@@ -10,6 +10,7 @@ export const Navbar = () => {
             <Link to={"/news"}>News</Link>
             <Link to={"/achivement"}>Thành tích</Link>
             <Link to={"/login"}>Đăng nhập</Link>
+            <Link to={"/register"}>Đăng kí</Link>
         </div>
     </>
 };
