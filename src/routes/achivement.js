@@ -1,5 +1,11 @@
+import React from 'react'
+import { Navbar } from '../components/navbar';
+
 const Achivement = () => {
-    return <h1>achievement</h1>;
+    return <div>
+        <h1>Achivement</h1>
+        <Navbar />
+    </div>
 };
 
 export default Achivement;

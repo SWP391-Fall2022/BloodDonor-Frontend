@@ -1,5 +1,11 @@
+import React from 'react'
+import { Navbar } from '../components/navbar';
+
 const Campaign = () => {
-    return <h1>cam</h1>;
+    return <div>
+        <h1>Campaign</h1>
+        <Navbar />
+    </div>
 };
 
 export default Campaign;

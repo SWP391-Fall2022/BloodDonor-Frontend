@@ -1,5 +1,11 @@
+import React from 'react'
+import { Navbar } from '../components/navbar';
+
 const News = () => {
-    return <h1>news</h1>;
+    return <div>
+        <h1>News</h1>
+        <Navbar />
+    </div>
 };
 
 export default News;

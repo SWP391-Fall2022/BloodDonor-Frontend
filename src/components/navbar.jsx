@@ -5,7 +5,7 @@ export const Navbar = () => {
     return <>
         <div>
             <p>MEDICORE</p>
-            <Link to={"/home"}>Trang chủ</Link>
+            <Link to={"/"}>Trang chủ</Link>
             <Link to={"/campaign"}>Chiến dịch</Link>
             <Link to={"/news"}>News</Link>
             <Link to={"/achivement"}>Thành tích</Link>
