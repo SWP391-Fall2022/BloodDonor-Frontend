@@ -1,6 +1,10 @@
 
 const Login = () => {
-    return <h1>ĐĂNG KÍ</h1>
+    return <div>
+        <h1>BẠN ĐĂNG KÍ VỚI VAI TRÒ</h1>
+        <p>NGƯỜI HIẾN MÁU</p>
+        <p>NƠI HIẾN MÁU</p>
+    </div>
         
 };
 
