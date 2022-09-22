@@ -1,4 +1,3 @@
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import './index.css';
 import ReactDOM from "react-dom/client";
@@ -6,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./routes/home";
 import Login from "./routes/login";
 import Register from "./routes/register";
+import Forget from "./routes/restore";
 import Campaign from "./routes/campaign";
 import News from "./routes/news";
 import Achivement from "./routes/achivement";
@@ -18,6 +18,7 @@ export default function App() {
         <Route path="/" index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="restore" element={<Forget />} />
         <Route path="campaign" element={<Campaign />} />
         <Route path="news" element={<News />} />
         <Route path="achivement" element={<Achivement />} />
