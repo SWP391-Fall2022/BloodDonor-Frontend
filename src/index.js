@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./routes/home";
 import Login from "./routes/login";
 import Register from "./routes/register";
+import NewPass from "./routes/changePass";
 import Forget from "./routes/restore";
 import Campaign from "./routes/campaign";
 import News from "./routes/news";
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/" index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="new-password" element={<NewPass />} />
         <Route path="restore" element={<Forget />} />
         <Route path="campaign" element={<Campaign />} />
         <Route path="news" element={<News />} />
