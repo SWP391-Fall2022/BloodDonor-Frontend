@@ -8,14 +8,14 @@ const Login = () => {
             <div className={`${styles.container} ${styles.font}`}>
                 <h1 className={`${styles.title}`}>ĐĂNG NHẬP</h1>
                 <Form layout="vertical">
-                    <Form.Item style={{ fontWeight: "bold" }} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
+                    <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
                         <Input placeholder="Nhập tên đăng nhập" />
                     </Form.Item>
-                    <Form.Item semibold style={{ fontWeight: "bold" }} label="Mật khẩu" name="Password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                    <Form.Item className={styles.formLabel} label="Mật khẩu" name="Password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
                         <Input.Password placeholder="Nhập mật khẩu" />
                     </Form.Item>
                     <Form.Item>
-                        <Button className={`${styles.btn}`} type="primary" size="large">
+                        <Button className={`${styles.btn}`} type="primary" htmlType="submit" size="large">
                             Đăng nhập
                         </Button>
                     </Form.Item>
