@@ -1,4 +1,5 @@
 import styles from '../styles/login.module.css';
+import '../index.css';
 import { Button, Form, Input } from 'antd';
 
 const newPass = () => {
@@ -9,7 +10,7 @@ const newPass = () => {
 
     return (
         <div className={styles.mainBackground}>
-            <div className={`${styles.container} ${styles.font}`}>
+            <div className={`${styles.container} shadowDP02-border10`}>
                 <h1 className={`${styles.title}`}>ĐỔI MẬT KHẨU</h1>
                 <Form layout="vertical">
                     <Form.Item className={styles.formLabel} label="Nhập mật khẩu cũ" name="oldPass" rules={[{ required: true, message: 'Vui lòng nhập vào đây' }]}>
