@@ -1,8 +1,0 @@
-/* căn giữa pagination */
-.pagination{
-    display: flex;
-}
-
-.pagination .ant-pagination{
-    margin: auto;
-}
