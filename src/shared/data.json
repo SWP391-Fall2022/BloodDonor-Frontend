@@ -1,0 +1,33 @@
+{
+    "listOfNews": [
+      {
+        "id": 1,
+        "title": "Ước mơ đêm Trung thu của bệnh nhi ung thư máu",
+        "content":"Trong khuôn khổ hoạt động Dự án “ Hổ trợ cải thiện chất lượng sống của những người khuyết tật bị phun rãi nặng chất da cam” các tỉnh Bình Định và KonTum.( gọi tắt là Dự án Hòa Nhập) của Dự án IC. Ngày 11/8/2022, Tổ chức The International Center (Dự án IC) phối hợp với Sở Y tế Bình Định và Trung tâm nghiên cứu phát triển Y tế cộng đồng tổ chức Hội thảo Họp chuyên đề Phục Hồi chức năng định hướng Đa chuyên ngành. Đến Dự và phát biểu khai mạc Hội thảo có BS.CKII. Lê Quang Hùng – Giám đốc Sở Y tế Bình Định; đại diện Cục QLKCB- Bộ Y Tế; Hội Vật Lý Trị Liệu Việt Nam, Hội phục hồi chức năng Việt Nam; Giám đốc, cán bộ và các chuyên gia của chương trình Dự án IC; Lãnh đạo Sở Y tế tỉnh KonTum; Đại diện Sở LĐTB&XH Bình Định; Bệnh viện Chỉnh hình – PHCN Quy Nhơn; Bệnh viện YHCT-PHCN, Lãnh đạo, trưởng khoa PHCN của11 Trung tâm Y tế huyện, thị xã, thành phố và bệnh viện Đa khoa khu vực; các bệnh viện ngoài công lập trên địa bàn tỉnh.",
+        "image":"https://vienhuyethoc.vn/wp-content/uploads/2022/09/100000-01.png",
+        "category": "campaignAct"
+      },
+      {
+        "id": 2,
+        "title": "Ước mơ đêm Trung thu của bệnh nhi ung thư máu",
+        "content":"abcd",
+        "image":"https://vienhuyethoc.vn/wp-content/uploads/2022/09/100000-01.png",
+        "category": "donorStory"
+      },
+      {
+        "id": 3,
+        "title": "Ước mơ đêm Trung thu của bệnh nhi ung thư máu",
+        "content":"abcd",
+        "image":"https://vienhuyethoc.vn/wp-content/uploads/2022/09/100000-01.png",
+        "category": "bloodType"
+      },
+      {
+        "id": 4,
+        "title": "Ước mơ đêm Trung thu của bệnh nhi ung thư máu",
+        "content":"abcd",
+        "image":"https://vienhuyethoc.vn/wp-content/uploads/2022/09/phuong-nhi-e1662437372595.jpg",
+        "category": "donorStory"
+      }
+    ]
+  }
+  
