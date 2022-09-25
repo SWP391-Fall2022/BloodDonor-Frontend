@@ -6,7 +6,7 @@ import { Button, Form, Input } from 'antd';
 const Login = () => {
     return (
         <div className={styles.mainBackground}>
-            <div className={`${styles.container} shadowDP02-border10`}>
+            <div className={styles.container}>
                 <h1 className={`${styles.title}`}>ĐĂNG NHẬP</h1>
                 <Form layout="vertical">
                     <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>

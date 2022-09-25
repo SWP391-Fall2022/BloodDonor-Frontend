@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import '../styles/navigation.css'
+import '../index.css'
 
 export const Navbar = () => {
     return (
@@ -10,14 +11,14 @@ export const Navbar = () => {
                     <p>MEDICHOR</p>
                 </div>
                 <div className="nav-links">
-                    <Link to={"/"}>Trang chủ</Link>
-                    <Link to={"/campaign"}>Chiến dịch</Link>
-                    <Link to={"/news"}>News</Link>
-                    <Link to={"/achivement"}>Thành tích</Link>
+                    <NavLink exact to={"/"}>Trang chủ</NavLink>
+                    <NavLink to={"/campaign"}>Chiến dịch</NavLink>
+                    <NavLink to={"/news"}>News</NavLink>
+                    <NavLink to={"/achivement"}>Thành tích</NavLink>
                 </div>
                 <div className="nav-logs">
-                    <Link to={"/login"}>Đăng nhập</Link>
-                    <Link to={"/register"}>Đăng ký</Link>
+                    <NavLink to={"/login"}>Đăng nhập</NavLink>
+                    <NavLink to={"/register"}>Đăng ký</NavLink>
                 </div>
             </nav>
         </div>
