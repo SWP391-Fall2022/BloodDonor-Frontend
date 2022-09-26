@@ -16,15 +16,15 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/new-password" element={<NewPass />} />
-        <Route path="/restore" element={<Forget />} />
-        <Route path="/campaign" element={<Campaign />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/achivement" element={<Achivement />} />
-        <Route path="*" element={<NoPage />} />
+        <Route exact strict path="/" element={<Home />} />
+        <Route exact strict path="/login" element={<Login />} />
+        <Route exact strict path="/register" element={<Register />} />
+        <Route exact strict path="/new-password" element={<NewPass />} />
+        <Route exact strict path="/restore" element={<Forget />} />
+        <Route exact strict path="/campaign" element={<Campaign />} />
+        <Route exact strict path="/news" element={<News />} />
+        <Route exact strict path="/achivement" element={<Achivement />} />
+        <Route exact strict path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
   );
