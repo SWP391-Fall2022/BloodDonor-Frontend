@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import Navigation from './Navigation/Navigation'
-import NewsDetail from './NewsDetail/Newsdetail'
-import ScrollingText from './ScrollingText/ScrollingText'
+import { Navbar } from '../components/navbar';
+import NewsDetail from '../components/NewsDetail/Newsdetail'
 import packageInfo from "../shared/data.json";
-import NewsList from './News/NewsList'
-import NewsDetailPageStyle from './NewsDetailPageStyle.css'
+import NewsList from '../components/News/NewsList'
+import '../styles/NewsDetailPageStyle.css'
 
 
 export default class NewsDetailPage extends Component {
@@ -23,12 +22,10 @@ export default class NewsDetailPage extends Component {
     render() {
         return (
             <div >
-
-                <Navigation />
-                <ScrollingText />
-                <div  className='detail-container'>
+                <Navbar />
+                <div className='detail-container'>
                     <div className='detail'> <NewsDetail /></div>
-                    <div className='other-news  shadowDP02 '>
+                    <div className='other-news'>
                         <div className='other-news-title'>Báo khác</div>
                         <NewsList
                             news={this.state.news}

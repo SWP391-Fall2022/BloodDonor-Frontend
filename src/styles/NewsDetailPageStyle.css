@@ -1,3 +1,5 @@
+@import '../index.css';
+
 .detail-container .detail-img img {
 
     width: 600px;
@@ -7,7 +9,7 @@
 
 .detail-container {
     display: flex;
-    /* justify-content: space-around; */
+    justify-content: center;
     padding: 30px 80px;
     font-size: 16px;
 }
@@ -18,7 +20,7 @@
     margin-right: 30px;
     padding: 30px 50px;
     border-radius: 10px;
-
+    box-shadow: var(--shadow-dp-02);
 }
 
 .newsDetail h2 {
@@ -33,6 +35,7 @@
     display: flex;
     flex-direction: column;
     border-radius: 10px;
+    box-shadow: var(--shadow-dp-02);
 }
 
 .other-news-title {
@@ -68,6 +71,7 @@
     overflow: hidden;
     max-width: 310px;
     color: black;
+    box-shadow: var(--shadow-dp-02);
 }
 
 .detail-container .news-item-content {
