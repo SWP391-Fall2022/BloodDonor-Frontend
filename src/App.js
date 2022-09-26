@@ -1,5 +1,6 @@
 import React from 'react'
-import BloodDonorApp from './components/BloodDonorApp';
+import ListNewsPage from './components/ListNewsPage';
+import NewsDetailPage from './components/NewsDetailPage'
 import './App.css';
 import 'antd/dist/antd.css';
 
@@ -8,7 +9,8 @@ import 'antd/dist/antd.css';
 export default function App() {
   return (
    <div className="App" >
-    <BloodDonorApp/>
+    {/* <ListNewsPage/> */}
+    <NewsDetailPage></NewsDetailPage>
    
    </div>
   );

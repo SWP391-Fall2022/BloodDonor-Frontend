@@ -4,7 +4,7 @@ export default class Navigation extends Component {
   render() {
     return (
       <div className="navbar ">
-        <nav class="nav grid-container">
+        <nav class="nav ">
           <div className="nav-logo">
           <a href="#home"> MEDICHOR</a>
           </div>
@@ -12,8 +12,9 @@ export default class Navigation extends Component {
           <div className="nav-links">
             <a href="#home">Trang Chủ</a>
             <a href="#campaign">Chiến Dịch</a>
-            <a href="#news">News</a>
+            <a className="nav-item" href="#news">Tin tức</a>
             <a href="#achievement">Thành Tích</a>
+            <a href="#qa">Hỏi đáp</a>
           </div>
 
           <div className="nav-logs">
