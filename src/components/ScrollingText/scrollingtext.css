@@ -1,0 +1,18 @@
+
+
+#mainmodal{
+    background-color: #FDFFA8;
+}
+.marquee {
+	color: #F44A43;
+    /* letter-spacing: 1px; */
+    font-weight: 600;
+    padding: 1px;
+    font-size: 20px;
+    display: flex;
+    height: 40px;
+    align-items: center;
+}
+.marquee p{
+    margin: 0;
+}
