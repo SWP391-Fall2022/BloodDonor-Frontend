@@ -11,6 +11,7 @@ import NewPass from "./routes/changePass";
 import Forget from "./routes/restore";
 import Campaign from "./routes/campaign";
 import ListNewsPage from './routes/ListNewsPage';
+import NewsDetailPage from './routes/NewsDetailPage';
 import Achivement from "./routes/achivement";
 import NoPage from "./routes/nopage";
 
@@ -27,6 +28,7 @@ export default function App() {
         <Route exact strict path="/restore" element={<Forget />} />
         <Route exact strict path="/campaign" element={<Campaign />} />
         <Route exact strict path="/news" element={<ListNewsPage />} />
+        <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} />
         <Route exact strict path="/achivement" element={<Achivement />} />
         <Route exact strict path="*" element={<NoPage />} />
       </Routes>

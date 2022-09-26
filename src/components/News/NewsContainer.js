@@ -47,7 +47,6 @@ export default class NewsContainer extends Component {
 
         <div className="search-news">
           <SearchBox></SearchBox>
-
           <NewsList
             news={this.state.news}
             categories={this.state.categories}

@@ -5,10 +5,8 @@ export default class BloodDonorApp extends Component {
   render() {
     return (
       <div>
-
-<Navbar/>
-    
-    <NewsContainer></NewsContainer>
+        <Navbar />
+        <NewsContainer></NewsContainer>
       </div>
     )
   }
