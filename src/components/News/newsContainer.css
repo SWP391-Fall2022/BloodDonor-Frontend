@@ -3,16 +3,17 @@
     grid-template-columns: auto auto auto auto auto auto;
     padding: 50px 80px;
     height: 100%;
-    width: 100%;
-
-    /* grid-gap: 50px; */
+    width: 1200px;
+    grid-gap: 50px;
     background-color: hsl(194, 100%, 97%);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .search-news {
     grid-column: 2/6;
-    margin-left: 50px;
-
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .search-numRe {
@@ -47,7 +48,7 @@
     border-radius: 10px;
     margin-bottom: 20px;
     /* dùng grid cho từng news */
-   
+
     box-sizing: border-box;
     max-height: 220px;
 
@@ -58,7 +59,7 @@
     justify-content: space-around;
 }
 
-.news-item:hover{
+.news-item:hover {
     color: black;
 }
 
@@ -72,15 +73,15 @@
     max-width: 380px;
     overflow: hidden;
     font-size: 13px;
-   
+
 }
 
-.news-item-content p{
+.news-item-content p {
     line-height: 24px;
     font-size: 14px;
 }
 
-.news-container  .title {
+.news-container .title {
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
@@ -89,10 +90,10 @@
     overflow: hidden;
 }
 
-.news-item-img{
+.news-item-img {
     width: 270px;
     height: 170px;
-background-image: none;    
+    background-image: none;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;

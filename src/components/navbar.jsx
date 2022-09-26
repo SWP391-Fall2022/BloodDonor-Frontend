@@ -1,9 +1,10 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
 import '../styles/navigation.css'
+import ScrollingText from './ScrollingText/ScrollingText'
 
 export const Navbar = () => {
-    return (
+    return (<>
         <div className="navbar ">
             <nav class="nav grid-container">
                 <div className="nav-logo">
@@ -21,5 +22,7 @@ export const Navbar = () => {
                 </div>
             </nav>
         </div>
+        <ScrollingText />
+    </>
     )
 };

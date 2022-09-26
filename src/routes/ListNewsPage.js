@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import Navigation from './Navigation/Navigation'
-import ScrollingText from './ScrollingText/ScrollingText'
-import NewsContainer from './News/NewsContainer'
+import { Navbar } from '../components/navbar'
+import NewsContainer from '../components/News/NewsContainer'
 export default class BloodDonorApp extends Component {
   render() {
     return (
       <div>
 
-<Navigation/>
-    <ScrollingText/>
+<Navbar/>
+    
     <NewsContainer></NewsContainer>
       </div>
     )
