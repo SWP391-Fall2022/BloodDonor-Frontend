@@ -1,0 +1,73 @@
+@import '../index.css';
+
+.nav {
+  background-color: var(--primary-400);
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.nav a {
+  position: relative;
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  font-size: 20px;
+  font-weight: 600;
+  transition: 0.5s;
+}
+
+.active {
+  background-color: var(--primary-600);
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  width: 50%;
+  left: 25%;
+  bottom: 10px;
+  background-color: white;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+/* Change the color of links on hover */
+.nav a:hover {
+  background-color: var(--primary-600);
+  color: white;
+}
+
+/* Use grid for layout 6 column */
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  gap: 10px;
+
+}
+
+.grid-container>div {
+  text-align: center;
+}
+
+.nav-logo p {
+  margin: 0;
+  padding: 14px 16px;
+  font-family: 'Reem Kufi Fun';
+  font-style: normal;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+}
+
+
+.nav-links {
+  grid-column: 2 / 6;
+  margin: auto;
+
+}
+
+.nav-logs {
+  margin: auto;
+}

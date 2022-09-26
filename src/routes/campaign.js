@@ -3,8 +3,8 @@ import { Navbar } from '../components/navbar';
 
 const Campaign = () => {
     return <div>
-        <h1>Campaign</h1>
         <Navbar />
+        <h1>Campaign</h1>
     </div>
 };
 

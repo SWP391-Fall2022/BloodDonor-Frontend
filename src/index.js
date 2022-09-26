@@ -4,6 +4,11 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./routes/home";
 import Login from "./routes/login";
+import Register from "./routes/register";
+import RegisterDonor from "./routes/register-volunteer";
+import RegisterPlace from "./routes/register-place";
+import NewPass from "./routes/changePass";
+import Forget from "./routes/restore";
 import Campaign from "./routes/campaign";
 import News from "./routes/news";
 import Achivement from "./routes/achivement";
@@ -13,12 +18,17 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" index element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="campaign" element={<Campaign />} />
-        <Route path="news" element={<News />} />
-        <Route path="achivement" element={<Achivement />} />
-        <Route path="*" element={<NoPage />} />
+        <Route exact strict path="/" element={<Home />} />
+        <Route exact strict path="/login" element={<Login />} />
+        <Route exact strict path="/register" element={<Register />} />
+        <Route exact strict path="/register/donor-volunteer" element={<RegisterDonor />} />
+        <Route exact strict path="/register/donor-place" element={<RegisterPlace />} />
+        <Route exact strict path="/new-password" element={<NewPass />} />
+        <Route exact strict path="/restore" element={<Forget />} />
+        <Route exact strict path="/campaign" element={<Campaign />} />
+        <Route exact strict path="/news" element={<News />} />
+        <Route exact strict path="/achivement" element={<Achivement />} />
+        <Route exact strict path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
   );
