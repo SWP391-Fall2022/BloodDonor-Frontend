@@ -9,6 +9,7 @@ import RegisterDonor from "./routes/register-volunteer";
 import RegisterPlace from "./routes/register-place";
 import NewPass from "./routes/changePass";
 import Forget from "./routes/restore";
+import Otp from "./routes/otp";
 import Campaign from "./routes/campaign";
 import ListNewsPage from './routes/ListNewsPage';
 import NewsDetailPage from './routes/NewsDetailPage';
@@ -26,6 +27,7 @@ export default function App() {
         <Route exact strict path="/register/donor-place" element={<RegisterPlace />} />
         <Route exact strict path="/new-password" element={<NewPass />} />
         <Route exact strict path="/restore" element={<Forget />} />
+        <Route exact strict path="/otp" element={<Otp />} />
         <Route exact strict path="/campaign" element={<Campaign />} />
         <Route exact strict path="/news" element={<ListNewsPage />} />
         <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} />

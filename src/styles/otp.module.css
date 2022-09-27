@@ -1,0 +1,25 @@
+.container {
+    background-color: white;
+    width: 700px;
+    height: auto;
+    padding: 50px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 10px;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+.content {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+}
