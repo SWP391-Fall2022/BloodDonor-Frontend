@@ -26,7 +26,7 @@ class Login extends Component {
         })
     }
 
-    handleLogin = () => {
+    handleLogin = async () => {
         let json = {
             method: 'POST',
             body: JSON.stringify({ "username": this.state.username, "password": this.state.password }),
@@ -34,9 +34,18 @@ class Login extends Component {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        fetch("http://localhost:8080/v1/login", json).then((response) => {
-            console.log(response)
-        }).catch((error) => {console.log(error)})
+        const response = await fetch("http://localhost:8080/v1/login", json)
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
+        if (response.JSON.success) {
+            this.setState({
+                message: 'Login successful!'
+            })
+        } else {
+            this.setState({
+                message: 'Wrong email or password'
+            })
+        }
     }
 
     render() {
@@ -57,6 +66,9 @@ class Login extends Component {
                             </Button>
                         </Form.Item>
                     </Form>
+                    <div style={{color: 'red'}}>
+                        {this.state.message}
+                    </div>
                     <div className={`${styles.underInfo}`}>
                         <div><Link className={`${styles.link}`} to={"/restore"}>Quên mật khẩu?</Link></div>
                         <div>Chưa có tài khoản? Đăng kí <Link className={`${styles.link}`} to={"/register"}>tại đây</Link></div>
