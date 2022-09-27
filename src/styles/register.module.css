@@ -1,0 +1,54 @@
+@import '../index.css';
+
+.mainBackground {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.container {
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    transform: translateX(-50%);
+}
+
+.title {
+    background-color: var(--primary-600);
+    color: white;
+    box-shadow: var(--shadow-dp-04);
+    width: fit-content;
+    height: auto;
+    margin: 0 auto;
+    padding: 10px 50px;
+    position: relative;
+
+    text-align: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    border-radius: 10px;
+}
+
+.btnContainer {
+    margin: auto;
+    width: 90%;
+}
+
+.btn {
+    width: fit-content;
+    height: 89px;
+    background: white;
+    color: black;
+    box-shadow: var(--shadow-dp-02);
+    border: 0px;
+    border-radius: 30px;
+    margin: 50px 5px;
+    padding: 30px 30px;
+
+    font-size: 25px;
+    font-weight: 600;
+}

@@ -8,8 +8,9 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'Test',
-            password: 'Test',
+            username: '',
+            password: '',
+            message: '',
         }
     }
 
@@ -26,7 +27,16 @@ class Login extends Component {
     }
 
     handleLogin = () => {
-        console.log(this.state)
+        let json = {
+            method: 'POST',
+            body: JSON.stringify({ "username": this.state.username, "password": this.state.password }),
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8'
+            })
+        }
+        fetch("http://localhost:8080/v1/login", json).then((response) => {
+            console.log(response)
+        }).catch((error) => {console.log(error)})
     }
 
     render() {
@@ -36,10 +46,10 @@ class Login extends Component {
                     <h1 className={`${styles.title}`}>ĐĂNG NHẬP</h1>
                     <Form layout="vertical">
                         <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
-                            <Input placeholder="Nhập tên đăng nhập" value={this.state.username} onChange={this.handleOnChangeUsername}/>
+                            <Input placeholder="Nhập tên đăng nhập" value={this.state.username} onChange={this.handleOnChangeUsername} />
                         </Form.Item>
                         <Form.Item className={styles.formLabel} label="Mật khẩu" name="Password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
-                            <Input.Password placeholder="Nhập mật khẩu" value={this.state.password} onChange={this.handleOnChangePassword}/>
+                            <Input.Password placeholder="Nhập mật khẩu" value={this.state.password} onChange={this.handleOnChangePassword} />
                         </Form.Item>
                         <Form.Item>
                             <Button className={`${styles.btn}`} type="primary" htmlType="submit" size="large" onClick={this.handleLogin}>
