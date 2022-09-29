@@ -1,6 +1,7 @@
 /* căn giữa pagination */
 .pagination{
     display: flex;
+    margin: 30px;
 }
 
 .pagination .ant-pagination{

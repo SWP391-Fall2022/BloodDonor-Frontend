@@ -20,6 +20,7 @@ export default class NewsContainer extends Component {
       typicalDonor: false,
     },
   };
+  //handle for filter change
 
   handleChange = (e) => {
     const { name } = e.target;

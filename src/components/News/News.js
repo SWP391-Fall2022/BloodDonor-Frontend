@@ -10,7 +10,6 @@ const News = (props) => {
 
     return (
       <Link to={'/news/news-detail'} className="news-item">
-        {/* <li key={id}> */}
         <div className="news-item-content">
           <p className="title">{title}</p>
           <p>{content}</p>
@@ -18,12 +17,10 @@ const News = (props) => {
           <p>{category}</p>
         </div>
 
-        <div className="news-item-img" style={{ backgroundImage: "url(/trungthuchoem.jpg)" }}>  </div>
+        <div className="news-item-img">  
+          <img src={image} />
+        </div>
 
-        {/* <div className="news-item-img">  <img src={image} /></div> */}
-
-
-        {/* </li> */}
       </Link>
     );
   });

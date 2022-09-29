@@ -2,10 +2,10 @@
     background-color: white;
     padding: 30px;
     display: inline-block;
- min-width: 320px;
     box-sizing: border-box;
     box-shadow: 3px 4px 7px #c9c9c7;
     border-radius: 10px;
+    width: 100%;
 }
 
 .filterTable label{
@@ -19,7 +19,5 @@
 
 .checkbox-item{
    padding-bottom: 5px;
-   
-    /* line-height: 10px; */
 
 }

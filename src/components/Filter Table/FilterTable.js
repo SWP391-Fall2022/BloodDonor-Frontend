@@ -35,7 +35,7 @@ export default class FilterTable extends Component {
 
           <Checkbox
             id="4"
-            title="Nhóm máu và sưc khỏe"
+            title="Nhóm máu và sức khỏe"
             name="bloodType"
             checked={this.props.categories.bloodType}
             handleChange={this.props.handleChange}
@@ -58,9 +58,6 @@ export default class FilterTable extends Component {
           />
         </div>
 
-        {/* <NewsList
-          news={filteredNews.length === 0 ? this.state.news : filteredNews}
-        /> */}
       </div>
     );
   }
