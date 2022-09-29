@@ -6,7 +6,7 @@ import ScrollingText from './ScrollingText/ScrollingText'
 export const Navbar = () => {
     return (<>
         <div className="navbar ">
-            <nav class="nav grid-container">
+            <nav className="nav grid-container">
                 <div className="nav-logo">
                     <p>MEDICHOR</p>
                 </div>
