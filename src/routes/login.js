@@ -1,53 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from '../styles/login.module.css';
 import '../index.css';
 import { Button, Form, Input } from 'antd';
-import { Component } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script'
 
-class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            message: '',
-            recaptchaCheck: false,
-            loginGoogleData: sessionStorage.getItem('loginData') ? JSON.parse(sessionStorage.getItem('loginData')) : null,
-        }
-    }
+function Login() {
+
+    const [username, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const [recaptchaCheck, setRecaptchaCheck] = useState(false);
+
+    useEffect(() => {
+        gapi.load("client:auth2", () => {
+            gapi.auth2.init({ clientId: process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID })
+        })
+    })
 
     // ReCAPTCHA
-    onChangeRecaptcha = (value) => {
+    const onChangeRecaptcha = (value) => {
         if (value !== null) {
-            this.setState({ recaptchaCheck: true })
+            setRecaptchaCheck(true)
         }
     }
 
     // Normal Login
-    handleOnChangeUsername = (event) => {
-        this.setState({
-            username: event.target.value
-        })
+    const handleOnChangeUsername = (event) => {
+        setUserName(event.target.value)
     }
 
-    handleOnChangePassword = (event) => {
-        this.setState({
-            password: event.target.value
-        })
+    const handleOnChangePassword = (event) => {
+        setPassword(event.target.value)
     }
 
-    handleLogin = async () => {
-        if (!this.state.recaptchaCheck) {
-            this.setState({ message: "Please check reCaptcha" })
+    const handleLogin = async () => {
+        if (!recaptchaCheck) {
+            setMessage('Vui lòng xác nhận reCaptcha')
         } else {
-            this.setState({ message: '' })
+            setMessage('')
             let json = {
                 method: 'POST',
-                body: JSON.stringify({ "username": this.state.username, "password": this.state.password }),
+                body: JSON.stringify({ "username": username, "password": password }),
                 headers: new Headers({
                     'Content-Type': 'application/json; charset=UTF-8'
                 })
@@ -56,28 +52,24 @@ class Login extends Component {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             if (response.success) {
-                this.setState({
-                    message: 'Login successful!'
-                })
+                sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
+                sessionStorage.setItem('checkLogin', JSON.stringify(true))
             } else {
-                this.setState({
-                    message: 'Wrong email or password'
-                })
+                setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
             }
             console.log(response)
         }
     }
 
     // Google Login
-
-    handleFailure = (result) => {
+    const handleFailure = (result) => {
         console.log(result)
     }
 
-    handleGoogleLogin = async (data) => {
+    const handleGoogleLogin = async (data) => {
         let json = {
             method: 'POST',
-            body: JSON.stringify({ tokenId: data.tokenId, }),
+            body: JSON.stringify({ tokenId: data.tokenId }),
             headers: new Headers({
                 'Content-Type': 'application/json; charset=UTF-8'
             })
@@ -86,60 +78,55 @@ class Login extends Component {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
 
-        this.setState({ loginGoogleData: data.profileObj.email })
-        sessionStorage.setItem('loginData', JSON.stringify(this.state.loginGoogleData))
+        sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
         console.log(data)
-        console.log(response)
+        console.log(json)
+        console.log(response.body)
     }
 
-    render() {
-        return (
-            <div className={styles.mainBackground}>
-                <div className={styles.container}>
-                    <h1 className={`${styles.title}`}>ĐĂNG NHẬP</h1>
-                    <Form layout="vertical">
-                        <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
-                            <Input placeholder="Nhập tên đăng nhập" value={this.state.username} onChange={this.handleOnChangeUsername} />
-                        </Form.Item>
-                        <Form.Item className={styles.formLabel} label="Mật khẩu" name="Password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
-                            <Input.Password placeholder="Nhập mật khẩu" value={this.state.password} onChange={this.handleOnChangePassword} />
-                        </Form.Item>
-                        <Form.Item className={styles.formLabel}>
-                            <Button className={`${styles.btn}`} type="primary" htmlType="submit" size="large" onClick={this.handleLogin}>
-                                Đăng nhập
-                            </Button>
-                        </Form.Item>
-                        <Form.Item className={`${styles.formLabel} ${styles.recapcha}`}>
-                            <ReCAPTCHA
-                                style={{ margin: "0 25px" }}
-                                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-                                onChange={this.onChangeRecaptcha}
-                            />
-                        </Form.Item>
-                    </Form>
-                    <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                        {this.state.message}
-                    </div>
-                    <div className={`${styles.underInfo}`}>
-                        <div><Link className={`${styles.link}`} to={"/restore"}>Quên mật khẩu?</Link></div>
-                        <div>Chưa có tài khoản? Đăng kí <Link className={`${styles.link}`} to={"/register"}>tại đây</Link></div>
-                        <div>HOẶC</div>
-                        <GoogleLogin
-                            clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
-                            buttonText="Đăng nhập bằng Google"
-                            onSuccess={this.handleGoogleLogin}
-                            onFailure={this.handleFailure}
-                            isSignedIn={true}
-                            cookiePolicy={'single_host_origin'}
+    return (
+        <div className={styles.mainBackground}>
+            <div className={styles.container}>
+                <h1 className={`${styles.title}`}>ĐĂNG NHẬP</h1>
+                <Form layout="vertical">
+                    <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
+                        <Input placeholder="Nhập tên đăng nhập" value={username} onChange={handleOnChangeUsername} />
+                    </Form.Item>
+                    <Form.Item className={styles.formLabel} label="Mật khẩu" name="Password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                        <Input.Password placeholder="Nhập mật khẩu" value={password} onChange={handleOnChangePassword} />
+                    </Form.Item>
+                    <Form.Item className={styles.formLabel}>
+                        <Button className={`${styles.btn}`} type="primary" htmlType="submit" size="large" onClick={handleLogin}>
+                            Đăng nhập
+                        </Button>
+                    </Form.Item>
+                    <Form.Item className={`${styles.formLabel} ${styles.recapcha}`}>
+                        <ReCAPTCHA
+                            style={{ margin: "0 25px" }}
+                            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                            onChange={onChangeRecaptcha}
                         />
-                    </div>
-                    <div>
-                        Your email: {this.state.loginGoogleData}
-                    </div>
+                    </Form.Item>
+                </Form>
+                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
+                    {message}
+                </div>
+                <div className={`${styles.underInfo}`}>
+                    <div><Link className={`${styles.link}`} to={"/restore"}>Quên mật khẩu?</Link></div>
+                    <div>Chưa có tài khoản? Đăng kí <Link className={`${styles.link}`} to={"/register"}>tại đây</Link></div>
+                    <div>HOẶC</div>
+                    <GoogleLogin
+                        clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
+                        buttonText="Đăng nhập bằng Google"
+                        onSuccess={handleGoogleLogin}
+                        onFailure={handleFailure}
+                        isSignedIn={true}
+                        cookiePolicy={'single_host_origin'}
+                    />
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Login;

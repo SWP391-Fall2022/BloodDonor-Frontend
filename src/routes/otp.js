@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styles from '../styles/otp.module.css';
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Button } from 'antd';
 import OtpInput from "react-otp-input";
 
@@ -10,7 +10,10 @@ export default class Otp extends Component {
 
     handleChange = (otp) => this.setState({ otp });
     render() {
-        return (
+
+        if (!sessionStorage.getItem('checkLogin')) {
+            return <Navigate to={'/login'} replace />
+        } else return (
             <div className={styles.container}>
                 <div className={styles.content}>Mã xác nhận đã được gửi qua mail của bạn</div>
                 <div className={styles.content}>Kiểm tra mail để xác nhận thông tin</div>
