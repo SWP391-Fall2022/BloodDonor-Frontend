@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from '../styles/login.module.css';
 import '../index.css';
 import { Button, Form, Input } from 'antd';
@@ -7,12 +7,16 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script'
 
+
 function Login() {
 
-    const [username, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
-    const [recaptchaCheck, setRecaptchaCheck] = useState(false);
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const [username, setUserName] = useState('')
+    const [password, setPassword] = useState('')
+    const [message, setMessage] = useState(location.state)
+    const [recaptchaCheck, setRecaptchaCheck] = useState(false)
 
     useEffect(() => {
         gapi.load("client:auth2", () => {
@@ -53,11 +57,10 @@ function Login() {
                 .catch((error) => { console.log(error) })
             if (response.success) {
                 sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
-                sessionStorage.setItem('checkLogin', JSON.stringify(true))
+                navigate("/auth")
             } else {
                 setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
             }
-            console.log(response)
         }
     }
 
@@ -79,9 +82,10 @@ function Login() {
             .catch((error) => { console.log(error) })
 
         sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
-        console.log(data)
-        console.log(json)
-        console.log(response.body)
+        if (response.success) {
+            sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
+            navigate("/auth")
+        }
     }
 
     return (
@@ -120,7 +124,6 @@ function Login() {
                         buttonText="Đăng nhập bằng Google"
                         onSuccess={handleGoogleLogin}
                         onFailure={handleFailure}
-                        isSignedIn={true}
                         cookiePolicy={'single_host_origin'}
                     />
                 </div>

@@ -89,8 +89,9 @@
 
 .containerChild {
     position: absolute;
-    top: 30px;
-    text-align: center;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
     background-color: white;
     width: 550px;
     height: auto;
@@ -112,7 +113,7 @@
 }
 
 .formLabel {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 
 .underInfo {
@@ -122,6 +123,7 @@
 
 .btnChild {
     width: fit-content;
+    margin: 10px;
     background: var(--primary-500);
     color: white;
     box-shadow: var(--shadow-dp-01);
