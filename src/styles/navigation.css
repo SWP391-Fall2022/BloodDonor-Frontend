@@ -1,7 +1,7 @@
 @import '../index.css';
 
 .nav {
-  background-color: var(--primary-400);
+  background-color: var(--primary-900);
   overflow: hidden;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .active {
-  background-color: var(--primary-600);
+  background-color: var(--primary-1000);
 }
 
 .active::after {
@@ -35,7 +35,7 @@
 
 /* Change the color of links on hover */
 .nav a:hover {
-  background-color: var(--primary-600);
+  background-color: var(--primary-1000);
   color: white;
 }
 
