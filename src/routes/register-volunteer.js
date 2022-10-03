@@ -1,22 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from '../styles/register.module.css';
 import '../index.css';
 import { Form, Input, InputNumber, Select } from 'antd';
-import { RegisterStepPanel } from '../components/RegisterStepsPanel';
-import packageInfo from "../shared/data.json";
+import { RegisterStepPanel } from '../components/Register/RegisterStepsPanel';
+import RegisterPD from '../components/Register/RegisterProvinceDistrict';
 const { TextArea } = Input;
 const { Option } = Select;
 
 function RegisterDonor() {
     const [stepForm] = Form.useForm();
-    const provinceList = packageInfo.provinces
-    const [districtList, setDistrictList] = useState(provinceList[0].district)
-    const [selectedDistrict, setSelectedDistrict] = useState(provinceList[0].district[0].name)
-
-    const onProvinceChange = (value) => {
-        setDistrictList(provinceList[value - 1].district)
-        setSelectedDistrict(provinceList[value - 1].district[0].name)
-    };
     const STEP_1_FORM = () => {
         return (
             <>
@@ -61,26 +53,7 @@ function RegisterDonor() {
     const STEP_3_FORM = () => {
         return (
             <>
-                <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.formLabel} label="Tỉnh" name="province" rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
-                        <Select
-                            showSearch placeholder="Chọn"
-                            onChange={onProvinceChange}
-                            defaultValue={provinceList[0].name}
-                            filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
-                        >
-                            {provinceList.map(a => (<Option key={a.id} >{a.name}</Option>))}
-                        </Select>
-                    </Form.Item>
-                    <Form.Item className={styles.formLabel} label="Quận/Huyện" name="districtId" rules={[{ required: true, message: 'Vui lòng chọn' },]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
-                        <Select
-                            showSearch placeholder="Chọn"
-                            filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
-                        >
-                            {districtList.map(a => (<Option key={a.id} value={a.id}>{a.name}</Option>))}
-                        </Select>
-                    </Form.Item>
-                </Form.Item>
+                <RegisterPD />
                 <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="AddressDetails" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
@@ -88,15 +61,23 @@ function RegisterDonor() {
         )
     }
 
-    const onFinish = async() => {
+    const onFinish = async () => {
         const formData = stepForm.getFieldsValue(true);
         delete formData.province
-        formData.birthday = "01/01/2001";
+        formData.birthday = new Date(2001, 0, 1);
         formData.role = "DONOR";
-        console.log(formData);
-        const response = await fetch("http://localhost:8080//v1/register/donor", formData)
-                .then((res) => res.json())
-                .catch((error) => { console.log(error) })
+        formData.districtId = JSON.parse(sessionStorage.getItem('districtId'));
+        console.log(formData)
+        let json = {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8'
+            })
+        }
+        const response = await fetch("http://localhost:8080/v1/register/donor", json)
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
         console.log(response)
     };
 

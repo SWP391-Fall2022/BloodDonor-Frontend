@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from '../styles/register.module.css';
 import '../index.css';
-import { Form, Input, InputNumber, Select } from 'antd';
-import { RegisterStepPanel } from '../components/RegisterStepsPanel';
-import packageInfo from "../shared/data.json";
+import { Form, Input, InputNumber } from 'antd';
+import { RegisterStepPanel } from '../components/Register/RegisterStepsPanel';
+import RegisterPD from '../components/Register/RegisterProvinceDistrict';
 const { TextArea } = Input;
-const { Option } = Select;
 
 function RegisterPlace() {
     const [stepForm] = Form.useForm();
@@ -18,7 +17,7 @@ function RegisterPlace() {
                 <Form.Item className={styles.formLabel} label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
                     <Input placeholder="Nhập Email" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Mật khẩu" name="Password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                <Form.Item className={styles.formLabel} label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu" name="confirmPassword" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
@@ -33,58 +32,42 @@ function RegisterPlace() {
                 <Form.Item className={styles.formLabel} label="Tên bệnh viện/ trạm y tế/ nơi tiếp nhận hiến máu" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên' }]}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Nhập số điện thoại" name="Phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
+                <Form.Item className={styles.formLabel} label="Nhập số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
                     <InputNumber style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Mã số thuế" name="username" rules={[{ required: true, message: 'Vui lòng nhập mã số' }]}>
+                <Form.Item className={styles.formLabel} label="Mã số thuế" name="taxcode" rules={[{ required: true, message: 'Vui lòng nhập mã số' }]}>
                     <Input placeholder="Nhập mã số thuế" />
                 </Form.Item>
             </>
         )
     }
-    const provinceList = packageInfo.provinces
-    const [districtList, setDistrictList] = useState(provinceList[0].district)
-    const [selectedDistrict, setSelectedDistrict] = useState(provinceList[0].district[0].name)
-
-    const onProvinceChange = (value) => {
-        setDistrictList(provinceList[value - 1].district)
-        setSelectedDistrict(provinceList[value - 1].district[0].name)
-    };
     const STEP_3_FORM = () => {
         return (
             <>
-                <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.formLabel} label="Tỉnh" name="province" rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
-                        <Select
-                            showSearch placeholder="Chọn"
-                            onChange={onProvinceChange}
-                            defaultValue={provinceList[0].name}
-                            filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
-                        >
-                            {provinceList.map(a => (<Option key={a.id} >{a.name}</Option>))}
-                        </Select>
-                    </Form.Item>
-                    <Form.Item className={styles.formLabel} label="Quận/Huyện" name="districtId" rules={[{ required: true, message: 'Vui lòng chọn' },]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
-                        <Select
-                            showSearch placeholder="Chọn"
-                            filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
-                        >
-                            {districtList.map(a => (<Option key={a.id} value={a.id}>{a.name}</Option>))}
-                        </Select>
-                    </Form.Item>
-                </Form.Item>
-                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="address" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}>
+                <RegisterPD />
+                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="AddressDetails" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
             </>
         )
     }
 
-    const onFinish = () => {
+    const onFinish = async () => {
         const formData = stepForm.getFieldsValue(true);
-
-        // POST the data to backend and show Notification
-        console.log(formData);
+        delete formData.province
+        formData.role = "ORGANIZATION";
+        formData.districtId = JSON.parse(sessionStorage.getItem('districtId'));
+        let json = {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8'
+            })
+        }
+        const response = await fetch("http://localhost:8080/v1/register/organization", json)
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
+        console.log(response)
     };
 
     const steps = [
