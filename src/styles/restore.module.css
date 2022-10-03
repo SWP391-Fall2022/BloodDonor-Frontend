@@ -1,8 +1,9 @@
 @import '../styles/login.module.css';
 
 .mainBackground {
-    background-image: url('../assets/background2.png');
+    background-image: url('../assets/changePassword-background.png');
     background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     top: 0px;
     right: 0px;
@@ -19,7 +20,7 @@
     width: 470px;
     height: auto;
     box-shadow: var(--shadow-dp-02);
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 50px;
 }
 
@@ -51,7 +52,7 @@
     color: black;
     box-shadow: var(--shadow-dp-02);
     border: 2px solid var(--blue-01);
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 16px;
     font-weight: 600;
 }
@@ -62,7 +63,7 @@
     color: white;
     box-shadow: var(--shadow-dp-02);
     border: 0px;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 20px 0;
     font-size: 16px;
     font-weight: 600;
