@@ -3,6 +3,11 @@
 .nav {
   background-color: var(--primary-900);
   overflow: hidden;
+  height: 55px;
+}
+
+p {
+  margin: 0;
 }
 
 /* Style the links inside the navigation bar */
@@ -21,30 +26,17 @@
   background-color: var(--primary-1000);
 }
 
-.active::after {
-  content: "";
-  position: absolute;
-  height: 3px;
-  width: 50%;
-  left: 25%;
-  bottom: 10px;
-  background-color: white;
-  border-radius: 10px;
-  transition: 0.5s;
-}
-
 /* Change the color of links on hover */
 .nav a:hover {
   background-color: var(--primary-1000);
   color: white;
 }
 
-/* Use grid for layout 6 column */
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto auto auto auto;
+  grid-template-columns: auto auto auto;
+  justify-content: space-between;
   gap: 10px;
-
 }
 
 .grid-container>div {
@@ -53,7 +45,7 @@
 
 .nav-logo p {
   margin: 0;
-  padding: 14px 16px;
+  padding: 14px 40px;
   font-family: 'Reem Kufi Fun';
   font-style: normal;
   font-size: 20px;
@@ -63,11 +55,176 @@
 
 
 .nav-links {
-  grid-column: 2 / 6;
   margin: auto;
-
 }
 
 .nav-logs {
   margin: auto;
+
+}
+
+.MuiSvgIcon-root {
+  display: none !important;
+}
+
+.navbar p {
+  margin: 0;
+}
+
+/* RESPONSE */
+
+@media only screen and (min-width: 1081px) {
+
+  .active::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 50%;
+    left: 25%;
+    bottom: 10px;
+    background-color: white;
+    border-radius: 10px;
+    transition: 0.5s;
+  }
+
+  .unactive-nav-logs,
+  .unactive-nav-links {
+    display: block;
+  }
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 1080px) {
+
+  .nav-links .MuiSvgIcon-root,
+  .unactive-nav-links .MuiSvgIcon-root {
+    display: inline-block !important;
+  }
+
+  .navbar .nav-links p,
+  .navbar .unactive-nav-links p {
+    display: none;
+  }
+
+  .active::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 50%;
+    left: 25%;
+    bottom: 10px;
+    background-color: white;
+    border-radius: 10px;
+    transition: 0.5s;
+  }
+
+  .unactive-nav-logs,
+  .unactive-nav-links {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+
+  .nav {
+    grid-gap: 0;
+    overflow: visible;
+    position: relative;
+  }
+
+  .nav-links,
+  .nav-logs {
+    margin-right: inherit;
+    width: 40%;
+    box-shadow: var(--shadow-dp-02);
+  }
+
+  .nav-links p,
+  .nav-logs p {
+    padding: 0 10px;
+
+  }
+
+  .nav-logo {
+    background-color: var(--primary-400);
+    height: 100%;
+
+  }
+
+  .nav-links,
+  .nav,
+  .nav-logs {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    z-index: 1;
+
+  }
+
+  .nav-logs {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav>div {
+    text-align: left;
+  }
+
+  .nav a {
+    color: black;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav a:hover {
+    color: black;
+    background-color: var(--primary-400);
+  }
+
+  .MuiSvgIcon-root {
+    display: inline-block !important;
+  }
+
+  .unactive-nav-logs,
+  .unactive-nav-links {
+    display: none;
+  }
+
+  .menu-button {
+    display: block;
+  }
+
+  .menu-button a {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 15px 16px 16px 16px;
+  }
+
+  .menu-button a {
+    color: #fff;
+    padding: 0;
+  }
+
+  .menu-button a:active {
+    color: white;
+  }
+
+  .menu-button .css-i4bv87-MuiSvgIcon-root {
+
+    width: 4em;
+    height: 2.3em;
+    font-size: larger;
+    padding: 12px;
+  }
+
+  .unactive {
+    background-color: var(--primary-400);
+  }
+
+  .menu-button a:hover {
+    background-color: var(--primary-600);
+    color: white;
+  }
+
 }

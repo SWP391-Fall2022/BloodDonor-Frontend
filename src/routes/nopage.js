@@ -1,5 +1,7 @@
+import { Navigate } from "react-router-dom";
+
 const NoPage = () => {
-    return <h1>404 Error</h1>;
+    return <div>404 error</div>
 };
 
 export default NoPage;

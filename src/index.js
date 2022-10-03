@@ -9,10 +9,13 @@ import RegisterDonor from "./routes/register-volunteer";
 import RegisterPlace from "./routes/register-place";
 import NewPass from "./routes/changePass";
 import Forget from "./routes/restore";
+import Otp from "./routes/otp";
 import Campaign from "./routes/campaign";
 import ListNewsPage from './routes/ListNewsPage';
 import NewsDetailPage from './routes/NewsDetailPage';
 import Achivement from "./routes/achivement";
+import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
+import DonorProfile from './routes/donor-progile';
 import NoPage from "./routes/nopage";
 
 export default function App() {
@@ -20,16 +23,23 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route exact strict path="/" element={<Home />} />
+
         <Route exact strict path="/login" element={<Login />} />
         <Route exact strict path="/register" element={<Register />} />
         <Route exact strict path="/register/donor-volunteer" element={<RegisterDonor />} />
         <Route exact strict path="/register/donor-place" element={<RegisterPlace />} />
+
+        <Route exact strict path="/auth" element={<AuthRoutes />} />
         <Route exact strict path="/new-password" element={<NewPass />} />
         <Route exact strict path="/restore" element={<Forget />} />
+        <Route exact strict path="/otp" element={<Otp />} />
+
         <Route exact strict path="/campaign" element={<Campaign />} />
         <Route exact strict path="/news" element={<ListNewsPage />} />
         <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} />
         <Route exact strict path="/achivement" element={<Achivement />} />
+
+        <Route exact strict path="/profile/:id" element={<DonorProfile />} />
         <Route exact strict path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
