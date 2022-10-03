@@ -3,7 +3,6 @@ import packageInfo from "../../shared/data.json";
 import FilterTable from "../Filter Table/FilterTable";
 import NewsList from "./NewsList";
 import SearchBox from "../Search Box/SearchBox";
-import Pagination from "../Pagination";
 import newsContainer from "./newsContainer.css";
 
 // Chứa các content item của news page để dùng bootstrp hoặc grid
@@ -52,9 +51,6 @@ export default class NewsContainer extends Component {
             news={this.state.news}
             categories={this.state.categories}
           ></NewsList>
-          <div className="pagination">
-            <Pagination></Pagination>
-          </div>
         </div>
       </div>
     );

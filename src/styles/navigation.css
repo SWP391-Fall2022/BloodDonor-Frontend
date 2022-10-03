@@ -1,5 +1,6 @@
 @import '../index.css';
 
+
 .nav {
   background-color: var(--primary-400);
   overflow: hidden;
@@ -17,8 +18,8 @@ p {
   color: white;
   text-align: center;
   padding: 14px 16px;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   transition: 0.5s;
 }
 
@@ -34,9 +35,8 @@ p {
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto;
-  justify-content: space-between;
-  gap: 10px;
+  grid-template-columns: auto auto auto auto ;
+  justify-content: space-around;
 }
 
 .grid-container>div {
@@ -48,13 +48,25 @@ p {
   padding: 14px 40px;
   font-family: 'Reem Kufi Fun';
   font-style: normal;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: white;
 }
 
 
 .nav-links {
+  margin: auto;
+}
+
+.nav-links , .unactive-nav-links {
+  grid-column: 2/4;
+}
+
+.nav-links a, .unactive-nav-links a{
+  width: 20%;
+}
+
+.nav-links, .un {
   margin: auto;
 }
 
@@ -71,9 +83,13 @@ p {
   margin: 0;
 }
 
+.menu-button{
+  display: none;
+}
+
 /* RESPONSE */
 
-@media only screen and (min-width: 1081px) {
+@media only screen and (min-width: 1257px) {
 
   .active::after {
     content: "";
@@ -85,6 +101,7 @@ p {
     background-color: white;
     border-radius: 10px;
     transition: 0.5s;
+   
   }
 
   .unactive-nav-logs,
@@ -94,7 +111,7 @@ p {
 }
 
 
-@media only screen and (min-width: 768px) and (max-width: 1080px) {
+@media only screen and (min-width: 768px) and (max-width: 1256px) {
 
   .nav-links .MuiSvgIcon-root,
   .unactive-nav-links .MuiSvgIcon-root {
@@ -199,14 +216,16 @@ p {
     right: 0;
     top: 0;
     padding: 15px 16px 16px 16px;
-  }
-
-  .menu-button a {
     color: #fff;
     padding: 0;
   }
 
   .menu-button a:active {
+    color: white;
+  }
+
+  .menu-button a:hover {
+    background-color: var(--primary-600);
     color: white;
   }
 
@@ -221,10 +240,4 @@ p {
   .unactive {
     background-color: var(--primary-400);
   }
-
-  .menu-button a:hover {
-    background-color: var(--primary-600);
-    color: white;
-  }
-
 }

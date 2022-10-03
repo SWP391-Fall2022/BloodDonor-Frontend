@@ -4,6 +4,7 @@ import NewsDetail from '../components/NewsDetail/Newsdetail'
 import packageInfo from "../shared/data.json";
 import NewsList from '../components/News/NewsList'
 import '../styles/NewsDetailPageStyle.css'
+import { PageFooter } from '../components/Footer/PageFooter';
 
 
 export default class NewsDetailPage extends Component {
@@ -33,10 +34,7 @@ export default class NewsDetailPage extends Component {
                         ></NewsList>
                     </div>
                 </div>
-
-
-
-
+                <PageFooter />
             </div>
         )
     }

@@ -2,13 +2,13 @@
     display: flex;
     background-color: hsl(194, 100%, 97%);
     justify-content: center;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 13%;
+    margin-right: 13%;
     padding-top: 30px;
 }
 
 .filter {
-    margin-right: 30px;
+    margin-right: 50px;
 }
 
 .search-news {
@@ -72,8 +72,8 @@
 }
 
 .news-container .news-item-content {
-    max-height: 11rem;
-    max-width: 70%;
+    max-height: 10rem;
+    max-width: 60%;
     overflow: hidden;
     font-size: 13px;
     padding-right: 10px;
@@ -95,10 +95,20 @@
 }
 
 .news-item-img {
-    width: 30%;
-    height: 11rem;
+    width: 40%;
+    height: 9rem;
     background-image: none;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+}
+
+.ant-list-pagination{
+    display: flex;
+}
+
+.ant-pagination {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
 }

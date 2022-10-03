@@ -20,6 +20,7 @@ export const Navbar = () => {
     }
 
     return (<>
+    <div className='navbar-container'>
         <div className="navbar ">
             <nav class="nav grid-container">
                 <div className="nav-logo">
@@ -76,6 +77,7 @@ export const Navbar = () => {
             </nav>
         </div>
         <ScrollingText />
+        </div>
     </>
     )
 };

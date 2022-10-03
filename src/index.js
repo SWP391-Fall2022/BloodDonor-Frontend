@@ -28,7 +28,7 @@ export default function App() {
         <Route exact strict path="/restore" element={<Forget />} />
         <Route exact strict path="/campaign" element={<Campaign />} />
         <Route exact strict path="/news" element={<ListNewsPage />} />
-        <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} />
+        <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
         <Route exact strict path="/achivement" element={<Achivement />} />
         <Route exact strict path="*" element={<NoPage />} />
       </Routes>
