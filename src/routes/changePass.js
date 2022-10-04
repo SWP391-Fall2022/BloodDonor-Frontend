@@ -19,12 +19,6 @@ class newPass extends Component {
         }
     }
 
-    handleOnChangeOldPassword = (event) => {
-        this.setState({
-            oldPass: event.target.value
-        })
-    }
-
     handleOnChangeNewPassword = (event) => {
         this.setState({
             newPass: event.target.value
@@ -62,9 +56,6 @@ class newPass extends Component {
                         {this.state.message}
                     </div>
                     <Form layout="vertical">
-                        <Form.Item className={styles.formLabel} label="Nhập mật khẩu cũ" name="oldPass" rules={[{ required: true, message: 'Vui lòng nhập vào đây' }]}>
-                            <Input.Password placeholder="Nhập mật khẩu mới" onChange={this.handleOnChangeOldPassword}/>
-                        </Form.Item>
                         <Form.Item className={styles.formLabel} label="Nhập mật khẩu mới" name="newPass" rules={[{ required: true, message: 'Vui lòng nhập vào đây' }]}>
                             <Input.Password placeholder="Nhập mật khẩu mới" onChange={this.handleOnChangeNewPassword}/>
                         </Form.Item>

@@ -10,6 +10,7 @@
     bottom: 0px;
     left: 0px;
 }
+
 .container {
     position: absolute;
     left: 60%;
@@ -50,7 +51,7 @@
 
 .btn {
     width: 100%;
-    background: var(--blue-01);
+    background-color: var(--blue-01);
     color: white;
     box-shadow: var(--shadow-dp-02);
     border: 0px;
@@ -58,6 +59,11 @@
     margin: 20px 0;
     font-size: 16px;
     font-weight: 600;
+}
+
+.btn:hover, .btn:focus {
+    background-color: black;
+    color: white;
 }
 
 .link {

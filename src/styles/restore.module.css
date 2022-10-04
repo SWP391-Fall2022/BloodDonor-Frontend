@@ -57,6 +57,11 @@
     font-weight: 600;
 }
 
+.btn2:hover, .btn2:focus {
+    border-color: black;
+    color: black;
+}
+
 .btn1 {
     width: 100%;
     background: var(--blue-01);
@@ -67,6 +72,11 @@
     margin: 20px 0;
     font-size: 16px;
     font-weight: 600;
+}
+
+.btn1:hover, .btn1:focus {
+    background-color: black;
+    color: white;
 }
 
 .link {
