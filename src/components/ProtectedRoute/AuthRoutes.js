@@ -19,7 +19,6 @@ export default function AuthRoutes() {
                 .catch((error) => { console.log(error) })
             setAuthorized(response.success)
             setRole(response.body.user.role)
-            console.log(response.body.userId)
             setUserId(response.body.userId)
             sessionStorage.setItem('user', JSON.stringify(response.body))
         }
@@ -27,7 +26,7 @@ export default function AuthRoutes() {
     }, []);
     if (authorized) {
         // return <Navigate to={'/profile/2'}/>
-        return <Navigate to={`/profile/${userId}`}/>
+        return <Navigate to={`/donor`}/>
     } else {
         return <>Failed</>
     }

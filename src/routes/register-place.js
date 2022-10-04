@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../styles/register.module.css';
 import '../index.css';
+import { useNavigate } from "react-router-dom";
 import { Form, Input, InputNumber } from 'antd';
 import { RegisterStepPanel } from '../components/Register/RegisterStepsPanel';
 import RegisterPD from '../components/Register/RegisterProvinceDistrict';
@@ -8,6 +9,8 @@ const { TextArea } = Input;
 
 function RegisterPlace() {
     const [stepForm] = Form.useForm();
+    const navigate = useNavigate()
+    const [message, setMessage] = useState()
     const STEP_1_FORM = () => {
         return (
             <>
@@ -45,7 +48,7 @@ function RegisterPlace() {
         return (
             <>
                 <RegisterPD />
-                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="AddressDetails" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}>
+                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
             </>
@@ -57,6 +60,7 @@ function RegisterPlace() {
         delete formData.province
         formData.role = "ORGANIZATION";
         formData.districtId = JSON.parse(sessionStorage.getItem('districtId'));
+        setMessage("Xin chờ trong giây lát...")
         let json = {
             method: 'POST',
             body: JSON.stringify(formData),
@@ -68,6 +72,15 @@ function RegisterPlace() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log(response)
+        if (response.status === 200) {
+            sessionStorage.setItem('OTPAcess', JSON.stringify(true))
+            navigate("/otp")
+        } else if (response.status === 400) {
+            setMessage(response.body)
+        } else if (response.status === 500) {
+            sessionStorage.setItem('OTPAcess', JSON.stringify(true))
+            setMessage("Email này đã được đăng kí. Nếu bạn không đăng nhập được rất có thể bạn chưa xác nhận otp. Vui lòng xác nhận otp tại http://localhost:3000/otp")
+        }
     };
 
     const steps = [
@@ -92,6 +105,9 @@ function RegisterPlace() {
                 <Form form={stepForm} layout="vertical" onFinish={onFinish}>
                     <RegisterStepPanel steps={steps} />
                 </Form>
+                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
+                    {message}
+                </div>
             </div>
         </div >
     )

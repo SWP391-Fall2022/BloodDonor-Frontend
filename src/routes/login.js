@@ -59,6 +59,7 @@ function Login() {
                 sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
                 navigate("/auth")
             } else {
+                sessionStorage.setItem('OTPAcess', JSON.stringify(true))
                 setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
             }
         }

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../styles/register.module.css';
 import '../index.css';
-import { Form, Input, InputNumber, Select } from 'antd';
+import { useNavigate } from "react-router-dom";
+import { Form, Input, InputNumber, Select, DatePicker } from 'antd';
 import { RegisterStepPanel } from '../components/Register/RegisterStepsPanel';
 import RegisterPD from '../components/Register/RegisterProvinceDistrict';
 const { TextArea } = Input;
@@ -9,6 +10,8 @@ const { Option } = Select;
 
 function RegisterDonor() {
     const [stepForm] = Form.useForm();
+    const navigate = useNavigate()
+    const [message, setMessage] = useState()
     const STEP_1_FORM = () => {
         return (
             <>
@@ -33,8 +36,11 @@ function RegisterDonor() {
                 <Form.Item className={styles.formLabel} label="Họ và Tên" name="name" rules={[{ required: true, message: 'Vui lòng nhập Họ và Tên' }]}>
                     <Input placeholder="Nhập Họ và Tên" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Nhập số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
+                <Form.Item className={styles.formLabel} label="Số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
                     <InputNumber style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
+                </Form.Item>
+                <Form.Item className={styles.formLabel} label="Sinh nhật" name="birthday" rules={[{ required: true, message: 'Vui lòng chọn' }]}>
+                    <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày sinh" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
                     <Form.Item className={styles.formLabel} label="Giới tính" name="sex" rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
@@ -54,7 +60,7 @@ function RegisterDonor() {
         return (
             <>
                 <RegisterPD />
-                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="AddressDetails" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}>
+                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
             </>
@@ -64,10 +70,9 @@ function RegisterDonor() {
     const onFinish = async () => {
         const formData = stepForm.getFieldsValue(true);
         delete formData.province
-        formData.birthday = new Date(2001, 0, 1);
         formData.role = "DONOR";
         formData.districtId = JSON.parse(sessionStorage.getItem('districtId'));
-        console.log(formData)
+        setMessage("Xin chờ trong giây lát...")
         let json = {
             method: 'POST',
             body: JSON.stringify(formData),
@@ -78,7 +83,15 @@ function RegisterDonor() {
         const response = await fetch("http://localhost:8080/v1/register/donor", json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
+        if (response.status === 200) {
+            sessionStorage.setItem('OTPAcess', JSON.stringify(true))
+            navigate("/otp", { state: { otpAccess: true } })
+        } else if (response.status === 400) {
+            setMessage(response.body)
+        } else if (response.status === 500) {
+            sessionStorage.setItem('OTPAcess', JSON.stringify(true))
+            setMessage("Email này đã được đăng kí.")
+        }
     };
 
     const steps = [
@@ -103,6 +116,9 @@ function RegisterDonor() {
                 <Form form={stepForm} layout="vertical" onFinish={onFinish}>
                     <RegisterStepPanel steps={steps} />
                 </Form>
+                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
+                    {message}
+                </div>
             </div>
         </div >
     )

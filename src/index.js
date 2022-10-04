@@ -15,8 +15,16 @@ import ListNewsPage from './routes/ListNewsPage';
 import NewsDetailPage from './routes/NewsDetailPage';
 import Achivement from "./routes/achivement";
 import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
+
 import DonorProfile from './routes/donor-progile';
 import NoPage from "./routes/nopage";
+import Info from './components/Donor-Profile/Basic Info/Info';
+import ChangeEmail from './components/Donor-Profile/Change Email/changeEmail';
+import ChangePassword from './components/Donor-Profile/Change Password/changePassword';
+import ChangePhone from './components/Donor-Profile/Change Phone/changePhone';
+import History from './components/Donor-Profile/History Campaign/history';
+import QnA from './components/Donor-Profile/Q&A/QnA';
+import Vouchers from './components/Donor-Profile/Voucher Storage/Vouchers';
 
 export default function App() {
   return (
@@ -24,23 +32,31 @@ export default function App() {
       <Routes>
         <Route exact strict path="/" element={<Home />} />
 
-        <Route exact strict path="/login" element={<Login />} />
-        <Route exact strict path="/register" element={<Register />} />
-        <Route exact strict path="/register/donor-volunteer" element={<RegisterDonor />} />
-        <Route exact strict path="/register/donor-place" element={<RegisterPlace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/register/donor-volunteer" element={<RegisterDonor />} />
+        <Route path="/register/donor-place" element={<RegisterPlace />} />
 
-        <Route exact strict path="/auth" element={<AuthRoutes />} />
-        <Route exact strict path="/new-password" element={<NewPass />} />
-        <Route exact strict path="/restore" element={<Forget />} />
-        <Route exact strict path="/otp" element={<Otp />} />
+        <Route path="/auth" element={<AuthRoutes />} />
+        <Route path="/new-password" element={<NewPass />} />
+        <Route path="/restore" element={<Forget />} />
+        <Route path="/otp" element={<Otp />} />
 
         <Route exact strict path="/campaign" element={<Campaign />} />
         <Route exact strict path="/news" element={<ListNewsPage />} />
         <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} />
         <Route exact strict path="/achivement" element={<Achivement />} />
 
-        <Route exact strict path="/profile/:id" element={<DonorProfile />} />
-        <Route exact strict path="*" element={<NoPage />} />
+        <Route path="/donor" element={<DonorProfile />} >
+          <Route index element={<Info />} />
+          <Route path="changeEmail" element={<ChangeEmail />} />
+          <Route path="changePassword" element={<ChangePassword />} />
+          <Route path="changePhone" element={<ChangePhone />} />
+          <Route path="history" element={<History />} />
+          <Route path="qna" element={<QnA />} />
+          <Route path="vouchers" element={<Vouchers />} />
+        </Route>
+        <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
   );
