@@ -25,7 +25,7 @@ const RegisterStepPanel = (props) => {
             <div className="steps-content">{props.steps[activeStep].content}</div>
             <div className="steps-action">
                 {activeStep > 0 && (
-                    <Button className={`${styles.btnChild}`} size="large" onClick={() => prev()}>
+                    <Button className={`${styles.btnChild}`} type="primary" size="large" onClick={() => prev()}>
                         Quay lại
                     </Button>
                 )}

@@ -4,6 +4,7 @@
     background-color: var(--blue-02);
     background-image: url('../assets/RegisterBG1.png');
     background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     height: 100%;
     background-size: cover;
@@ -47,7 +48,7 @@
 .btn {
     width: fit-content;
     height: auto;
-    background: white;
+    background-color: white;
     color: black;
     box-shadow: var(--shadow-dp-02);
     border: 0px;
@@ -56,6 +57,11 @@
     margin-top: 80px;
     font-size: 25px;
     font-weight: 600;
+}
+
+.btn:hover, .btn:focus {
+    background-color: var(--secondary-300);
+    color: black;
 }
 
 .btnLeft {
@@ -76,8 +82,9 @@
 
 .mainBackgroundChild {
     background-color: var(--blue-02);
-    background-image: url('../assets/RegisterBG2.png');
+    background-image: url('../assets/register-background.png');
     background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     height: 100%;
     background-size: cover;
@@ -124,13 +131,18 @@
 .btnChild {
     width: fit-content;
     margin: 10px;
-    background: var(--primary-500);
+    background-color: var(--primary-500);
     color: white;
     box-shadow: var(--shadow-dp-01);
     border: 0px;
     border-radius: 2px;
     font-size: 16px;
     font-weight: 600;
+}
+
+.btnChild:hover, .btnChild:focus {
+    background-color: var(--primary-700);
+    color: white;
 }
 
 .link {
