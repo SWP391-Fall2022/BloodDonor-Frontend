@@ -1,5 +1,13 @@
 @import '../index.css';
 
+/* fixed navabr */
+.navbar-container {
+  position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+}
 
 .nav {
   background-color: var(--primary-400);
@@ -56,6 +64,7 @@ p {
 
 .nav-links {
   margin: auto;
+  width: 100%;
 }
 
 .nav-links , .unactive-nav-links {
@@ -72,7 +81,6 @@ p {
 
 .nav-logs {
   margin: auto;
-
 }
 
 .MuiSvgIcon-root {
@@ -198,6 +206,10 @@ p {
     background-color: var(--primary-400);
   }
 
+  .nav-links a{
+    width: 100%;
+  }
+
   .MuiSvgIcon-root {
     display: inline-block !important;
   }
@@ -218,15 +230,20 @@ p {
     padding: 15px 16px 16px 16px;
     color: #fff;
     padding: 0;
+    height: 55px;
+
   }
 
   .menu-button a:active {
     color: white;
+    height: 55px;
+
   }
 
   .menu-button a:hover {
     background-color: var(--primary-600);
     color: white;
+    height: 55px;
   }
 
   .menu-button .css-i4bv87-MuiSvgIcon-root {
@@ -239,5 +256,9 @@ p {
 
   .unactive {
     background-color: var(--primary-400);
+  }
+
+  .grid-container {
+    justify-content: unset;
   }
 }
