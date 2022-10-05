@@ -1,0 +1,407 @@
+@import '../index.css';
+
+h1 {
+    font-weight: 800 !important;
+    font-size: 50px;
+    line-height: 65px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem !important;
+    color: #1F364B;
+
+}
+
+h2 {
+    font-weight: 700 !important;
+    font-size: 28px;
+    line-height: 39px;
+    text-transform: uppercase;
+    padding: 6% 0 2% 0;
+    color: #1F364B;
+}
+
+h3 {
+    font-weight: 500 !important;
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 2rem;
+}
+
+h4 {
+    font-weight: 600 !important;
+    font-size: 16px;
+    line-height: 28px;
+}
+
+p,
+li {
+    font-weight: 500 !important;
+    font-size: 16px;
+    line-height: 22px;
+    margin: 0 0 !important;
+}
+
+/*-----------homepage-campaign CARD------------*/
+.homepage-campaign-card {
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    width: 230px;
+}
+
+.homepage-campaign-header {
+    text-align: left;
+    padding: 5%;
+}
+
+.homepage-campaign-header a {
+    display: block;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.homepage-campaign-img-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    align-items: center;
+}
+
+.homepage-campaign-img-container img {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.homepage-campaign-card-content {
+    text-align: left;
+    padding: 5%;
+
+}
+
+.homepage-campaign-name {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: black;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.homepage-campaign-address {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    color: black;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.homepage-campaign-time {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.homepage-campaign-card-footer {
+    display: grid;
+    text-align: center;
+    grid-template-columns: 50% 50%;
+    padding: 5%;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.196);
+}
+
+/*---------------COVER------------*/
+.cover {
+    background-image: url(../../src/assets/homepage-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 8% 10%;
+}
+
+.container-content {
+    display: inline-block;
+    text-align: left;
+}
+
+.container-search {
+    display: inline-block;
+    background-color: white;
+    padding: 2% 3%;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-02);
+    margin-top: 1%;
+}
+
+.row-search {
+    display: flex;
+    justify-content: space-between
+}
+
+@media only screen and (max-width: 950px) {
+    h1 {
+        font-size: 42px;
+        line-height: 56px;
+    }
+
+    h3 {
+        font-size: 18px;
+        line-height: 25px;
+    }
+
+    h4 {
+        font-size: 12px;
+        line-height: 20px;
+    }
+}
+
+@media only screen and (max-width: 740px) {
+    h1 {
+        font-size: 30px;
+        line-height: 45px;
+    }
+
+    h3 {
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    h4 {
+        font-size: 10px;
+        line-height: 15px;
+    }
+}
+
+
+
+/*--------CHIẾN DỊCH GẦN ĐÂY----------*/
+.homepage-campaign {
+    background-color: var(--blue-02);
+    text-align: center;
+    padding-bottom: 10%;
+}
+
+.container-homepage-campaign {
+    display: grid;
+    padding: 0 10%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+/*------------STANDARD-----------*/
+.standard {
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+.container-standard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0 15%;
+}
+
+.standard-card {
+    margin: 2% 0.5%;
+    width: 95%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-02);
+    display: block;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    transition: all 0.4s;
+}
+
+.standard-bullet {
+    font-weight: 800 !important;
+    font-size: 30px;
+    display: inline-block;
+    padding: 3% 0 1% 0;
+    color: var(--primary-900);
+    /* background-color: var(--primary-900);
+    width: 20%;
+    height: 50px;
+    border-radius: 60px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px; */
+    transition: all 0.4s;
+}
+
+.standard-card p {
+    margin-top: 1% !important;
+    padding: 0% 12% 8% 12%;
+    transition: all 0.4s;
+}
+
+.standard-card:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -20%;
+    left: -20%;
+    background: var(--primary-900);
+    width: 40%;
+    height: 20%;
+    border-radius: 5px;
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    transition: transform 0.4s ease-out;
+}
+
+.standard-card:hover:before {
+    transform: scale(21);
+}
+
+.standard-card:hover {
+    box-shadow: none;
+    transition: all 0.4s;
+}
+
+.standard-card:hover p {
+    transition: all 0.4s ease-out;
+    color: white;
+    transform: scale(1.15);
+}
+
+.standard-card:hover .standard-bullet {
+    transition: all 0.4s ease-out;
+    transform: scale(1.15);
+    color: white;
+}
+
+@media only screen and (max-width: 900px) {
+    .container-standard {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 0 20%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .container-standard {
+        display: grid;
+        grid-template-columns: 1fr;
+        padding: 0 20%;
+    }
+}
+
+/*--------NHỮNG LỜI KHUYÊN--------*/
+.advice {
+    background-color: var(--blue-02);
+    text-align: center;
+    padding: 0 5% 10% 5%;
+}
+
+.advice-col {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
+.advice-card {
+    padding: 6% 8%;
+    margin: 2% 0.5%;
+    width: 95%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-02);
+}
+
+.advice-bullet {
+    font-weight: 800 !important;
+    font-size: 20px;
+    display: inline-block;
+    padding: 6px 16px;
+    background-color: #71D94D;
+    color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-01);
+}
+
+.advice-card p {
+    margin-top: 4% !important;
+}
+
+/*----------TIN TỨC--------*/
+.homepage-news {
+    text-align: center;
+    padding: 0 10%;
+}
+.homepage-news-container{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 0;
+}
+.new-main{
+    width: 100%;
+}
+.homepage-news-container img{
+    width: 100%;
+}
+/*------------THÀNH TÍCH-------*/
+.achievements {
+    background-color: var(--blue-02);
+    text-align: center;
+    padding: 0 5% 10% 5%;
+}
+
+/*-----------THẮC MẮC THƯỜNG GẶP--------*/
+.q-and-a {
+    text-align: center;
+    padding: 0 22% 10% 22%;
+    background-image: url(../assets/homepage-qanda-background.png);
+    background-repeat: no-repeat;
+    background-size: 15%;
+    background-position: 97% 50%;
+}
+
+.q-and-a-container {
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    margin-bottom: 2%;
+    box-shadow: var(--shadow-dp-01);
+}
+
+.q-and-a-card {
+    border-radius: 5px;
+    background-color: var(--blue-02);
+}
+
+.q-and-a-card li {
+    padding: 0.8% 2%;
+    list-style-type: disc;
+}
+
+/* .floating{
+    position:absolute;
+}
+@keyframes float {
+	0% {transform: translatey(0px);
+	}
+	50% {transform: translatey(-20px);
+	}
+	100% {transform: translatey(0px);
+	}
+}
+.floating img{
+    display: flex;
+	transform: translatey(0px);
+	animation: float 6s ease-in-out infinite;
+    z-index: 10000;
+	
+}
+
+.floating img { width: 100%; height: auto; } */

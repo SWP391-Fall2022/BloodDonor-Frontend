@@ -34,9 +34,6 @@ export default class NewsDetailPage extends Component {
                     </div>
                 </div>
 
-
-
-
             </div>
         )
     }
