@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../components/Otp/otp.module.css';
+import styles from '../../components/Otp/otp.module.css';
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Button } from 'antd';
 import OtpInput from "react-otp-input";

@@ -4,13 +4,13 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from './routes/Homepage/Homepage';
 import Achievements from './routes/Homepage/Achievements/Achievement';
-import Login from "./routes/login";
-import Register from "./routes/register";
+import Login from "./routes/Login, Register/login";
+import Register from "./routes/Login, Register/register";
 import RegisterDonor from "./components/Register/RegisterDonor";
 import RegisterPlace from "./components/Register/RegisterPlace";
-// import NewPass from "./routes/changePass";
-// import Forget from "./routes/restore";
-import Otp from "./routes/otp";
+import NewPass from "./routes/Login, Register/changePass";
+import Forget from "./routes/Login, Register/restore";
+import Otp from "./routes/Login, Register/otp"
 // import Campaign from "./routes/campaign";
 // import ListNewsPage from './routes/ListNewsPage';
 // import NewsDetailPage from './routes/NewsDetailPage';
@@ -39,8 +39,8 @@ export default function App() {
         <Route path="/register/place" element={<RegisterPlace />} />
 
         <Route path="/auth" element={<AuthRoutes />} />
-        {/* <Route path="/new-password" element={<NewPass />} /> */}
-        {/* <Route path="/restore" element={<Forget />} /> */}
+        <Route path="/new-password" element={<NewPass />} />
+        <Route path="/restore" element={<Forget />} />
         <Route path="/otp" element={<Otp />} />
 
         {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
