@@ -1,15 +1,18 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 import { Navbar } from '../components/navbar';
+import { PageFooterBottom } from '../components/Footer/PageFooterBottom';
 function DonorProfile() {
-
-    // const user = JSON.parse(sessionStorage.getItem('user'))
-    // console.log(user)
-    return (
-        <>
-            <Navbar />
-            <Outlet />
-        </>
-    )
+    const user = JSON.parse(sessionStorage.getItem('user'))
+    if (user === null) {
+        return <Navigate to={`/login`} />
+    } else
+        return (
+            <>
+                <Navbar />
+                <Outlet />
+                <PageFooterBottom />
+            </>
+        )
 }
 
 export default DonorProfile
