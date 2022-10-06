@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/otp.module.css';
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Button } from 'antd';
@@ -27,7 +27,6 @@ export default function Otp() {
             .catch((error) => { console.log(error) })
         console.log(response)
         if (response.success) {
-            sessionStorage.setItem('OTPAcess', JSON.stringify(false))
             navigate('/login')
         }
     }

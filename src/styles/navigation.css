@@ -146,7 +146,7 @@ p {
   }
 
   .nav-logo {
-    background-color: var(--primary-400);
+    background-color: var(--primary-900);
     height: 100%;
 
   }
@@ -178,7 +178,7 @@ p {
 
   .nav a:hover {
     color: black;
-    background-color: var(--primary-400);
+    background-color: var(--primary-1000);
   }
 
   .MuiSvgIcon-root {
@@ -219,11 +219,11 @@ p {
   }
 
   .unactive {
-    background-color: var(--primary-400);
+    background-color: var(--primary-900);
   }
 
   .menu-button a:hover {
-    background-color: var(--primary-600);
+    background-color: var(--primary-1000);
     color: white;
   }
 

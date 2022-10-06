@@ -48,7 +48,7 @@ function RegisterPlace() {
         return (
             <>
                 <RegisterPD />
-                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}>
+                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails">
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
             </>
