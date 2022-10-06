@@ -1,0 +1,37 @@
+@import "../homepage.css";
+/*--------NHỮNG LỜI KHUYÊN--------*/
+.advice {
+    background-color: var(--blue-02);
+    text-align: center;
+    padding: 0 5% 10% 5%;
+}
+
+.advice-col {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
+.advice-card {
+    padding: 6% 8%;
+    margin: 2% 0.5%;
+    width: 95%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-02);
+}
+
+.advice-bullet {
+    font-weight: 800 !important;
+    font-size: 20px;
+    display: inline-block;
+    padding: 6px 16px;
+    background-color: #71D94D;
+    color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-01);
+    margin-bottom: 0.6rem;
+}
+
+.advice-card p {
+    margin-top: 4% !important;
+}

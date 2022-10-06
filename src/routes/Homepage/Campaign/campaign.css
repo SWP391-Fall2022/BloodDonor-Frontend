@@ -1,0 +1,93 @@
+@import "../homepage.css";
+/*-----------campaign CARD------------*/
+.campaign-card {
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    width: 230px;
+}
+
+.campaign-header {
+    text-align: left;
+    padding: 5%;
+}
+
+.campaign-header a {
+    display: block;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.campaign-img-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    align-items: center;
+}
+
+.campaign-img-container img {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.campaign-card-content {
+    text-align: left;
+    padding: 5%;
+
+}
+
+.campaign-name {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: black;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.campaign-address {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    color: black;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.campaign-time {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.campaign-card-footer {
+    display: grid;
+    text-align: center;
+    grid-template-columns: 50% 50%;
+    padding: 5%;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.196);
+}
+
+/*--------CHIẾN DỊCH GẦN ĐÂY----------*/
+.campaign {
+    background-color: var(--blue-02);
+    text-align: center;
+    padding-bottom: 10%;
+}
+
+.container-campaign {
+    display: grid;
+    padding: 0 10%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}

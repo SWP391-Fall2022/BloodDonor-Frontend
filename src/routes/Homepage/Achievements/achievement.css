@@ -1,0 +1,7 @@
+@import "../homepage.css";
+/*------------THÀNH TÍCH-------*/
+.achievements {
+    background-color: var(--blue-02);
+    text-align: center;
+    padding: 0 5% 10% 5%;
+}
