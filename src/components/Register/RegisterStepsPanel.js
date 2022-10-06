@@ -1,4 +1,4 @@
-import styles from '../../styles/register.module.css';
+import styles from './register.module.css';
 import React, { useState } from "react";
 import { Button, Steps } from "antd";
 

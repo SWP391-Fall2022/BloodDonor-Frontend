@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd';
 import React, { useState } from 'react'
 import packageInfo from "../../shared/data.json";
-import styles from '../../styles/register.module.css';
+import styles from './register.module.css';
 const { Option } = Select;
 
 export default function RegisterPD() {

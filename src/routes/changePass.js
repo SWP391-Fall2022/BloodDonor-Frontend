@@ -1,4 +1,4 @@
-import styles from '../styles/login.module.css';
+import styles from '../components/Login/login.module.css';
 import '../index.css';
 import { Component } from "react";
 import { Button, Form, Input } from 'antd';

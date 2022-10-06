@@ -1,4 +1,4 @@
-@import '../styles/login.module.css';
+@import '../components/Login/login.module.css';
 
 .mainBackground {
     background-image: url('../assets/changePassword-background.png');

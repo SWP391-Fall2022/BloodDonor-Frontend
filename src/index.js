@@ -5,8 +5,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./routes/home";
 import Login from "./routes/login";
 import Register from "./routes/register";
-import RegisterDonor from "./routes/register-volunteer";
-import RegisterPlace from "./routes/register-place";
+import RegisterDonor from "./components/Register/RegisterDonor";
+import RegisterPlace from "./components/Register/RegisterPlace";
 import NewPass from "./routes/changePass";
 import Forget from "./routes/restore";
 import Otp from "./routes/otp";
@@ -33,9 +33,10 @@ export default function App() {
         <Route exact strict path="/" element={<Home />} />
 
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/register/donor-volunteer" element={<RegisterDonor />} />
-        <Route path="/register/donor-place" element={<RegisterPlace />} />
+        <Route path="/register" element={<Register />} >
+          <Route path="donor-volunteer" element={<RegisterDonor />} />
+          <Route path="donor-place" element={<RegisterPlace />} />
+        </Route>
 
         <Route path="/auth" element={<AuthRoutes />} />
         <Route path="/new-password" element={<NewPass />} />

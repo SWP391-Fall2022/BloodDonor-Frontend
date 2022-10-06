@@ -1,8 +1,6 @@
-@import '../index.css';
-
 .mainBackground {
     background-color: var(--blue-02);
-    background-image: url('../assets/RegisterBG1.png');
+    background-image: url('../../assets/RegisterBG1.png');
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;
@@ -82,7 +80,7 @@
 
 .mainBackgroundChild {
     background-color: var(--blue-02);
-    background-image: url('../assets/register-background.png');
+    background-image: url('../../assets/register-background.png');
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;

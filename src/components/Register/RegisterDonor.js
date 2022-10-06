@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import styles from '../styles/register.module.css';
-import '../index.css';
+import styles from './register.module.css';
 import { useNavigate } from "react-router-dom";
-import { Form, Input, InputNumber } from 'antd';
-import { RegisterStepPanel } from '../components/Register/RegisterStepsPanel';
-import RegisterPD from '../components/Register/RegisterProvinceDistrict';
+import { Form, Input, InputNumber, Select, DatePicker } from 'antd';
+import { RegisterStepPanel } from '../Register/RegisterStepsPanel';
+import RegisterPD from '../Register/RegisterProvinceDistrict';
 const { TextArea } = Input;
+const { Option } = Select;
 
-function RegisterPlace() {
+function RegisterDonor() {
     const [stepForm] = Form.useForm();
     const navigate = useNavigate()
     const [message, setMessage] = useState()
@@ -32,14 +32,25 @@ function RegisterPlace() {
     const STEP_2_FORM = () => {
         return (
             <>
-                <Form.Item className={styles.formLabel} label="Tên bệnh viện/ trạm y tế/ nơi tiếp nhận hiến máu" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên' }]}>
-                    <TextArea rows={2} allowClear showCount maxLength={100} />
+                <Form.Item className={styles.formLabel} label="Họ và Tên" name="name" rules={[{ required: true, message: 'Vui lòng nhập Họ và Tên' }]}>
+                    <Input placeholder="Nhập Họ và Tên" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Nhập số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
+                <Form.Item className={styles.formLabel} label="Số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
                     <InputNumber style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Mã số thuế" name="taxcode" rules={[{ required: true, message: 'Vui lòng nhập mã số' }]}>
-                    <Input placeholder="Nhập mã số thuế" />
+                <Form.Item className={styles.formLabel} label="Sinh nhật" name="birthday" rules={[{ required: true, message: 'Vui lòng chọn' }]}>
+                    <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày sinh" />
+                </Form.Item>
+                <Form.Item className={styles.formLabel}>
+                    <Form.Item className={styles.formLabel} label="Giới tính" name="sex" rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                        <Select placeholder="Chọn">
+                            <Option value="MALE">Nam</Option>
+                            <Option value="FEMALE">Nữ</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item className={styles.formLabel} label="Số CMND" name="identityNum" rules={[{ required: true, message: 'Vui lòng nhập số CMND' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                        <Input placeholder="Nhập số CMND" />
+                    </Form.Item>
                 </Form.Item>
             </>
         )
@@ -58,7 +69,7 @@ function RegisterPlace() {
     const onFinish = async () => {
         const formData = stepForm.getFieldsValue(true);
         delete formData.province
-        formData.role = "ORGANIZATION";
+        formData.role = "DONOR";
         formData.districtId = JSON.parse(sessionStorage.getItem('districtId'));
         setMessage("Xin chờ trong giây lát...")
         let json = {
@@ -68,18 +79,17 @@ function RegisterPlace() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        const response = await fetch("http://localhost:8080/v1/register/organization", json)
+        const response = await fetch("http://localhost:8080/v1/register/donor", json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
         if (response.status === 200) {
             sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-            navigate("/otp")
+            navigate("/otp", { state: { otpAccess: true } })
         } else if (response.status === 400) {
             setMessage(response.body)
         } else if (response.status === 500) {
             sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-            setMessage("Email này đã được đăng kí. Nếu bạn không đăng nhập được rất có thể bạn chưa xác nhận otp. Vui lòng xác nhận otp tại http://localhost:3000/otp")
+            setMessage("Email này đã được đăng kí.")
         }
     };
 
@@ -96,7 +106,7 @@ function RegisterPlace() {
             title: 'Địa chỉ',
             content: <STEP_3_FORM />
         }
-    ]
+    ];
 
     return (
         <div className={styles.mainBackgroundChild} >
@@ -113,4 +123,4 @@ function RegisterPlace() {
     )
 };
 
-export default RegisterPlace;
+export default RegisterDonor;

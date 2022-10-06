@@ -1,7 +1,5 @@
-@import '../index.css';
-
 .mainBackground {
-    background-image: url('../assets/login-background.png');
+    background-image: url('../../assets/login-background.png');
     background-repeat: no-repeat;
     background-size: cover;
     position: absolute;

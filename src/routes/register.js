@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from 'antd';
 import donor from '../assets/Donor.png'
 import doctor from '../assets/Doctor.png'
-import styles from '../styles/register.module.css';
+import styles from '../components/Register/register.module.css';
 
 const Register = () => {
     return <div className={styles.mainBackground}>
