@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { NavLink } from "react-router-dom";
-import '../styles/navigation.css'
-import ScrollingText from './ScrollingText/ScrollingText'
+import './navigation.css'
+import ScrollingText from './ScrollingText'
 import HomeIcon from '@mui/icons-material/Home';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import MenuBookIcon from '@mui/icons-material/MenuBook';

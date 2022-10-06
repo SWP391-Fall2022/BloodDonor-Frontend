@@ -2,6 +2,7 @@ import React from 'react';
 import './index.css';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Homepage from './routes/Homepage/Homepage';
 // import Home from "./routes/home";
 // import Login from "./routes/login";
 // import Register from "./routes/register";
@@ -30,9 +31,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route exact strict path="/" element={<Home />} />
+        <Route exact strict path="/" element={<Homepage />} />
 
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} >
           <Route path="donor-volunteer" element={<RegisterDonor />} />
           <Route path="donor-place" element={<RegisterPlace />} />
