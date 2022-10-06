@@ -1,6 +1,5 @@
 import React from "react";
 import "./standard.css";
-import LiquorIcon from '@mui/icons-material/Liquor';
 const Standard = () => {
   return (
     <section className="standard">
