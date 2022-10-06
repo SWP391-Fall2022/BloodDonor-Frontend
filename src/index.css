@@ -5,6 +5,7 @@
 :root {
     /* Color */
     /* Primary */
+    --primary-1000: #990102;
     --primary-900: #b6292a;
     --primary-800: #c63335;
     --primary-700: #d3393b;
@@ -31,8 +32,8 @@
     --background-02: #B5D7EB;
     /* Blue */
     --blue-01: #1F364B;
-    --blue-02: #B5D7EB;
-    --blue-03: #A1CFEA;
+    --blue-02: #BDE7FF;
+    --blue-03: #98D2F3;
     --blue-04: #3F7EE8;
 
     /* Shadow */
