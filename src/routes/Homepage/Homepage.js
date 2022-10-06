@@ -1,6 +1,5 @@
 import React from "react";
-// import { PageFooter } from "../../components/Footer/PageFooter";
-// import { Navbar } from "../../components/navbar";
+import { Navbar } from "../../components/NavBar/navbar";
 import Achievements from "./Achievements/Achievement";
 import Advice from "./Advice/Advice";
 import Benefits from "./Benefits/Benefits";
@@ -12,9 +11,8 @@ import Standard from "./Standard/Standard";
 const Homepage = () => {
   return (
     <div>
-      {/* <Navbar /> */}
+      <Navbar />
       <div id="homepage">
-        something
         <Cover />
         <Benefits />
         <Campaign />
