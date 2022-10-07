@@ -34,11 +34,20 @@ p {
 
 .active {
   background-color: var(--primary-1000);
+  color: white !important;
+}
+
+.active .nav-icon{
+  color: white;
 }
 
 /* Change the color of links on hover */
 .nav a:hover {
   background-color: var(--primary-1000);
+  color: white;
+}
+
+.nav a:hover .nav-icon{
   color: white;
 }
 
@@ -189,7 +198,7 @@ p {
   }
 
   .nav-logo {
-    background-color: var(--primary-400);
+    background-color: var(--primary-900);
     height: 100%;
 
   }
@@ -220,8 +229,7 @@ p {
   }
 
   .nav a:hover {
-    color: black;
-    background-color: var(--primary-400);
+    background-color: var(--primary-900);
   }
 
   .nav-links a{
@@ -230,6 +238,11 @@ p {
 
   .nav-icon {
     display: inline-block !important;
+    color: var(--primary-900);
+  }
+
+  .menu-button .nav-icon{
+    color: white;
   }
 
   .unactive-nav-logs,
@@ -259,7 +272,7 @@ p {
   }
 
   .menu-button a:hover {
-    background-color: var(--primary-600);
+    background-color: var(--primary-1000);
     color: white;
     height: 50px;
   }
@@ -272,10 +285,12 @@ p {
   }
 
   .unactive {
-    background-color: var(--primary-400);
+    background-color: var(--primary-900);
   }
 
   .grid-container {
     justify-content: unset;
   }
+
+  
 }
