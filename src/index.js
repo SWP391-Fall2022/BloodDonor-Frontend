@@ -12,8 +12,8 @@ import Homepage from './routes/Homepage/Homepage';
 // import Forget from "./routes/restore";
 // import Otp from "./routes/otp";
 // import Campaign from "./routes/campaign";
-// import ListNewsPage from './routes/ListNewsPage';
-// import NewsDetailPage from './routes/NewsDetailPage';
+import ListNewsPage from './routes/News/ListNewsPage';
+import NewsDetailPage from './routes/News/NewsDetailPage';
 // import Achivement from "./routes/achivement";
 // import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
 
@@ -32,6 +32,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route exact strict path="/" element={<Homepage />} />
+        <Route exact strict path="/news" element={<ListNewsPage />} />
+        <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
+
 
         {/* <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} >
@@ -45,8 +48,7 @@ export default function App() {
         <Route path="/otp" element={<Otp />} />
 
         <Route exact strict path="/campaign" element={<Campaign />} />
-        <Route exact strict path="/news" element={<ListNewsPage />} />
-        <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} />
+        
         <Route exact strict path="/achivement" element={<Achivement />} />
 
         <Route path="/donor" element={<DonorProfile />} >
