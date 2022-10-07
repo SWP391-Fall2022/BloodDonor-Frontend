@@ -47,9 +47,7 @@ export default function App() {
         <Route path="/restore" element={<Forget />} />
         <Route path="/otp" element={<Otp />} />
 
-        <Route exact strict path="/campaign" element={<Campaign />} />
-        
-        <Route exact strict path="/achivement" element={<Achivement />} />
+        {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
         {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
         {/* <Route exact strict path="/news" element={<ListNewsPage />} /> */}
         {/* <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} /> */}
