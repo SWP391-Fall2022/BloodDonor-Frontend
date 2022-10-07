@@ -48,7 +48,7 @@ export const Navbar = () => {
                         <p>Thành tích</p>
                     </NavLink>
 
-                    <NavLink to="/qa">
+                    <NavLink to="/qna">
                         <HelpCenterIcon className='nav-icon'></HelpCenterIcon>
                         <p>Hỏi đáp</p>
                     </NavLink>

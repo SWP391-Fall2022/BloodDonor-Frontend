@@ -1,0 +1,149 @@
+.mainBackground {
+    background-color: var(--blue-02);
+    background-image: url('../../assets/register-mainpage-background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    height: 100%;
+    background-size: cover;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.container {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 1000px;
+}
+
+.title {
+    background-color: var(--primary-600);
+    color: white;
+    box-shadow: var(--shadow-dp-04);
+    height: auto;
+    margin: 0 auto;
+    padding: 10px 50px;
+    position: relative;
+
+    text-align: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    border-radius: 10px;
+}
+
+.btnContainer {
+    margin: auto;
+    width: 100%;
+}
+
+.btn {
+    width: fit-content;
+    height: auto;
+    background-color: white;
+    color: black;
+    box-shadow: var(--shadow-dp-02);
+    border: 0px;
+    border-radius: 30px;
+    padding: 10px 30px;
+    margin-top: 80px;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.btn:hover, .btn:focus {
+    background-color: var(--secondary-300);
+    color: black;
+}
+
+.btnLeft {
+    margin-right: 200px;
+}
+
+.btnRight {
+    margin-left: 200px;
+}
+
+.imgContainer {
+    width: 100%;
+}
+
+.img {
+    width: 500px;
+}
+
+.mainBackgroundChild {
+    background-color: var(--blue-02);
+    background-image: url('../../assets/register-background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    height: 100%;
+    background-size: cover;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.containerChild {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);
+    background-color: white;
+    width: 550px;
+    height: auto;
+    padding: 40px 70px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 10px;
+}
+
+.titleChild, .formLabel, .underInfo {
+    font-weight: 700;
+    text-align: center;
+}
+
+.titleChild {
+    color: var(--secondary-900);
+    margin: 0%;
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.formLabel {
+    margin-bottom: 30px;
+}
+
+.underInfo {
+    font-family: 'Inter';
+    font-weight: 400;
+}
+
+.btnChild {
+    width: fit-content;
+    margin: 10px;
+    background-color: var(--primary-500);
+    color: white;
+    box-shadow: var(--shadow-dp-01);
+    border: 0px;
+    border-radius: 2px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btnChild:hover, .btnChild:focus {
+    background-color: var(--primary-700);
+    color: white;
+}
+
+.link {
+    color: black;
+    font-weight: 700;
+}
