@@ -11,7 +11,7 @@
 }
 
 .nav {
-  background-color: var(--primary-400);
+  background-color: var(--primary-900);
   overflow: hidden;
   height: 50px;
 }
@@ -33,12 +33,12 @@ p {
 }
 
 .active {
-  background-color: var(--primary-600);
+  background-color: var(--primary-1000);
 }
 
 /* Change the color of links on hover */
 .nav a:hover {
-  background-color: var(--primary-600);
+  background-color: var(--primary-1000);
   color: white;
 }
 
