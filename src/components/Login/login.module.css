@@ -1,0 +1,79 @@
+.mainBackground {
+    background-image: url('../../assets/login-background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.container {
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    width: 470px;
+    height: auto;
+    padding: 50px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .container {
+        width: 400px;
+        left: 50%;
+        top: 10%;
+        transform: translateX(-50%);
+    }
+}
+
+.title, .formLabel, .underInfo {
+    font-weight: 700;
+    text-align: center;
+}
+
+.title {
+    color: var(--secondary-900);
+    padding-bottom: 20px;
+    font-size: 33px;
+}
+
+.underInfo {
+    font-family: 'Inter';
+    font-weight: 400;
+}
+
+.btn {
+    width: 100%;
+    background-color: var(--blue-01);
+    color: white;
+    box-shadow: var(--shadow-dp-02);
+    border: 0px;
+    border-radius: 5px;
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn:hover, .btn:focus {
+    background-color: black;
+    color: white;
+}
+
+.link {
+    color: black;
+    font-weight: 700;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 300px;
+        left: 50%;
+        top: 10%;
+        transform: translateX(-50%);
+    }
+}

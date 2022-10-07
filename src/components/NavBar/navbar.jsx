@@ -22,7 +22,7 @@ export const Navbar = () => {
     return (<>
     <div className='navbar-container'>
         <div className="navbar ">
-            <nav class="nav grid-container">
+            <nav className="nav grid-container">
                 <div className="nav-logo">
                     <p>MEDICHOR</p>
                 </div>
@@ -48,7 +48,7 @@ export const Navbar = () => {
                         <p>Thành tích</p>
                     </NavLink>
 
-                    <NavLink to="/qa">
+                    <NavLink to="/qna">
                         <HelpCenterIcon className='nav-icon'></HelpCenterIcon>
                         <p>Hỏi đáp</p>
                     </NavLink>
@@ -56,12 +56,12 @@ export const Navbar = () => {
                 </div>
                 <div className={click ? 'nav-logs' : 'unactive-nav-logs'}>
                     <NavLink to="/login">
-                        <ExitToAppIcon></ExitToAppIcon>
+                        <ExitToAppIcon className='nav-icon'></ExitToAppIcon>
                         <p>Đăng nhập</p>
                     </NavLink>
 
                     <NavLink to="/register">
-                        <PersonAddAltIcon></PersonAddAltIcon>
+                        <PersonAddAltIcon className='nav-icon'></PersonAddAltIcon>
                         <p>Đăng ký</p>
                     </NavLink>
                 </div>

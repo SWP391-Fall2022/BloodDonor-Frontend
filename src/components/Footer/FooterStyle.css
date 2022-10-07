@@ -1,0 +1,133 @@
+.link-pages .foot-icon, .info  .foot-icon{
+display: block !important;
+margin: 0 5px;
+color: var(--primary-500);
+font-size: 3em;
+}
+
+
+.footer-container-top{
+    display: flex;
+    padding: 25px 80px;
+    justify-content:space-between;
+    background-color: white;
+}
+
+.footer-links{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 600;
+    text-align: center;
+}
+
+.link-pages-content{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.info-content{
+    display: flex;
+    
+}
+
+.footer-logo{
+    max-width: 28%;
+}
+
+.footer-logo p:first-child{
+    font-weight: 700;
+    font-size: 48px;
+    font-family: Reem Kufi Fun;
+    margin: 0;
+    color: var(--primary-500);
+}
+
+.footer-logo-content{
+    max-width: 305px;
+}
+
+.pages{
+    font-weight: 600;
+    max-width: 32%;
+
+}
+
+.pages a{
+    color: black;
+}
+
+.foot-container-bot{
+    background-color: black;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.info-title, .link-pages-title, .pages-title {
+    font-size: 18px;
+}
+
+/* RESPONSIVE */
+
+@media only screen and (min-width:911px) and (max-width: 1080px) {
+
+    .footer-container-top{
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-logo-content{
+        display: none;
+    }
+
+    .footer-links{
+        flex-direction: row;
+        align-items: unset;
+    }
+
+    .link-pages, .info{
+        margin: 20px;
+    }
+
+    .pages{
+        max-width: none;
+    }
+
+    .link-pages .foot-icon, .info  .foot-icon{
+        margin: 0 8px;
+        }
+}
+
+@media only screen and  (max-width: 910px) {
+
+    .footer-container-top{
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-logo{
+        max-width: 100%;
+        flex-direction: column;
+    }
+
+    .footer-logo-content{
+        display: none;
+    }
+
+    .footer-links{
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .pages{
+        max-width: none;
+    }
+
+    .link-pages .foot-icon, .info  .foot-icon{
+        margin: 0 8px;
+        }
+}

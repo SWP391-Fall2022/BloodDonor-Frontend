@@ -1,0 +1,42 @@
+.container {
+    background-color: white;
+    width: 700px;
+    height: auto;
+    padding: 50px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 10px;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+.content {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.btn {
+    width: fit-content;
+    margin: 10px;
+    background: var(--primary-500);
+    color: white;
+    box-shadow: var(--shadow-dp-01);
+    border: 0px;
+    border-radius: 2px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btnChild:hover, .btnChild:focus {
+    background-color: var(--primary-700);
+    color: white;
+}
