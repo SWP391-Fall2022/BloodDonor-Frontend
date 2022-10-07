@@ -1,0 +1,114 @@
+@import "../../index.css";
+#QnA h1 {
+    font-weight: 800 !important;
+    font-size: 50px;
+    line-height: 65px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem !important;
+    color: #1F364B;
+
+}
+
+#QnA h2 {
+    font-weight: 700 !important;
+    font-size: 28px;
+    line-height: 39px;
+    text-transform: uppercase;
+    padding: 3.5% 0 2% 0;
+    color: #1F364B;
+}
+
+#QnA h3 {
+    font-weight: 600 !important;
+    font-size: 16px;
+    line-height: 30px;
+    margin-bottom: 0.2rem;
+    padding: 0 3%;
+}
+
+#QnA h4 {
+    font-weight: 600 !important;
+    font-size: 16px;
+    line-height: 28px;
+}
+
+#QnA li {
+    font-weight: 500 !important;
+    font-size: 15px;
+    line-height: 22px;
+    margin: 0 0 !important;
+}
+
+@media only screen and (max-width: 950px) {
+    #QnA h1 {
+        font-size: 42px !important;
+        line-height: 56px !important;
+    }
+    #QnA h2{
+        font-size: 22px !important;
+        line-height: 30px;
+    }
+    #QnA h3 {
+        font-size: 16px !important;
+        line-height: 25px !important;
+    }
+    #QnA h4 {
+        font-size: 12px !important;
+        line-height: 20px !important;
+    }
+}
+
+@media only screen and (max-width: 740px) {
+    #QnA h1 {
+        font-size: 30px !important;
+        line-height: 45px !important;
+    }
+    #QnA h2{
+        font-size: 18px !important;
+        line-height: 24px !important;
+    }
+    #QnA h3 {
+        font-size: 12px !important;
+        line-height: 20px !important;
+    }
+    #QnA h4 {
+        font-size: 10px !important;
+        line-height: 15px !important;
+    }
+}
+#QnA{
+    background-color: var(--blue-0);
+}
+.QnA-cover{
+    margin-top: 90px;
+    background-image: url(../../assets/QnA-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    text-align: center;
+}
+
+.QnA-container {
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    margin-bottom: 2%;
+    box-shadow: var(--shadow-dp-01);
+}
+
+.QnA-card {
+    border-radius: 5px;
+    background-color: var(--blue-02);
+}
+
+.QnA-card li {
+    padding: 0.8% 5%;
+    list-style-type: disc;
+}
+
+.QnA-content{
+    padding: 3% 24%;
+}
