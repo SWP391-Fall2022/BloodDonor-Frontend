@@ -43,6 +43,10 @@ font-size: 3em;
     color: var(--primary-500);
 }
 
+.footer-logo-content{
+    max-width: 305px;
+}
+
 .pages{
     font-weight: 600;
     max-width: 32%;
@@ -58,6 +62,10 @@ font-size: 3em;
     color: white;
     padding: 10px 0;
     text-align: center;
+}
+
+.info-title, .link-pages-title, .pages-title {
+    font-size: 18px;
 }
 
 /* RESPONSIVE */

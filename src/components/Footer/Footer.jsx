@@ -81,7 +81,7 @@ export const Footer = () => {
         </div>
 
         <div className='pages'>
-          <p>CÁC TRANG CUNG CẤP THÔNG TIN</p>
+          <p className='pages-title'>CÁC TRANG CUNG CẤP THÔNG TIN</p>
             <p><a href='https://vienhuyethoc.vn/'>Viện huyết học - Truyền máu trung ương</a></p>
             <p><a href='http://hienmaunhandao.org.vn/'>Hội chữ thập đỏ TP Hồ Chí Minh - Trung tâm hiến máu nhân đạo</a></p>
             <p><a href='https://giotmauvang.org.vn/'>Giọt máu vàng</a></p>
