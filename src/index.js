@@ -2,7 +2,7 @@ import React from 'react';
 import './index.css';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./routes/home";
+import Homepage from "./routes/Homepage/Homepage";
 import Login from "./routes/login";
 import Register from "./routes/register";
 import RegisterDonor from "./routes/register-volunteer";
@@ -19,7 +19,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact strict path="/" element={<Home />} />
+        <Route exact strict path="/" element={<Homepage />} />
         <Route exact strict path="/login" element={<Login />} />
         <Route exact strict path="/register" element={<Register />} />
         <Route exact strict path="/register/donor-volunteer" element={<RegisterDonor />} />
