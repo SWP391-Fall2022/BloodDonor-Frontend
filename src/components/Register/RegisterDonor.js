@@ -110,7 +110,7 @@ function RegisterDonor() {
 
     return (
         <div className={styles.mainBackgroundChild} >
-            <div className={`${styles.container} ${styles.containerChild}`}>
+            <div className={`${styles.containerChild}`}>
                 <h1 className={styles.titleChild}>ĐĂNG KÝ</h1>
                 <Form form={stepForm} layout="vertical" onFinish={onFinish}>
                     <RegisterStepPanel steps={steps} />
