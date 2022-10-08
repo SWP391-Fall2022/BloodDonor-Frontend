@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from '../donor.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
 import moment from 'moment';
-import { Form, Input, Select, DatePicker } from 'antd';
+import { Form, Input, Select, DatePicker, Button } from 'antd';
 const { Option } = Select;
 const { TextArea } = Input;
 export default function BasicInfoContainer() {
@@ -36,25 +36,25 @@ export default function BasicInfoContainer() {
         <div className={styles.infoContainer}>
             <div className={styles.title}>THÔNG TIN CƠ BẢN</div>
             <Form layout="vertical">
-                <Form.Item className={styles.formLabel} label="Họ và Tên" name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
-                    <Input defaultValue={user.name} placeholder="Nhập họ và tên" />
+                <Form.Item className={styles.formLabel} label="Họ và Tên" name="name" initialValue={user.name} rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
+                    <Input placeholder="Nhập họ và tên" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="Ngày sinh" name="birthday" rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
-                        <DatePicker defaultValue={moment(`${user.birthday}`, 'YYYY-MM-DD')} format={'YYYY-MM-DD'} style={{ width: '100%' }} placeholder="Chọn ngày sinh" />
+                    <Form.Item className={styles.subFormLabel} label="Ngày sinh" name="birthday" initialValue={moment(`${user.birthday}`, 'YYYY-MM-DD')} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                        <DatePicker format={'YYYY-MM-DD'} style={{ width: '100%' }} placeholder="Chọn ngày sinh" />
                     </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Giới tính" name="sex" rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
-                        <Select defaultValue={user.sex} placeholder="Chọn">
+                    <Form.Item className={styles.subFormLabel} label="Giới tính" name="sex" initialValue={user.sex} rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                        <Select placeholder="Chọn">
                             <Option value="MALE">Nam</Option>
                             <Option value="FEMALE">Nữ</Option>
                         </Select>
                     </Form.Item>
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="CMND" name="identityNum" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
-                        <Input defaultValue={user.identityNum} placeholder="Nhập số CMND" />
+                    <Form.Item className={styles.subFormLabel} label="CMND" name="identityNum" initialValue={user.identityNum} rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                        <Input placeholder="Nhập số CMND" />
                     </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Nhóm máu" name="bloodType" style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                    <Form.Item className={styles.subFormLabel} label="Nhóm máu" name="bloodType" initialValue={user.bloodType} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
                         <Select placeholder="Chọn">
                             <Option value="O">O</Option>
                             <Option value="A">A</Option>
@@ -64,21 +64,19 @@ export default function BasicInfoContainer() {
                     </Form.Item>
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="Tỉnh" name="province" rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                    <Form.Item className={styles.subFormLabel} label="Tỉnh" name="province" initialValue={userDefaultProvince} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                         <Select
                             showSearch placeholder="Chọn"
                             onChange={onProvinceChange}
-                            defaultValue={userDefaultProvince}
                             filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
                         >
                             {provinceList.map(a => (<Option key={a.id} >{a.name}</Option>))}
                         </Select>
                     </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Quận/Huyện" rules={[{ required: true, message: 'Vui lòng chọn' },]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                    <Form.Item className={styles.subFormLabel} label="Quận/Huyện" initialValue={userDefaultDistrict} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
                         <Select
                             showSearch placeholder="Chọn"
                             onChange={onDistrictChange}
-                            defaultValue={userDefaultDistrict}
                             filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
                         >
                             {districtList.map(a => (<Option key={a.id} value={a.id}>{a.name}</Option>))}
@@ -87,6 +85,14 @@ export default function BasicInfoContainer() {
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails">
                     <TextArea defaultValue={user.user.addressDetails} rows={2} allowClear showCount maxLength={100} />
+                </Form.Item>
+                <Form.Item className={styles.formLabel}>
+                    <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
+                        Thay đổi
+                    </Button>
+                    <Button className={`${styles.btn2}`} htmlType="submit" size="large">
+                        Hủy
+                    </Button>
                 </Form.Item>
             </Form>
         </div>

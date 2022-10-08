@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './register.module.css';
 import { useNavigate } from "react-router-dom";
-import { Form, Input, InputNumber, Select, DatePicker } from 'antd';
+import { Form, Input, Select, DatePicker } from 'antd';
 import { RegisterStepPanel } from '../Register/RegisterStepsPanel';
 import RegisterPD from '../Register/RegisterProvinceDistrict';
 const { TextArea } = Input;
@@ -36,7 +36,7 @@ function RegisterDonor() {
                     <Input placeholder="Nhập Họ và Tên" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
-                    <InputNumber style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
+                    <Input style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Sinh nhật" name="birthday" rules={[{ required: true, message: 'Vui lòng chọn' }]}>
                     <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày sinh" />
@@ -79,12 +79,13 @@ function RegisterDonor() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        const response = await fetch("http://localhost:8080/v1/register/donor", json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/donor`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
+        console.log(response)
         if (response.status === 200) {
             sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-            navigate("/otp", { state: { otpAccess: true } })
+            navigate("/otp", { state: { otpAccess: true, userId: response.body.userId } })
         } else if (response.status === 400) {
             setMessage(response.body)
         } else if (response.status === 500) {

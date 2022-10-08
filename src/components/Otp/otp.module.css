@@ -36,7 +36,7 @@
     font-weight: 600;
 }
 
-.btnChild:hover, .btnChild:focus {
+.btn:hover, .btn:focus {
     background-color: var(--primary-700);
     color: white;
 }

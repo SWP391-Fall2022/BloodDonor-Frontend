@@ -51,7 +51,7 @@ export default function LoginContainer() {
                     'Content-Type': 'application/json; charset=UTF-8'
                 })
             }
-            const response = await fetch("http://localhost:8080/v1/login", json)
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             if (response.success) {
@@ -77,7 +77,7 @@ export default function LoginContainer() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        const response = await fetch("http://localhost:8080/v1/login/google", json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login/google`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
 

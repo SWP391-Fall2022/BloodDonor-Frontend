@@ -1,5 +1,5 @@
 import styles from '../donor.module.css'
-import { Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 export default function ChangeEmailSide() {
     return (
         <div className={styles.infoContainer}>
@@ -16,6 +16,14 @@ export default function ChangeEmailSide() {
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Nhập lại email mới" name="confirmNewEmail" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
                     <Input placeholder="Nhập email" />
+                </Form.Item>
+                <Form.Item className={styles.formLabel}>
+                    <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
+                        Thay đổi
+                    </Button>
+                    <Button className={`${styles.btn2}`} htmlType="submit" size="large">
+                        Hủy
+                    </Button>
                 </Form.Item>
             </Form>
         </div>

@@ -5,8 +5,6 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 class newPass extends Component {
 
-    //Need a system to check login before come to this page
-    //Need a system to check old Password before change the new one
     constructor(props) {
         super(props);
         this.state = {

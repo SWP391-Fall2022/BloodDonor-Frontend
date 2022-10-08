@@ -19,14 +19,6 @@ export default function AvatarContainer() {
                 <Avatar className={styles.ava} size={160} icon={<UserOutlined />} />
             </div>
             <div className={styles.leftSideText}>{user.name}</div>
-            <div>
-                <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
-                    Thay đổi
-                </Button>
-                <Button className={`${styles.btn2}`} htmlType="submit" size="large">
-                    Hủy
-                </Button>
-            </div>
             <Modal open={open} onCancel={handleCancel} footer={false}>
                 <h1 style={{ textAlign: 'center' }}><strong>ĐỔI ẢNH ĐẠI DIỆN</strong></h1>
                 <ImgCrop grid rotate shape="round">
