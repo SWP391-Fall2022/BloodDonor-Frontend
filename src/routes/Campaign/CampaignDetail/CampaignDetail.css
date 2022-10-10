@@ -1,0 +1,194 @@
+/* -----------------------Left side---------- */
+.campaignDetail-left {
+    background-color: white;
+    margin-right: 20px;
+    padding: 25px 35px;
+    text-align: center;
+    box-shadow: var(--shadow-dp-02);
+}
+
+.campaignDetail-left-title {
+    text-align: left;
+}
+
+.campaign-title{
+    font-weight: 700;
+    margin-top: 15px;
+}
+
+.campaign-detail-left-img{
+    width: 40%;
+    max-width: 225px;
+    height: 220px;
+    margin: 30px auto;
+}
+
+.campaign-detail-left-img  img{
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    transform: scale(1);
+}
+
+.campaignDetail-left  .sub-title{
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+/* Blood type */
+
+.blood-type ul{
+    list-style: none;
+    display: flex;
+    padding: 0;
+    width: 60%;
+    margin: 10px auto 0 auto;
+    justify-content: center
+}
+
+.blood-type-item{
+    background-color: var(--primary-500);
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    margin: 5px 20px;
+}
+
+/* Date style */
+.date{
+    width: 75%;
+    max-width: 430px;
+    height: 185px;
+    overflow: auto;
+    margin: 18px auto;
+    line-height: 25px;
+    background-color: var(--primary-050);
+    padding: 20px 13px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+}
+
+.campaignDetail-left .ant-radio-group {
+    line-height: 40px;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: start;
+}
+
+.time{
+    width: 49%;
+    max-width: 281px;
+    text-align: initial;
+    margin: 20px auto;
+    background-color: var(--primary-050);
+    padding: 15px 17px 10px 19px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+
+}
+
+.time .ant-radio-group{
+    display: block;
+}
+
+#join{
+    background-color: var(--primary-500);
+    color: white;
+    /* padding: 5px 10px; */
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+#senqna{
+    border: 1px solid var(--primary-500);
+    margin-top: 20px;
+
+
+}
+
+/* ---------------right side-------------------- */
+/* medal style---------------- */
+
+.medals-avatar{
+    text-align: center;
+    background-color: white;
+    padding: 20px 10px;
+    box-shadow: var(--shadow-dp-02);
+    margin-bottom: 20px;
+
+}
+
+.campaignDetail-right .avatar{
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+.campaignDetail-right .avatar img{
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    transform: scale(1);
+}
+
+
+
+.organization-name{
+    max-width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.medals{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+/* .campaignDetail-medal-item{
+padding:0 5% ;
+} */
+
+.campaignDetail-medal-item p{
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.campaignDetail-medal-item img{
+    width: 45%;
+}
+
+.campaignDetail-medal-item:first-of-type{
+    margin-right: 5px;
+}
+
+/* qna style-------------------- */
+.campaignDetail-q-and-a{
+    background-color: white;
+    padding: 20px 15px;
+    box-shadow: var(--shadow-dp-02);
+}
+
+.campaignDetail-q-and-a h3{
+    text-align: center;
+}
+
+.campaignDetail-q-and-a .ant-collapse > .ant-collapse-item > .ant-collapse-header{
+    padding: 5px 16px;
+}
+
+.campaignDetail-q-and-a .ant-collapse-content-box{
+    list-style: disc;
+}
+
+.campaignDetail-q-and-a-card{
+    margin-bottom: 15px;
+}
+
+.campaignDetail-q-and-a .ant-collapse-header-text{
+    font-weight: 600;
+}
