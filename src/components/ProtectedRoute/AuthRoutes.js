@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 
 export default function AuthRoutes() {
     const [role, setRole] = useState(null);
-    const [userId, setUserId] = useState(null);
     const [authorized, setAuthorized] = useState(false);
 
     useEffect(() => {
@@ -14,12 +13,11 @@ export default function AuthRoutes() {
             })
         }
         async function fetchAPI() {
-            const response = await fetch("http://localhost:8080/v1/donors/me", json)
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             setAuthorized(response.success)
             setRole(response.body.user.role)
-            setUserId(response.body.userId)
             sessionStorage.setItem('user', JSON.stringify(response.body))
         }
         fetchAPI();

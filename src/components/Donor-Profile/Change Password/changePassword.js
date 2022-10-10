@@ -3,17 +3,18 @@ import Points from '../Left Side/Points'
 import Award from '../Left Side/Award'
 import ChangePasswordSide from './changePasswordSide'
 import styles from '../donor.module.css'
+import { Col, Row } from 'antd'
 export default function ChangePassword() {
     const user = JSON.parse(sessionStorage.getItem('user'))
     console.log(user)
     return (
-        <div className={styles.mainContainer}>
-            <div className={styles.leftContainerMain}>
+        <Row justify="center" className={styles.mainContainer}>
+            <Col span={7} className={styles.leftContainerMain}>
                 <AvatarContainer />
                 <Points />
                 <Award />
-            </div>
-            <ChangePasswordSide />
-        </div>
+            </Col>
+            <Col span={7}><ChangePasswordSide /></Col>
+        </Row>
     )
 }

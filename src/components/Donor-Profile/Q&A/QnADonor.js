@@ -3,16 +3,16 @@ import Points from '../Left Side/Points'
 import Award from '../Left Side/Award'
 import QnAContainer from './QnAContainer'
 import styles from '../donor.module.css'
+import { Row, Col } from 'antd'
 export default function QnADonor() {
-    const user = JSON.parse(sessionStorage.getItem('user'))
     return (
-        <div className={styles.mainContainer}>
-            <div className={styles.leftContainerMain}>
+        <Row justify="center" className={styles.mainContainer}>
+            <Col span={7} className={styles.leftContainerMain}>
                 <AvatarContainer />
                 <Points />
                 <Award />
-            </div>
-            <QnAContainer />
-        </div>
+            </Col>
+            <Col span={7} ><QnAContainer /></Col>
+        </Row>
     )
 }

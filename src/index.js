@@ -21,9 +21,7 @@ import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
 import DonorProfile from './routes/donor-progile';
 import NoPage from "./routes/nopage";
 import Info from './components/Donor-Profile/Basic Info/Info';
-import ChangeEmail from './components/Donor-Profile/Change Email/changeEmail';
 import ChangePassword from './components/Donor-Profile/Change Password/changePassword';
-import ChangePhone from './components/Donor-Profile/Change Phone/changePhone';
 import History from './components/Donor-Profile/History Campaign/history';
 import QnADonor from './components/Donor-Profile/Q&A/QnADonor';
 import Vouchers from './components/Donor-Profile/Voucher Storage/Vouchers';
@@ -55,9 +53,7 @@ export default function App() {
 
         <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />
-          <Route path="changeEmail" element={<ChangeEmail />} />
           <Route path="changePassword" element={<ChangePassword />} />
-          <Route path="changePhone" element={<ChangePhone />} />
           <Route path="history" element={<History />} />
           <Route path="qna" element={<QnADonor />} />
           <Route path="vouchers" element={<Vouchers />} />
