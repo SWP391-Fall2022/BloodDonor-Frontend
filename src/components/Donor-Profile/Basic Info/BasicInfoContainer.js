@@ -62,8 +62,6 @@ export default function BasicInfoContainer() {
                 "addressDetails": formData.addressDetails
             }
         }
-        console.log(formData)
-        console.log(requestData)
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
         let json = {
             method: 'PUT',
@@ -77,21 +75,7 @@ export default function BasicInfoContainer() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.success) {
-            const updatedData = {
-                "name": formData.name,
-                "birthday": formData.birthday,
-                "sex": formData.sex,
-                "identityNum": formData.identityNum,
-                "avatar": "something",
-                "bloodType": formData.bloodType,
-                "user": {
-                    "phone": formData.phone,
-                    "anamnesis": formData.anamnesis,
-                    "districtId": districtId,
-                    "addressDetails": formData.addressDetails
-                }
-            }
-            sessionStorage.setItem('user', JSON.stringify(updatedData))
+            sessionStorage.setItem('user', JSON.stringify(requestData))
             navigate("/donor")
             setMessage("Thay đổi thành công")
         }
@@ -115,7 +99,7 @@ export default function BasicInfoContainer() {
                     </Form.Item>
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="Ngày sinh" name="birthday" initialValue={moment(`${user.birthday}`, 'YYYY-MM-DD')} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                    <Form.Item className={styles.subFormLabel} label="Ngày sinh" name="birthday" initialValue={moment(`${user.birthday}`)} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                         <DatePicker format={'YYYY-MM-DD'} style={{ width: '100%' }} placeholder="Chọn ngày sinh" />
                     </Form.Item>
                     <Form.Item className={styles.subFormLabel} label="Giới tính" name="sex" initialValue={user.sex} rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
@@ -160,7 +144,7 @@ export default function BasicInfoContainer() {
                 <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" initialValue={user.user.addressDetails}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Tiền sử bệnh lý" name="anamnesis" initialValue={user.user.anamnesis}>
+                <Form.Item className={styles.formLabel} label="Tiền sử bệnh lý" name="anamnesis" initialValue={user.anamnesis}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>

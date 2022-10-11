@@ -6,13 +6,13 @@ import styles from '../donor.module.css'
 import { Col, Row } from 'antd'
 export default function Info() {
     return (
-        <Row justify="center" className={styles.mainContainer}>
-            <Col span={7} className={styles.leftContainerMain}>
+        <Row justify="space-evenly" className={styles.mainContainer}>
+            <Col l={7} className={styles.leftContainerMain}>
                 <AvatarContainer />
                 <Points />
                 <Award />
             </Col>
-            <Col span={7}><BasicInfoContainer /></Col>
+            <Col l={7}><BasicInfoContainer /></Col>
         </Row>
     )
 }
