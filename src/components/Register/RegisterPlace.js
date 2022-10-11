@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './register.module.css';
 import { useNavigate } from "react-router-dom";
-import { Form, Input, InputNumber } from 'antd';
+import { Form, Input } from 'antd';
 import { RegisterStepPanel } from './RegisterStepsPanel';
 import RegisterPD from './RegisterProvinceDistrict';
 const { TextArea } = Input;
@@ -35,7 +35,7 @@ function RegisterPlace() {
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Nhập số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
-                    <InputNumber style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
+                    <Input style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Mã số thuế" name="taxcode" rules={[{ required: true, message: 'Vui lòng nhập mã số' }]}>
                     <Input placeholder="Nhập mã số thuế" />
@@ -67,7 +67,7 @@ function RegisterPlace() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        const response = await fetch("http://localhost:8080/v1/register/organization", json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/organization`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log(response)

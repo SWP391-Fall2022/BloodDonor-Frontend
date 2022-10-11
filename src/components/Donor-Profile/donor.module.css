@@ -1,8 +1,5 @@
 .mainContainer {
-    position: absolute;
-    left: 40%;
-    top: 15%;
-    width: 810px;
+    margin-top: 130px;
 }
 
 .infoContainer, .leftContainer {
@@ -76,7 +73,7 @@
 }
 
 .formLabel {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .subFormLabel {

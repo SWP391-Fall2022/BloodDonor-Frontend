@@ -9,8 +9,9 @@ export default function Otp() {
     const [otp, setOtp] = useState('')
     const [seconds, setSeconds] = useState(60)
     const { state } = useLocation();
-    const { otpAccess } = state;
+    const { otpAccess, userId } = state;
     const navigate = useNavigate();
+    const [message, setMessage] = useState('')
     const handleChange = (otp) => {
         setOtp(otp)
     }
@@ -22,16 +23,17 @@ export default function Otp() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        const response = await fetch(`http://localhost:8080/v1/register/confirmCode/${otp}`, json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/confirmCode/${otp}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log(response)
         if (response.success) {
             navigate('/login')
+        } else {
+            setMessage(response.body)
         }
     }
 
-    //Undone
     const reSendOtp = async () => {
         setSeconds(60)
         let json = {
@@ -40,7 +42,7 @@ export default function Otp() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        const response = await fetch(`http://localhost:8080/v1/register/resendCode/1004`, json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/resendCode/${userId}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log(response)
@@ -91,7 +93,10 @@ export default function Otp() {
                 <div className={styles.content}>Gửi lại mã trong {seconds}s</div>
                 <div style={{ textAlign: 'center' }}>
                     <Button className={`${styles.btn}`} onClick={handleSubmit}>Xác nhận</Button>
-                    {button}                    
+                    {button}
+                </div>
+                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', fontSize: '120%' }}>
+                    {message}
                 </div>
             </div>
         )

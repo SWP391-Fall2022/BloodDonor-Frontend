@@ -1,0 +1,23 @@
+.filterTable{
+    background-color: white;
+    padding: 30px;
+    display: inline-block;
+    box-sizing: border-box;
+    box-shadow: 3px 4px 7px #c9c9c7;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.filterTable label{
+    margin-left: 6px;
+}
+.filterTable h3{
+    margin: 0;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.checkbox-item{
+   padding-bottom: 5px;
+
+}

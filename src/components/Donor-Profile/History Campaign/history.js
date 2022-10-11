@@ -3,17 +3,18 @@ import Points from '../Left Side/Points'
 import Award from '../Left Side/Award'
 import HistoryContainer from './historyContainer'
 import styles from '../donor.module.css'
+import { Col, Row } from 'antd'
 export default function History() {
     const user = JSON.parse(sessionStorage.getItem('user'))
     console.log(user)
     return (
-        <div className={styles.mainContainer} style={{width: '1000px', left: '30%'}}>
-            <div className={styles.leftContainerMain} >
+        <Row justify="center" className={styles.mainContainer}>
+            <Col span={7} className={styles.leftContainerMain} >
                 <AvatarContainer />
                 <Points />
                 <Award />
-            </div>
-            <HistoryContainer />
-        </div>
+            </Col>
+            <Col span={10}><HistoryContainer /></Col>
+        </Row>
     )
 }

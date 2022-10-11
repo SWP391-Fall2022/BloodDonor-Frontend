@@ -4,18 +4,19 @@ import Award from '../Left Side/Award'
 import VouchersContainer from './VouchersContainer'
 import VouchersContainer2 from './VouchersCointainer2'
 import styles from '../donor.module.css'
+import { Col, Row } from 'antd'
 export default function Vouchers() {
-    const user = JSON.parse(sessionStorage.getItem('user'))
     return (
-        <div style={{marginBottom: '1000px'}}>
-            <div className={styles.mainContainer} style={{ height: '1400px' }}>
-                <div className={styles.leftContainerMain}>
+        <div>
+            <Row justify="center" className={styles.mainContainer} style={{ height: 'fit-content', marginBottom: '50px' }}>
+                <Col span={7} className={styles.leftContainerMain}>
                     <AvatarContainer />
                     <Points />
                     <Award />
-                </div>
-                <VouchersContainer />
-                <VouchersContainer2 />
-            </div></div>
+                </Col>
+                <Col span={7}><VouchersContainer /></Col>
+                <Col span={14}><VouchersContainer2 /></Col>
+            </Row>
+        </div>
     )
 }

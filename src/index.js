@@ -11,20 +11,19 @@ import RegisterPlace from "./components/Register/RegisterPlace";
 import NewPass from "./routes/Login, Register/changePass";
 import Forget from "./routes/Login, Register/restore";
 import Otp from "./routes/Login, Register/otp"
+import QnA from "./routes/QAndA/QnA"
 // import Campaign from "./routes/campaign";
-// import ListNewsPage from './routes/ListNewsPage';
-// import NewsDetailPage from './routes/NewsDetailPage';
+import ListNewsPage from './routes/News/ListNewsPage';
+import NewsDetailPage from './routes/News/NewsDetailPage';
 // import Achivement from "./routes/achivement";
 import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
 
 import DonorProfile from './routes/donor-progile';
 import NoPage from "./routes/nopage";
 import Info from './components/Donor-Profile/Basic Info/Info';
-import ChangeEmail from './components/Donor-Profile/Change Email/changeEmail';
 import ChangePassword from './components/Donor-Profile/Change Password/changePassword';
-import ChangePhone from './components/Donor-Profile/Change Phone/changePhone';
 import History from './components/Donor-Profile/History Campaign/history';
-import QnA from './components/Donor-Profile/Q&A/QnA';
+import QnADonor from './components/Donor-Profile/Q&A/QnADonor';
 import Vouchers from './components/Donor-Profile/Voucher Storage/Vouchers';
 
 export default function App() {
@@ -32,6 +31,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route exact strict path="/" element={<Homepage />} />
+        <Route exact strict path="/news" element={<ListNewsPage />} />
+        <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
+        <Route exact strict path="/qna" element={<QnA />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -44,17 +46,16 @@ export default function App() {
         <Route path="/otp" element={<Otp />} />
 
         {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
+        {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
         {/* <Route exact strict path="/news" element={<ListNewsPage />} /> */}
         {/* <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} /> */}
         <Route exact strict path="/achivement" element={<Achievements />} />
 
         <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />
-          <Route path="changeEmail" element={<ChangeEmail />} />
           <Route path="changePassword" element={<ChangePassword />} />
-          <Route path="changePhone" element={<ChangePhone />} />
           <Route path="history" element={<History />} />
-          <Route path="qna" element={<QnA />} />
+          <Route path="qna" element={<QnADonor />} />
           <Route path="vouchers" element={<Vouchers />} />
         </Route>
         <Route path="*" element={<NoPage />} />
