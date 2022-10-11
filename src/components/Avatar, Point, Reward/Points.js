@@ -1,4 +1,4 @@
-import styles from '../donor.module.css'
+import styles from './leftside.module.css'
 export default function Points() {
     //Reminder: Insert user points here
     const user = JSON.parse(sessionStorage.getItem('user'))

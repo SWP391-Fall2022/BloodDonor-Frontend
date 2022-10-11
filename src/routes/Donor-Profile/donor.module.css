@@ -12,12 +12,10 @@
 }
 
 .infoContainer {
-    float: right;
     width: 510px;
 }
 
 .leftContainer {
-    float: left;
     width: 270px;
     text-align: center;
     margin-bottom: 20px;
