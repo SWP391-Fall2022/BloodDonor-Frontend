@@ -4,7 +4,6 @@ import { Navbar } from '../../components/NavBar/navbar';
 // import { PageFooterBottom } from '../components/Footer/PageFooterBottom';
 function DonorProfile() {
     const user = JSON.parse(sessionStorage.getItem('user'))
-    console.log(user)
     if (user === null) {
         return <Navigate to={`/login`} />
     } else

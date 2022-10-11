@@ -96,11 +96,11 @@
     margin: auto;
 }
 
-@media only screen and (max-width: 767px) {
+/* @media only screen and (max-width: 767px) {
     .containerChild {
 
     }
-}
+} */
 
 .titleChild, .formLabel, .underInfo {
     font-weight: 700;

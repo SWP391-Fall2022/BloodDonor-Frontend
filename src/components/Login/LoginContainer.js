@@ -85,8 +85,10 @@ export default function LoginContainer() {
         sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
         if (response.success) {
             sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
-            navigate("/auth")
+            sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
+            navigate("/auth-google")
         }
+
     }
 
     return (

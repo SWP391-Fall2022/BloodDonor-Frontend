@@ -79,6 +79,9 @@ export default function BasicInfoContainer() {
             navigate("/donor")
             setMessage("Thay đổi thành công")
         }
+        setTimeout(() => {
+            setMessage('');
+        }, 3000);
     };
 
     const onProvinceChange = (value) => {

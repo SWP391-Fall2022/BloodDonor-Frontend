@@ -10,15 +10,24 @@ function RegisterPlace() {
     const [stepForm] = Form.useForm();
     const navigate = useNavigate()
     const [message, setMessage] = useState()
+    const email = JSON.parse(sessionStorage.getItem('GoogleEmail'))
+    let emailInput;
+    if (email === null) {
+        emailInput = <Form.Item className={styles.formLabel} label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
+            <Input placeholder="Nhập Email" />
+        </Form.Item>
+    } else {
+        emailInput = <Form.Item className={styles.formLabel} label="Email" name="email" initialValue={email} disabled rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
+            <Input placeholder="Nhập Email" disabled />
+        </Form.Item>
+    }
     const STEP_1_FORM = () => {
         return (
             <>
                 <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
                     <Input placeholder="Nhập tên đăng nhập" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
-                    <Input placeholder="Nhập Email" />
-                </Form.Item>
+                {emailInput}
                 <Form.Item className={styles.formLabel} label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
@@ -78,7 +87,7 @@ function RegisterPlace() {
             setMessage(response.body)
         } else if (response.status === 500) {
             sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-            setMessage("Email này đã được đăng kí. Nếu bạn không đăng nhập được rất có thể bạn chưa xác nhận otp. Vui lòng xác nhận otp tại http://localhost:3000/otp")
+            setMessage("Email này đã được đăng kí.")
         }
     };
 

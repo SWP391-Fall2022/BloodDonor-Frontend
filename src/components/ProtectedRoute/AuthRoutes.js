@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 export default function AuthRoutes() {
     const [role, setRole] = useState(null);
     const [authorized, setAuthorized] = useState(false);
+    const [rendered, setRendered] = useState(false)
 
     useEffect(() => {
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
@@ -19,14 +20,19 @@ export default function AuthRoutes() {
             setAuthorized(response.success)
             setRole(response.body.user.role)
             sessionStorage.setItem('user', JSON.stringify(response.body))
+            setRendered(true)
         }
         fetchAPI();
     }, []);
     if (authorized) {
         // return <Navigate to={'/profile/2'}/>
-        return <Navigate to={`/donor`}/>
+        return <Navigate to={`/donor`} />
     } else {
-        return <>Failed</>
+        if (rendered) {
+            return <Navigate to={`/login`} />
+        } else {
+            <div>We are redirect, please wait for a bit</div>
+        }
     }
 }
 
