@@ -18,13 +18,13 @@ import NewsDetailPage from './routes/News/NewsDetailPage';
 // import Achivement from "./routes/achivement";
 import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
 
-import DonorProfile from './routes/donor-progile';
+import DonorProfile from './routes/Donor-Profile/donor-profile';
 import NoPage from "./routes/nopage";
-import Info from './components/Donor-Profile/Basic Info/Info';
-import ChangePassword from './components/Donor-Profile/Change Password/changePassword';
-import History from './components/Donor-Profile/History Campaign/history';
-import QnADonor from './components/Donor-Profile/Q&A/QnADonor';
-import Vouchers from './components/Donor-Profile/Voucher Storage/Vouchers';
+import Info from './routes/Donor-Profile/Basic Info/Info';
+import ChangePassword from './routes/Donor-Profile/Change Password/changePassword';
+import History from './routes/Donor-Profile/History Campaign/history';
+import QnADonor from './routes/Donor-Profile/Q&A/QnADonor';
+import Vouchers from './routes/Donor-Profile/Voucher Storage/Vouchers';
 
 export default function App() {
   return (

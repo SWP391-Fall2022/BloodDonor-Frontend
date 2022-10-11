@@ -2,7 +2,7 @@ import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Button, Modal, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { useState } from 'react';
-import styles from '../donor.module.css'
+import styles from './leftside.module.css'
 export default function AvatarContainer() {
     const user = JSON.parse(sessionStorage.getItem('user'))
     const [open, setOpen] = useState(false);

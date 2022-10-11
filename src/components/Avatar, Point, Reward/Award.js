@@ -1,7 +1,7 @@
-import styles from '../donor.module.css'
-import GoldShield from '../../../assets/awards/Gold-Shield.png'
-import SilSol from '../../../assets/awards/Sil-Sol.png'
-import CopCoin from '../../../assets/awards/Cop-Coin.png'
+import styles from './leftside.module.css'
+import GoldShield from '../../assets/awards/Gold-Shield.png'
+import SilSol from '../../assets/awards/Sil-Sol.png'
+import CopCoin from '../../assets/awards/Cop-Coin.png'
 export default function Award() {
     //Reminder: Insert user awards based on points here
     const user = JSON.parse(sessionStorage.getItem('user'))
