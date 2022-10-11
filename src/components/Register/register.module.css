@@ -3,44 +3,47 @@
     background-image: url('../../assets/register-mainpage-background.png');
     background-repeat: no-repeat;
     background-size: cover;
-    position: absolute;
+    background-position: center;
+    background-attachment: fixed;
+    width: 100%;
     height: 100%;
+    position: absolute;
     background-size: cover;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
+    text-align: center;
 }
 
 .container {
-    position: absolute;
+    /* position: absolute;
     left: 50%;
-    top: 10%;
-    transform: translateX(-50%);
+    top: 10%; */
+    padding: 5% 10%;
+    /* transform: translateX(-50%); */
     text-align: center;
-    width: 1000px;
 }
 
 .title {
+    display: inline-block;
     background-color: var(--primary-600);
     color: white;
     box-shadow: var(--shadow-dp-04);
     height: auto;
-    margin: 0 auto;
-    padding: 10px 50px;
-    position: relative;
-
+    padding: 1% 5%;
     text-align: center;
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 700;
-    font-size: 50px;
-    border-radius: 10px;
+    font-size: 200%;
+    border-radius: 5px;
 }
 
-.btnContainer {
-    margin: auto;
-    width: 100%;
+.detailCol {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    grid-gap: 10%;
+}
+
+@media only screen and (max-width: 767px) {
+    .detailCol {
+        grid-template-columns: 100%;
+    }
 }
 
 .btn {
@@ -51,9 +54,9 @@
     box-shadow: var(--shadow-dp-02);
     border: 0px;
     border-radius: 30px;
-    padding: 10px 30px;
-    margin-top: 80px;
-    font-size: 25px;
+    padding: 1.5% 5%;
+    margin-top: 10%;
+    font-size: 150%;
     font-weight: 600;
 }
 
@@ -62,48 +65,42 @@
     color: black;
 }
 
-.btnLeft {
-    margin-right: 200px;
-}
-
-.btnRight {
-    margin-left: 200px;
-}
-
-.imgContainer {
-    width: 100%;
-}
-
 .img {
-    width: 500px;
+    width: 70%;
 }
 
 .mainBackgroundChild {
-    background-color: var(--blue-02);
+    display: flex;
+    flex-direction: center;
+    align-items: center;
     background-image: url('../../assets/register-background.png');
     background-repeat: no-repeat;
     background-size: cover;
-    position: absolute;
+    background-position: center;
+    background-attachment: fixed;
+    width: 100%;
     height: 100%;
+    position: absolute;
     background-size: cover;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
+    text-align: center;
 }
 
 .containerChild {
-    position: absolute;
-    left: 50%;
-    top: 20%;
-    transform: translateX(-50%);
     background-color: white;
-    width: 550px;
+    width: fit-content;
     height: auto;
-    padding: 40px 70px;
     box-shadow: var(--shadow-dp-02);
-    border-radius: 10px;
+    border-radius: 5px;
+    padding: 3% 4%;
+    text-align: center;
+    margin: auto;
 }
+
+/* @media only screen and (max-width: 767px) {
+    .containerChild {
+
+    }
+} */
 
 .titleChild, .formLabel, .underInfo {
     font-weight: 700;
@@ -114,11 +111,11 @@
     color: var(--secondary-900);
     margin: 0%;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 150%;
 }
 
 .formLabel {
-    margin-bottom: 30px;
+    margin-bottom: 6%;
 }
 
 .underInfo {
@@ -128,19 +125,24 @@
 
 .btnChild {
     width: fit-content;
-    margin: 10px;
+    margin: 1%;
     background-color: var(--primary-500);
     color: white;
     box-shadow: var(--shadow-dp-01);
-    border: 0px;
-    border-radius: 2px;
-    font-size: 16px;
+    border: 0;
+    border-radius: 5px;
+    font-size: 100%;
     font-weight: 600;
 }
 
 .btnChild:hover, .btnChild:focus {
     background-color: var(--primary-700);
     color: white;
+}
+
+.stepBar {
+    width: 30%;
+    font-size: 5%;
 }
 
 .link {

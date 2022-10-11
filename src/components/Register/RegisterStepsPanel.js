@@ -17,7 +17,7 @@ const RegisterStepPanel = (props) => {
 
     return (
         <>
-            <Steps progressDot current={activeStep} style={{ width: 400 }}>
+            <Steps size='small' progressDot current={activeStep}>
                 {props.steps.map((item) => (
                     <Steps.Step key={item.title} title={item.title} />
                 ))}

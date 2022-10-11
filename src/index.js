@@ -17,16 +17,15 @@ import ListNewsPage from './routes/News/ListNewsPage';
 import NewsDetailPage from './routes/News/NewsDetailPage';
 // import Achivement from "./routes/achivement";
 import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
+import AuthGoogleRoutes from './components/ProtectedRoute/CheckNewGoogleUser';
 
-import DonorProfile from './routes/donor-progile';
+import DonorProfile from './routes/Donor-Profile/donor-profile';
 import NoPage from "./routes/nopage";
-import Info from './components/Donor-Profile/Basic Info/Info';
-import ChangeEmail from './components/Donor-Profile/Change Email/changeEmail';
-import ChangePassword from './components/Donor-Profile/Change Password/changePassword';
-import ChangePhone from './components/Donor-Profile/Change Phone/changePhone';
-import History from './components/Donor-Profile/History Campaign/history';
-import QnADonor from './components/Donor-Profile/Q&A/QnADonor';
-import Vouchers from './components/Donor-Profile/Voucher Storage/Vouchers';
+import Info from './routes/Donor-Profile/Basic Info/Info';
+import ChangePassword from './routes/Donor-Profile/Change Password/changePassword';
+import History from './routes/Donor-Profile/History Campaign/history';
+import QnADonor from './routes/Donor-Profile/Q&A/QnADonor';
+import Vouchers from './routes/Donor-Profile/Voucher Storage/Vouchers';
 
 export default function App() {
   return (
@@ -43,13 +42,12 @@ export default function App() {
         <Route path="/register/place" element={<RegisterPlace />} />
 
         <Route path="/auth" element={<AuthRoutes />} />
+        <Route path="/auth-google" element={<AuthGoogleRoutes />} />
         <Route path="/new-password" element={<NewPass />} />
         <Route path="/restore" element={<Forget />} />
         <Route path="/otp" element={<Otp />} />
 
-        <Route exact strict path="/campaign" element={<Campaign />} />
-        
-        <Route exact strict path="/achivement" element={<Achivement />} />
+        {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
         {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
         {/* <Route exact strict path="/news" element={<ListNewsPage />} /> */}
         {/* <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} /> */}
@@ -57,9 +55,7 @@ export default function App() {
 
         <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />
-          <Route path="changeEmail" element={<ChangeEmail />} />
           <Route path="changePassword" element={<ChangePassword />} />
-          <Route path="changePhone" element={<ChangePhone />} />
           <Route path="history" element={<History />} />
           <Route path="qna" element={<QnADonor />} />
           <Route path="vouchers" element={<Vouchers />} />

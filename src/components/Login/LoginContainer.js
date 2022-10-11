@@ -51,15 +51,16 @@ export default function LoginContainer() {
                     'Content-Type': 'application/json; charset=UTF-8'
                 })
             }
-            const response = await fetch("http://localhost:8080/v1/login", json)
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
+            if (response === undefined) {
+                sessionStorage.setItem('OTPAcess', JSON.stringify(true))
+                setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
+            }
             if (response.success) {
                 sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
                 navigate("/auth")
-            } else {
-                sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-                setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
             }
         }
     }
@@ -77,15 +78,17 @@ export default function LoginContainer() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        const response = await fetch("http://localhost:8080/v1/login/google", json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login/google`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
 
         sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
         if (response.success) {
             sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
-            navigate("/auth")
+            sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
+            navigate("/auth-google")
         }
+
     }
 
     return (

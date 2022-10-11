@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './register.module.css';
 import { useNavigate } from "react-router-dom";
-import { Form, Input, InputNumber, Select, DatePicker } from 'antd';
+import { Form, Input, Select, DatePicker } from 'antd';
 import { RegisterStepPanel } from '../Register/RegisterStepsPanel';
 import RegisterPD from '../Register/RegisterProvinceDistrict';
 const { TextArea } = Input;
@@ -11,15 +11,24 @@ function RegisterDonor() {
     const [stepForm] = Form.useForm();
     const navigate = useNavigate()
     const [message, setMessage] = useState()
+    const email = JSON.parse(sessionStorage.getItem('GoogleEmail'))
+    let emailInput;
+    if (email === null) {
+        emailInput = <Form.Item className={styles.formLabel} label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
+            <Input placeholder="Nhập Email" />
+        </Form.Item>
+    } else {
+        emailInput = <Form.Item className={styles.formLabel} label="Email" name="email" initialValue={email} disabled rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
+            <Input placeholder="Nhập Email" disabled />
+        </Form.Item>
+    }
     const STEP_1_FORM = () => {
         return (
             <>
                 <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
                     <Input placeholder="Nhập tên đăng nhập" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
-                    <Input placeholder="Nhập Email" />
-                </Form.Item>
+                {emailInput}
                 <Form.Item className={styles.formLabel} label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
@@ -36,7 +45,7 @@ function RegisterDonor() {
                     <Input placeholder="Nhập Họ và Tên" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
-                    <InputNumber style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
+                    <Input style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Sinh nhật" name="birthday" rules={[{ required: true, message: 'Vui lòng chọn' }]}>
                     <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày sinh" />
@@ -79,12 +88,13 @@ function RegisterDonor() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        const response = await fetch("http://localhost:8080/v1/register/donor", json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/donor`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
+        console.log(response)
         if (response.status === 200) {
             sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-            navigate("/otp", { state: { otpAccess: true } })
+            navigate("/otp", { state: { otpAccess: true, userId: response.body.userId } })
         } else if (response.status === 400) {
             setMessage(response.body)
         } else if (response.status === 500) {
@@ -110,7 +120,7 @@ function RegisterDonor() {
 
     return (
         <div className={styles.mainBackgroundChild} >
-            <div className={`${styles.container} ${styles.containerChild}`}>
+            <div className={`${styles.containerChild}`}>
                 <h1 className={styles.titleChild}>ĐĂNG KÝ</h1>
                 <Form form={stepForm} layout="vertical" onFinish={onFinish}>
                     <RegisterStepPanel steps={steps} />
