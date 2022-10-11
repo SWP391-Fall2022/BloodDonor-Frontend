@@ -17,6 +17,7 @@ import ListNewsPage from './routes/News/ListNewsPage';
 import NewsDetailPage from './routes/News/NewsDetailPage';
 // import Achivement from "./routes/achivement";
 import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
+import AuthGoogleRoutes from './components/ProtectedRoute/CheckNewGoogleUser';
 
 import DonorProfile from './routes/Donor-Profile/donor-profile';
 import NoPage from "./routes/nopage";
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/register/place" element={<RegisterPlace />} />
 
         <Route path="/auth" element={<AuthRoutes />} />
+        <Route path="/auth-google" element={<AuthGoogleRoutes />} />
         <Route path="/new-password" element={<NewPass />} />
         <Route path="/restore" element={<Forget />} />
         <Route path="/otp" element={<Otp />} />
