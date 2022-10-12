@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import { Outlet, Navigate } from 'react-router-dom';
+import { FooterSmall } from '../../components/Footer/FooterSmall';
 import { Navbar } from '../../components/NavBar/navbar';
-// import { PageFooterBottom } from '../components/Footer/PageFooterBottom';
 function DonorProfile() {
     const user = JSON.parse(sessionStorage.getItem('user'))
     if (user === null) {
@@ -10,11 +10,11 @@ function DonorProfile() {
         return (
             <>
                 <Navbar />
-                <Row>
+                <Row >
                     <Col span={6}></Col>
                     <Col span={18}><Outlet /></Col>
                 </Row>
-                {/* <PageFooterBottom /> */}
+                <FooterSmall />
             </>
         )
 }
