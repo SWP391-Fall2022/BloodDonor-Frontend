@@ -11,13 +11,13 @@ const Register = () => {
             <div className={`${styles.detailCol}`}>
                 <div className={`${styles.detailContainer}`}>
                     <Link to='/register/donor'>
-                        <Button className={`${styles.btn}`} type="primary" size="large">NGƯỜI HIẾN MÁU</Button>
+                        <Button id={`${styles.registerBtn}`} type="primary" size="large">NGƯỜI HIẾN MÁU</Button>
                     </Link>
                     <img className={`${styles.img}`} src={donor} alt="Donor" />
                 </div>
                 <div className={`${styles.detailContainer}`}>
                     <Link to='/register/place'>
-                        <Button className={`${styles.btn}`} type="primary" size="large">NƠI HIẾN MÁU</Button>
+                        <Button id={`${styles.registerBtn}`} type="primary" size="large">NƠI HIẾN MÁU</Button>
                     </Link>
                     <img className={`${styles.img}`} src={doctor} alt="Doctor" />
                 </div>

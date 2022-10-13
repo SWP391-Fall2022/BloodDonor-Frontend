@@ -54,7 +54,7 @@ export default function LoginContainer() {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-                // console.log(response)
+                console.log(response)
             if (response === undefined || !response.success) {
                 sessionStorage.setItem('OTPAcess', JSON.stringify(true))
                 setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
@@ -103,7 +103,7 @@ export default function LoginContainer() {
                         <Input.Password placeholder="Nhập mật khẩu" value={password} onChange={handleOnChangePassword} />
                     </Form.Item>
                     <Form.Item className={styles.formLabel}>
-                        <Button className={`${styles.btn}`} type="primary" htmlType="submit" size="large" onClick={handleLogin}>
+                        <Button id={styles["btn"]} type="primary" htmlType="submit" size="large" onClick={handleLogin}>
                             Đăng nhập
                         </Button>
                     </Form.Item>

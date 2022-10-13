@@ -67,9 +67,9 @@ export default function Otp() {
 
     let button;
     if (seconds > 0) {
-        button = <Button className={`${styles.btn}`} disabled>Gửi lại mã</Button>
+        button = <Button id={`${styles.btnDisabled}`} disabled>Gửi lại mã</Button>
     } else {
-        button = <Button className={`${styles.btn}`} onClick={reSendOtp}>Gửi lại mã</Button>
+        button = <Button id={`${styles.btn}`} onClick={reSendOtp}>Gửi lại mã</Button>
     }
 
     if (otpAccess === null || !otpAccess) {
@@ -95,7 +95,7 @@ export default function Otp() {
                     }} />
                 <div className={styles.content}>Gửi lại mã trong {seconds}s</div>
                 <div style={{ textAlign: 'center' }}>
-                    <Button className={`${styles.btn}`} onClick={handleSubmit}>Xác nhận</Button>
+                    <Button id={`${styles.btn}`} onClick={handleSubmit}>Xác nhận</Button>
                     {button}
                 </div>
                 <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', fontSize: '120%' }}>

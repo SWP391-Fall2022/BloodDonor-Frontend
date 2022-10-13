@@ -34,6 +34,7 @@ function NewPass() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.status === 200) {
+            sessionStorage.removeItem('restore')
             setMessage('Đổi mật khẩu thành công, đang chuyển hướng về trang đăng nhập ...')
             setTimeout(() => {
                 navigate('/login')
@@ -66,7 +67,7 @@ function NewPass() {
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Button className={`${styles.btn}`} type="primary" htmlType="submit" size="large">
+                        <Button id={`${styles.btn}`} type="primary" htmlType="submit" size="large">
                             Đổi mật khẩu
                         </Button>
                     </Form.Item>

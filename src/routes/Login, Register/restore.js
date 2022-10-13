@@ -49,14 +49,14 @@ function Forget() {
                     </Form.Item>
                     <div className={styles.info}><Link className={styles.link} to={"/login"}>Quay lại đăng nhập</Link></div>
                     <Form.Item>
-                        <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
+                        <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
                             Gửi mã xác nhận qua mail
                         </Button>
                     </Form.Item>
                 </Form>
                 <div className={styles.info}>Bạn chưa có tài khoản?</div>
                 <Link to={"/register"} style={{ textDecoration: 'none' }}>
-                    <Button className={`${styles.btn2}`} htmlType="submit" size="large">
+                    <Button id={`${styles.btn2}`} htmlType="submit" size="large">
                         Tạo tài khoản
                     </Button>
                 </Link>

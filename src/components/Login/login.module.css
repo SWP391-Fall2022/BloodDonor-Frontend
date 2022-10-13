@@ -47,7 +47,7 @@
     font-weight: 400;
 }
 
-.btn {
+#btn {
     width: 100%;
     background-color: var(--blue-01);
     color: white;
@@ -59,7 +59,7 @@
     font-weight: 600;
 }
 
-.btn:hover, .btn:focus {
+#btn:hover, #btn:focus {
     background-color: black;
     color: white;
 }

@@ -25,17 +25,17 @@ const RegisterStepPanel = (props) => {
             <div className="steps-content">{props.steps[activeStep].content}</div>
             <div className="steps-action">
                 {activeStep > 0 && (
-                    <Button className={`${styles.btnChild}`} type="primary" size="large" onClick={() => prev()}>
+                    <Button id={`${styles.registerBtnChild}`} type="primary" size="large" onClick={() => prev()}>
                         Quay lại
                     </Button>
                 )}
                 {activeStep < props.steps.length - 1 && (
-                    <Button className={`${styles.btnChild}`} type="primary" size="large" onClick={() => next()}>
+                    <Button id={`${styles.registerBtnChild}`} type="primary" size="large" onClick={() => next()}>
                         Tiếp
                     </Button>
                 )}
                 {activeStep === props.steps.length - 1 && (
-                    <Button className={`${styles.btnChild}`} type="primary" htmlType="submit" size="large">
+                    <Button id={`${styles.registerBtnChild}`} type="primary" htmlType="submit" size="large">
                         Đăng ký
                     </Button>
                 )}

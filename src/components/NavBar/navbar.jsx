@@ -55,6 +55,7 @@ export const Navbar = () => {
         sessionStorage.removeItem('user');
         sessionStorage.removeItem('JWT_Key');
         sessionStorage.removeItem('userRole');
+        sessionStorage.removeItem('GoogleEmail');
         user = null;
     }
 

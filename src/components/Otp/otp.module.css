@@ -24,7 +24,7 @@
     text-align: center;
 }
 
-.btn {
+#btn {
     width: fit-content;
     margin: 10px;
     background: var(--primary-500);
@@ -36,7 +36,19 @@
     font-weight: 600;
 }
 
-.btn:hover, .btn:focus {
+#btn:hover, #btn:focus {
     background-color: var(--primary-700);
     color: white;
+}
+
+#btnDisabled {
+    width: fit-content;
+    margin: 10px;
+    background: var(--secondary-300);
+    color: white;
+    box-shadow: var(--shadow-dp-01);
+    border: 0px;
+    border-radius: 2px;
+    font-size: 16px;
+    font-weight: 600;
 }
