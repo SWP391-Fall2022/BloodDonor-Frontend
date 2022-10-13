@@ -20,25 +20,30 @@ import NewsDetailPage from './routes/News/NewsDetailPage';
 // import Achivement from "./routes/achivement";
 import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
 
-import DonorProfile from './routes/donor-progile';
+import DonorProfile from './routes/Donor-Profile/donor-profile';
 import NoPage from "./routes/nopage";
-import Info from './components/Donor-Profile/Basic Info/Info';
-import ChangeEmail from './components/Donor-Profile/Change Email/changeEmail';
-import ChangePassword from './components/Donor-Profile/Change Password/changePassword';
-import ChangePhone from './components/Donor-Profile/Change Phone/changePhone';
-import History from './components/Donor-Profile/History Campaign/history';
-import QnADonor from './components/Donor-Profile/Q&A/QnADonor';
-import Vouchers from './components/Donor-Profile/Voucher Storage/Vouchers';
+import Info from './routes/Donor-Profile/Basic Info/Info';
+import ChangePassword from './routes/Donor-Profile/Change Password/changePassword';
+import History from './routes/Donor-Profile/History Campaign/history';
+import QnADonor from './routes/Donor-Profile/Q&A/QnADonor';
+import Vouchers from './routes/Donor-Profile/Voucher Storage/Vouchers';
+
+import OrganizationProfile from './routes/Organization-Profile/organization-profile';
+import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
+import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Home page */}
         <Route exact strict path="/" element={<Homepage />} />
         <Route exact strict path="/news" element={<ListNewsPage />} />
         <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
         <Route exact strict path="/qna" element={<QnA />} />
+        <Route exact strict path="/achivement" element={<Achievements />} />
 
+        {/* Basic system */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register/donor" element={<RegisterDonor />} />
@@ -52,19 +57,27 @@ export default function App() {
         <Route exact strict path="/campaign" element={<Campaign />} />
         <Route exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />} />
         <Route exact strict path="/organization/:id" element={<OrganizationInformation />} />
-
-
         <Route exact strict path="/achivement" element={<Achievements />} />
 
+        {/* Pages for logged in donor */}
         <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />
-          <Route path="changeEmail" element={<ChangeEmail />} />
           <Route path="changePassword" element={<ChangePassword />} />
-          <Route path="changePhone" element={<ChangePhone />} />
           <Route path="history" element={<History />} />
           <Route path="qna" element={<QnADonor />} />
           <Route path="vouchers" element={<Vouchers />} />
         </Route>
+
+        {/* Pages for logged in organization */}
+        <Route path="/organization" element={<OrganizationProfile />} >
+          <Route index element={<OrganizationInfo />} />
+          <Route path="changePassword" element={<OrganizationChangePassword />} />
+
+        </Route>
+
+        {/* Pages for admin */}
+
+        {/* 404 error page */}
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>

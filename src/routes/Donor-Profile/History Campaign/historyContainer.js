@@ -36,9 +36,9 @@ const columns = [
         key: 'action',
         render: () => (
             <Space size="middle">
-                <a>Đã đăng ký</a>
-                <a>Đã tham gia</a>
-                <a>Hủy tham gia</a>
+                <Link>Đã đăng ký</Link>
+                <Link>Đã tham gia</Link>
+                <Link>Hủy tham gia</Link>
             </Space>
         ),
     },

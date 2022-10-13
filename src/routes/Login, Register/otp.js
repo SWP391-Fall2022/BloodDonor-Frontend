@@ -26,9 +26,12 @@ export default function Otp() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/confirmCode/${otp}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
         if (response.success) {
-            navigate('/login')
+            if (JSON.parse(sessionStorage.getItem('restore'))) {
+                navigate('/new-password')
+            } else {
+                navigate('/login')
+            }
         } else {
             setMessage(response.body)
         }
