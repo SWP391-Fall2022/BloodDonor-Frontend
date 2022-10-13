@@ -1,0 +1,176 @@
+.campaign-container{
+    display: flex;
+    margin-left: 18%;
+    margin-right: 14%;
+    margin-top: 105px;
+    padding-top: 30px;
+}
+
+.campaign-container .MuiSvgIcon-root {
+    display: inline-block !important;
+  }
+
+/* Filter table style ----------------------------------------------------------*/
+
+.filter-table {
+    background-color: white;
+    width: 27%;
+    min-width: 240px;
+    height: fit-content;
+    margin-right: 40px;
+    margin-bottom: 30px;
+    padding: 30px 35px 30px 30px;
+    box-shadow: var(--shadow-dp-02);
+}
+
+.filter-table p{
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom:  0.6em;
+}
+
+.filter-by-blood{
+    margin-bottom: 20px;
+}
+
+.filter-item label{
+    font-size: 16px;
+}
+
+.filter-item{
+    height: 35px;
+}
+
+
+/* datepicker & search style --------------------------------------------------*/
+.date-seach{
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.date-seach .ant-picker-range{
+    height: 35px;
+    width: 53%;
+}
+
+.date-seach .ant-input-wrapper{
+    width: 96%;
+}
+
+.date-seach .ant-input-group-wrapper input,
+ .date-seach .ant-input-group-wrapper button{
+    height: 35px;
+ }
+
+ .date-seach .ant-input-search-button{
+    background-color: var(--primary-900) !important;
+ }
+
+/*-----------campaign CARD------------*/
+.search-campaign .ant-list-lg .ant-list-item{
+    padding: 0;
+}
+
+.search-campaign .campaign-card {
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    width: 100%;
+    color: black;
+}
+
+.search-campaign .campaign-header {
+    text-align: left;
+    padding: 5%;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.196);
+}
+
+.search-campaign .campaign-header a {
+    display: block;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.search-campaign .campaign-img-container {
+    width: 100%;
+    height:190px;
+    overflow: hidden;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.search-campaign .campaign-img-container img {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.search-campaign .campaign-card-content {
+    text-align: left;
+    padding: 5%;
+
+}
+
+.search-campaign .campaign-name {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: black;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-campaign .campaign-address {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    color: black;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-campaign .campaign-time {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.search-campaign .campaign-card-footer {
+    display: grid;
+    text-align: center;
+    grid-template-columns: 50% 50%;
+    padding: 5%;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.196);
+}
+
+.search-campaign .ant-list-item{
+    width: 95%;
+    padding: 0;
+}
+
+
+.search-campaign .campaign-img-container img{
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    transform: scale(1); 
+    /* cho ảnh fix với div */
+ }
+
+ .search-campaign .campaign-report{
+    border-left: 0.5px solid rgba(0, 0, 0, 0.196);
+ }
+
+
+
+
+

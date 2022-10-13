@@ -12,7 +12,9 @@ import NewPass from "./routes/Login, Register/changePass";
 import Forget from "./routes/Login, Register/restore";
 import Otp from "./routes/Login, Register/otp"
 import QnA from "./routes/QAndA/QnA"
-// import Campaign from "./routes/campaign";
+import Campaign from "./routes/Campaign/Campaign";
+import CampaignDetailPage from "./routes/Campaign/CampaignDetailPage";
+import OrganizationInformation from "./routes/Campaign/OrganizationInformation/OrganizationInformation";
 import ListNewsPage from './routes/News/ListNewsPage';
 import NewsDetailPage from './routes/News/NewsDetailPage';
 // import Achivement from "./routes/achivement";
@@ -39,8 +41,6 @@ export default function App() {
         <Route exact strict path="/news" element={<ListNewsPage />} />
         <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
         <Route exact strict path="/qna" element={<QnA />} />
-        {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
-        {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
         <Route exact strict path="/achivement" element={<Achievements />} />
 
         {/* Basic system */}
@@ -54,7 +54,12 @@ export default function App() {
         <Route path="/restore" element={<Forget />} />
         <Route path="/otp" element={<Otp />} />
 
-        {/* Pages for donor */}
+        <Route exact strict path="/campaign" element={<Campaign />} />
+        <Route exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />} />
+        <Route exact strict path="/organization/:id" element={<OrganizationInformation />} />
+        <Route exact strict path="/achivement" element={<Achievements />} />
+
+        {/* Pages for logged in donor */}
         <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />
           <Route path="changePassword" element={<ChangePassword />} />
@@ -63,7 +68,7 @@ export default function App() {
           <Route path="vouchers" element={<Vouchers />} />
         </Route>
 
-        {/* Pages for organization */}
+        {/* Pages for logged in organization */}
         <Route path="/organization" element={<OrganizationProfile />} >
           <Route index element={<OrganizationInfo />} />
           <Route path="changePassword" element={<OrganizationChangePassword />} />

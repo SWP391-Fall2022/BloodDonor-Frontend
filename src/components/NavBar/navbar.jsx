@@ -18,7 +18,7 @@ export const Navbar = () => {
     const [click, setClick] = useState(false);
     function handleClick() {
         setClick(!click);
-        console.log(click);
+        console.log("click",click);
     }
 
     const user = JSON.parse(sessionStorage.getItem('user'))
