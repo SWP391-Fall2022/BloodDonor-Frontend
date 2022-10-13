@@ -1,4 +1,8 @@
-#homepage h1 {
+@import "../../index.css";
+.QnA-content{
+    padding: 3% 24%;
+}
+#QnA h1 {
     font-weight: 800 !important;
     font-size: 50px;
     line-height: 65px;
@@ -9,30 +13,30 @@
 
 }
 
-#homepage h2 {
+#QnA h2 {
     font-weight: 700 !important;
     font-size: 28px;
     line-height: 39px;
     text-transform: uppercase;
-    padding: 5% 0 1% 0;
+    padding: 3.5% 0 2% 0;
     color: #1F364B;
 }
 
-#homepage h3 {
-    font-weight: 500 !important;
-    font-size: 18px;
+#QnA h3 {
+    font-weight: 600 !important;
+    font-size: 16px;
     line-height: 30px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.2rem;
+    padding: 0 3%;
 }
 
-#homepage h4 {
+#QnA h4 {
     font-weight: 600 !important;
     font-size: 16px;
     line-height: 28px;
 }
 
-#homepage p,
-#homepage li {
+#QnA li {
     font-weight: 500 !important;
     font-size: 15px;
     line-height: 22px;
@@ -40,41 +44,74 @@
 }
 
 @media only screen and (max-width: 950px) {
-    #homepage h1 {
+    #QnA h1 {
         font-size: 42px !important;
         line-height: 56px !important;
     }
-    #homepage h2{
+    #QnA h2{
         font-size: 22px !important;
         line-height: 30px;
-        padding: 8% 0 2% 0;
     }
-    #homepage h3 {
+    #QnA h3 {
         font-size: 16px !important;
         line-height: 25px !important;
     }
-    #homepage h4 {
+    #QnA h4 {
         font-size: 12px !important;
         line-height: 20px !important;
     }
 }
 
 @media only screen and (max-width: 740px) {
-    #homepage h1 {
+    #QnA h1 {
         font-size: 30px !important;
         line-height: 45px !important;
     }
-    #homepage h2{
+    #QnA h2{
         font-size: 18px !important;
         line-height: 24px !important;
-        padding: 10% 0 3% 0;
     }
-    #homepage h3 {
+    #QnA h3 {
         font-size: 12px !important;
         line-height: 20px !important;
     }
-    #homepage h4 {
+    #QnA h4 {
         font-size: 10px !important;
         line-height: 15px !important;
     }
+    .QnA-content{
+        padding: 3% 15%;
+    }
 }
+#QnA{
+    background-color: var(--blue-0);
+}
+.QnA-cover{
+    margin-top: 85px;
+    background-image: url(../../assets/QnA-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    text-align: center;
+}
+
+.QnA-container {
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    margin-bottom: 2%;
+    box-shadow: var(--shadow-dp-01);
+}
+
+.QnA-card {
+    border-radius: 5px;
+    background-color: var(--blue-02);
+}
+
+.QnA-card li {
+    padding: 0.8% 5%;
+    list-style-type: disc;
+}
+

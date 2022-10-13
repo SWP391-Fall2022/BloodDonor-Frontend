@@ -22,7 +22,6 @@ const Homepage = () => {
         <Achievements />
         <QAndA />
       </div>
-      {/* <PageFooter /> */}
     </div>
   );
 };

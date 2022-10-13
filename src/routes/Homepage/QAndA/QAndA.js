@@ -56,7 +56,7 @@ const QAndA = () => {
         </li>
       </Panel>
     </Collapse>
-    <Button type="secondary" style={{ marginTop: "1.5%" }}>
+    <Button type="secondary" style={{ marginTop: "1.5%" }} href="/QnA">
       Xem thêm
     </Button>
   </section>

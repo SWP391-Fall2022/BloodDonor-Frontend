@@ -43,12 +43,12 @@ export const Navbar = () => {
                     </NavLink>
 
 
-                    <NavLink to="/achivement">
+                    <NavLink to="/achievement" onClick={() => window.onscroll({top: 0})}>
                         <EmojiEventsIcon className='nav-icon'></EmojiEventsIcon>
                         <p>Thành tích</p>
                     </NavLink>
 
-                    <NavLink to="/qa">
+                    <NavLink to="/qna">
                         <HelpCenterIcon className='nav-icon'></HelpCenterIcon>
                         <p>Hỏi đáp</p>
                     </NavLink>

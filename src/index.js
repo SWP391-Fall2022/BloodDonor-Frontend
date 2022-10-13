@@ -3,6 +3,12 @@ import './index.css';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from './routes/Homepage/Homepage';
+import Achievement from './routes/Achievement/Achievement';
+import { SideBarforDonor } from './components/SideBar/SideBarforDonor';
+import { SideBarforOrganization } from './components/SideBar/SideBarforOrganization';
+import { SideBarforAdmin } from './components/SideBar/SideBarforAdmin';
+import QnA from './routes/QnA/QnA';
+
 // import Home from "./routes/home";
 // import Login from "./routes/login";
 // import Register from "./routes/register";
@@ -46,10 +52,18 @@ export default function App() {
 
         <Route exact strict path="/campaign" element={<Campaign />} />
         <Route exact strict path="/news" element={<ListNewsPage />} />
-        <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} />
-        <Route exact strict path="/achivement" element={<Achivement />} />
+        <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} /> */}
+        <Route exact strict path="/achievement" element={<Achievement />} />
+        <Route exact strict path="/qna" element={<QnA/>} />
+        <Route exact strict path="/sidebar_for_donor" element={<SideBarforDonor/>} />
+        <Route exact strict path="/sidebar_for_organization" element={<SideBarforOrganization/>} />
+        <Route exact strict path="/sidebar_for_admin" element={<SideBarforAdmin/>} />
 
-        <Route path="/donor" element={<DonorProfile />} >
+
+        
+
+
+        {/* <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />
           <Route path="changeEmail" element={<ChangeEmail />} />
           <Route path="changePassword" element={<ChangePassword />} />
