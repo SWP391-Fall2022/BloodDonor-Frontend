@@ -22,6 +22,7 @@ export const Navbar = () => {
     }
 
     const user = JSON.parse(sessionStorage.getItem('user'))
+    const role = JSON.parse(sessionStorage.getItem('userRole'))
     let loginState;
     if (user === null) {
         loginState = <div className={click ? 'nav-logs' : 'unactive-nav-logs'}>
@@ -38,7 +39,7 @@ export const Navbar = () => {
     }
     if (user !== null) {
         loginState = <div className={click ? 'nav-logs' : 'unactive-nav-logs'}>
-            <Link to="/donor">
+            <Link to={role}>
                 <AccountCircleIcon className='nav-icon'></AccountCircleIcon>
                 <p>Hồ sơ</p>
             </Link>
@@ -53,6 +54,7 @@ export const Navbar = () => {
     function handleLogout() {
         sessionStorage.removeItem('user');
         sessionStorage.removeItem('JWT_Key');
+        sessionStorage.removeItem('userRole');
         user = null;
     }
 

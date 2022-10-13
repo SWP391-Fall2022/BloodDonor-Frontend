@@ -70,7 +70,7 @@
     padding: 15px 0;
 }
 
-.formLabel {
+.formLabel, .textLabel {
     margin-bottom: 20px;
 }
 
@@ -127,11 +127,6 @@
     color: black;
     box-shadow: var(--shadow-dp-01);
     font-weight: 600;
-}
-
-.questionPanel li {
-    padding: 0.8% 5%;
-    list-style-type: disc;
 }
 
 /* Voucher Page */

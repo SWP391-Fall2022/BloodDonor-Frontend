@@ -17,7 +17,6 @@ import ListNewsPage from './routes/News/ListNewsPage';
 import NewsDetailPage from './routes/News/NewsDetailPage';
 // import Achivement from "./routes/achivement";
 import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
-import AuthGoogleRoutes from './components/ProtectedRoute/CheckNewGoogleUser';
 
 import DonorProfile from './routes/Donor-Profile/donor-profile';
 import NoPage from "./routes/nopage";
@@ -27,32 +26,35 @@ import History from './routes/Donor-Profile/History Campaign/history';
 import QnADonor from './routes/Donor-Profile/Q&A/QnADonor';
 import Vouchers from './routes/Donor-Profile/Voucher Storage/Vouchers';
 
+import OrganizationProfile from './routes/Organization-Profile/organization-profile';
+import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
+import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Home page */}
         <Route exact strict path="/" element={<Homepage />} />
         <Route exact strict path="/news" element={<ListNewsPage />} />
         <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
         <Route exact strict path="/qna" element={<QnA />} />
+        {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
+        {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
+        <Route exact strict path="/achivement" element={<Achievements />} />
 
+        {/* Basic system */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register/donor" element={<RegisterDonor />} />
         <Route path="/register/place" element={<RegisterPlace />} />
 
         <Route path="/auth" element={<AuthRoutes />} />
-        <Route path="/auth-google" element={<AuthGoogleRoutes />} />
         <Route path="/new-password" element={<NewPass />} />
         <Route path="/restore" element={<Forget />} />
         <Route path="/otp" element={<Otp />} />
 
-        {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
-        {/* <Route exact strict path="/campaign" element={<Campaign />} /> */}
-        {/* <Route exact strict path="/news" element={<ListNewsPage />} /> */}
-        {/* <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} /> */}
-        <Route exact strict path="/achivement" element={<Achievements />} />
-
+        {/* Pages for donor */}
         <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />
           <Route path="changePassword" element={<ChangePassword />} />
@@ -60,6 +62,17 @@ export default function App() {
           <Route path="qna" element={<QnADonor />} />
           <Route path="vouchers" element={<Vouchers />} />
         </Route>
+
+        {/* Pages for organization */}
+        <Route path="/organization" element={<OrganizationProfile />} >
+          <Route index element={<OrganizationInfo />} />
+          <Route path="changePassword" element={<OrganizationChangePassword />} />
+
+        </Route>
+
+        {/* Pages for admin */}
+
+        {/* 404 error page */}
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
