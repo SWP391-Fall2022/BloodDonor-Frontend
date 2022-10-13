@@ -1,0 +1,48 @@
+.senqna{
+    display: inline-block;
+}
+
+.senqna .ant-btn-primary{
+    background-color: white !important;
+    color: black !important;
+    border-color: var(--primary-600) !important;
+}
+
+.send-ques-modal .ant-modal-title{
+    font-weight: 700;
+    font-size: 24px ;
+    text-align: center ;
+    line-height: 35px ;
+    text-transform: uppercase;
+    padding-top: 30px;
+}
+
+.send-ques-modal .ant-modal-header{
+    border: none;
+}
+
+.send-ques-modal .ant-modal-body{
+    padding: 0 40px;
+}
+
+.send-ques-modal .ant-modal-footer {
+    text-align: center;
+    border: none;
+    padding: 0 16px 25px  16px;
+
+}
+
+.send-ques-modal .ant-modal-footer .ant-btn-default,
+.send-ques-modal .ant-modal-footer .ant-btn-default:active,
+.send-ques-modal .ant-modal-footer .ant-btn-default:focus,
+.send-ques-modal .ant-modal-footer .ant-btn-default:hover{
+    color: var(--primary-600) !important;
+    border-color: var(--primary-600) !important;
+
+}
+
+
+#send-question-form .ant-form-item-label{
+    font-weight: 600;
+    font-size: 18px;
+}

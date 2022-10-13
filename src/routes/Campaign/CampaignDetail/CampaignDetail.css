@@ -1,3 +1,14 @@
+/* modal style-------------------------------------- */
+.edit-date-time .ant-btn-primary{
+    border-color: var(--primary-600) !important;
+    background:  var(--primary-600) !important;
+}
+
+.edit-date-time .ant-btn-primary:active{
+    border-color: var(--primary-600);
+    background:  var(--primary-600);
+}
+
 /* -----------------------Left side---------- */
 .campaignDetail-left {
     background-color: white;
@@ -54,58 +65,6 @@
     margin: 5px 20px;
 }
 
-/* Date style */
-.date{
-    width: 75%;
-    max-width: 430px;
-    height: 185px;
-    overflow: auto;
-    margin: 18px auto;
-    line-height: 25px;
-    background-color: var(--primary-050);
-    padding: 20px 13px;
-    box-shadow: var(--shadow-dp-02);
-    border-radius: 5px;
-}
-
-.campaignDetail-left .ant-radio-group {
-    line-height: 40px;
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-items: start;
-}
-
-.time{
-    width: 49%;
-    max-width: 281px;
-    text-align: initial;
-    margin: 20px auto;
-    background-color: var(--primary-050);
-    padding: 15px 17px 10px 19px;
-    box-shadow: var(--shadow-dp-02);
-    border-radius: 5px;
-
-}
-
-.time .ant-radio-group{
-    display: block;
-}
-
-#join{
-    background-color: var(--primary-500);
-    color: white;
-    /* padding: 5px 10px; */
-    margin-right: 20px;
-    margin-top: 20px;
-}
-
-#senqna{
-    border: 1px solid var(--primary-500);
-    margin-top: 20px;
-
-
-}
-
 /* ---------------right side-------------------- */
 /* medal style---------------- */
 
@@ -149,10 +108,6 @@
     align-items: center;
 }
 
-/* .campaignDetail-medal-item{
-padding:0 5% ;
-} */
-
 .campaignDetail-medal-item p{
     font-size: 12px;
     font-weight: 600;
@@ -164,31 +119,4 @@ padding:0 5% ;
 
 .campaignDetail-medal-item:first-of-type{
     margin-right: 5px;
-}
-
-/* qna style-------------------- */
-.campaignDetail-q-and-a{
-    background-color: white;
-    padding: 20px 15px;
-    box-shadow: var(--shadow-dp-02);
-}
-
-.campaignDetail-q-and-a h3{
-    text-align: center;
-}
-
-.campaignDetail-q-and-a .ant-collapse > .ant-collapse-item > .ant-collapse-header{
-    padding: 5px 16px;
-}
-
-.campaignDetail-q-and-a .ant-collapse-content-box{
-    list-style: disc;
-}
-
-.campaignDetail-q-and-a-card{
-    margin-bottom: 15px;
-}
-
-.campaignDetail-q-and-a .ant-collapse-header-text{
-    font-weight: 600;
 }

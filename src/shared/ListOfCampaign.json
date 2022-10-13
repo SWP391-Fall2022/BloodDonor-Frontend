@@ -41,7 +41,7 @@
       "image": "https://static.giotmauvang.org.vn/ihpstatic/LOGO/BTH.jpg",
       "description": "Hội bảo trợ bệnh nhân nghèo TPHCM xin thông báo: Điểm hiến máu cố định tại khu vực Bình tân từ ngày 17/09/2022 đến ngày 18/09/2022. Quí tình nguyện viên tham gia hiến máu vui lòng đăng kí vào trang thông tin này để thuật lợi hơn khi làm thủ thục chuẩn bị hiến máu.",
       "startDate": "2022-09-15",
-      "endDate": "2022-09-15",
+      "endDate": "2022-09-25",
       "emergency": false,
       "status": true,
       "AddressDetail": "24 Nguyễn Thị Diệu, Phường Võ Thị Sáu, Quận 3, Hà Nội",
@@ -59,7 +59,7 @@
       "image": "https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/309268836_439739304920901_2377485346690661175_n.png?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=AEh1YrkGZv8AX-uzGoZ&_nc_ht=scontent.fsgn2-6.fna&oh=00_AT_LZBIwfFJcDAY1optDRX7TA88IQm672HAgjKOwETafNw&oe=634651CA",
       "description": "Trung Tâm Hiến Máu Nhân Đạo Tp.HCM xin thông báo: Điểm hiến máu cố định tại khu vực Bình tân từ ngày 17/09/2022 đến ngày 18/09/2022. Quí tình nguyện viên tham gia hiến máu vui lòng đăng kí vào trang thông tin này để thuật lợi hơn khi làm thủ thục chuẩn bị hiến máu.",
       "startDate": "2022-09-15",
-      "endDate": "2022-09-15",
+      "endDate": "2022-12-15",
       "emergency": true,
       "status": true,
       "AddressDetail": "118 Hồng Bàng, Phường 12, Quận 5, TP.HCM",
@@ -77,7 +77,7 @@
       "image": "https://cdn.haitrieu.com/wp-content/uploads/2022/08/logo-benh-vien-cho-ray.png",
       "description": " Trung tâm Truyền máu Chợ Rẫy xin thông báo: Điểm hiến máu cố định tại khu vực Bình tân từ ngày 17/09/2022 đến ngày 18/09/2022. Quí tình nguyện viên tham gia hiến máu vui lòng đăng kí vào trang thông tin này để thuật lợi hơn khi làm thủ thục chuẩn bị hiến máu.",
       "startDate": "2022-09-15",
-      "endDate": "2022-09-15",
+      "endDate": "2022-11-11",
       "emergency": false,
       "status": true,
       "AddressDetail": "Cổng số 5, đường Phạm Hữu Chí, Phường 12, Quận 5, Đà Nẵng",
@@ -90,11 +90,11 @@
     },
     {
       "id": 6,
-      "organization": "Trung tâm hiến máu Nhân Đạo TP Hồ Chí Minh",
-      "image": "https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/309268836_439739304920901_2377485346690661175_n.png?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=AEh1YrkGZv8AX-uzGoZ&_nc_ht=scontent.fsgn2-6.fna&oh=00_AT_LZBIwfFJcDAY1optDRX7TA88IQm672HAgjKOwETafNw&oe=634651CA",
-      "description": "Trung tâm hiến máu nhân đạo xin thông báo: Điểm hiến máu cố định tại khu vực Bình tân từ ngày 17/09/2022 đến ngày 18/09/2022. Quí tình nguyện viên tham gia hiến máu vui lòng đăng kí vào trang thông tin này để thuật lợi hơn khi làm thủ thục chuẩn bị hiến máu.",
+      "organization": "BV Truyền máu Huyết học",
+      "image": "https://static.giotmauvang.org.vn/ihpstatic/LOGO/BTH.jpg",
+      "description": "BV Truyền máu Huyết học xin thông báo: Điểm hiến máu cố định tại khu vực Bình tân từ ngày 17/09/2022 đến ngày 18/09/2022. Quí tình nguyện viên tham gia hiến máu vui lòng đăng kí vào trang thông tin này để thuật lợi hơn khi làm thủ thục chuẩn bị hiến máu.",
       "startDate": "2022-09-15",
-      "endDate": "2022-09-15",
+      "endDate": "2022-11-15",
       "emergency": false,
       "status": true,
       "AddressDetail": "118 Hồng Bàng, Phường 12, Quận 5, Cần Thơ",
@@ -104,7 +104,7 @@
         "Nhóm máu AB"
       ],
       "name": "Chiến dịch 106",
-      "organizationId": "3"
+      "organizationId": "4"
     }
   ]
 }

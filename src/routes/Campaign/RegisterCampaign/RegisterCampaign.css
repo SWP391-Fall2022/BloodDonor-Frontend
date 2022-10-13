@@ -1,0 +1,44 @@
+/* Date style */
+.register-date{
+    max-width: 443px;
+    height: 165px;
+    overflow: auto;
+    margin: 0 auto;
+    line-height: 25px;
+    background-color: var(--primary-050);
+    border-radius: 5px;
+    padding: 0 20px;
+
+}
+
+.register-date-cover{
+    background-color: var(--primary-050);
+    box-shadow: var(--shadow-dp-02);
+    height: 197px;
+    padding: 20px 0;
+    width: 79%;
+    margin: 0 auto;
+}
+
+.campaignDetail-left .ant-radio-group {
+    line-height: 40px;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: start;
+}
+
+.register-time{
+    width: 49%;
+    max-width: 281px;
+    text-align: initial;
+    margin: 20px auto;
+    background-color: var(--primary-050);
+    padding: 15px 17px 10px 19px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+
+}
+
+.register-time .ant-radio-group{
+    display: block;
+}

@@ -1,0 +1,26 @@
+.health-info-modal .ant-modal-title{
+    font-weight: 700;
+    font-size: 24px ;
+    text-align: center ;
+    line-height: 35px ;
+    text-transform: uppercase;
+    padding: 20px 85px 0 85px;
+}
+
+.health-info-modal .ant-modal-header{
+    border: none;
+}
+
+.health-info-modal .ant-modal-body{
+    padding: 0 40px 24px 40px;
+}
+
+.health-info-modal .ant-modal-footer{
+    display: none;
+
+
+}
+
+.participated-buttons .num-of-registered{
+   display: none ;
+}

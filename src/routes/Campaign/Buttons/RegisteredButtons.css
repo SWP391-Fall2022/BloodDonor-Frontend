@@ -1,0 +1,9 @@
+/* edit buttons position */
+.registered-buttons .edit-date-time{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.registered-buttons  .cancel-camp{
+    margin-right: 20px;
+}
