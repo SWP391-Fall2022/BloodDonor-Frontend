@@ -14,7 +14,9 @@ export default function CampaignDetail({registered,campaign,callback}) {
         confirm({
           title: 'Bạn có muốn hủy tham gia chiến dịch này?',
           icon: <ExclamationCircleOutlined />,
-      
+          okText: 'Hủy tham gia',
+          cancelText: 'Thoát',
+          className:'cancel-confirm',
           onOk() {
         callback(!registered);
 

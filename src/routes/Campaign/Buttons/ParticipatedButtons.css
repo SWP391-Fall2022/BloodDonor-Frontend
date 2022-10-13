@@ -24,3 +24,14 @@
 .participated-buttons .num-of-registered{
    display: none ;
 }
+
+/* customize button of antd modal */
+.participated-buttons .ant-btn-primary{
+    border-color: var(--primary-600) !important;
+    background:  var(--primary-600) !important;
+}
+
+.participated-buttons .ant-btn-primary:active{
+    border-color: var(--primary-600);
+    background:  var(--primary-600);
+}

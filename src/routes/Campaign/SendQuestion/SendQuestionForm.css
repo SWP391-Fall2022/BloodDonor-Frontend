@@ -46,3 +46,14 @@
     font-weight: 600;
     font-size: 18px;
 }
+
+/* customize button of antd modal */
+.send-ques-modal .ant-btn-primary{
+    border-color: var(--primary-600) !important;
+    background:  var(--primary-600) !important;
+}
+
+.send-ques-modal  .ant-btn-primary:active{
+    border-color: var(--primary-600);
+    background:  var(--primary-600);
+}
