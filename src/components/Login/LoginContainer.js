@@ -54,7 +54,8 @@ export default function LoginContainer() {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-            if (response === undefined) {
+                // console.log(response)
+            if (response === undefined || !response.success) {
                 sessionStorage.setItem('OTPAcess', JSON.stringify(true))
                 setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
             }
@@ -81,12 +82,11 @@ export default function LoginContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login/google`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-
         sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
         if (response.success) {
             sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
             sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
-            navigate("/auth-google")
+            navigate("/auth")
         }
 
     }

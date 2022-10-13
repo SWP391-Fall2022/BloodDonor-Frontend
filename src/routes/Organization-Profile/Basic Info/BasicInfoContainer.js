@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import styles from '../donor.module.css'
+import styles from '../organization.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
-import moment from 'moment';
-import { Form, Input, Select, DatePicker, Button } from 'antd';
+import { Form, Input, Select, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
 const { TextArea } = Input;
@@ -11,7 +10,13 @@ export default function BasicInfoContainer() {
     const [message, setMessage] = useState('')
     const navigate = useNavigate();
     const user = JSON.parse(sessionStorage.getItem('user'))
+    // console.log(user)
     const [form] = Form.useForm();
+    const splitArr = user.introduction.split("-")
+    const introduction1 = splitArr[0];
+    const introduction2 = splitArr[1];
+    // console.log(introduction1)
+    // console.log(introduction2)
     let userDefaultDistrict;
     let userDefaultDistrictList;
     let userDefaultProvince;
@@ -21,7 +26,7 @@ export default function BasicInfoContainer() {
     //Find province based on user's districtID
     for (let i = 0; i < provinceList.length; i++) {
         for (let j = 0; j < provinceList[i].district.length; j++) {
-            if (provinceList[i].district[j].id === user.user.districtId) {
+            if (provinceList[i].district[j].id === user.districtId) {
                 userDefaultDistrict = provinceList[i].district[j].name;
                 userDefaultDistrictList = provinceList[i].district;
                 userDefaultProvince = provinceList[i].name
@@ -51,18 +56,13 @@ export default function BasicInfoContainer() {
 
         const requestData = {
             "name": formData.name,
-            "birthday": formData.birthday,
-            "sex": formData.sex,
-            "identityNum": formData.identityNum,
-            "avatar": "something",
-            "bloodType": formData.bloodType,
-            "anamnesis": formData.anamnesis,
-            "user": {
-                "phone": formData.phone,
-                "districtId": districtId,
-                "addressDetails": formData.addressDetails
-            }
+            "districtId": districtId,
+            "addressDetails": formData.addressDetails,
+            "phone": formData.phone,
+            "introduction": formData.introduction1 + "-" + formData.introduction2,
+            "website": formData.website
         }
+        // console.log(requestData)
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
         let json = {
             method: 'PUT',
@@ -72,12 +72,17 @@ export default function BasicInfoContainer() {
             }),
             body: JSON.stringify(requestData),
         }
-        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me`, json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/organization/updateInfo`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.success) {
+            requestData.email = user.email
+            requestData.taxCode = user.taxCode
+            requestData.id = user.id
+            requestData.username = user.username
+            requestData.avatar = user.avatar
             sessionStorage.setItem('user', JSON.stringify(requestData))
-            navigate("/donor")
+            navigate("/organization")
             setMessage("Thay đổi thành công")
         }
         setTimeout(() => {
@@ -92,40 +97,18 @@ export default function BasicInfoContainer() {
 
     return (
         <div className={styles.infoContainer}>
-            <div className={styles.title}>THÔNG TIN CƠ BẢN</div>
+            <div className={styles.title}>THAY ĐỔI THÔNG TIN</div>
             <Form layout="vertical" form={form} onFinish={onFinish}>
                 <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="Họ và Tên" name="name" initialValue={user.name} rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                    <Form.Item className={styles.subFormLabel} label="Tên tổ chức" initialValue={user.name} name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                         <Input placeholder="Nhập họ và tên" />
                     </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
                         <Input placeholder="Nhập số điện thoại" />
                     </Form.Item>
                 </Form.Item>
-                <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="Ngày sinh" name="birthday" initialValue={moment(`${user.birthday}`)} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
-                        <DatePicker format={'YYYY-MM-DD'} style={{ width: '100%' }} placeholder="Chọn ngày sinh" />
-                    </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Giới tính" name="sex" initialValue={user.sex} rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
-                        <Select placeholder="Chọn">
-                            <Option value="MALE">Nam</Option>
-                            <Option value="FEMALE">Nữ</Option>
-                        </Select>
-                    </Form.Item>
-                </Form.Item>
-                <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="CMND" name="identityNum" initialValue={user.identityNum} rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
-                        <Input placeholder="Nhập số CMND" />
-                    </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Nhóm máu" name="bloodType" initialValue={user.bloodType} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
-                        <Select placeholder="Chọn">
-                            <Option value="O">O</Option>
-                            <Option value="A">A</Option>
-                            <Option value="B">B</Option>
-                            <Option value="AB">AB</Option>
-                        </Select>
-                    </Form.Item>
-                </Form.Item>
+                <div className={styles.textLabel}><strong>Email: </strong>{user.email}</div>
+                <div className={styles.textLabel}><strong>Mã số thuế: </strong>{user.taxCode}</div>
                 <Form.Item className={styles.formLabel}>
                     <Form.Item className={styles.subFormLabel} label="Tỉnh" name="province" initialValue={userDefaultProvince} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)' }}>
                         <Select
@@ -145,10 +128,13 @@ export default function BasicInfoContainer() {
                         </Select>
                     </Form.Item>
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" initialValue={user.user.addressDetails}>
+                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" initialValue={user.addressDetails}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Tiền sử bệnh lý" name="anamnesis" initialValue={user.anamnesis}>
+                <Form.Item className={styles.formLabel} label="Chức năng và nhiệm vụ chung" name="introduction1" initialValue={introduction1}>
+                    <TextArea rows={2} allowClear showCount maxLength={100} />
+                </Form.Item>
+                <Form.Item className={styles.formLabel} label="Phạm vi hoạt động" name="introduction2" initialValue={introduction2}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>

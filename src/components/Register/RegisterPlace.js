@@ -82,7 +82,7 @@ function RegisterPlace() {
         console.log(response)
         if (response.status === 200) {
             sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-            navigate("/otp")
+            navigate("/otp", { state: { otpAccess: true, userId: response.body.userId } })
         } else if (response.status === 400) {
             setMessage(response.body)
         } else if (response.status === 500) {
