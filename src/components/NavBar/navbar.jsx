@@ -20,7 +20,6 @@ export const Navbar = () => {
         setClick(!click);
         console.log("click",click);
     }
-
     const user = JSON.parse(sessionStorage.getItem('user'))
     const role = JSON.parse(sessionStorage.getItem('userRole'))
     let loginState;
