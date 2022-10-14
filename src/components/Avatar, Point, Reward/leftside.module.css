@@ -1,0 +1,66 @@
+.leftContainer {
+    display: block;
+    background-color: white;
+    height: auto;
+    padding: 20px 20px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+}
+
+.leftContainer {
+    width: 270px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.leftSideText {
+    font-size: 130%;
+    font-weight: 600;
+}
+
+/*  */
+.ava {
+    box-shadow: var(--shadow-dp-01);
+    margin-bottom: 20px;
+}
+
+/*  */
+.editIcon {
+    position: absolute;
+    top: 140px;
+    left: 160px;
+    background-color: var(--secondary-300);
+    color: white;
+    box-shadow: var(--shadow-dp-03);
+    z-index: 1;
+}
+
+/*  */
+.editIcon:hover, .editIcon:focus {
+    background-color: var(--secondary-400);
+    color: white;
+}
+
+/*  */
+.awardImgContainer {
+    width: 230px;
+}
+/*  */
+.awardImg1, .awardImg2, .awardImg3 {
+    width: 26%;
+    height: 60px;
+}
+/*  */
+.awardImg1 {
+    float: left;
+}
+/*  */
+.awardImg3 {
+    float: right;
+}
+
+/*  */
+.uploader {
+    width: 470px;
+    height: 470px;
+}

@@ -3,47 +3,51 @@ import './index.css';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from './routes/Homepage/Homepage';
-import Achievement from './routes/Achievement/Achievement';
-import { SideBarforDonor } from './components/SideBar/SideBarforDonor';
-import { SideBarforOrganization } from './components/SideBar/SideBarforOrganization';
-import { SideBarforAdmin } from './components/SideBar/SideBarforAdmin';
-import QnA from './routes/QnA/QnA';
-
-// import Home from "./routes/home";
-// import Login from "./routes/login";
-// import Register from "./routes/register";
-// import RegisterDonor from "./components/Register/RegisterDonor";
-// import RegisterPlace from "./components/Register/RegisterPlace";
-// import NewPass from "./routes/changePass";
-// import Forget from "./routes/restore";
-// import Otp from "./routes/otp";
-// import Campaign from "./routes/campaign";
-// import ListNewsPage from './routes/ListNewsPage';
-// import NewsDetailPage from './routes/NewsDetailPage';
+import Achievements from './routes/Homepage/Achievements/Achievement';
+import Login from "./routes/Login, Register/login";
+import Register from "./routes/Login, Register/register";
+import RegisterDonor from "./components/Register/RegisterDonor";
+import RegisterPlace from "./components/Register/RegisterPlace";
+import NewPass from "./routes/Login, Register/changePass";
+import Forget from "./routes/Login, Register/restore";
+import Otp from "./routes/Login, Register/otp"
+import QnA from "./routes/QAndA/QnA"
+import Campaign from "./routes/Campaign/Campaign";
+import CampaignDetailPage from "./routes/Campaign/CampaignDetailPage";
+import OrganizationInformation from "./routes/Campaign/OrganizationInformation/OrganizationInformation";
+import ListNewsPage from './routes/News/ListNewsPage';
+import NewsDetailPage from './routes/News/NewsDetailPage';
 // import Achivement from "./routes/achivement";
-// import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
+import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
 
-// import DonorProfile from './routes/donor-progile';
-// import NoPage from "./routes/nopage";
-// import Info from './components/Donor-Profile/Basic Info/Info';
-// import ChangeEmail from './components/Donor-Profile/Change Email/changeEmail';
-// import ChangePassword from './components/Donor-Profile/Change Password/changePassword';
-// import ChangePhone from './components/Donor-Profile/Change Phone/changePhone';
-// import History from './components/Donor-Profile/History Campaign/history';
-// import QnA from './components/Donor-Profile/Q&A/QnA';
-// import Vouchers from './components/Donor-Profile/Voucher Storage/Vouchers';
+import DonorProfile from './routes/Donor-Profile/donor-profile';
+import NoPage from "./routes/nopage";
+import Info from './routes/Donor-Profile/Basic Info/Info';
+import ChangePassword from './routes/Donor-Profile/Change Password/changePassword';
+import History from './routes/Donor-Profile/History Campaign/history';
+import QnADonor from './routes/Donor-Profile/Q&A/QnADonor';
+import Vouchers from './routes/Donor-Profile/Voucher Storage/Vouchers';
+
+import OrganizationProfile from './routes/Organization-Profile/organization-profile';
+import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
+import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Home page */}
         <Route exact strict path="/" element={<Homepage />} />
+        <Route exact strict path="/news" element={<ListNewsPage />} />
+        <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
+        <Route exact strict path="/qna" element={<QnA />} />
+        <Route exact strict path="/achivement" element={<Achievements />} />
 
-        {/* <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} >
-          <Route path="donor-volunteer" element={<RegisterDonor />} />
-          <Route path="donor-place" element={<RegisterPlace />} />
-        </Route>
+        {/* Basic system */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/register/donor" element={<RegisterDonor />} />
+        <Route path="/register/place" element={<RegisterPlace />} />
 
         <Route path="/auth" element={<AuthRoutes />} />
         <Route path="/new-password" element={<NewPass />} />
@@ -51,28 +55,30 @@ export default function App() {
         <Route path="/otp" element={<Otp />} />
 
         <Route exact strict path="/campaign" element={<Campaign />} />
-        <Route exact strict path="/news" element={<ListNewsPage />} />
-        <Route exact strict path="/news/news-detail" element={<NewsDetailPage />} /> */}
-        <Route exact strict path="/achievement" element={<Achievement />} />
-        <Route exact strict path="/qna" element={<QnA/>} />
-        <Route exact strict path="/sidebar_for_donor" element={<SideBarforDonor/>} />
-        <Route exact strict path="/sidebar_for_organization" element={<SideBarforOrganization/>} />
-        <Route exact strict path="/sidebar_for_admin" element={<SideBarforAdmin/>} />
+        <Route exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />} />
+        <Route exact strict path="/organization/:id" element={<OrganizationInformation />} />
+        <Route exact strict path="/achivement" element={<Achievements />} />
 
-
-        
-
-
-        {/* <Route path="/donor" element={<DonorProfile />} >
+        {/* Pages for logged in donor */}
+        <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />
-          <Route path="changeEmail" element={<ChangeEmail />} />
           <Route path="changePassword" element={<ChangePassword />} />
-          <Route path="changePhone" element={<ChangePhone />} />
           <Route path="history" element={<History />} />
-          <Route path="qna" element={<QnA />} />
+          <Route path="qna" element={<QnADonor />} />
           <Route path="vouchers" element={<Vouchers />} />
         </Route>
-        <Route path="*" element={<NoPage />} /> */}
+
+        {/* Pages for logged in organization */}
+        <Route path="/organization" element={<OrganizationProfile />} >
+          <Route index element={<OrganizationInfo />} />
+          <Route path="changePassword" element={<OrganizationChangePassword />} />
+
+        </Route>
+
+        {/* Pages for admin */}
+
+        {/* 404 error page */}
+        <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
   );
