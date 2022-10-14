@@ -3,7 +3,7 @@ import './index.css';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from './routes/Homepage/Homepage';
-import Achievements from './routes/Homepage/Achievements/Achievement';
+import Achievement from './routes/Achievement/Achievement';
 import Login from "./routes/Login, Register/login";
 import Register from "./routes/Login, Register/register";
 import RegisterDonor from "./components/Register/RegisterDonor";
@@ -11,7 +11,7 @@ import RegisterPlace from "./components/Register/RegisterPlace";
 import NewPass from "./routes/Login, Register/changePass";
 import Forget from "./routes/Login, Register/restore";
 import Otp from "./routes/Login, Register/otp"
-import QnA from "./routes/QAndA/QnA"
+import QnA from "./routes/QnA/QnA"
 import Campaign from "./routes/Campaign/Campaign";
 import CampaignDetailPage from "./routes/Campaign/CampaignDetailPage";
 import OrganizationInformation from "./routes/Campaign/OrganizationInformation/OrganizationInformation";
@@ -41,7 +41,7 @@ export default function App() {
         <Route exact strict path="/news" element={<ListNewsPage />} />
         <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
         <Route exact strict path="/qna" element={<QnA />} />
-        <Route exact strict path="/achivement" element={<Achievements />} />
+        <Route exact strict path="/achievement" element={<Achievement />} />
 
         {/* Basic system */}
         <Route path="/login" element={<Login />} />
@@ -57,7 +57,6 @@ export default function App() {
         <Route exact strict path="/campaign" element={<Campaign />} />
         <Route exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />} />
         <Route exact strict path="/organization/:id" element={<OrganizationInformation />} />
-        <Route exact strict path="/achivement" element={<Achievements />} />
 
         {/* Pages for logged in donor */}
         <Route path="/donor" element={<DonorProfile />} >

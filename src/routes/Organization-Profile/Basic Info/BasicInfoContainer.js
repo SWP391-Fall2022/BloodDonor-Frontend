@@ -99,13 +99,11 @@ export default function BasicInfoContainer() {
         <div className={styles.infoContainer}>
             <div className={styles.title}>THAY ĐỔI THÔNG TIN</div>
             <Form layout="vertical" form={form} onFinish={onFinish}>
-                <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="Tên tổ chức" initialValue={user.name} name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
-                        <Input placeholder="Nhập họ và tên" />
-                    </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
-                        <Input placeholder="Nhập số điện thoại" />
-                    </Form.Item>
+                <Form.Item className={styles.FormLabel} label="Tên tổ chức" initialValue={user.name} name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} >
+                    <Input placeholder="Nhập tên tổ chức" />
+                </Form.Item>
+                <Form.Item className={styles.FormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} >
+                    <Input placeholder="Nhập số điện thoại" />
                 </Form.Item>
                 <div className={styles.textLabel}><strong>Email: </strong>{user.email}</div>
                 <div className={styles.textLabel}><strong>Mã số thuế: </strong>{user.taxCode}</div>
