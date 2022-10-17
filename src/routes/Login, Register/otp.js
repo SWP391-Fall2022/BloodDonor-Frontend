@@ -86,9 +86,9 @@ export default function Otp() {
                     isInputNum={true}
                     containerStyle={{ display: "flex", justifyContent: "center" }}
                     inputStyle={{
-                        width: "60px",
-                        height: "90px",
-                        margin: "30px 15px",
+                        width: "40px",
+                        height: "60px",
+                        margin: "5px 5px",
                         fontSize: "64px",
                         borderRadius: 10,
                         border: "3px solid"
