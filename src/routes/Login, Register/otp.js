@@ -26,9 +26,12 @@ export default function Otp() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/confirmCode/${otp}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
         if (response.success) {
-            navigate('/login')
+            if (JSON.parse(sessionStorage.getItem('restore'))) {
+                navigate('/new-password')
+            } else {
+                navigate('/login')
+            }
         } else {
             setMessage(response.body)
         }
@@ -64,9 +67,9 @@ export default function Otp() {
 
     let button;
     if (seconds > 0) {
-        button = <Button className={`${styles.btn}`} disabled>Gửi lại mã</Button>
+        button = <Button id={`${styles.btnDisabled}`} disabled>Gửi lại mã</Button>
     } else {
-        button = <Button className={`${styles.btn}`} onClick={reSendOtp}>Gửi lại mã</Button>
+        button = <Button id={`${styles.btn}`} onClick={reSendOtp}>Gửi lại mã</Button>
     }
 
     if (otpAccess === null || !otpAccess) {
@@ -86,13 +89,13 @@ export default function Otp() {
                         width: "40px",
                         height: "60px",
                         margin: "5px 5px",
-                        fontSize: "40px",
+                        fontSize: "64px",
                         borderRadius: 10,
                         border: "3px solid"
                     }} />
                 <div className={styles.content}>Gửi lại mã trong {seconds}s</div>
                 <div style={{ textAlign: 'center' }}>
-                    <Button className={`${styles.btn}`} onClick={handleSubmit}>Xác nhận</Button>
+                    <Button id={`${styles.btn}`} onClick={handleSubmit}>Xác nhận</Button>
                     {button}
                 </div>
                 <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', fontSize: '120%' }}>

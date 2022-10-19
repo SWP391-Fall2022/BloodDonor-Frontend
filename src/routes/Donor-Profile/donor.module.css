@@ -129,6 +129,11 @@
     font-weight: 600;
 }
 
+.questionPanel li {
+    padding: 0.8% 5%;
+    list-style-type: disc;
+}
+
 /* Voucher Page */
 .innerTitle {
     color: var(--secondary-900);

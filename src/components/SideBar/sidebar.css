@@ -1,0 +1,55 @@
+@import url(../../index.css);
+
+.sidebar-container {
+    padding-top: 2.3%;
+    width: 270px;
+    height: 100vh;
+    background-color: #12232F;
+    text-align: center;
+}
+
+.sidebar-item {
+    padding: 5% 0 5% 9%;
+    display: flex;
+align-items:center;
+}
+
+.sidebar-subitem {
+    padding: 5% 0 5% 20%;
+    display: flex;
+align-items:center;
+}
+
+.sidebar-item:hover{
+    background-color: var(--blue-01) !important;
+}
+
+.sidebar-container .active{
+    background-color: var(--blue-01);
+    border-right: 6px solid var(--blue-04);
+}
+
+.sidebar-item p, .sidebar-subitem p{
+    display: inline;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: white;
+    padding-top: 2%;
+}
+
+.sidebar-icon{
+    display: inline;
+    color: white;
+    margin-right: 5%;
+}
+.sidebar-logo{
+    padding-bottom: 3%;
+    margin: 0;
+    height: 50px;
+    font-family: 'Reem Kufi Fun';
+    font-style: normal;
+    font-size: 26px;
+    font-weight: 600;
+    color: white;
+}

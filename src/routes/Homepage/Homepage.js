@@ -1,4 +1,5 @@
 import React from "react";
+import { Footer } from "../../components/Footer/Footer";
 import { Navbar } from "../../components/NavBar/navbar";
 import Achievements from "./Achievements/Achievement";
 import Advice from "./Advice/Advice";
@@ -22,7 +23,7 @@ const Homepage = () => {
         <Achievements />
         <QAndA />
       </div>
-      {/* <PageFooter /> */}
+      <Footer />
     </div>
   );
 };

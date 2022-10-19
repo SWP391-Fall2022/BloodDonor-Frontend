@@ -1,4 +1,5 @@
 import { Button, Collapse } from 'antd';
+import { Footer } from "../../../components/Footer/Footer";
 import React from 'react';
 import "./qanda.css"
 const { Panel } = Collapse;
@@ -56,7 +57,7 @@ const QAndA = () => {
         </li>
       </Panel>
     </Collapse>
-    <Button type="secondary" style={{ marginTop: "1.5%" }}>
+    <Button type="secondary" style={{ marginTop: "1.5%" }} href="/QnA">
       Xem thêm
     </Button>
   </section>

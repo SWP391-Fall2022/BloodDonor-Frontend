@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Carousel } from 'antd';
 import img_1 from "../../../assets/homepage-banner-1.png"
 import img_2 from "../../../assets/homepage-banner-2.png"
 import img_3 from "../../../assets/homepage-banner-3.png"
+import Aos from "aos";
+import "aos/dist/aos.css";
+import "aos/dist/aos"
 const Benefits = () => {
+  useEffect(() => {
+    Aos.init({duration: 1500});
+  }, []);
     return <section className="benefits">
     <Carousel autoplay draggable={true} touchThreshold={30} dots={false}>
       <div>

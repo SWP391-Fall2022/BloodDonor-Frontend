@@ -34,6 +34,7 @@ export default function BasicInfoContainer() {
     //Cancel Button
     const onReset = () => {
         form.resetFields();
+        setDistrictList(userDefaultDistrictList)
     };
 
     //Submit Button

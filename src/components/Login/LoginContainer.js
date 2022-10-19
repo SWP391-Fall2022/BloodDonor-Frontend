@@ -54,7 +54,8 @@ export default function LoginContainer() {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-            if (response === undefined) {
+            console.log(response)
+            if (response === undefined || !response.success) {
                 sessionStorage.setItem('OTPAcess', JSON.stringify(true))
                 setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
             }
@@ -81,12 +82,11 @@ export default function LoginContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login/google`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-
         sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
         if (response.success) {
             sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
             sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
-            navigate("/auth-google")
+            navigate("/auth")
         }
 
     }
@@ -103,18 +103,16 @@ export default function LoginContainer() {
                         <Input.Password placeholder="Nhập mật khẩu" value={password} onChange={handleOnChangePassword} />
                     </Form.Item>
                     <Form.Item className={styles.formLabel}>
-                        <Button className={`${styles.btn}`} type="primary" htmlType="submit" size="large" onClick={handleLogin}>
+                        <Button id={styles["btn"]} type="primary" htmlType="submit" size="large" onClick={handleLogin}>
                             Đăng nhập
                         </Button>
                     </Form.Item>
-                    <Form.Item className={`${styles.formLabel} ${styles.recapcha}`}>
-                        <ReCAPTCHA
-                            style={{ margin: "0 25px" }}
-                            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-                            onChange={onChangeRecaptcha}
-                        />
-                    </Form.Item>
                 </Form>
+                <ReCAPTCHA
+                    className={`${styles.recaptcha}`}
+                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                    onChange={onChangeRecaptcha}
+                />
                 <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
                     {message}
                 </div>
