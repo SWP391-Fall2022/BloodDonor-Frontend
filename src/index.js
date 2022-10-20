@@ -71,7 +71,7 @@ export default function App() {
         <Route path="/organization" element={<OrganizationProfile />} >
           <Route index element={<OrganizationInfo />} />
           <Route path="changePassword" element={<OrganizationChangePassword />} />
-
+          <Route path="profile" element={<OrganizationInfo />} />
         </Route>
 
         {/* Pages for admin */}

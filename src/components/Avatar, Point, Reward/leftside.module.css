@@ -19,6 +19,11 @@
 }
 
 /*  */
+
+.avaContainer {
+    position: relative;
+}
+
 .ava {
     box-shadow: var(--shadow-dp-01);
     margin-bottom: 20px;
@@ -27,8 +32,8 @@
 /*  */
 .editIcon {
     position: absolute;
-    top: 140px;
-    left: 160px;
+    bottom: 15%;
+    right: 15%;
     background-color: var(--secondary-300);
     color: white;
     box-shadow: var(--shadow-dp-03);

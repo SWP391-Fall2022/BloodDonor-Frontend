@@ -5,12 +5,12 @@ import styles from '../organization.module.css'
 import { Col, Row } from 'antd'
 export default function OrganizationChangePassword() {
     return (
-        <Row justify="center" className={styles.mainContainer}>
-            <Col span={7} className={styles.leftContainerMain}>
+        <div className={styles.mainContainer}>
+            <div className={styles.leftContainerMain}>
                 <AvatarContainer />
                 <Award />
-            </Col>
-            <Col span={7}><ChangePasswordSide /></Col>
-        </Row>
+            </div>
+            <div><ChangePasswordSide /></div>
+        </div>
     )
 }
