@@ -1,0 +1,59 @@
+@import "../homepage.css";
+/*--------NHỮNG LỜI KHUYÊN--------*/
+.advice {
+    background-color: var(--blue-02);
+    text-align: center;
+    padding: 0 5% 5% 5%;
+}
+
+.advice-col {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
+
+.advice-card {
+    padding: 8% 9%;
+    margin: 2% 0.5%;
+    width: 95%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-02);
+}
+.advice-card:hover{
+    background-color: #d7ffca;
+}
+.advice-card:hover p{
+    transform: scale(1.12);
+    transition-duration: 0.5s;
+}
+.advice-bullet {
+    font-weight: 800 !important;
+    font-size: 20px;
+    display: inline-block;
+    padding: 6px 16px;
+    background-color: #71D94D;
+    color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-01);
+    margin-bottom: 10%;
+}
+
+.advice-card p {
+    margin-top: 4% !important;
+}
+
+@media only screen and (max-width: 950px) {
+    .advice-col {
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .advice-col {
+        display: block;
+    }
+    .advice{
+        padding:0 20% 5% 20%;
+    }
+}

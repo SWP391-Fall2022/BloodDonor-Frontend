@@ -1,0 +1,293 @@
+@import '../../index.css';
+
+/* fixed navabr */
+.navbar-container {
+  position: fixed;
+    z-index:99;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 90px;
+}
+
+.nav {
+  background-color: var(--primary-900);
+  overflow: hidden;
+  height: 50px;
+}
+
+
+/* Style the links inside the navigation bar */
+.nav a {
+  position: relative;
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.5s;
+}
+
+.nav .active {
+  background-color: var(--primary-1000);
+  color: white !important;
+}
+
+.nav .active .nav-icon{
+  color: white;
+}
+
+/* Change the color of links on hover */
+.nav a:hover {
+  background-color: var(--primary-1000);
+  color: white;
+}
+
+.nav a:hover .nav-icon{
+  color: white;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto ;
+  justify-content: space-around;
+}
+
+.grid-container>div {
+  text-align: center;
+}
+
+.nav-logo p {
+  margin: 0;
+  padding-top: 6.5px;
+  height: 50px;
+  font-family: 'Reem Kufi Fun';
+  font-style: normal;
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+
+
+.nav-links {
+  margin: auto;
+  width: 100%;
+}
+
+.nav-links , .unactive-nav-links {
+  grid-column: 2/4;
+}
+
+.nav-links a, .unactive-nav-links a{
+  width: 20%;
+}
+
+.nav-links, .un {
+  margin: auto;
+}
+
+.nav-logs {
+  margin: auto;
+}
+
+.nav-icon {
+  display: none !important;
+}
+
+.navbar p {
+  margin: 0;
+}
+
+.menu-button{
+  display: none;
+}
+
+/* RESPONSE */
+
+@media only screen and (min-width: 1257px) {
+
+  .nav .active::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 50%;
+    left: 25%;
+    bottom: 10px;
+    background-color: white;
+    border-radius: 10px;
+    transition: 0.5s;
+   
+  }
+
+  .unactive-nav-logs,
+  .unactive-nav-links {
+    display: block;
+  }
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 1256px) {
+
+  .nav-links .nav-icon,
+  .unactive-nav-links .nav-icon {
+    display: inline-block !important;
+  }
+
+  .nav-logs .nav-icon,
+  .unactive-nav-logs .nav-icon {
+    display: inline-block !important;
+  }
+
+  .navbar .nav-logs p,
+  .navbar .unactive-nav-logs p {
+    display: none;
+  }
+
+  .navbar .nav-links p,
+  .navbar .unactive-nav-links p {
+    display: none;
+  }
+
+  .unactive-nav-logs,
+  .unactive-nav-links {
+    display: block;
+  }
+
+  .nav .active::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 50%;
+    left: 25%;
+    bottom: 10px;
+    background-color: white;
+    border-radius: 10px;
+    transition: 0.5s;
+  }
+
+  .nav a {
+    padding: 10px 16px;
+  }
+
+ 
+}
+
+@media only screen and (max-width: 767px) {
+
+  .nav {
+    grid-gap: 0;
+    overflow: visible;
+    position: relative;
+  }
+
+  .nav-links,
+  .nav-logs {
+    margin-right: inherit;
+    width: 40%;
+    box-shadow: var(--shadow-dp-02);
+  }
+
+  .nav-links p,
+  .nav-logs p {
+    padding: 0 10px;
+
+  }
+
+  .nav-logo {
+    background-color: var(--primary-900);
+    height: 100%;
+
+  }
+
+  .nav-links,
+  .nav,
+  .nav-logs {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    z-index: 99;
+
+  }
+
+  .nav-logs {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav>div {
+    text-align: left;
+  }
+
+  .nav a {
+    color: black;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav a:hover {
+    background-color: var(--primary-900);
+  }
+
+  .nav-links a{
+    width: 100%;
+  }
+
+  .nav-icon {
+    display: inline-block !important;
+    color: var(--primary-900);
+  }
+
+  .menu-button .nav-icon{
+    color: white;
+  }
+
+  .unactive-nav-logs,
+  .unactive-nav-links {
+    display: none;
+  }
+
+  .menu-button {
+    display: block;
+  }
+
+  .menu-button a {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 15px 16px 16px 16px;
+    color: #fff;
+    padding: 0;
+    height: 50px;
+
+  }
+
+  .menu-button a:active {
+    color: white;
+    height: 50px;
+
+  }
+
+  .menu-button a:hover {
+    background-color: var(--primary-1000);
+    color: white;
+    height: 50px;
+  }
+
+  .menu-button .nav-icon {
+    width: 4em;
+    height: 2.3em;
+    font-size: larger;
+    padding: 12px;
+  }
+
+  .menu-button .unactive {
+    background-color: var(--primary-900);
+  }
+
+  .grid-container {
+    justify-content: unset;
+  }
+
+  
+}

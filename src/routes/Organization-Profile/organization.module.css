@@ -1,0 +1,143 @@
+.mainContainer {
+    margin-top: 130px;
+}
+
+.infoContainer, .leftContainer {
+    display: block;
+    background-color: white;
+    height: auto;
+    padding: 20px 20px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+}
+
+.infoContainer {
+    width: 510px;
+}
+
+.leftContainer {
+    width: 270px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.leftContainerMain {
+    width: 270px;
+    float: left;
+    text-align: center;
+}
+
+.btn1 {
+    background-color: var(--primary-600);
+    color: white;
+    box-shadow: var(--shadow-dp-01);
+    border: 0px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn1:hover, .btn1:focus {
+    background-color: var(--primary-800);
+    color: white;
+}
+
+.btn2 {
+    color: black;
+    box-shadow: var(--shadow-dp-01);
+    border: 0px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn2:hover, .btn2:focus {
+    background-color: var(--secondary-200);
+    color: black;
+}
+
+.title, .formLabel, .subFormLabel {
+    font-weight: 600;
+    text-align: center;
+}
+
+.title {
+    color: var(--secondary-900);
+    margin: 0%;
+    font-size: 18px;
+    padding: 15px 0;
+}
+
+.formLabel, .textLabel {
+    margin-bottom: 20px;
+}
+
+.subFormLabel {
+    margin-bottom: 0px;
+}
+
+.leftSideText {
+    font-size: 130%;
+    font-weight: 600;
+}
+
+.ava {
+    box-shadow: var(--shadow-dp-01);
+}
+
+.editIcon {
+    position: absolute;
+    top: 140px;
+    left: 160px;
+    background-color: var(--secondary-300);
+    color: white;
+    box-shadow: var(--shadow-dp-03);
+    z-index: 1;
+}
+
+.editIcon:hover, .editIcon:focus {
+    background-color: var(--secondary-400);
+    color: white;
+}
+
+.awardImgContainer {
+    width: 230px;
+}
+
+.awardImg1, .awardImg2, .awardImg3 {
+    width: 26%;
+    height: 60px;
+}
+
+.awardImg1 {
+    float: left;
+}
+
+.awardImg3 {
+    float: right;
+}
+
+
+/* QnA page */
+.questionPanel {
+    border: 0px;
+    border-radius: 2px;
+    color: black;
+    box-shadow: var(--shadow-dp-01);
+    font-weight: 600;
+}
+
+/* Voucher Page */
+.innerTitle {
+    color: var(--secondary-900);
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.uploader {
+    width: 470px;
+    height: 470px;
+}

@@ -1,0 +1,34 @@
+@import "../homepage.css";
+/*---------------COVER------------*/
+.cover {
+    background-image: url(../../../assets/homepage-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 8% 10% 10% 10%;
+    margin-top: 80px;
+}
+
+.container-content {
+    display: inline-block;
+    text-align: left;
+}
+
+.container-search {
+    display: inline-block;
+    background-color: white;
+    padding: 2% 3%;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-02);
+    margin-top: 0.5%;
+}
+
+.row-search {
+    display: flex;
+    justify-content: space-between
+}
+
+
+
+

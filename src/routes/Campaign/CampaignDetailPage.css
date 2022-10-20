@@ -1,0 +1,13 @@
+.campaign-detail-container {
+    margin: 140px 12% 30px 12%;
+    display: flex;
+
+}
+
+.campaignDetail-left{
+    width: 67%;
+}
+
+.campaignDetail-right{
+    width: 33%;
+}
