@@ -27,14 +27,14 @@
     margin-left: 10px;
 }
 
-.ant-input-group-wrapper {
+.news-container .ant-input-group-wrapper {
     display: inline-block;
     width: 70%;
     text-align: start;
     vertical-align: top;
 }
 
-.ant-input-search-button {
+.news-container .ant-input-search-button {
     background-color: var(--primary-400) !important;
 }
 
@@ -104,11 +104,11 @@
     background-size: cover;
 }
 
-.ant-list-pagination{
+.news-container .ant-list-pagination{
     display: flex;
 }
 
-.ant-pagination {
+.news-container .ant-pagination {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
