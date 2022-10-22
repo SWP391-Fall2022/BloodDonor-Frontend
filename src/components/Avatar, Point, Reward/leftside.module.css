@@ -25,7 +25,7 @@
 }
 
 .ava {
-    box-shadow: var(--shadow-dp-01);
+    box-shadow: var(--shadow-dp-03);
     margin-bottom: 20px;
 }
 
@@ -46,19 +46,53 @@
     color: white;
 }
 
+.btn1 {
+    background-color: var(--primary-600);
+    color: white;
+    box-shadow: var(--shadow-dp-01);
+    border: 0px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn1:hover, .btn1:focus {
+    background-color: var(--primary-800);
+    color: white;
+}
+
+.btn2 {
+    color: black;
+    box-shadow: var(--shadow-dp-01);
+    border: 0px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn2:hover, .btn2:focus {
+    background-color: var(--secondary-200);
+    color: black;
+}
+
 /*  */
 .awardImgContainer {
     width: 230px;
 }
+
 /*  */
 .awardImg1, .awardImg2, .awardImg3 {
     width: 26%;
     height: 60px;
 }
+
 /*  */
 .awardImg1 {
     float: left;
 }
+
 /*  */
 .awardImg3 {
     float: right;

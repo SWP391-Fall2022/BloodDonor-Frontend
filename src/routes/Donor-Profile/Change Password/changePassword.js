@@ -11,7 +11,7 @@ export default function ChangePassword() {
                 <Points />
                 <Award />
             </div>
-            <div><ChangePasswordSide /></div>
+            <div className={styles.rightContainerMain}><ChangePasswordSide /></div>
         </div>
     )
 }

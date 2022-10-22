@@ -12,7 +12,7 @@ export default function History() {
                 <Points />
                 <Award />
             </div>
-            <div><HistoryContainer /></div>
+            <HistoryContainer />
         </div>
     )
 }

@@ -2,7 +2,6 @@ import AvatarContainer from '../../../components/Avatar, Point, Reward/Avatar'
 import Award from '../../../components/Avatar, Point, Reward/Award'
 import ChangePasswordSide from './changePasswordSide'
 import styles from '../organization.module.css'
-import { Col, Row } from 'antd'
 export default function OrganizationChangePassword() {
     return (
         <div className={styles.mainContainer}>
@@ -10,7 +9,7 @@ export default function OrganizationChangePassword() {
                 <AvatarContainer />
                 <Award />
             </div>
-            <div><ChangePasswordSide /></div>
+            <div><ChangePasswordSide/></div>
         </div>
     )
 }

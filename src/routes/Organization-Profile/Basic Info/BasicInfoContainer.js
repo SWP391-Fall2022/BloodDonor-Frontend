@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import styles from '../organization.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
-import { Form, Input, Select, Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Form, Input, Select, Button, notification } from 'antd';
 const { Option } = Select;
 const { TextArea } = Input;
 export default function BasicInfoContainer() {
 
-    const [message, setMessage] = useState('')
-    const navigate = useNavigate();
     const user = JSON.parse(sessionStorage.getItem('user'))
     // console.log(user)
     const [form] = Form.useForm();
@@ -82,12 +79,15 @@ export default function BasicInfoContainer() {
             requestData.username = user.username
             requestData.avatar = user.avatar
             sessionStorage.setItem('user', JSON.stringify(requestData))
-            navigate("/organization")
-            setMessage("Thay đổi thành công")
+            notification.success({
+                message: 'Đổi thông tin thành công',
+                description: 'Đang tải lại thông tin mới',
+                placement: "top"
+            });
         }
         setTimeout(() => {
-            setMessage('');
-        }, 3000);
+            window.location.reload(false);
+        }, 1000);
     };
 
     const onProvinceChange = (value) => {
@@ -144,9 +144,6 @@ export default function BasicInfoContainer() {
                     </Button>
                 </Form.Item>
             </Form>
-            <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                {message}
-            </div>
         </div>
     )
 }

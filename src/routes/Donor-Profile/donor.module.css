@@ -8,7 +8,7 @@
     margin-left: 270px;
 }
 
-.donorSideBar {    
+.donorSideBar {
     margin-top: 90px;
     position: fixed;
     top: 0;
@@ -17,7 +17,7 @@
     z-index: 2;
 }
 
-.infoContainer, .leftContainer {
+.infoContainer, .leftContainer, .infoContainerHistory {
     margin: 0 20px;
     background-color: white;
     height: auto;
@@ -30,6 +30,10 @@
     width: 510px;
 }
 
+.infoContainerHistory {
+    width: 700px;
+}
+
 .leftContainer {
     width: 270px;
     text-align: center;
@@ -39,6 +43,31 @@
 .leftContainerMain {
     width: 270px;
     text-align: center;
+}
+
+@media only screen and (max-width: 1280px) {
+    .infoContainerHistory {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .mainContainer {
+        margin-left: 0;
+    }
+
+    .leftContainerMain {
+        transform: scale(0.8);
+    }
+
+    .infoContainer {
+        width: 90%;
+    }
+
+    .infoContainerHistory {
+        width: 100%;
+        transform: scale(0.8);
+    }
 }
 
 /* Buttons */
