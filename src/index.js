@@ -32,6 +32,8 @@ import OrganizationProfile from './routes/Organization-Profile/organization-prof
 import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
 import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
 
+import Test from './routes/test'
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -73,6 +75,8 @@ export default function App() {
           <Route path="changePassword" element={<OrganizationChangePassword />} />
           <Route path="profile" element={<OrganizationInfo />} />
         </Route>
+
+        <Route path="/test" element={<Test />} />
 
         {/* Pages for admin */}
 
