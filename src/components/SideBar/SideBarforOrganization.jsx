@@ -12,6 +12,7 @@ import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import FolderIcon from '@mui/icons-material/Folder';
 import InfoIcon from '@mui/icons-material/Info';
 import SupportIcon from '@mui/icons-material/Support';
+import LogoutIcon from '@mui/icons-material/Logout';
 export const SideBarforOrganization = () => {
   const [click, setClick] = useState(false);
   function handleClick() {
@@ -26,7 +27,7 @@ export const SideBarforOrganization = () => {
             <p>MEDICHOR</p>
           </div>
           <div className={click ? "sidebar-links" : "unactive-sidebar-links"}>
-            <NavLink end to="/sidebar_for_organization" className="sidebar-item">
+            <NavLink end to="/organization-homepage" className="sidebar-item">
               <HomeIcon className="sidebar-icon"></HomeIcon>
               <p>Trang chủ</p>
             </NavLink>
@@ -70,6 +71,11 @@ export const SideBarforOrganization = () => {
             <NavLink to="/sidebar_for_organization/qna" className="sidebar-item">
                 <SupportIcon className="sidebar-icon"></SupportIcon>
                 <p>Hướng dẫn sử dụng</p>
+            </NavLink>
+
+            <NavLink to="/sidebar_for_organization/qna" className="sidebar-item">
+                <LogoutIcon className="sidebar-icon"></LogoutIcon>
+                <p>Đăng xuất</p>
             </NavLink>
 
             {/* <NavLink to="/qna">

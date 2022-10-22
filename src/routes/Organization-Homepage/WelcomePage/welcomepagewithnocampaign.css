@@ -1,0 +1,50 @@
+
+@import url(../Homepage/homepagedetail.css);
+
+#welcomePageWithNoCampaign {
+    max-width: 100%;
+    margin: 2% 10% 1% 10%;
+    padding: 0 5% 3% 5%;
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    text-align: center;
+    display:  grid;
+    grid-template-columns: 60% 40%;
+}
+#welcomePageWithNoCampaign .welcome-content{
+    padding-top: 8%;
+}
+#welcomePageWithNoCampaign .welcome-img{
+    height: 100%;
+    overflow: hidden;
+    align-items: center;
+    position: relative;
+}
+#welcomePageWithNoCampaign .welcome-img img{
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+#welcomePageWithNoCampaign img{
+    width: 100%;
+}
+#welcomePageWithNoCampaign .welcome-box-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 3%;
+    padding: 0 10%;
+}
+
+#welcomePageWithNoCampaign .amount {
+    background-color: var(--primary-900);
+    padding: 6% 0;
+    width: 70%;
+    margin: 0 15%;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 36px;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-01);
+    color: white;
+}
