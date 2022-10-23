@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./sidebar.css";
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import KeyIcon from '@mui/icons-material/Key';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import HomeIcon from '@mui/icons-material/Home';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
@@ -16,18 +13,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 export const SideBarforOrganization = () => {
   const [click, setClick] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
-  const user = JSON.parse(sessionStorage.getItem('user'))
-  function handleClick() {
-    setClick(!click);
-    console.log(click);
-  }
 
   function handleLogout() {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('JWT_Key');
     sessionStorage.removeItem('userRole');
     sessionStorage.removeItem('GoogleEmail');
-    user = null;
   }
 
   function handleSubMenu() {
@@ -63,7 +54,7 @@ export const SideBarforOrganization = () => {
             <p>Trang chủ</p>
           </NavLink>
 
-          <NavLink to="/sidebar_for_organization/campaign_history" className="sidebar-item">
+          <NavLink to="/organization/notification" className="sidebar-item">
             <ReportProblemIcon className="sidebar-icon"></ReportProblemIcon>
             <p>Quản lý thông báo khẩn cấp</p>
           </NavLink>
@@ -88,7 +79,7 @@ export const SideBarforOrganization = () => {
             <p>Thông tin tổ chức</p>
           </Link>
 
-            {subMenu}
+          {subMenu}
 
           <NavLink to="/sidebar_for_organization/qna" className="sidebar-item">
             <SupportIcon className="sidebar-icon"></SupportIcon>

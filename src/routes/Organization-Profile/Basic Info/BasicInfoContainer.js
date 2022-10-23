@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import styles from '../organization.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
-import { Form, Input, Select, Button, notification } from 'antd';
+import { Form, Input, Select, Button, notification, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 const { Option } = Select;
 const { TextArea } = Input;
+const { confirm } = Modal;
 export default function BasicInfoContainer() {
 
     const user = JSON.parse(sessionStorage.getItem('user'))
@@ -39,8 +41,21 @@ export default function BasicInfoContainer() {
         setDistrictList(userDefaultDistrictList)
     };
 
-    //Submit Button
-    const onFinish = async () => {
+    //Submit
+    const onFinish = () => {
+        confirm({
+            title: 'Bạn có muốn kiểm tra lại thông tin trước khi lưu không?',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Lưu',
+            cancelText: 'Xem lại',
+            onOk() {
+                onConfirm();
+            },
+        });
+    }
+
+    //Confirm Submit
+    const onConfirm = async () => {
         const formData = form.getFieldsValue(true);
         let districtId = 0;
         for (let i = 0; i < provinceList.length; i++) {

@@ -17,6 +17,15 @@
     z-index: 2;
 }
 
+.breadcrumb {
+    margin-top: 90px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    z-index: 2;
+}
+
 .infoContainer, .leftContainer, .infoContainerHistory {
     margin: 0 20px;
     background-color: white;

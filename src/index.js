@@ -17,22 +17,24 @@ import CampaignDetailPage from "./routes/Campaign/CampaignDetailPage";
 import OrganizationInformation from "./routes/Campaign/OrganizationInformation/OrganizationInformation";
 import ListNewsPage from './routes/News/ListNewsPage';
 import NewsDetailPage from './routes/News/NewsDetailPage';
-// import Achivement from "./routes/achivement";
 import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
 
 import DonorProfile from './routes/Donor-Profile/donor-profile';
-import NoPage from "./routes/nopage";
+import { NoPage, NoPageOrganization } from "./routes/nopage";
 import Info from './routes/Donor-Profile/Basic Info/Info';
 import ChangePassword from './routes/Donor-Profile/Change Password/changePassword';
 import History from './routes/Donor-Profile/History Campaign/history';
 import QnADonor from './routes/Donor-Profile/Q&A/QnADonor';
 import Vouchers from './routes/Donor-Profile/Voucher Storage/Vouchers';
 
+import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
+import OrganizationNotificationContainer from './routes/Organization-Profile/Emergency Notification/OrganizationNotificationContainer';
+import OrganizationNotificationListContainer from './routes/Organization-Profile/Emergency Notification/List Of Notification/OrganizationNotificationListContainer';
+import OrganizationCreateNotification from './routes/Organization-Profile/Emergency Notification/Create Notification/CreateNotification';
+import OrganizationViewNotification from './routes/Organization-Profile/Emergency Notification/List Of Notification/OrganizationViewNotification';
+import OrganizationReviewNotification from './routes/Organization-Profile/Emergency Notification/Create Notification/ReviewNotification';
 import OrganizationProfile from './routes/Organization-Profile/organization-profile';
 import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
-import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
-
-import Test from './routes/test'
 
 export default function App() {
   return (
@@ -71,12 +73,20 @@ export default function App() {
 
         {/* Pages for logged in organization */}
         <Route path="/organization" element={<OrganizationProfile />} >
+          {/* Change this component below to main page route */}
           <Route index element={<OrganizationInfo />} />
+          {/* Notification Emergency Management */}
+          <Route path="notification" element={<OrganizationNotificationContainer />}>
+            <Route index element={<OrganizationNotificationListContainer />} />
+            <Route path="create" element={<OrganizationCreateNotification />} />
+            <Route path="create/preview" element={<OrganizationReviewNotification />} />
+            <Route path="view" element={<OrganizationViewNotification />} />
+            <Route path="*" element={<NoPageOrganization />} />
+          </Route>
           <Route path="changePassword" element={<OrganizationChangePassword />} />
           <Route path="profile" element={<OrganizationInfo />} />
+          <Route path="*" element={<NoPageOrganization />} />
         </Route>
-
-        <Route path="/test" element={<Test />} />
 
         {/* Pages for admin */}
 
