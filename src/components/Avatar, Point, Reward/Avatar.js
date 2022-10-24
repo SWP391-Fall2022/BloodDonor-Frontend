@@ -5,7 +5,8 @@ import { useState } from 'react';
 import styles from './leftside.module.css'
 
 export default function AvatarContainer() {
-    const user = JSON.parse(sessionStorage.getItem('user'))
+    const avatar = JSON.parse(sessionStorage.getItem('avatar'))
+    const name = JSON.parse(sessionStorage.getItem('name'))
     //Modal Control
     const [open, setOpen] = useState(false);
     //Image url

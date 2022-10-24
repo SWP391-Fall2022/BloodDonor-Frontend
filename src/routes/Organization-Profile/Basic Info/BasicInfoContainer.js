@@ -88,12 +88,6 @@ export default function BasicInfoContainer() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.success) {
-            requestData.email = user.email
-            requestData.taxCode = user.taxCode
-            requestData.id = user.id
-            requestData.username = user.username
-            requestData.avatar = user.avatar
-            sessionStorage.setItem('user', JSON.stringify(requestData))
             notification.success({
                 message: 'Đổi thông tin thành công',
                 description: 'Đang tải lại thông tin mới',
