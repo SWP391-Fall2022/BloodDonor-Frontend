@@ -8,14 +8,14 @@ import { Breadcrumb } from "antd";
 export function OrBread(props) {
     return (
         <div>
-            <Breadcrumb style={{ padding: '1% 0 0 1%' }}>
+            <Breadcrumb style={{ padding: '1% 0 0 2%' }}>
                 <Breadcrumb.Item>{props.layer1}</Breadcrumb.Item>
                 <Breadcrumb.Item>{props.layer2}</Breadcrumb.Item>
                 <Breadcrumb.Item>{props.layer3}</Breadcrumb.Item>
                 <Breadcrumb.Item>{props.layer4}</Breadcrumb.Item>
                 <Breadcrumb.Item>{props.layer5}</Breadcrumb.Item>
             </Breadcrumb>
-            <div style={{ fontSize: 'large', padding: ' 1% 2%' }}><strong>{props.name}</strong></div>
+            <div style={{ fontSize: 'large', padding: ' 1% 2% 2% 2%' }}><strong>{props.name}</strong></div>
         </div>
     )
 }

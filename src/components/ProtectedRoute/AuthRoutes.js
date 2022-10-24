@@ -26,8 +26,8 @@ export default function AuthGoogleRoutes() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
 
-            // console.log(donorResponse)
-            // console.log(organizationResponse)
+            console.log(donorResponse)
+            console.log(organizationResponse)
             
             // First time login with google success (Have not registered before)
             if (donorResponse === undefined && organizationResponse === undefined) {

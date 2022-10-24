@@ -5,7 +5,7 @@ export default function OrganizationNotificationListContainer() {
     return (
         <>
             <div className={styles.breadcrumb}><OrBread name="Quản lí thông báo khẩn cấp" /></div>
-            <div className={styles.mainContainer}>
+            <div className={styles.mainContainer}>                
                 <OrganizationNotificationList />
             </div>
         </>

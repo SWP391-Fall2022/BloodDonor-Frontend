@@ -1,9 +1,12 @@
 /* Overall */
-.mainContainer {
+.mainContainer, .mainContainer2 {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     padding-bottom: 100px;
+}
+
+.mainContainer {
     margin-left: 270px;
 }
 
