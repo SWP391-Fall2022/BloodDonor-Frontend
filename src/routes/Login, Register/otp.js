@@ -89,7 +89,7 @@ export default function Otp() {
                         width: "40px",
                         height: "60px",
                         margin: "5px 5px",
-                        fontSize: "64px",
+                        fontSize: "45px",
                         borderRadius: 10,
                         border: "3px solid"
                     }} />

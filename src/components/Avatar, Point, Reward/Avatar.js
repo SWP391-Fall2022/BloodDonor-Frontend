@@ -4,7 +4,8 @@ import ImgCrop from 'antd-img-crop';
 import { useState } from 'react';
 import styles from './leftside.module.css'
 export default function AvatarContainer() {
-    const user = JSON.parse(sessionStorage.getItem('user'))
+    const avatar = JSON.parse(sessionStorage.getItem('avatar'))
+    const name = JSON.parse(sessionStorage.getItem('name'))
     const [open, setOpen] = useState(false);
     const showModal = () => {
         setOpen(true);
@@ -18,7 +19,7 @@ export default function AvatarContainer() {
                 <Button onClick={showModal} shape='circle' size='large' className={styles.editIcon} type="link" icon={<EditOutlined />} />
                 <Avatar className={styles.ava} size={160} icon={<UserOutlined />} />
             </div>
-            <div className={styles.leftSideText}>{user.name}</div>
+            <div className={styles.leftSideText}>{name}</div>
             <Modal open={open} onCancel={handleCancel} footer={false}>
                 <h1 style={{ textAlign: 'center' }}><strong>ĐỔI ẢNH ĐẠI DIỆN</strong></h1>
                 <ImgCrop grid rotate shape="round">

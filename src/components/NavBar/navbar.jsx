@@ -20,10 +20,9 @@ export const Navbar = () => {
         setClick(!click);
         console.log("click",click);
     }
-    const user = JSON.parse(sessionStorage.getItem('user'))
     const role = JSON.parse(sessionStorage.getItem('userRole'))
     let loginState;
-    if (user === null) {
+    if (role === null) {
         loginState = <div className={click ? 'nav-logs' : 'unactive-nav-logs'}>
             <NavLink to="/login">
                 <ExitToAppIcon className='nav-icon'></ExitToAppIcon>
@@ -36,7 +35,7 @@ export const Navbar = () => {
             </NavLink>
         </div>
     }
-    if (user !== null) {
+    if (role !== null) {
         loginState = <div className={click ? 'nav-logs' : 'unactive-nav-logs'}>
             <Link to={role}>
                 <AccountCircleIcon className='nav-icon'></AccountCircleIcon>
@@ -51,11 +50,8 @@ export const Navbar = () => {
     }
 
     function handleLogout() {
-        sessionStorage.removeItem('user');
-        sessionStorage.removeItem('JWT_Key');
-        sessionStorage.removeItem('userRole');
-        sessionStorage.removeItem('GoogleEmail');
-        user = null;
+        sessionStorage.clear()
+        window.location.reload(false);
     }
 
     return (<>

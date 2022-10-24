@@ -28,7 +28,7 @@ export default function AuthGoogleRoutes() {
 
             // console.log(donorResponse)
             // console.log(organizationResponse)
-            
+
             // First time login with google success (Have not registered before)
             if (donorResponse === undefined && organizationResponse === undefined) {
                 setAuthorized(false)
@@ -37,17 +37,15 @@ export default function AuthGoogleRoutes() {
             // Login Donor
             if (donorResponse.success) {
                 setAuthorized(true)
-                setRole("DONOR")
                 setRendered(true)
-                sessionStorage.setItem('user', JSON.stringify(donorResponse.body))
+                sessionStorage.removeItem('GoogleEmail');
                 sessionStorage.setItem('userRole', JSON.stringify("/donor"))
             }
             // Login Organization
             if (organizationResponse.success) {
                 setAuthorized(true)
-                setRole("ORGANIZATION")
                 setRendered(true)
-                sessionStorage.setItem('user', JSON.stringify(organizationResponse.body))
+                sessionStorage.removeItem('GoogleEmail');
                 sessionStorage.setItem('userRole', JSON.stringify("/organization"))
             }
         }
@@ -55,17 +53,12 @@ export default function AuthGoogleRoutes() {
     }, []);
 
     if (authorized) {
-        if (role === "DONOR") {
-            return <Navigate to={`/donor`} />
-        }
-        if (role === "ORGANIZATION") {
-            return <Navigate to={`/organization`} />
-        }
+        return <Navigate to={`/`} />
     } else {
         if (rendered) {
             return <Navigate to={`/register`} />
         } else {
-            return <h2 style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>We are redirect, please wait for a bit</h2>
+            return <h2 style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>Đang chuyển hướng ...</h2>
         }
     }
 }

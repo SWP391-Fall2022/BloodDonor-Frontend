@@ -21,7 +21,7 @@ export default function BasicInfoContainer() {
     //Find province based on user's districtID
     for (let i = 0; i < provinceList.length; i++) {
         for (let j = 0; j < provinceList[i].district.length; j++) {
-            if (provinceList[i].district[j].id === user.user.districtId) {
+            if (provinceList[i].district[j].id === user.districtId) {
                 userDefaultDistrict = provinceList[i].district[j].name;
                 userDefaultDistrictList = provinceList[i].district;
                 userDefaultProvince = provinceList[i].name
@@ -76,7 +76,6 @@ export default function BasicInfoContainer() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.success) {
-            sessionStorage.setItem('user', JSON.stringify(requestData))
             navigate("/donor")
             setMessage("Thay đổi thành công")
         }
@@ -98,7 +97,7 @@ export default function BasicInfoContainer() {
                     <Form.Item className={styles.subFormLabel} label="Họ và Tên" name="name" initialValue={user.name} rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                         <Input placeholder="Nhập họ và tên" />
                     </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
                         <Input placeholder="Nhập số điện thoại" />
                     </Form.Item>
                 </Form.Item>
@@ -145,7 +144,7 @@ export default function BasicInfoContainer() {
                         </Select>
                     </Form.Item>
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" initialValue={user.user.addressDetails}>
+                <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" initialValue={user.addressDetails}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Tiền sử bệnh lý" name="anamnesis" initialValue={user.anamnesis}>
