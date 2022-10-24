@@ -1,9 +1,8 @@
-import { Col, Row } from 'antd';
-import { useEffect, useState } from 'react';
-import { Outlet, Navigate, useLocation } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 import { FooterSmall } from '../../components/Footer/FooterSmall';
 import { Navbar } from '../../components/NavBar/navbar';
 import { SideBarforDonor } from '../../components/SideBar/SideBarforDonor'
+import styles from './donor.module.css'
 function DonorProfile() {
 
     const [rendered, setRendered] = useState(false)
@@ -60,10 +59,8 @@ function DonorProfile() {
         return (
             <>
                 <Navbar />
-                <Row >
-                    <Col span={6} style={{ marginTop: '90px' }}><SideBarforDonor /></Col>
-                    <Col span={18}><Outlet /></Col>
-                </Row>
+                <div class={styles.donorSideBar}><SideBarforDonor /></div>
+                <div ><Outlet /></div>
                 <FooterSmall />
             </>
         )

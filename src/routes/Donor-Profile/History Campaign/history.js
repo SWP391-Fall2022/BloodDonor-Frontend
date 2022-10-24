@@ -3,16 +3,15 @@ import Points from '../../../components/Avatar, Point, Reward/Points'
 import Award from '../../../components/Avatar, Point, Reward/Award'
 import HistoryContainer from './historyContainer'
 import styles from '../donor.module.css'
-import { Col, Row } from 'antd'
 export default function History() {
     return (
-        <Row justify="center" className={styles.mainContainer}>
-            <Col span={7} className={styles.leftContainerMain} >
+        <div className={styles.mainContainer}>
+            <div className={styles.leftContainerMain}>
                 <AvatarContainer />
                 <Points />
                 <Award />
-            </Col>
-            <Col span={10}><HistoryContainer /></Col>
-        </Row>
+            </div>
+            <HistoryContainer />
+        </div>
     )
 }

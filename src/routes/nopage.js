@@ -1,5 +1,7 @@
-const NoPage = () => {
+export const NoPage = () => {
     return <div>404 error</div>
 };
 
-export default NoPage;
+export const NoPageOrganization = () => {
+    return <div style={{ textAlign: 'center' }}>404 error AAAAAAAAAAAAAAAAAAAAAAAAAAA</div>
+};

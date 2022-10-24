@@ -1,8 +1,9 @@
-import { Col, Row } from 'antd';
-import { useEffect, useState } from 'react';
-import { Outlet, Navigate, useLocation } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
 import { FooterSmall } from '../../components/Footer/FooterSmall';
 import { SideBarforOrganization } from '../../components/SideBar/SideBarforOrganization'
+import styles from './organization.module.css'
+// The main container for logged in Organization
+// Everything inside organization will show up here
 function OrganizationProfile() {
 
     const [rendered, setRendered] = useState(false)
@@ -56,10 +57,8 @@ function OrganizationProfile() {
     } else if (rendered) {
         return (
             <>
-                <Row >
-                    <Col span={6}><SideBarforOrganization /></Col>
-                    <Col span={18}><Outlet /></Col>
-                </Row>
+                <div className={styles.organizationSideBar}><SideBarforOrganization /></div>
+                <div><Outlet /></div>
                 <FooterSmall />
             </>
         )

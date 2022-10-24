@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import styles from '../organization.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
-import { Form, Input, Select, Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Form, Input, Select, Button, notification, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 const { Option } = Select;
 const { TextArea } = Input;
+const { confirm } = Modal;
 export default function BasicInfoContainer() {
 
-    const [message, setMessage] = useState('')
-    const navigate = useNavigate();
     const user = JSON.parse(sessionStorage.getItem('user'))
     // console.log(user)
     const [form] = Form.useForm();
@@ -42,8 +41,21 @@ export default function BasicInfoContainer() {
         setDistrictList(userDefaultDistrictList)
     };
 
-    //Submit Button
-    const onFinish = async () => {
+    //Submit
+    const onFinish = () => {
+        confirm({
+            title: 'Bạn có muốn kiểm tra lại thông tin trước khi lưu không?',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Lưu',
+            cancelText: 'Xem lại',
+            onOk() {
+                onConfirm();
+            },
+        });
+    }
+
+    //Confirm Submit
+    const onConfirm = async () => {
         const formData = form.getFieldsValue(true);
         let districtId = 0;
         for (let i = 0; i < provinceList.length; i++) {
@@ -76,12 +88,15 @@ export default function BasicInfoContainer() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.success) {
-            navigate("/organization")
-            setMessage("Thay đổi thành công")
+            notification.success({
+                message: 'Đổi thông tin thành công',
+                description: 'Đang tải lại thông tin mới',
+                placement: "top"
+            });
         }
         setTimeout(() => {
-            setMessage('');
-        }, 3000);
+            window.location.reload(false);
+        }, 1000);
     };
 
     const onProvinceChange = (value) => {
@@ -138,9 +153,6 @@ export default function BasicInfoContainer() {
                     </Button>
                 </Form.Item>
             </Form>
-            <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                {message}
-            </div>
         </div>
     )
 }

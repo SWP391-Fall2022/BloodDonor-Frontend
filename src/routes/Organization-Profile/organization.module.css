@@ -1,9 +1,31 @@
+/* Overall */
+.mainContainer, .mainContainer2 {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 100px;
+}
+
 .mainContainer {
-    margin-top: 50px;
+    margin-left: 270px;
+}
+
+.organizationSideBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    z-index: 2;
+}
+
+.breadcrumb {
+    margin-left: 270px;
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
 }
 
 .infoContainer, .leftContainer {
-    display: block;
+    margin: 0 20px;
     background-color: white;
     height: auto;
     padding: 20px 20px;
