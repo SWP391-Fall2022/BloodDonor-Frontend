@@ -3,13 +3,15 @@ import styles from '../donor.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
 import moment from 'moment';
 import { Form, Input, Select, DatePicker, Button, notification } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 const { Option } = Select;
 const { TextArea } = Input;
 export default function BasicInfoContainer() {
 
-    const navigate = useNavigate();
-    const user = JSON.parse(sessionStorage.getItem('user'))
+    const [user, setUser] = useOutletContext();
+    if (user === null) {
+        window.location.reload(false);
+    }
     const [form] = Form.useForm();
     let userDefaultDistrict;
     let userDefaultDistrictList;
@@ -53,7 +55,7 @@ export default function BasicInfoContainer() {
             "birthday": formData.birthday,
             "sex": formData.sex,
             "identityNum": formData.identityNum,
-            "avatar": "something",
+            "avatar": JSON.parse(sessionStorage.getItem('avatar')),
             "bloodType": formData.bloodType,
             "anamnesis": formData.anamnesis,
             "user": {

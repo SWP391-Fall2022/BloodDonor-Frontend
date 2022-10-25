@@ -15,10 +15,7 @@ export const SideBarforOrganization = () => {
   const [showSubMenu, setShowSubMenu] = useState(false);
 
   function handleLogout() {
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('JWT_Key');
-    sessionStorage.removeItem('userRole');
-    sessionStorage.removeItem('GoogleEmail');
+    sessionStorage.clear()
   }
 
   function handleSubMenu() {

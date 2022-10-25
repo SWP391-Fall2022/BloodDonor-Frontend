@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 export default function AuthGoogleRoutes() {
-    const [role, setRole] = useState(null);
     const [authorized, setAuthorized] = useState(false);
     // Need a render state because first render will not run useEffect until it has done the first return
     const [rendered, setRendered] = useState(false)
@@ -30,9 +29,10 @@ export default function AuthGoogleRoutes() {
             // console.log(organizationResponse)
 
             // First time login with google success (Have not registered before)
-            if (donorResponse === undefined && organizationResponse === undefined) {
+            if (donorResponse.status === 400 && organizationResponse.status === 400) {
                 setAuthorized(false)
                 setRendered(true)
+                console.log(rendered)
             }
             // Login Donor
             if (donorResponse.success) {
@@ -50,7 +50,7 @@ export default function AuthGoogleRoutes() {
             }
         }
         fetchAPI();
-    }, []);
+    }, [rendered]);
 
     if (authorized) {
         return <Navigate to={`/`} />

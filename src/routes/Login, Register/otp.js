@@ -30,10 +30,11 @@ export default function Otp() {
             if (JSON.parse(sessionStorage.getItem('restore'))) {
                 navigate('/new-password')
             } else {
+                sessionStorage.clear()
                 navigate('/login')
             }
         } else {
-            setMessage(response.body)
+            setMessage("Mã không chính xác")
         }
     }
 

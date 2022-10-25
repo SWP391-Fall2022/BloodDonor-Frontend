@@ -3,17 +3,23 @@ import styles from '../organization.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
 import { Form, Input, Select, Button, notification, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { useOutletContext } from 'react-router-dom';
 const { Option } = Select;
 const { TextArea } = Input;
 const { confirm } = Modal;
 export default function BasicInfoContainer() {
 
-    const user = JSON.parse(sessionStorage.getItem('user'))
+    const [user, setUser] = useOutletContext();
+    let introduction1 = "";
+    let introduction2 = "";
     // console.log(user)
     const [form] = Form.useForm();
-    const splitArr = user.introduction.split("-")
-    const introduction1 = splitArr[0];
-    const introduction2 = splitArr[1];
+    if (user.introduction !== null) {
+        const splitArr = user.introduction.split("-")
+        introduction1 = splitArr[0];
+        introduction2 = splitArr[1];
+    }
+
     // console.log(introduction1)
     // console.log(introduction2)
     let userDefaultDistrict;

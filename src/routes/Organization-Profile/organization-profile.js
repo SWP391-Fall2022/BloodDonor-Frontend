@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import { FooterSmall } from '../../components/Footer/FooterSmall';
 import { SideBarforOrganization } from '../../components/SideBar/SideBarforOrganization'
@@ -7,7 +8,7 @@ import styles from './organization.module.css'
 function OrganizationProfile() {
 
     const [rendered, setRendered] = useState(false)
-    const location = useLocation();
+    const [user, setUser] = useState(null)
     const rolePath = JSON.parse(sessionStorage.getItem('userRole'))
 
     useEffect(() => {
@@ -22,31 +23,20 @@ function OrganizationProfile() {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/organization/getInfo`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-            console.log(response);
+            // console.log(response);
             if (response.success) {
-                //current pathname/route
-                if (location.pathname === "/organization/changePassword") {
-                    sessionStorage.setItem('avatar', JSON.stringify(response.body.avatar))
-                    sessionStorage.setItem('name', JSON.stringify(response.body.name))                    
-                    sessionStorage.removeItem('user')
-                }
-                if (location.pathname === "/organization") {
-                    sessionStorage.setItem('avatar', JSON.stringify(response.body.avatar))
-                    sessionStorage.setItem('name', JSON.stringify(response.body.name))
-                    const user = {
-                        "name": response.body.name,
-                        "phone": response.body.phone,
-                        "taxCode": response.body.taxCode,
-                        "email": response.body.email,
-                        "districtId": response.body.districtId,
-                        "addressDetails": response.body.addressDetails,
-                        "introduction": response.body.introduction,
-                    }
-                    sessionStorage.setItem('user', JSON.stringify(user))
-                }
+                sessionStorage.setItem('avatar', JSON.stringify(response.body.avatar))
+                sessionStorage.setItem('name', JSON.stringify(response.body.name))
+                setUser({
+                    "name": response.body.name,
+                    "phone": response.body.phone,
+                    "taxCode": response.body.taxCode,
+                    "email": response.body.email,
+                    "districtId": response.body.districtId,
+                    "addressDetails": response.body.addressDetails,
+                    "introduction": response.body.introduction,
+                })
                 setRendered(true)
-            } else {
-
             }
         }
         fetchAPI();
@@ -58,16 +48,12 @@ function OrganizationProfile() {
         return (
             <>
                 <div className={styles.organizationSideBar}><SideBarforOrganization /></div>
-                <div><Outlet /></div>
+                <div><Outlet context={[user, setUser]} /></div>
                 <FooterSmall />
             </>
         )
     } else {
-        return (
-            <>
-                <div>Đang cập nhật thông tin</div>
-            </>
-        )
+        return <div>Đang cập nhật thông tin</div>
     }
 }
 
