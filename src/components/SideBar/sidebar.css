@@ -94,13 +94,13 @@
     }
 
     .sidebar-item {
-        padding: 15% 0 15% 9%;
-        margin: 10%;
+        padding: 18% 0 18% 0;
+        margin: 12% 10%;
     }
 
     .sidebar-subitem {
-        padding: 15% 0 15% 20%;
-        margin: 10%;
+        padding: 18% 0 18% 20%;
+        margin: 12% 10%;
     }
 
     .sidebar-container .active,

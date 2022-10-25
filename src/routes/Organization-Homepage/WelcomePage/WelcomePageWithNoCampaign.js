@@ -5,8 +5,8 @@ const WelcomePageWithNoCampaign = () => {
     <section id="welcomePageWithNoCampaign">
       <div className="welcome-content">
         <h2>Chào mừng trở lại</h2>
-        <h5>
-          Hiện không có chiến dịch nào. Hãy kiểm tra <br/> xem còn công việc nào chưa xử lý nhé.
+        <h5 style={{width:"100%"}}>
+          Hiện không có chiến dịch nào. Hãy kiểm tra xem còn công việc nào chưa xử lý nhé.
         </h5>
         <div className="welcome-box-container">
           <div className="welcome-box">

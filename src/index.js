@@ -33,6 +33,7 @@ import OrganizationChangePassword from './routes/Organization-Profile/Change Pas
 import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
 import Achievement from './routes/Achievement/Achievement';
 import OrganizationHomepage from './routes/Organization-Homepage/OrganizationHomepage';
+import OrganizationCampaignDonorList from './routes/Organization-Campaign-Donor/OrganizationCampaignDonorList';
 
 export default function App() {
   return (
@@ -62,6 +63,7 @@ export default function App() {
         <Route exact strict path="/achievement" element={<Achievement/>} />
         {/*KHANH DOAN THEM*/}
         <Route exact strict path="/organization-homepage" element={<OrganizationHomepage/>}/>
+        <Route exact strict path="/organization-campaign-donorlist" element={<OrganizationCampaignDonorList/>}/>
         {/* Pages for logged in donor */}
         <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />

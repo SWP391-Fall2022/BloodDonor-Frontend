@@ -27,22 +27,22 @@ export const SideBarforOrganization = () => {
             <p>MEDICHOR</p>
           </div>
           <div className={click ? "sidebar-links" : "unactive-sidebar-links"}>
-            <NavLink end to="/organization-homepage" className="sidebar-item">
+            <NavLink end to="/organization-homepage" className="sidebar-item" title="Trang chủ">
               <HomeIcon className="sidebar-icon"></HomeIcon>
               <p>Trang chủ</p>
             </NavLink>
 
-            <NavLink to="/sidebar_for_organization/campaign_history" className="sidebar-item">
+            <NavLink to="/sidebar_for_organization/campaign_history" className="sidebar-item" title="Quản lý thông báo khẩn cấp">
               <ReportProblemIcon className="sidebar-icon"></ReportProblemIcon>
               <p>Quản lý thông báo khẩn cấp</p>
             </NavLink>
 
-            <NavLink to="/sidebar_for_organization/change_pw" className="sidebar-item">
+            <NavLink to="/sidebar_for_organization/change_pw" className="sidebar-item" title="Quản lý chiến dịch">
               <LocalHospitalIcon className="sidebar-icon"></LocalHospitalIcon>
               <p>Quản lý chiến dịch</p>
             </NavLink>
 
-            <NavLink to="/sidebar_for_organization/change_pnb" className="sidebar-item">
+            <NavLink to="/sidebar_for_organization/change_pnb" className="sidebar-item" title="Quản lý hỏi đáp">
               <HelpCenterIcon className="sidebar-icon"></HelpCenterIcon>
               <p>Quản lý hỏi đáp</p>
             </NavLink>
@@ -52,28 +52,28 @@ export const SideBarforOrganization = () => {
               <p>Tin nhắn</p>
             </NavLink> */}
 
-            <NavLink to="/sidebar_for_organization/qna" className="sidebar-item">
+            <NavLink to="/sidebar_for_organization/qna" className="sidebar-item" title="Thông tin tổ chức">
               <FolderIcon className="sidebar-icon"></FolderIcon>
               <p>Thông tin tổ chức</p>
             </NavLink>
             <div>
-                <NavLink to="/sidebar_for_organization/qna" className="sidebar-subitem">
+                <NavLink to="/sidebar_for_organization/qna" className="sidebar-subitem" title="Thay đổi thông tin">
                     <InfoIcon className="sidebar-icon"></InfoIcon>
                     <p>Thay đổi thông tin</p>
                 </NavLink>
 
-                <NavLink to="/sidebar_for_organization/qna" className="sidebar-subitem">
+                <NavLink to="/sidebar_for_organization/qna" className="sidebar-subitem" title="Thay đổi mật khẩu">
                     <KeyIcon className="sidebar-icon"></KeyIcon>
                     <p>Thay đổi mật khẩu</p>
                 </NavLink>
             </div>
 
-            <NavLink to="/sidebar_for_organization/qna" className="sidebar-item">
+            <NavLink to="/sidebar_for_organization/qna" className="sidebar-item" title="Hướng dẫn sử dụng">
                 <SupportIcon className="sidebar-icon"></SupportIcon>
                 <p>Hướng dẫn sử dụng</p>
             </NavLink>
 
-            <NavLink to="/sidebar_for_organization/qna" className="sidebar-item">
+            <NavLink to="/sidebar_for_organization/qna" className="sidebar-item" title="Đăng xuất">
                 <LogoutIcon className="sidebar-icon"></LogoutIcon>
                 <p>Đăng xuất</p>
             </NavLink>

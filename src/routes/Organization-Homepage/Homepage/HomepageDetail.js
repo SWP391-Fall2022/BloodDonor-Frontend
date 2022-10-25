@@ -28,7 +28,7 @@ const HomepageDetail = () => {
   return (
     <section id="homepage-detail">
       <PageHeader className="site-page-header" title="Trang chủ" />
-      <WelcomePageWithCampaign />
+      <WelcomePageWithNoCampaign/>
       {/* <WelcomePageWithNoCampaign /> */}
       <div className="homepage-col-2">
         <div className="qna-shortcut">
@@ -49,8 +49,7 @@ const HomepageDetail = () => {
           />
         </div>
         <div>
-          <CampaignShortcutWithCampaign />
-          {/* <CampaignShortcutWithNoCampaign /> */}
+          <CampaignShortcutWithNoCampaign />
         </div>
       </div>
       <FooterSmall />

@@ -13,7 +13,7 @@
     grid-template-columns: 60% 40%;
 }
 #welcomePageWithNoCampaign .welcome-content{
-    padding-top: 8%;
+    padding: 8% 5% 0 5%;
 }
 #welcomePageWithNoCampaign .welcome-img{
     height: 100%;
@@ -47,4 +47,32 @@
     border-radius: 5px;
     box-shadow: var(--shadow-dp-01);
     color: white;
+}
+@media only screen and (max-width: 1200px) {
+    #welcomePageWithNoCampaign .welcome-box-container {
+
+        padding: 0 10%;
+    }
+    #welcomePageWithNoCampaign .amount {
+        font-size: 26px;
+        line-height: 32px;}
+}
+
+@media only screen and (max-width: 1000px) {
+    #welcomePageWithNoCampaign .welcome-content{
+        padding: 0;
+    }
+    #welcomePageWithNoCampaign{
+        display: block;
+        padding: 7% 10%;
+    }
+    #welcomePageWithNoCampaign .welcome-img{
+        display:  none;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    #welcomePageWithNoCampaign .amount {
+        font-size: 22px;
+        line-height: 28px;}
 }

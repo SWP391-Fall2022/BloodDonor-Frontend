@@ -41,6 +41,9 @@
 }
 
 @media only screen and (max-width: 900px) {
+    #welcomePageWithCampaign {
+        padding: 7% 2%;
+    }
     #welcomePageWithCampaign .welcome-box-container {
         padding: 0 5%;
     }
