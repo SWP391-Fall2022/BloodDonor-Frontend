@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import styles from './register.module.css';
+import packageInfo from "../../shared/ProvinceDistrict.json";
 import { useNavigate } from "react-router-dom";
-import { Form, Input, Select, DatePicker } from 'antd';
+import { Form, Input, Select, DatePicker, notification } from 'antd';
 import { RegisterStepPanel } from '../Register/RegisterStepsPanel';
-import RegisterPD from '../Register/RegisterProvinceDistrict';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -12,6 +12,20 @@ function RegisterDonor() {
     const navigate = useNavigate()
     const [message, setMessage] = useState()
     const email = JSON.parse(sessionStorage.getItem('GoogleEmail'))
+    const provinceList = packageInfo.provinces
+    const [districtList, setDistrictList] = useState(provinceList[0].district)
+    const [districtId, setDistrictId] = useState(provinceList[0].district[0].id);
+
+    const onProvinceChange = (value) => {
+        setDistrictList(provinceList[value - 1].district)
+        stepForm.setFieldsValue({ district: provinceList[value - 1].district[0].name })
+        setDistrictId(provinceList[value - 1].district[0].id)
+    };
+
+    const onDistrictChange = (value) => {
+        setDistrictId(value)
+    }
+
     let emailInput;
     if (email === null) {
         emailInput = <Form.Item className={styles.formLabel} label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
@@ -67,7 +81,26 @@ function RegisterDonor() {
     const STEP_3_FORM = () => {
         return (
             <>
-                <RegisterPD />
+                <Form.Item className={styles.formLabel}>
+                    <Form.Item className={styles.formLabel} label="Tỉnh" name="province" initialValue={provinceList[0].name} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                        <Select
+                            showSearch placeholder="Chọn"
+                            onChange={onProvinceChange}
+                            filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
+                        >
+                            {provinceList.map(a => (<Option key={a.id} >{a.name}</Option>))}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item className={styles.formLabel} label="Quận/Huyện" name="district" initialValue={provinceList[0].district[0].name} rules={[{ required: true, message: 'Vui lòng chọn' },]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                        <Select
+                            showSearch placeholder="Chọn"
+                            onChange={onDistrictChange}
+                            filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
+                        >
+                            {districtList.map(a => (<Option key={a.id} value={a.id}>{a.name}</Option>))}
+                        </Select>
+                    </Form.Item>
+                </Form.Item>
                 <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails">
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
@@ -78,8 +111,10 @@ function RegisterDonor() {
     const onFinish = async () => {
         const formData = stepForm.getFieldsValue(true);
         delete formData.province
+        delete formData.district
         formData.role = "DONOR";
-        formData.districtId = JSON.parse(sessionStorage.getItem('districtId'));
+        formData.districtId = districtId;
+        // console.log(formData)
         setMessage("Xin chờ trong giây lát...")
         let json = {
             method: 'POST',
@@ -93,13 +128,43 @@ function RegisterDonor() {
             .catch((error) => { console.log(error) })
         console.log(response)
         if (response.status === 200) {
-            sessionStorage.setItem('OTPAcess', JSON.stringify(true))
             navigate("/otp", { state: { otpAccess: true, userId: response.body.userId } })
         } else if (response.status === 400) {
-            setMessage(response.body)
+            setMessage('')
+            if (response.body === "Email not valid") {
+                notification.error({
+                    message: "Email không hợp lệ",
+                    placement: "top"
+                });
+            }
+            if (response.body === "Phone number not valid") {
+                notification.error({
+                    message: "Số điện thoại không hợp lệ",
+                    placement: "top"
+                });
+            }
+            if (response.body === "Confirm password not match") {
+                notification.error({
+                    message: "Hai mật khẩu không trùng khớp",
+                    placement: "top"
+                });
+            }
+            if (response.body === "The age must be between 18 and 60.") {
+                notification.error({
+                    message: "Độ tuổi tham gia phải từ 18 đến 60 tuổi",
+                    placement: "top"
+                });
+            }
+
         } else if (response.status === 500) {
-            sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-            setMessage("Email này đã được đăng kí.")
+            notification.error({
+                message: "Email đã được đăng kí",
+                placement: "top"
+            });
+        }
+        //Email has been registered but hasn't verified otp
+        else {
+            navigate("/otp", { state: { otpAccess: true, userId: response.body.userId } })
         }
     };
 

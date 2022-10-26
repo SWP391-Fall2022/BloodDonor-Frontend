@@ -36,63 +36,67 @@ import OrganizationReviewNotification from './routes/Organization-Profile/Emerge
 import OrganizationProfile from './routes/Organization-Profile/organization-profile';
 import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
 
+import NoInternetConnection from './others/NoInternetConnection'
+
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Home page */}
-        <Route exact strict path="/" element={<Homepage />} />
-        <Route exact strict path="/news" element={<ListNewsPage />} />
-        <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
-        <Route exact strict path="/qna" element={<QnA />} />
-        <Route exact strict path="/achievement" element={<Achievement />} />
+    <NoInternetConnection>
+      <BrowserRouter>
+        <Routes>
+          {/* Home page */}
+          <Route exact strict path="/" element={<Homepage />} />
+          <Route exact strict path="/news" element={<ListNewsPage />} />
+          <Route exact strict path="/news/news-detail/:id" element={<NewsDetailPage />} />
+          <Route exact strict path="/qna" element={<QnA />} />
+          <Route exact strict path="/achievement" element={<Achievement />} />
 
-        {/* Basic system */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/register/donor" element={<RegisterDonor />} />
-        <Route path="/register/place" element={<RegisterPlace />} />
+          {/* Basic system */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/register/donor" element={<RegisterDonor />} />
+          <Route path="/register/place" element={<RegisterPlace />} />
 
-        <Route path="/auth" element={<AuthRoutes />} />
-        <Route path="/new-password" element={<NewPass />} />
-        <Route path="/restore" element={<Forget />} />
-        <Route path="/otp" element={<Otp />} />
+          <Route path="/auth" element={<AuthRoutes />} />
+          <Route path="/new-password" element={<NewPass />} />
+          <Route path="/restore" element={<Forget />} />
+          <Route path="/otp" element={<Otp />} />
 
-        <Route exact strict path="/campaign" element={<Campaign />} />
-        <Route exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />} />
-        <Route exact strict path="/organization/:id" element={<OrganizationInformation />} />
+          <Route exact strict path="/campaign" element={<Campaign />} />
+          <Route exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />} />
+          <Route exact strict path="/organization/:id" element={<OrganizationInformation />} />
 
-        {/* Pages for logged in donor */}
-        <Route path="/donor" element={<DonorProfile />} >
-          <Route index element={<Info />} />
-          <Route path="changePassword" element={<ChangePassword />} />
-          <Route path="history" element={<History />} />
-          <Route path="qna" element={<QnADonor />} />
-          <Route path="vouchers" element={<Vouchers />} />
-        </Route>
+          {/* Pages for logged in donor */}
+          <Route path="/donor" element={<DonorProfile />} >
+            <Route index element={<Info />} />
+            <Route path="changePassword" element={<ChangePassword />} />
+            <Route path="history" element={<History />} />
+            <Route path="qna" element={<QnADonor />} />
+            <Route path="vouchers" element={<Vouchers />} />
+          </Route>
 
-        {/* Pages for logged in organization */}
-        <Route path="/organization" element={<OrganizationProfile />} >
-          {/* Change this component below to main page route */}
-          <Route index element={<OrganizationInfo />} />
-          {/* Notification Emergency Management */}
-          <Route path="notification" element={<OrganizationNotificationContainer />}>
-            <Route index element={<OrganizationNotificationListContainer />} />
-            <Route path="create" element={<OrganizationCreateNotification />} />
-            <Route path="create/preview" element={<OrganizationReviewNotification />} />
-            <Route path="view" element={<OrganizationViewNotification />} />
+          {/* Pages for logged in organization */}
+          <Route path="/organization" element={<OrganizationProfile />} >
+            {/* Change this component below to main page route */}
+            <Route index element={<OrganizationInfo />} />
+            {/* Notification Emergency Management */}
+            <Route path="notification" element={<OrganizationNotificationContainer />}>
+              <Route index element={<OrganizationNotificationListContainer />} />
+              <Route path="create" element={<OrganizationCreateNotification />} />
+              <Route path="create/preview" element={<OrganizationReviewNotification />} />
+              <Route path="view" element={<OrganizationViewNotification />} />
+              <Route path="*" element={<NoPageOrganization />} />
+            </Route>
+            <Route path="changePassword" element={<OrganizationChangePassword />} />
+            <Route path="profile" element={<OrganizationInfo />} />
             <Route path="*" element={<NoPageOrganization />} />
           </Route>
-          <Route path="changePassword" element={<OrganizationChangePassword />} />
-          <Route path="profile" element={<OrganizationInfo />} />
-          <Route path="*" element={<NoPageOrganization />} />
-        </Route>
 
-        {/* Pages for admin */}
+          {/* Pages for admin */}
 
-        {/* 404 error page */}
-        <Route path="*" element={<NoPage />} />
-      </Routes>
-    </BrowserRouter>
+          {/* 404 error page */}
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+      </BrowserRouter>
+    </NoInternetConnection>
   );
 }

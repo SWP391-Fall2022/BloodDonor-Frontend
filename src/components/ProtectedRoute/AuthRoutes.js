@@ -1,10 +1,11 @@
 //A Gate keeper to check if Google Logged in User has registered the app before
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 export default function AuthGoogleRoutes() {
     const [authorized, setAuthorized] = useState(false);
-    // Need a render state because first render will not run useEffect until it has done the first return
+    const { state } = useLocation();
+    const navigate = useNavigate();
     const [rendered, setRendered] = useState(false)
 
     useEffect(() => {
@@ -29,34 +30,34 @@ export default function AuthGoogleRoutes() {
             // console.log(organizationResponse)
 
             // First time login with google success (Have not registered before)
-            if (donorResponse.status === 400 && organizationResponse.status === 400) {
+            if ((donorResponse.status === 400 || donorResponse.status === 404) && (organizationResponse.status === 500 || organizationResponse.status === 400)) {
                 setAuthorized(false)
                 setRendered(true)
-                console.log(rendered)
+                if (state !== null) {
+                    navigate("/register", { state: { googleEmail: state.googleEmail } })
+                }
             }
             // Login Donor
             if (donorResponse.success) {
                 setAuthorized(true)
-                setRendered(true)
-                sessionStorage.removeItem('GoogleEmail');
                 sessionStorage.setItem('userRole', JSON.stringify("/donor"))
             }
             // Login Organization
             if (organizationResponse.success) {
                 setAuthorized(true)
-                setRendered(true)
-                sessionStorage.removeItem('GoogleEmail');
                 sessionStorage.setItem('userRole', JSON.stringify("/organization"))
             }
         }
         fetchAPI();
-    }, [rendered]);
+    }, [navigate]);
 
     if (authorized) {
         return <Navigate to={`/`} />
     } else {
         if (rendered) {
-            return <Navigate to={`/register`} />
+            if (state === null) {
+                return <Navigate to={`/`} />
+            }
         } else {
             return <h2 style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>Đang chuyển hướng ...</h2>
         }

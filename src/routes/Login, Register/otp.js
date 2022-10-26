@@ -9,7 +9,6 @@ export default function Otp() {
     const [otp, setOtp] = useState('')
     const [seconds, setSeconds] = useState(60)
     const { state } = useLocation();
-    const { otpAccess, userId } = state;
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
     const handleChange = (otp) => {
@@ -40,6 +39,7 @@ export default function Otp() {
 
     const reSendOtp = async () => {
         setSeconds(60)
+        const userId = state.userId
         let json = {
             method: 'PUT',
             headers: new Headers({
@@ -73,9 +73,10 @@ export default function Otp() {
         button = <Button id={`${styles.btn}`} onClick={reSendOtp}>Gửi lại mã</Button>
     }
 
-    if (otpAccess === null || !otpAccess) {
+    if (state === null) {
         return <Navigate to={'/login'} replace />
-    } else
+    } 
+    if (state !== null && state.otpAccess) {
         return (
             <div className={styles.container}>
                 <div className={styles.content}>Mã xác nhận đã được gửi qua mail của bạn</div>
@@ -104,4 +105,5 @@ export default function Otp() {
                 </div>
             </div>
         )
+    }
 }
