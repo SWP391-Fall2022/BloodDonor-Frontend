@@ -20,7 +20,7 @@ import NewsDetailPage from './routes/News/NewsDetailPage';
 import AuthRoutes from './components/ProtectedRoute/AuthRoutes';
 
 import DonorProfile from './routes/Donor-Profile/donor-profile';
-import { NoPage, NoPageOrganization } from "./routes/nopage";
+import { NoPage, NoPageOrganization } from "./others/nopage";
 import Info from './routes/Donor-Profile/Basic Info/Info';
 import ChangePassword from './routes/Donor-Profile/Change Password/changePassword';
 import History from './routes/Donor-Profile/History Campaign/history';

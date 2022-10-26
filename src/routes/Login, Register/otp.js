@@ -26,12 +26,15 @@ export default function Otp() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.success) {
-            if (JSON.parse(sessionStorage.getItem('restore'))) {
-                navigate('/new-password')
-            } else {
-                sessionStorage.clear()
-                navigate('/login')
+            if (state !== null) {
+                
             }
+                if (JSON.parse(sessionStorage.getItem('restore'))) {
+                    navigate('/new-password')
+                } else {
+                    sessionStorage.clear()
+                    navigate('/login')
+                }
         } else {
             setMessage("Mã không chính xác")
         }
@@ -75,7 +78,7 @@ export default function Otp() {
 
     if (state === null) {
         return <Navigate to={'/login'} replace />
-    } 
+    }
     if (state !== null && state.otpAccess) {
         return (
             <div className={styles.container}>
