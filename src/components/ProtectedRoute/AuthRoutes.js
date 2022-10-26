@@ -1,10 +1,11 @@
 //A Gate keeper to check if Google Logged in User has registered the app before
+import { LoadingOutlined } from "@ant-design/icons";
+import { notification, Spin } from "antd";
 import { useState, useEffect } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function AuthGoogleRoutes() {
     const [authorized, setAuthorized] = useState(false);
-    const { state } = useLocation();
     const navigate = useNavigate();
     const [rendered, setRendered] = useState(false)
 
@@ -29,13 +30,22 @@ export default function AuthGoogleRoutes() {
             // console.log(donorResponse)
             // console.log(organizationResponse)
 
+            //No JWT, kick back to home page
+            if (donorResponse.status === 400 && organizationResponse.status === 400) {
+                setAuthorized(true)
+            }
+
             // First time login with google success (Have not registered before)
-            if ((donorResponse.status === 400 || donorResponse.status === 404) && (organizationResponse.status === 500 || organizationResponse.status === 400)) {
+            if (donorResponse.status === 404 && organizationResponse.status === 500) {
                 setAuthorized(false)
-                setRendered(true)
-                if (state !== null) {
-                    navigate("/register", { state: { googleEmail: state.googleEmail } })
-                }
+                notification.error({
+                    message: "Email này chưa từng đăng kí app",
+                    description: "Đang chuyển hướng đến trang đăng kí, vui lòng đăng kí với email này",
+                    placement: "top"
+                });
+                setTimeout(() => {
+                    setRendered(true)
+                }, 5000);
             }
             // Login Donor
             if (donorResponse.success) {
@@ -55,11 +65,9 @@ export default function AuthGoogleRoutes() {
         return <Navigate to={`/`} />
     } else {
         if (rendered) {
-            if (state === null) {
-                return <Navigate to={`/`} />
-            }
+            return <Navigate to={`/register`} />
         } else {
-            return <h2 style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>Đang chuyển hướng ...</h2>
+            return <div style={{ textAlign: 'center' }}><Spin indicator={<LoadingOutlined style={{ fontSize: 150 }} spin />} /></div>
         }
     }
 }
