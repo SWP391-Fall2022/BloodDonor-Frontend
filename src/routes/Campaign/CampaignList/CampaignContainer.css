@@ -1,12 +1,12 @@
-.campaign-container{
+#campaign-container{
     display: flex;
-    margin-left: 18%;
+    margin-left: 16%;
     margin-right: 14%;
     margin-top: 105px;
     padding-top: 30px;
 }
 
-.campaign-container .MuiSvgIcon-root {
+#campaign-container .MuiSvgIcon-root {
     display: inline-block !important;
   }
 
@@ -21,6 +21,8 @@
     margin-bottom: 30px;
     padding: 30px 35px 30px 30px;
     box-shadow: var(--shadow-dp-02);
+    position: sticky;
+    top: 135px;
 }
 
 .filter-table p{
@@ -50,7 +52,7 @@
 
 .date-seach .ant-picker-range{
     height: 35px;
-    width: 53%;
+    width: 70%;
 }
 
 .date-seach .ant-input-wrapper{
@@ -96,7 +98,7 @@
     line-height: 24px;
 }
 
-.search-campaign .campaign-img-container {
+#campaign-container .search-campaign .campaign-img-container {
     width: 100%;
     height:190px;
     overflow: hidden;
@@ -104,9 +106,10 @@
     margin-top: 5px;
 }
 
-.search-campaign .campaign-img-container img {
+#campaign-container .campaign-img-container img {
     max-width: 100%;
     object-fit: contain;
+    top: unset;
 }
 
 .search-campaign .campaign-card-content {

@@ -30,7 +30,7 @@ export default function OrganizationInformation() {
     return (
         <>
             <Navbar></Navbar>
-            <div className='organization-container'>
+            <div id='organization-container'>
                 <div className='organization-left'>
                     <Breadcrumb>
                         <Breadcrumb.Item>
@@ -109,11 +109,12 @@ export default function OrganizationInformation() {
                         </div >
                     </div>
 
-                    <div className='ongoing-campaign'>
+                    <div id='ongoing-campaign-info-page'>
                         <List
                             itemLayout="vertical"
                             size="large"
                             pagination={{
+                                className:"ongoing-campaign-pagination",
                                 onChange: (page) => {
                                     console.log(page);
                                 },
@@ -134,7 +135,7 @@ export default function OrganizationInformation() {
                                                         {item.organization}
                                                     </a>
                                                 </div>
-                                                <div className="campaign-img-container">
+                                                <div className="ongoing-campaign-img-container">
                                                     <img src={item.image} alt={item.organization}></img>
                                                 </div>
                                                 <div className="campaign-card-content">

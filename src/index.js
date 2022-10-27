@@ -32,6 +32,18 @@ import OrganizationProfile from './routes/Organization-Profile/organization-prof
 import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
 import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
 
+// org campaign management
+import OrganizationCampign from './routes/Organization-Campaign/OrganizationCampaign';
+import OrganizationManageCampaign from './routes/Organization-Campaign/ManageCampaign/ManageCampaign';
+import OrganizationCreateCampaign from './routes/Organization-Campaign/CreateCampaign/CreateCampaign';
+import OrganizationDetailCampaign from './routes/Organization-Campaign/CreateCampaign/DetailCampaign/DetailCampaign';
+
+// org question management
+import OrganizationQuestion from './routes/Organization-Question/OrganizationQuestion';
+import OrganizationManageQuestion from './routes/Organization-Question/ManageQuestion/ManageQuestion';
+import OrganizationUnRepliedQuestion from './routes/Organization-Question/DetailQuestion/UnReplied';
+import OrganizationRepliedQuestion from './routes/Organization-Question/DetailQuestion/RepliedQuestion';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -54,6 +66,7 @@ export default function App() {
         <Route path="/restore" element={<Forget />} />
         <Route path="/otp" element={<Otp />} />
 
+        {/* Donor campaign */}
         <Route exact strict path="/campaign" element={<Campaign />} />
         <Route exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />} />
         <Route exact strict path="/organization/:id" element={<OrganizationInformation />} />
@@ -71,8 +84,22 @@ export default function App() {
         <Route path="/organization" element={<OrganizationProfile />} >
           <Route index element={<OrganizationInfo />} />
           <Route path="changePassword" element={<OrganizationChangePassword />} />
-
         </Route>
+
+        {/* Org campaign management  */}
+        <Route path="/organization/manageCampaign" element={<OrganizationCampign />} >
+          <Route index element={<OrganizationManageCampaign />} />
+          <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
+          <Route path="detailCampaign/:id" element={<OrganizationDetailCampaign />} />
+        </Route>
+
+        {/* Org campaign management  */}
+        <Route path="/organization/manageQuestion" element={<OrganizationQuestion />} >
+          <Route index element={<OrganizationManageQuestion />} />
+          <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
+          <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
+        </Route>
+
 
         {/* Pages for admin */}
 

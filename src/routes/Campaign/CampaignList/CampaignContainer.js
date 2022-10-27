@@ -3,13 +3,11 @@ import packageInfo from "../../../shared/ListOfCampaign.json";
 import './CampaignContainer.css';
 import { FormGroup } from "@mui/material";
 import { Link } from "react-router-dom";
-import { List,DatePicker, Checkbox } from "antd";
+import { List,DatePicker, Checkbox, Input } from "antd";
 import { HeartFilled } from '@ant-design/icons';
-import { Input } from 'antd';
 
 const { RangePicker } = DatePicker;
 const { Search } = Input;
-
 
 const campaignData = packageInfo.listOfCampaign;
 
@@ -43,7 +41,7 @@ function take_duplicate_element(array, size) {
     return result
 }
 
-const CampaignContainer = () => {
+function CampaignContainer()  {
     const [blood, setBlood] = useState([]);
     const [filteredBlood, setFilteredBlood] = useState([]);
 
@@ -51,6 +49,8 @@ const CampaignContainer = () => {
     const [filteredProvince, setFilteredProvince] = useState([]);
 
     const [endFilter, setEndFilter] = useState([]);
+
+    
 
     const handleChange = e => {
         if (e.target.checked) {
@@ -98,9 +98,7 @@ const CampaignContainer = () => {
 
     return (
 
-        <div className="campaign-container">
-            {/* <TextField value={blood} fullWidth onChange={handleChange} />
-            <TextField value={province} fullWidth onChange={handleChange} /> */}
+        <div id="campaign-container">
 
             <div className="filter-table">
                 <FormGroup>
