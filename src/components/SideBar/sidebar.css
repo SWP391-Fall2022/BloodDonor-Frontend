@@ -1,41 +1,54 @@
 @import url(../../index.css);
 
 .sidebar-container {
-    padding-top: 2.3%;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    padding: 5% 0 4% 0;
     width: 270px;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #12232F;
     text-align: center;
 }
 
 .sidebar-item {
-    padding: 5% 0 2% 9%;
+
+    padding: 4% 0 4% 6%;
+    margin: 2%;
     display: flex;
     align-items: center;
+    border-radius: 5px;
 }
 
 .sidebar-subitem {
-    padding: 5% 0 2% 20%;
+    padding: 4% 0 4% 20%;
     display: flex;
+    margin: 2%;
     align-items: center;
+    border-radius: 5px;
 }
 
-.sidebar-item:hover {
+.sidebar-item:hover,
+.sidebar-subitem:hover {
     background-color: var(--blue-01) !important;
+    border-radius: 5px;
 }
 
-.sidebar-container .active {
+.sidebar-container .active,
+.sidebar-subitem .active {
     background-color: var(--blue-01);
     border-right: 6px solid var(--blue-04);
+
 }
 
-.sidebar-item p, .sidebar-subitem p {
+.sidebar-item p,
+.sidebar-subitem p {
     display: inline;
     font-weight: 500;
     font-size: 14px;
     line-height: 24px;
     color: white;
-    padding-top: 2%;
+    margin: 0;
 }
 
 .sidebar-icon {
@@ -45,7 +58,7 @@
 }
 
 .sidebar-logo {
-    padding-bottom: 3%;
+    padding: 2%;
     margin: 0;
     height: 50px;
     font-family: 'Reem Kufi Fun';
@@ -56,16 +69,45 @@
 }
 
 @media only screen and (max-width: 800px) {
-    .sidebar-container {
-        width: fit-content;
-        padding-top: 23%;
-    }
-
-    .sidebar-item, .sidebar-item {
-        padding: 15px;
-    }
-
-    .sidebar-item p, .sidebar-subitem p, .sidebar-logo {
+    .sidebar-container p {
         display: none;
+    }
+    .sidebar-logo{
+        display: none;
+    }
+    .sidebar-container {
+        position: sticky;
+        top: 0;
+        z-index: 99;
+        padding: 20% 0 4% 0;
+        width: 60px;
+        min-height: 100vh;
+        background-color: #12232F;
+        text-align: center;
+    }
+
+    .sidebar-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding: 18% 0;
+    }
+
+    .sidebar-item {
+        padding: 18% 0 18% 0;
+        margin: 12% 10%;
+    }
+
+    .sidebar-subitem {
+        padding: 18% 0 18% 20%;
+        margin: 12% 10%;
+    }
+
+    .sidebar-container .active,
+    .sidebar-subitem .active {
+        border-bottom: 6px solid var(--blue-04);
+        border-right: none;
+        border-radius: 5px;
     }
 }
