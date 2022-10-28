@@ -11,7 +11,7 @@ const { Search } = Input;
 export default function OrganizationNotificationList() {
     //Show list in 3 mode: All, On Going or Done
     const [listState, setListState] = useState("All")
-    const [empty, setEmpty] = useState(false);
+    const [empty, setEmpty] = useState(true);
     //Demo data set, must fetch from database
     const dataSource = [
         {

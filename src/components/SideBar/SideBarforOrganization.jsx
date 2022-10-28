@@ -62,12 +62,12 @@ export const SideBarforOrganization = () => {
             <p>Quản lý thông báo khẩn cấp</p>
           </NavLink>
 
-          <NavLink to="/sidebar_for_organization/change_pw" className="sidebar-item" title="Quản lý chiến dịch">
+          <NavLink to="/organization/manageCampaign" className="sidebar-item" title="Quản lý chiến dịch">
             <LocalHospitalIcon className="sidebar-icon"></LocalHospitalIcon>
             <p>Quản lý chiến dịch</p>
           </NavLink>
 
-          <NavLink to="/sidebar_for_organization/change_pnb" className="sidebar-item" title="Quản lý hỏi đáp">
+          <NavLink to="/organization/manageQuestion" className="sidebar-item" title="Quản lý hỏi đáp">
             <HelpCenterIcon className="sidebar-icon"></HelpCenterIcon>
             <p>Quản lý hỏi đáp</p>
           </NavLink>

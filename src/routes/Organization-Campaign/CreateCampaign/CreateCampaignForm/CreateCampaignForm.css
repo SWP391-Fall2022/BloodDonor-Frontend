@@ -1,0 +1,74 @@
+@import url(../../../../index.css);
+
+#create-campaign-container{
+    background: white;
+    width: 100%;
+    background-color: hsl(194, 100%, 97%) !important;
+
+}
+
+.create-campaign-form{
+    width: 70%;
+    margin: 50px auto;
+    box-shadow: var(--shadow-dp-02);
+    background-color: white;
+    padding: 30px;
+
+}
+
+#create-campaign-form .ant-row.ant-form-item-row{
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#create-campaign-form .ant-col.ant-form-item-control{
+    width: 100%;
+}
+
+#create-campaign-form .ant-col.ant-form-item-label{
+    font-weight: 700;
+}
+
+.create-campaign-header {
+    padding: 15px 20px;
+    box-shadow: var(--shadow-dp-01);
+    background-color: white;
+}
+
+.create-campaign-header a{
+   
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.manage-campaign-breadcrumb{
+    margin-bottom: 10px;
+}
+
+#create-campaign-form .ant-picker-range{
+    width: 100%;
+}
+
+
+.create-campaign-form-buttons{
+    text-align: center;
+}
+
+#previewButton, #finishButton, #publicSend{
+    background-color: var(--primary-500);
+    border: none;
+    margin-right: 20px;
+}
+
+#cancelButton, #refuseButton, #privateSend{
+    color: var(--primary-500);
+    border-color: var(--primary-500);
+    background-color: white;
+    width: 115px;
+    margin-right: 20px;
+}
+
+.create-campaign-confirm .ant-btn-primary{
+    background-color: var(--primary-500);
+    border: none;
+}

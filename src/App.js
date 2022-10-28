@@ -35,6 +35,21 @@ import OrganizationViewNotification from './routes/Organization-Profile/Emergenc
 import OrganizationReviewNotification from './routes/Organization-Profile/Emergency Notification/Create Notification/ReviewNotification';
 import OrganizationProfile from './routes/Organization-Profile/organization-profile';
 import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
+import OrganizationHomepage from './routes/Organization-Homepage/OrganizationHomepage';
+import OrganizationCampaignDonorList from './routes/Organization-Campaign-Donor/OrganizationCampaignDonorList';
+import OrganizationCampaignHealthInf from './routes/Organization-Campaign-Donor/HealthInformation/OrganizationCampaignHealthInf'
+
+// org campaign management
+import OrganizationCampign from './routes/Organization-Campaign/OrganizationCampaign';
+import OrganizationManageCampaign from './routes/Organization-Campaign/ManageCampaign/ManageCampaign';
+import OrganizationCreateCampaign from './routes/Organization-Campaign/CreateCampaign/CreateCampaign';
+import OrganizationDetailCampaign from './routes/Organization-Campaign/CreateCampaign/DetailCampaign/DetailCampaign';
+
+// org question management
+import OrganizationQuestion from './routes/Organization-Question/OrganizationQuestion';
+import OrganizationManageQuestion from './routes/Organization-Question/ManageQuestion/ManageQuestion';
+import OrganizationUnRepliedQuestion from './routes/Organization-Question/DetailQuestion/UnReplied';
+import OrganizationRepliedQuestion from './routes/Organization-Question/DetailQuestion/RepliedQuestion';
 
 import NoInternetConnection from './others/NoInternetConnection'
 
@@ -65,6 +80,10 @@ export default function App() {
           <Route exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />} />
           <Route exact strict path="/organization/:id" element={<OrganizationInformation />} />
 
+          <Route exact strict path="/organization-homepage" element={<OrganizationHomepage />} />
+          <Route exact strict path="/organization-campaign-donorlist" element={<OrganizationCampaignDonorList />} />
+          <Route exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf />} />
+
           {/* Pages for logged in donor */}
           <Route path="/donor" element={<DonorProfile />} >
             <Route index element={<Info />} />
@@ -77,7 +96,7 @@ export default function App() {
           {/* Pages for logged in organization */}
           <Route path="/organization" element={<OrganizationProfile />} >
             {/* Change this component below to main page route */}
-            <Route index element={<OrganizationInfo />} />
+            <Route index element={<OrganizationHomepage />} />
             {/* Notification Emergency Management */}
             <Route path="notification" element={<OrganizationNotificationContainer />}>
               <Route index element={<OrganizationNotificationListContainer />} />
@@ -86,10 +105,34 @@ export default function App() {
               <Route path="view" element={<OrganizationViewNotification />} />
               <Route path="*" element={<NoPageOrganization />} />
             </Route>
+            <Route path="manageCampaign" element={<OrganizationCampign />} >
+              <Route index element={<OrganizationManageCampaign />} />
+              <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
+              <Route path="detailCampaign/:id" element={<OrganizationDetailCampaign />} />
+            </Route>
+            <Route path="manageQuestion" element={<OrganizationQuestion />} >
+              <Route index element={<OrganizationManageQuestion />} />
+              <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
+              <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
+            </Route>
             <Route path="changePassword" element={<OrganizationChangePassword />} />
             <Route path="profile" element={<OrganizationInfo />} />
             <Route path="*" element={<NoPageOrganization />} />
           </Route>
+
+          {/* Org campaign management  */}
+          {/* <Route path="/organization/manageCampaign" element={<OrganizationCampign />} >
+            <Route index element={<OrganizationManageCampaign />} />
+            <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
+            <Route path="detailCampaign/:id" element={<OrganizationDetailCampaign />} />
+          </Route> */}
+
+          {/* Org campaign management  */}
+          {/* <Route path="/organization/manageQuestion" element={<OrganizationQuestion />} >
+            <Route index element={<OrganizationManageQuestion />} />
+            <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
+            <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
+          </Route> */}
 
           {/* Pages for admin */}
 
