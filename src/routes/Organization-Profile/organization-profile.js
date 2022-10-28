@@ -60,7 +60,6 @@ function OrganizationProfile() {
             <>
                 <div className={styles.organizationSideBar}><SideBarforOrganization /></div>
                 <div><Outlet context={[user, setUser]} /></div>
-                <FooterSmall />
             </>
         )
     } else {

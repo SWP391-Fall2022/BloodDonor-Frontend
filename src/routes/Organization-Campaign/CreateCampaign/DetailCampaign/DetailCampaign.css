@@ -1,0 +1,68 @@
+.org-campaignDetail-header {
+    padding: 15px 20px;
+    box-shadow: var(--shadow-dp-01);
+    background-color: white;
+}
+
+.org-campaignDetail-header a{
+   
+    font-weight: 500;
+    font-size: 18px;
+    color: black;
+}
+
+#org-campaign-detail-container{
+    background-color: white;
+    width: 70%;
+    margin: 40px auto;
+    padding: 25px 35px;
+    text-align: center;
+    box-shadow: var(--shadow-dp-02);
+}
+
+.org-campaignDetail-title {
+    text-align: left;
+}
+
+.org-campaign-title{
+    font-weight: 700;
+    margin-top: 15px;
+}
+
+.org-campaign-detail-img{
+    width: 40%;
+    max-width: 225px;
+    height: 220px;
+    margin: 30px auto;
+}
+
+.org-campaign-detail-img  img{
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    transform: scale(1);
+}
+
+#org-campaign-detail-container  .sub-title{
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+/* Blood type */
+
+.blood-type ul{
+    list-style: none;
+    display: flex;
+    padding: 0;
+    width: 60%;
+    margin: 10px auto 0 auto;
+    justify-content: center
+}
+
+.blood-type-item{
+    background-color: var(--primary-500);
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    margin: 5px 20px;
+}
