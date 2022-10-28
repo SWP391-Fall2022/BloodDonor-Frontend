@@ -25,7 +25,7 @@ export default function CampaignDetail() {
     });
 
     // check donor unregistered registerd
-    const [registered, setRegistered] = useState(true);
+    const [registered, setRegistered] = useState(false);
 
      // check donor participated the campaign
      const [participated, setParticipated] = useState(false);

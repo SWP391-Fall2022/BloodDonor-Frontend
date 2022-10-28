@@ -1,4 +1,5 @@
 import { Avatar, List } from "antd";
+import { Footer } from "../../components/Footer/Footer";
 import React from "react";
 import { Navbar } from "../../components/NavBar/navbar";
 import "./achievement.css";
@@ -37,24 +38,24 @@ const Achievement = () => {
         </h2>
         <div className="achievement-cols">
           <div className="container-col">
-          <h3 style={{paddingTop: `${250 - height_col1 * 250 / 100}px`}}>Quy Nhơn</h3>
-            <div className="col col1" style={{height: `${height_col1 * 250 / 100}px`}}></div>
+            <h3 style={{ paddingTop: `${250 - height_col1 * 250 / 100}px` }}>Quy Nhơn</h3>
+            <div className="col col1" style={{ height: `${height_col1 * 250 / 100}px` }}></div>
           </div>
           <div className="container-col">
-            <h3 style={{paddingTop: `${250 - height_col2 * 250 / 100}px`}}>Đà Nẵng</h3>
-            <div className="col col2" style={{height: `${height_col2 * 250 / 100}px`}}></div>
+            <h3 style={{ paddingTop: `${250 - height_col2 * 250 / 100}px` }}>Đà Nẵng</h3>
+            <div className="col col2" style={{ height: `${height_col2 * 250 / 100}px` }}></div>
           </div>
           <div className="container-col">
-            <h3 style={{paddingTop: `${250 - height_col3 * 250 / 100}px`}}>TP Hồ Chí Minh</h3>
-            <div className="col col3" style={{height: `${height_col3 * 250 / 100}px`}}></div>
+            <h3 style={{ paddingTop: `${250 - height_col3 * 250 / 100}px` }}>TP Hồ Chí Minh</h3>
+            <div className="col col3" style={{ height: `${height_col3 * 250 / 100}px` }}></div>
           </div>
           <div className="container-col">
-          <h3 style={{paddingTop: `${250 - height_col4 * 250 / 100}px`}}>Hà Nội</h3>
-            <div className="col col4" style={{height: `${height_col4 * 250 / 100}px`}}></div>
+            <h3 style={{ paddingTop: `${250 - height_col4 * 250 / 100}px` }}>Hà Nội</h3>
+            <div className="col col4" style={{ height: `${height_col4 * 250 / 100}px` }}></div>
           </div>
           <div className="container-col">
-            <h3 style={{paddingTop: `${250 - height_col5 * 250 / 100}px`}}>Cần Thơ</h3>
-            <div className="col col5" style={{height: `${height_col5 * 250 / 100}px`}}></div>
+            <h3 style={{ paddingTop: `${250 - height_col5 * 250 / 100}px` }}>Cần Thơ</h3>
+            <div className="col col5" style={{ height: `${height_col5 * 250 / 100}px` }}></div>
           </div>
         </div>
       </section>
@@ -120,6 +121,7 @@ const Achievement = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </section>
   );
 };

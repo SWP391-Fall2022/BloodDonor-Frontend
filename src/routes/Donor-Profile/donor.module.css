@@ -1,9 +1,33 @@
+/* Overall */
 .mainContainer {
-    margin-top: 130px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 110px;
+    padding-bottom: 100px;
+    margin-left: 270px;
 }
 
-.infoContainer, .leftContainer {
-    display: block;
+.donorSideBar {
+    margin-top: 90px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    z-index: 2;
+}
+
+.breadcrumb {
+    margin-top: 90px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    z-index: 2;
+}
+
+.infoContainer, .leftContainer, .infoContainerHistory {
+    margin: 0 20px;
     background-color: white;
     height: auto;
     padding: 20px 20px;
@@ -15,6 +39,10 @@
     width: 510px;
 }
 
+.infoContainerHistory {
+    width: 700px;
+}
+
 .leftContainer {
     width: 270px;
     text-align: center;
@@ -23,9 +51,35 @@
 
 .leftContainerMain {
     width: 270px;
-    float: left;
     text-align: center;
 }
+
+@media only screen and (max-width: 1280px) {
+    .infoContainerHistory {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .mainContainer {
+        margin-left: 0;
+    }
+
+    .leftContainerMain {
+        transform: scale(0.8);
+    }
+
+    .infoContainer {
+        width: 90%;
+    }
+
+    .infoContainerHistory {
+        width: 100%;
+        transform: scale(0.8);
+    }
+}
+
+/* Buttons */
 
 .btn1 {
     background-color: var(--primary-600);
@@ -58,6 +112,8 @@
     color: black;
 }
 
+/* Basic Info, Change Password Page */
+
 .title, .formLabel, .subFormLabel {
     font-weight: 600;
     text-align: center;
@@ -77,48 +133,6 @@
 .subFormLabel {
     margin-bottom: 0px;
 }
-
-.leftSideText {
-    font-size: 130%;
-    font-weight: 600;
-}
-
-.ava {
-    box-shadow: var(--shadow-dp-01);
-}
-
-.editIcon {
-    position: absolute;
-    top: 140px;
-    left: 160px;
-    background-color: var(--secondary-300);
-    color: white;
-    box-shadow: var(--shadow-dp-03);
-    z-index: 1;
-}
-
-.editIcon:hover, .editIcon:focus {
-    background-color: var(--secondary-400);
-    color: white;
-}
-
-.awardImgContainer {
-    width: 230px;
-}
-
-.awardImg1, .awardImg2, .awardImg3 {
-    width: 26%;
-    height: 60px;
-}
-
-.awardImg1 {
-    float: left;
-}
-
-.awardImg3 {
-    float: right;
-}
-
 
 /* QnA page */
 .questionPanel {
@@ -145,4 +159,12 @@
 .uploader {
     width: 470px;
     height: 470px;
+}
+
+.voucherContainer {
+    text-align: center;
+}
+
+.img {
+    width: 70%;
 }
