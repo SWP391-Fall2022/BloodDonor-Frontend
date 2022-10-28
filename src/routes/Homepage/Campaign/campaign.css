@@ -2,7 +2,7 @@
 /*-----------campaign CARD------------*/
 .campaign-card {
     background-color: white;
-    box-shadow: var(--shadow-dp-02);
+    box-shadow: var(--shadow-dp-01);
     border-radius: 5px;
     width: 230px;
 }
@@ -10,7 +10,7 @@
 .campaign-header {
     text-align: left;
     padding: 5%;
-}
+} 
 
 .campaign-img-container {
     width: 100%;

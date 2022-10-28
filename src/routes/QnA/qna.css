@@ -2,6 +2,9 @@
 .QnA-content{
     padding: 3% 24%;
 }
+.ant-collapse-header-text{
+    font-size: 17px;
+}
 #QnA h1 {
     font-weight: 800 !important;
     font-size: 50px;
@@ -98,15 +101,16 @@
 
 .QnA-container {
     text-align: left;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     border-radius: 5px;
     margin-bottom: 2%;
-    box-shadow: var(--shadow-dp-01);
+    border: 1px solid rgb(220, 220, 220);
 }
 
 .QnA-card {
     border-radius: 5px;
+    margin-bottom: 0.5%;
     background-color: var(--blue-02);
 }
 

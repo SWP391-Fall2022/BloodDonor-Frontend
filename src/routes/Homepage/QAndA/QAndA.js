@@ -7,7 +7,10 @@ const QAndA = () => {
     <h2>THẮC MẮC THƯỜNG GẶP</h2>
 
     <Collapse className="q-and-a-container">
-      <Panel header="Ai có thể tham gia hiến máu?" className="q-and-a-card">
+    <Panel
+        header="Ai có thể tham gia hiến máu?"
+        className="q-and-a-card"
+      >
         <li>
           Tất cả mọi người từ 18 - 60 tuổi, thực sự tình nguyện hiến máu của
           mình để cứu chữa người bệnh.

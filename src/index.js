@@ -3,7 +3,6 @@ import './index.css';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from './routes/Homepage/Homepage';
-import Achievements from './routes/Homepage/Achievements/Achievement';
 import Login from "./routes/Login, Register/login";
 import Register from "./routes/Login, Register/register";
 import RegisterDonor from "./components/Register/RegisterDonor";
@@ -33,7 +32,9 @@ import OrganizationChangePassword from './routes/Organization-Profile/Change Pas
 import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
 import Achievement from './routes/Achievement/Achievement';
 import OrganizationHomepage from './routes/Organization-Homepage/OrganizationHomepage';
-import OrganizationCampaignDonorList from './routes/Organization-Campaign-Donor/OrganizationCampaignDonorList';
+import OrganizationCampaignDonorList from './routes/Organization-Campaign-Donor/DonorList/OrganizationCampaignDonorList';
+import AvatarContainer from './components/Avatar, Point, Reward/Avatar';
+import OrganizationCampaignHealthInf from './routes/Organization-Campaign-Donor/HealthInformation/OrganizationCampaignHealthInf';
 
 export default function App() {
   return (
@@ -64,6 +65,8 @@ export default function App() {
         {/*KHANH DOAN THEM*/}
         <Route exact strict path="/organization-homepage" element={<OrganizationHomepage/>}/>
         <Route exact strict path="/organization-campaign-donorlist" element={<OrganizationCampaignDonorList/>}/>
+        <Route exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf/>}/>
+        
         {/* Pages for logged in donor */}
         <Route path="/donor" element={<DonorProfile />} >
           <Route index element={<Info />} />

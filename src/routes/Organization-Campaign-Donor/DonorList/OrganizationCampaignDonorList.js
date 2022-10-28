@@ -1,6 +1,6 @@
 import { PageHeader } from "antd"
-import {SideBarforOrganization} from "../../components/SideBar/SideBarforOrganization"
-import DonorList from "./DonorList/DonorList"
+import {SideBarforOrganization} from "../../../components/SideBar/SideBarforOrganization"
+import DonorList from "./DonorList"
 import "./organizationcampaigndonorlist.css"
 const OrganizationCampaignDonorList = () =>{
     // const user = JSON.parse(sessionStorage.getItem('user'))
@@ -14,7 +14,7 @@ const OrganizationCampaignDonorList = () =>{
             <div className="organization-donorlist-col">
                     <div><SideBarforOrganization/></div>
                     <div>
-                        <PageHeader className="site-page-header" title="Trang chủ" />
+                        <PageHeader className="site-page-header" title="Danh sách tình nguyện viên" />
                         <DonorList/>
                     </div>
             </div>
