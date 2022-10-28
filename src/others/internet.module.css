@@ -10,9 +10,13 @@
 }
 
 .mainBackgroundInternet {
-    background-image: url('../assets/NoInternet.png');
+    background-image: url('../assets/No-Internet.png');
 }
 
 .mainBackground404 {
-    background-image: url('../assets/404.png');
+    background-image: url('../assets/404-background.png');
+}
+
+.organization404 {
+    background-image: url('../assets/Organization-404.png');
 }

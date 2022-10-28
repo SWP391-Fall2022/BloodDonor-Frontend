@@ -94,6 +94,7 @@ export default function App() {
           {/* Pages for admin */}
 
           {/* 404 error page */}
+          <Route path="/404" element={<NoPage />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
       </BrowserRouter>

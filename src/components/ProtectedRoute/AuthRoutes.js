@@ -40,12 +40,11 @@ export default function AuthGoogleRoutes() {
                 setAuthorized(false)
                 notification.error({
                     message: "Email này chưa từng đăng kí app",
-                    description: "Đang chuyển hướng đến trang đăng kí, vui lòng đăng kí với email này",
+                    description: "Vui lòng nhập email này để đăng kí. Sau khi đăng kí bạn có thể đăng nhập bằng Google mà không cần tài khoản, mật khẩu.",
+                    duration: 10,
                     placement: "top"
                 });
-                setTimeout(() => {
-                    setRendered(true)
-                }, 5000);
+                setRendered(true)
             }
             // Login Donor
             if (donorResponse.success) {

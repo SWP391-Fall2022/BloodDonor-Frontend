@@ -80,6 +80,29 @@
     color: black;
 }
 
+.btn3 {
+    background-color: var(--primary-600);
+    color: white;
+    border: 0px;
+    font-size: 14px;
+}
+
+.btn3:hover, .btn3:focus {
+    background-color: var(--primary-800);
+    color: white;
+}
+
+.btn4 {
+    color: var(--primary-600);
+    border: 1px solid var(--primary-600);
+    font-size: 14px;
+}
+
+.btn4:hover, .btn4:focus {
+    color: var(--primary-1000);
+    border: 1px solid var(--primary-1000);
+}
+
 .title, .formLabel, .subFormLabel {
     font-weight: 600;
     text-align: center;
@@ -162,4 +185,8 @@
 .uploader {
     width: 470px;
     height: 470px;
+}
+
+.emptyImg {
+    width: 40%;
 }

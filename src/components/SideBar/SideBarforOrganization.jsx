@@ -10,12 +10,17 @@ import FolderIcon from '@mui/icons-material/Folder';
 import InfoIcon from '@mui/icons-material/Info';
 import SupportIcon from '@mui/icons-material/Support';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { notification } from "antd";
 export const SideBarforOrganization = () => {
   const [click, setClick] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
 
   function handleLogout() {
     sessionStorage.clear()
+    notification.success({
+      message: 'Đăng xuất YEEEEEEEEEEEEE',
+      placement: "top"
+  });
   }
 
   function handleSubMenu() {

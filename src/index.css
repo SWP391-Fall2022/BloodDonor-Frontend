@@ -63,21 +63,21 @@ code {
         monospace;
 }
 
-.avatar-uploader,
-.avatar-uploader-trigger,
-.avatar {
+.profile-avatar-uploader,
+.profile-avatar-uploader-trigger,
+.profile-avatar {
     width: 470px;
     height: 470px;
 }
 
-.avatar-uploader {
+.profile-avatar-uploader {
     display: block;
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
 }
 
-.avatar-uploader-trigger {
+.profile-avatar-uploader-trigger {
     display: table-cell;
     vertical-align: middle;
     text-align: center;

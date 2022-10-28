@@ -118,22 +118,22 @@ export default function AvatarContainer() {
                 <h1 style={{ textAlign: 'center' }}><strong>ĐỔI ẢNH ĐẠI DIỆN</strong></h1>
                 <ImgCrop grid rotate shape="round" modalTitle="Chỉnh sửa hình ảnh" modalCancel='Hủy' onModalOk={showLoading}>
                     <Upload
-                        className="avatar-uploader"
-                        name="avatar"
+                        className="profile-avatar-uploader"
+                        name="profile-avatar"
                         customRequest={uploadImage}
                         showUploadList={false}
                     >
                         {
                             imageUrlPreview !== null ?
-                                <img src={imageUrlPreview} alt="" className="avatar" />
+                                <img src={imageUrlPreview} alt="" className="profile-avatar" />
                                 :
                                 <>
                                     {
                                         loadImage === true ?
                                             <Spin indicator={<LoadingOutlined style={{ fontSize: 80, }} spin />}>
-                                                <div className="avatar-uploader-trigger" />
+                                                <div className="profile-avatar-uploader-trigger" />
                                             </Spin> :
-                                            <div className="avatar-uploader-trigger">
+                                            <div className="profile-avatar-uploader-trigger">
                                                 <PlusOutlined />
                                                 <div>Upload</div>
                                             </div>

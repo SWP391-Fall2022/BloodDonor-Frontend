@@ -1,5 +1,6 @@
+import { notification } from 'antd';
 import { useEffect, useState } from 'react';
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate, useNavigate } from 'react-router-dom';
 import { FooterSmall } from '../../components/Footer/FooterSmall';
 import { SideBarforOrganization } from '../../components/SideBar/SideBarforOrganization'
 import styles from './organization.module.css'
@@ -10,6 +11,7 @@ function OrganizationProfile() {
     const [rendered, setRendered] = useState(false)
     const [user, setUser] = useState(null)
     const rolePath = JSON.parse(sessionStorage.getItem('userRole'))
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Send JWT to backend to get user
@@ -24,6 +26,15 @@ function OrganizationProfile() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             // console.log(response);
+            //Bad request/ JWT expired
+            if (response.status === 400) {
+                sessionStorage.clear()
+                notification.error({
+                    message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                    placement: "top"
+                });
+                navigate("/");
+            }
             if (response.success) {
                 sessionStorage.setItem('avatar', JSON.stringify(response.body.avatar))
                 sessionStorage.setItem('name', JSON.stringify(response.body.name))

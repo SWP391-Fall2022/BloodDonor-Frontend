@@ -1,5 +1,6 @@
+import { notification } from 'antd';
 import { useEffect, useState } from 'react';
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate, useNavigate } from 'react-router-dom';
 import { FooterSmall } from '../../components/Footer/FooterSmall';
 import { Navbar } from '../../components/NavBar/navbar';
 import { SideBarforDonor } from '../../components/SideBar/SideBarforDonor'
@@ -9,6 +10,7 @@ function DonorProfile() {
     const [rendered, setRendered] = useState(false)
     const rolePath = JSON.parse(sessionStorage.getItem('userRole'))
     const [user, setUser] = useState(null)
+    const navigate = useNavigate();
     // console.log(location.pathname)
 
     useEffect(() => {
@@ -24,6 +26,14 @@ function DonorProfile() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             // console.log(response);
+            if (response.status === 400) {
+                sessionStorage.clear()
+                notification.error({
+                    message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                    placement: "top"
+                });
+                navigate("/");
+            }
             if (response.success) {
                 //current pathname/route
 

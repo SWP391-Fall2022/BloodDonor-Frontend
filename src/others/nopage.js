@@ -5,5 +5,5 @@ export const NoPage = () => {
 };
 
 export const NoPageOrganization = () => {
-    return <div>AAAAAAAAAAAAAAAAAAAAAAAAAAAA</div>
+    return <div className={`${styles.mainBackground} ${styles.organization404}`} />
 };
