@@ -57,7 +57,7 @@ export const SideBarforOrganization = () => {
             <p>Trang chủ</p>
           </NavLink>
 
-          <NavLink to="/organization/notification" className="sidebar-item" title="Quản lý thông báo khẩn cấp">
+          <NavLink to="/organization/notification" className="sidebar-item">
             <ReportProblemIcon className="sidebar-icon"></ReportProblemIcon>
             <p>Quản lý thông báo khẩn cấp</p>
           </NavLink>
