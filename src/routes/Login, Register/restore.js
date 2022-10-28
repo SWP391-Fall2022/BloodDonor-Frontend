@@ -25,9 +25,7 @@ function Forget() {
             setMessage("Tài khoản này đã bị cấm")
         }
         if (response.status === 200) {
-            sessionStorage.setItem('restore', JSON.stringify(true))
-            sessionStorage.setItem('userId', JSON.stringify(response.body.userId))
-            navigate("/otp", { state: { otpAccess: true, userId: response.body.userId } })
+            navigate("/otp", { state: { otpAccess: true, userId: response.body.userId, restore: true } })
         }
     }
 

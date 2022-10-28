@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from '../Login/login.module.css';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script'
@@ -10,11 +10,9 @@ import { gapi } from 'gapi-script'
 export default function LoginContainer() {
 
     const navigate = useNavigate()
-    const location = useLocation()
 
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
-    const [message, setMessage] = useState(location.state)
     const [recaptchaCheck, setRecaptchaCheck] = useState(false)
 
     useEffect(() => {
@@ -41,9 +39,11 @@ export default function LoginContainer() {
 
     const handleLogin = async () => {
         if (!recaptchaCheck) {
-            setMessage('Vui lòng xác nhận reCaptcha')
+            notification.error({
+                message: "Vui lòng xác nhận recaptcha",
+                placement: "top"
+            });
         } else {
-            setMessage('')
             let json = {
                 method: 'POST',
                 body: JSON.stringify({ "username": username, "password": password }),
@@ -54,10 +54,18 @@ export default function LoginContainer() {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-                console.log(response)
-            if (response === undefined || !response.success) {
-                sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-                setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
+            console.log(response)
+            if (response.status === 401) {
+                notification.error({
+                    message: "Tài khoản này chưa được xác nhận hoặc duyệt bởi admin",
+                    placement: "top"
+                });
+            }
+            else if (response === undefined || !response.success) {
+                notification.error({
+                    message: "Tài khoản hoặc mật khẩu không đúng",
+                    placement: "top"
+                });
             }
             if (response.success) {
                 sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
@@ -82,10 +90,18 @@ export default function LoginContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login/google`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
+        // console.log(response)
+        if (response.status === 403) {
+            notification.error({
+                message: "Tài khoản này chưa được xác nhận hoặc duyệt bởi admin",
+                placement: "top"
+            });
+        }
         if (response.success) {
+
+            // console.log(response)
             sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
-            sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
+            // sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
             navigate("/auth")
         }
 
@@ -107,17 +123,12 @@ export default function LoginContainer() {
                             Đăng nhập
                         </Button>
                     </Form.Item>
-                    <Form.Item className={`${styles.formLabel} ${styles.recapcha}`}>
-                        <ReCAPTCHA
-                            style={{ margin: "0 25px" }}
-                            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-                            onChange={onChangeRecaptcha}
-                        />
-                    </Form.Item>
                 </Form>
-                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                    {message}
-                </div>
+                <ReCAPTCHA
+                    className={`${styles.recaptcha}`}
+                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                    onChange={onChangeRecaptcha}
+                />
                 <div className={`${styles.underInfo}`}>
                     <div><Link className={`${styles.link}`} to={"/restore"}>Quên mật khẩu?</Link></div>
                     <div>Chưa có tài khoản? Đăng kí <Link className={`${styles.link}`} to={"/register"}>tại đây</Link></div>

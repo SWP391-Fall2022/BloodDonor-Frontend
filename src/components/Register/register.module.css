@@ -41,6 +41,10 @@
 }
 
 @media only screen and (max-width: 767px) {
+    .mainBackground {
+        height: 200%;
+    }
+
     .detailCol {
         grid-template-columns: 100%;
     }

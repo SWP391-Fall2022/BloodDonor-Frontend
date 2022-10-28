@@ -9,7 +9,6 @@ export default function Otp() {
     const [otp, setOtp] = useState('')
     const [seconds, setSeconds] = useState(60)
     const { state } = useLocation();
-    const { otpAccess, userId } = state;
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
     const handleChange = (otp) => {
@@ -27,18 +26,23 @@ export default function Otp() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.success) {
-            if (JSON.parse(sessionStorage.getItem('restore'))) {
-                navigate('/new-password')
-            } else {
-                navigate('/login')
+            if (state !== null) {
+                
             }
+                if (JSON.parse(sessionStorage.getItem('restore'))) {
+                    navigate('/new-password')
+                } else {
+                    sessionStorage.clear()
+                    navigate('/login')
+                }
         } else {
-            setMessage(response.body)
+            setMessage("Mã không chính xác")
         }
     }
 
     const reSendOtp = async () => {
         setSeconds(60)
+        const userId = state.userId
         let json = {
             method: 'PUT',
             headers: new Headers({
@@ -72,9 +76,10 @@ export default function Otp() {
         button = <Button id={`${styles.btn}`} onClick={reSendOtp}>Gửi lại mã</Button>
     }
 
-    if (otpAccess === null || !otpAccess) {
+    if (state === null) {
         return <Navigate to={'/login'} replace />
-    } else
+    }
+    if (state !== null && state.otpAccess) {
         return (
             <div className={styles.container}>
                 <div className={styles.content}>Mã xác nhận đã được gửi qua mail của bạn</div>
@@ -86,10 +91,10 @@ export default function Otp() {
                     isInputNum={true}
                     containerStyle={{ display: "flex", justifyContent: "center" }}
                     inputStyle={{
-                        width: "60px",
-                        height: "90px",
-                        margin: "30px 15px",
-                        fontSize: "64px",
+                        width: "40px",
+                        height: "60px",
+                        margin: "5px 5px",
+                        fontSize: "45px",
                         borderRadius: 10,
                         border: "3px solid"
                     }} />
@@ -103,4 +108,5 @@ export default function Otp() {
                 </div>
             </div>
         )
+    }
 }

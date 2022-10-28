@@ -1,4 +1,5 @@
 import { Button, Collapse } from 'antd';
+import { Footer } from "../../../components/Footer/Footer";
 import React from 'react';
 import "./qanda.css"
 const { Panel } = Collapse;
