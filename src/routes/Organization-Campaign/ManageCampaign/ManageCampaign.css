@@ -31,17 +31,7 @@
     font-weight: 500;
 }
 
-/* style for tabs header------------------ */
-#manage-campaign-container .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn  {
-    color: var( --primary-500); 
- }
 
- 
- #manage-campaign-container .ant-tabs-ink-bar {
-    position: absolute;
-    background: var( --primary-500);
-    pointer-events: none;
- }
 
  #manage-campaign-container .ant-pagination {
     margin: 20px auto;
@@ -53,6 +43,7 @@
     padding: 10px 30px;
     box-shadow: var(--shadow-dp-02);
     margin-bottom: 30px;
+    
 
  }
 
@@ -99,4 +90,9 @@
 
 #manage-campaign-container .ant-table-cell{
     text-align: center;
+}
+
+
+#manage-campaign-container .ant-table-content{
+    min-height: 430px;
 }

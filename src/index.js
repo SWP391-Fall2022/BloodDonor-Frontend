@@ -90,7 +90,7 @@ export default function App() {
         <Route path="/organization/manageCampaign" element={<OrganizationCampign />} >
           <Route index element={<OrganizationManageCampaign />} />
           <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
-          <Route path="detailCampaign/:id" element={<OrganizationDetailCampaign />} />
+          <Route path="detailCampaign" element={<OrganizationDetailCampaign />} />
         </Route>
 
         {/* Org campaign management  */}

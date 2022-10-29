@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 import { Outlet, Navigate } from 'react-router-dom';
 import { FooterSmall } from '../../components/Footer/FooterSmall';
 import { Navbar } from '../../components/NavBar/navbar';
-import {SideBarforOrganization} from"../../components/SideBar/SideBarForOrganization";
+import {SideBarforOrganization} from"../../components/SideBar/SideBarforOrganization";
 import styles from './organization.module.css'
 
 function OrganizationProfile() {
@@ -23,7 +23,7 @@ function OrganizationProfile() {
                 {/* <FooterSmall /> */}
             </>
         )
-    // }
+    }
 }
 
 export default OrganizationProfile

@@ -66,12 +66,7 @@ export default function CampaignDetail() {
 
                 <div className='campaignDetail-left'>
                     <div className='campaignDetail-left-title'>
-                        <Breadcrumb>
-                            <Breadcrumb.Item>
-                                <Link to={'/campaign'}>Chiến dịch</Link>
-                            </Breadcrumb.Item>
-                            <Breadcrumb.Item>THÔNG BÁO</Breadcrumb.Item>
-                        </Breadcrumb>
+                      
 
                         <h2 className='campaign-title' > THÔNG BÁO</h2>
                         <div>Ngày đăng:{startDate.getDate()}/{startDate.getMonth() + 1}/{startDate.getFullYear()} |  {campaign.organization}  </div>

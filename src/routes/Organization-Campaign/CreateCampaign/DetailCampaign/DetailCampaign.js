@@ -1,117 +1,170 @@
-import { React,  useContext, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { React } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { Breadcrumb, Modal } from "antd";
 import "antd/dist/antd.css";
-import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Breadcrumb,Button,Radio } from "antd";
 import './DetailCampaign.css';
-import moment from 'moment';
-import packageInfo from '../../../../shared/ListOfCampaign.json'
+import RegisterCampaign from '../../../Campaign/RegisterCampaign/RegisterCampaign'
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import HelpIcon from '@mui/icons-material/Help';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import ContentPasteIcon from '@mui/icons-material/ContentPaste';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PeopleIcon from '@mui/icons-material/People';
+import { useState } from "react";
+
 
 function DetailCampaign() {
+  const [message,setMessage]=useState("")
+  //get camp id
+  const location = useLocation();
+  console.log("location:", location)
 
+  //nhận state từ navigation
+  const campId = location.state.id;
+  const campList = location.state.cam.body;
 
-    // take the campaign
-    const campaignTitle = useParams();
+  // tìm ra campaign được chọn
+  const selectedCampaign = campList.find(obj => {
+    return obj.id === campId;
+  });
 
-    const campaign = packageInfo.listOfCampaign.find(obj => {
+  //  render blood types
+  const slpitBlood = selectedCampaign.bloodTypes.split("-");
+  const listBloodType = slpitBlood.map((bloodType) =>
+    <li className='blood-type-item'>{bloodType}</li>
+  );
 
-        return obj.id == campaignTitle.id;
-    });
+  // fetch api xóa campaign
+  
+  const navigate = useNavigate();
 
-    // check donor unregistered registerd
-    const [registered, setRegistered] = useState(false);
+  // function deleteCampaign() {
+    const asyncFn = async () => {
+      const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+      let json = {
+        method: 'DELETE',
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer " + token,
+        })
+      }
+      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/delete/${selectedCampaign.id}`, json)
+        .then((res) => res.json())
+        .catch((error) => { console.log(error) })
 
-     // check donor participated the campaign
-     const [participated, setParticipated] = useState(false);
-
-    //get state after register at UnRegisterButtons component
-    function callbackFunction(isRegistered){
-        setRegistered(isRegistered);
+      if (response.success) {
+        console.log("response", response)
+        // alert("Campaign has been deleted")
+        navigate("/organization/manageCampaign")
+       
+      }
+      setTimeout(() => {
+        setMessage('');
+      }, 3000);
     }
 
+  // }
+
+
+
   
+// confirm modal
+const [open, setOpen] = useState(false);
+const showConfirm = () => {
+  Modal.confirm({
+    title: 'Bạn có chắc muốn xóa chiến dịch này không?',
+    icon: <ExclamationCircleOutlined />,
+    okText: 'Xóa',
+    cancelText: 'Hủy',
+    className: 'create-campaign-confirm',
+  
+onOk(){
+  asyncFn();
+  setOpen(false)
+}
+  });
+};
+
+  return (
+
+    <>
+      <div className="org-campaign-header">
+        <Breadcrumb className="replied-breadcrumb">
+          <Breadcrumb.Item>Quản lý chiến dịch</Breadcrumb.Item>
+          <Breadcrumb.Item>Thông tin chiến dịch</Breadcrumb.Item>
+        </Breadcrumb>
+        <Link to="/organization/manageCampaign"><ArrowLeftOutlined style={{ marginRight: "10px" }} />Thông tin chiến dịch</Link>
+      </div>
+      <div id="org-campaign-body">
+
+        <div id='org-campaign-detail-container'>
+
+          <div className='org-campaignDetail'>
+            <div className='org-campaignDetail-title'>
+
+              <h2 className='org-campaign-title' > {selectedCampaign.name} </h2>
+              <div>Ngày đăng: {selectedCampaign.startDate} |  {selectedCampaign.organizationName}  </div>
+            </div>
+
+            <div className='org-campaign-detail-img'>
+              <img src={selectedCampaign.images} alt={selectedCampaign.organizationName} />
+            </div>
+
+            <div className='org-campaign-content'>
+              <p className='sub-title'>{selectedCampaign.organizationName} xin thông báo:</p>
+              <p>{selectedCampaign.description}</p>
+
+              <p className='sub-title'>Thời gian:</p>
+              <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
+                Buổi chiều bắt đầu lúc 13h30 đến 17h00
+              </p>
 
 
+              <p className='sub-title'>Địa chỉ</p>
+              <p>{selectedCampaign.addressDetails}</p>
 
-    //  render blood types
-    const listBloodType = campaign.blood.map((bloodType) =>
-        <li className='blood-type-item'>{bloodType.slice(8, 10)}</li>
-    );
+              <p className='sub-title'>Nhóm máu cần</p>
+              <div className='blood-type'>
+                <ul >{listBloodType}</ul>
+              </div>
 
+              <p className='sub-title'>Xin lưu ý</p>
+              <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
+              <p>Xin trân trọng thông báo!!!</p>
+              <RegisterCampaign campaign={selectedCampaign} registered={true}></RegisterCampaign>
+            </div>
 
-    // setup date
-    var startDate = new Date(campaign.startDate);
+          </div>
+        </div>
 
+        <div id="action-table">
+          <div className="action-table-item" style={{ display: "flex", flexDirection: "column" }}>
+            <FavoriteIcon className="action-table-icon" ></FavoriteIcon> 120
+          </div>
+          <div className="action-table-item" style={{ display: "flex", flexDirection: "column" }}>
+            <HelpIcon className="action-table-icon" ></HelpIcon>100
+          </div>
+          <div className="action-table-item" style={{ display: "flex", flexDirection: "column" }}>
+            <PeopleIcon className="action-table-icon" ></PeopleIcon>100
+          </div>
 
-    return (
+          <div className="action-table-item" style={{ display: "flex", flexDirection: "column" }}>
+            <BorderColorIcon className="action-table-icon" ></BorderColorIcon>130
+          </div>
 
-        <>
+          <div className="action-table-item" style={{ display: "flex", flexDirection: "column" }} onClick={showConfirm}>
+            <DeleteIcon className="action-table-icon" ></DeleteIcon>Xóa
+          </div>
+          <div className="action-table-item" style={{ display: "flex", flexDirection: "column" }}>
+            <ContentPasteIcon className="action-table-icon" ></ContentPasteIcon>Sửa
+          </div>
 
-<div className="org-campaignDetail-header">
-                <Breadcrumb className="manage-campaign-breadcrumb">
-            <Breadcrumb.Item>Quản lý chiến dịch</Breadcrumb.Item>
-            <Breadcrumb.Item>Thông tin chiến dịch</Breadcrumb.Item>
-          </Breadcrumb>
-          <Link to="/organization/manageCampaign"><ArrowLeftOutlined style={{ marginRight: "10px" }} />Thông tin chiến dịch</Link>
-                </div>
+        </div>
+      </div>
 
-                
-            <div id='org-campaign-detail-container'>
+    </>
 
-               
-
-                <div className='org-campaignDetail'>
-                    <div className='org-campaignDetail-title'>
-                        <Breadcrumb>
-                            <Breadcrumb.Item>
-                                <Link to={'/campaign'}>Chiến dịch</Link>
-                            </Breadcrumb.Item>
-                            <Breadcrumb.Item>THÔNG BÁO</Breadcrumb.Item>
-                        </Breadcrumb>
-
-                        <h2 className='org-campaign-title' > THÔNG BÁO</h2>
-                        <div>Ngày đăng:{startDate.getDate()}/{startDate.getMonth() + 1}/{startDate.getFullYear()} |  {campaign.organization}  </div>
-                    </div>
-
-                    <div className='org-campaign-detail-img'>
-                        <img src={campaign.image} alt={campaign.organization} />
-                    </div>
-
-                    <div className='org-campaign-content'>
-                        <p className='sub-title'>{campaign.organization} xin thông báo:</p>
-                        <p>Điểm hiến máu cố định tại khu vực Bình tân từ ngày 17/09/2022 đến ngày 18/09/2022.
-                            Quí tình nguyện viên tham gia hiến máu vui lòng đăng kí vào trang thông tin này
-                            để thuận lợi hơn khi làm thủ thục chuẩn bị hiến máu.</p>
-
-                        <p className='sub-title'>Thời gian:</p>
-                        <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
-                            Buổi chiều bắt đầu lúc 13h30 đến 17h00
-                        </p>
-
-
-                        <p className='sub-title'>Địa chỉ</p>
-                        <p>{campaign.AddressDetail}</p>
-
-                        <p className='sub-title'>Nhóm máu cần</p>
-                        <div className='blood-type'>
-                            <ul >{listBloodType}</ul>
-                        </div>
-
-                        <p className='sub-title'>Xin lưu ý</p>
-                        <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
-                        <p>Xin trân trọng thông báo!!!</p>
-                        {/* <RegisterCampaign campaign={campaign} registered={registered}></RegisterCampaign> */}
-                    </div>
-
-                </div>
-
-              
-            </div >
-
-        </>
-
-
-
-    )
+  )
 }
 export default DetailCampaign;

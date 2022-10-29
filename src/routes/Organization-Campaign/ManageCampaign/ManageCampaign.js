@@ -2,19 +2,26 @@ import React from "react";
 import "antd/dist/antd.css";
 import "./ManageCampaign.css";
 import { Input, Table, Button, Tabs } from 'antd';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 
 const { Search } = Input;
 
-const onChange = (key) => {
-  console.log(key);
-};
+// check status of campaign to render on table
+function checkCampStatus(camp) {
+  const today = new Date();
+  var start = new Date(camp.startDate);
+  var end = new Date(camp.endDate);
+
+  if ((start <= today && today <= end) || start > today)
+    return "Đang diễn ra"
+  else /*if(endDate < today)*/
+    return "Kết thúc"
+}
 
 
-
-
+//Set columns for table
 const columns = [
   {
     title: 'STT',
@@ -51,294 +58,177 @@ const columns = [
 ];
 
 
+export default function ManageCampaign() {
+  const [tableRow, setTableRow] = useState([]);
+  const [message, setMessage] = useState('')
 
-const data = [
-//   campaigns.map((camp)=>
+  const navigate = useNavigate();
+  const [campaigns, setCampaigns] = useState({})
 
-//   )
+  // fetch data function
+  function getCampFromAPI() {
+    const asyncFn = async () => {
+      const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+      let json = {
+        method: 'GET',
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer " + token,
+        })
+      }
+      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAllByOrganization`, json)
+        .then((res) => res.json())
+        .catch((error) => { console.log(error) })
 
-  {
-    key: '1',
-    id: '1',
-    camName: 'Chiến dịch 105',
-    camTime: '20/9/2022 -> 20/10/2022',
-    donorList: 'link',
-    questions: 'link',
-    status: 'Kết thúc'
-  },
-  {
-    key: '2',
-    id: '2',
-    camName: 'Chiến dịch 104',
-    camTime: '20/10/2022 -> 22/12/2022',
-    donorList: 'link',
+      if (response.success) {
+        console.log("response", response)
+        setCampaigns(response)
+        setTableRow(
+          response.body.map(row => ({
+            camName: row.name,
+            camTime: row.startDate + " -> " + row.endDate,
+            id: row.id,
+            donorList: 'link',
 
-    questions: 'link',
-    status: 'Sắp diễn ra'
-  },
-  {
-    key: '3',
-    id: '3',
-    camName: 'Chiến dịch 102',
-    camTime: '23/11/2022 -> 24/12/2022',
-    donorList: 'link',
-
-    questions: 'link',
-    status: 'Đang diễn ra'
-  },
-  {
-    key: '4',
-    id: '4',
-    camName: 'Chiến dịch 102',
-    camTime: '23/11/2022 -> 24/12/2022',
-    donorList: 'link',
-
-    questions: 'link',
-    status: 'Đang diễn ra'
-  },
-  {
-    key: '5',
-    id: '5',
-    camName: 'Chiến dịch 102',
-    camTime: '23/11/2022 -> 24/12/2022',
-    donorList: 'link',
-
-    questions: 'link',
-    status: 'Đã hủy'
-  },
-  {
-    key: '6',
-    id: '6',
-    camName: 'Chiến dịch 102',
-    camTime: '23/11/2022 -> 24/12/2022',
-    donorList: 'link',
-
-    questions: 'link',
-    status: 'Đang diễn ra'
-  },
-];
-
-// filter with status
-
-const waitingCampaign=data.filter(
-  (camp) => {return camp.status.includes('Sắp diễn ra')}
-)
-
-const ongoingCamp=data.filter(
-  (camp) => {return camp.status.includes('Đang diễn ra')}
-)
-
-const endedCamp=data.filter(
-  (camp) => {return camp.status.includes('Kết thúc')}
-)
-
-const cancelCamp=data.filter(
-  (camp) => {return camp.status.includes('Đã hủy')}
-  // data.status == "Sắp diễn ra")
-)
-export default function ManageCampaign  (){
+            questions: 'link',
+            status: checkCampStatus(row)
+          })))
+        console.log("camps", tableRow)
+        // navigate("/organization/manageCampaign")
+       
+      }
+      setTimeout(() => {
+        setMessage('');
+      }, 3000);
+    }
+    asyncFn();
+  }
 
 
-  // fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`)
-  // .then(res => res.json())
-  // .then(
-  //   (result) => {
-  //     setCampaigns(result.body);
-  //     setCampaigns(
-  //       result.body.map(row => ({
-  //         camName: row.name,
-  //         camTime: row.startDate ,
-  //         donorList: "link",
-  //         questions: "link",
-  //         status:row.startDate
-  //       }))
-  //     );
-     
-  //   },
-  //   // Note: it's important to handle errors here
-  //   // instead of a catch() block so that we don't swallow
-  //   // exceptions from actual bugs in components.
-  //   (error) => {
-     
-  //     console.log(error)
-  //   }
-  // )
+  //call etch API function
+  useEffect(() => {
+    getCampFromAPI();
+  }, []
+  )
 
-const [campaigns, setCampaigns]= useState([]);
-const navigate = useNavigate();
+  // filter data for tabs with status
+  const ongoingCamp = tableRow.filter(
+    (camp) => { return camp.status.includes('Đang diễn ra') }
+  )
 
-  return(
+  const endedCamp = tableRow.filter(
+    (camp) => { return camp.status.includes('Kết thúc') }
+  )
 
-    
-  
-  <>
+  return (
 
+    <>
+      <div id="manage-campaign-container">
+        <div className="manage-campaign-header">
+          <p >Quản lý chiến dịch</p>
+        </div>
 
-    <div id="manage-campaign-container">
-      <div className="manage-campaign-header">
-        <p >Quản lý chiến dịch</p>
+        <div className="manage-campaign-container">
+          <p className="manage-campaign-title"> Danh sách các chiến dịch của tổ chức hiến máu</p>
+          <Tabs
+            className="manage-campaign-content"
+            defaultActiveKey="1"
+            items={[
+              {
+                label: `Tất cả`,
+                key: '1',
+                children: <>
+                  <div className="search-buttons">
+                    <Search className="cam-search-box" />
+                    <div className="cre-del-buttons">
+                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
+                        Tạo mới
+                      </Button>
+                    </div>
+                  </div>
+
+                  <Table columns={columns} dataSource={tableRow}
+                    pagination={{
+                      pageSize: 5,
+                    }}
+
+                    onRow={record => ({
+                      onClick: (e) => {
+
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id } })
+                      }
+
+                    })}
+                  />
+
+                </>,
+              },
+
+              {
+                label: `Đang diễn ra`,
+                key: '2',
+                children: <>
+                  <div className="search-buttons">
+                    <Search className="cam-search-box" />
+                    <div className="cre-del-buttons">
+                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
+                        Tạo mới
+                      </Button>
+                    </div>
+                  </div>
+
+                  <Table columns={columns} dataSource={ongoingCamp}
+                    pagination={{
+                      pageSize: 5,
+                    }}
+
+                    onRow={record => ({
+                      onClick: (e) => {
+
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id } })
+                      }
+
+                    })}
+                  />
+
+                </>,
+              },
+              {
+                label: `Kết thúc`,
+                key: '3',
+                children: <>
+                  <div className="search-buttons">
+                    <Search className="cam-search-box" />
+                    <div className="cre-del-buttons">
+
+                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
+                        Tạo mới
+                      </Button>
+                    </div>
+                  </div>
+
+                  <Table columns={columns} dataSource={endedCamp}
+                    pagination={{
+                      pageSize: 5,
+                    }}
+
+                    onRow={record => ({
+                      onClick: (e) => {
+
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id } })
+                      }
+
+                    })}
+
+                  />
+
+                </>,
+              }
+            ]}
+          />
+        </div>
       </div>
 
-      <div className="manage-campaign-container">
-        <p className="manage-campaign-title"> Danh sách các chiến dịch của tổ chức hiến máu</p>
-        <Tabs
-          className="manage-campaign-content"
-          defaultActiveKey="1"
-          onChange={onChange}
-          items={[
-            {
-              label: `Tất cả`,
-              key: '1',
-              children: <>
-                <div className="search-buttons">
-                  <Search className="cam-search-box" />
-                  <div className="cre-del-buttons">
-                    
-                    <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                      Tạo mới
-                    </Button>
-
-
-                  </div>
-                </div>
-
-                <Table columns={columns} dataSource={data}
-                  pagination={{
-
-                    pageSize: 5,
-                  }}
-
-                  onRow = {record =>({
-                    onClick:(e)=>navigate("/organization/manageCampaign/detailCampaign/1")
-                  })}
-
-                />
-
-              </>,
-            },
-            {
-              label: `Sắp diễn ra`,
-              key: '2',
-              children: <>
-                <div className="search-buttons">
-                  <Search className="cam-search-box" />
-                  <div className="cre-del-buttons">
-                    
-                    <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                      Tạo mới
-                    </Button>
-
-
-                  </div>
-                </div>
-
-                <Table columns={columns} dataSource={waitingCampaign}
-                  pagination={{
-
-                    pageSize: 5,
-                  }}
-
-                  onRow = {record =>({
-                    onClick:(e)=>navigate("/organization/manageCampaign/detailCampaign/2")
-                  })}
-
-                />
-
-              </>,
-            },
-            {
-              label: `Đang diễn ra`,
-              key: '3',
-              children:  <>
-              <div className="search-buttons">
-                <Search className="cam-search-box" />
-                <div className="cre-del-buttons">
-                  
-                  <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                    Tạo mới
-                  </Button>
-
-
-                </div>
-              </div>
-
-              <Table columns={columns} dataSource={ongoingCamp}
-                pagination={{
-
-                  pageSize: 5,
-                }}
-
-                onRow = {record =>({
-                  onClick:(e)=>navigate("/organization/manageCampaign/detailCampaign/3")
-                })}
-
-              />
-
-            </>,
-            },
-            {
-              label: `Kết thúc`,
-              key: '4',
-              children:  <>
-              <div className="search-buttons">
-                <Search className="cam-search-box" />
-                <div className="cre-del-buttons">
-                  
-                  <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                    Tạo mới
-                  </Button>
-
-
-                </div>
-              </div>
-
-              <Table columns={columns} dataSource={endedCamp}
-                pagination={{
-
-                  pageSize: 5,
-                }}
-
-                onRow = {record =>({
-                  onClick:(e)=>navigate("/organization/manageCampaign/detailCampaign/4")
-                })}
-
-              />
-
-            </>,
-            },
-            {
-              label: `Hủy`,
-              key: '5',
-              children:  <>
-              <div className="search-buttons">
-                <Search className="cam-search-box" />
-                <div className="cre-del-buttons">
-                  
-                  <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                    Tạo mới
-                  </Button>
-
-
-                </div>
-              </div>
-
-              <Table columns={columns} dataSource={cancelCamp}
-                pagination={{
-
-                  pageSize: 5,
-                }}
-
-              />
-
-            </>,
-            }
-          ]}
-        />
-      </div>
-
-
-    </div>
- 
-  </>
-);
+    </>
+  );
 }
