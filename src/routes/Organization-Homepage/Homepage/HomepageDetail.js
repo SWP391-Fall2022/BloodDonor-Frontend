@@ -1,6 +1,6 @@
 import { Avatar, List, PageHeader } from "antd";
 import { useState } from "react";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "./homepagedetail.css";
 import WelcomePageWithCampaign from "../WelcomePage/WelcomePageWithCampaign";
 import WelcomePageWithOther from "../WelcomePage/WelcomePageWithNoCampaign";

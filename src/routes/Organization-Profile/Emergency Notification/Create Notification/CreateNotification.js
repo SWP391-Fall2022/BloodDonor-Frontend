@@ -4,10 +4,10 @@ import packageInfo from "../../../../shared/ProvinceDistrict.json";
 import { OrBread } from '../../organization-breadcrumb'
 import { Link } from "react-router-dom"
 import stylesNoti from './createReview.module.css'
-import { Button, Checkbox, Form, Input, Select, Spin, Switch, Upload } from "antd"
+import { Button, Checkbox, Form, Input, Select, Switch, Upload } from "antd"
 import { useState } from "react"
-import TextArea from "antd/lib/input/TextArea";
 import ImgCrop from "antd-img-crop";
+import Editor from "../Create Notification/Editor";
 const { Option } = Select;
 
 export default function OrganizationCreateNotification() {
@@ -69,14 +69,14 @@ export default function OrganizationCreateNotification() {
                         <Form.Item className={styles.formLabel} label="Địa điểm" name="name" rules={[{ required: true }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item className={styles.formLabel} label="Yêu cầu về nhóm máu" name="name" rules={[{ required: true }]}>
+                        <Form.Item className={styles.formLabel} label="Yêu cầu" name="name" rules={[{ required: true }]}>
                             <Checkbox>Nhóm máu A</Checkbox>
                             <Checkbox>Nhóm máu B</Checkbox>
                             <Checkbox>Nhóm máu AB</Checkbox>
                             <Checkbox>Nhóm máu O</Checkbox>
                         </Form.Item>
                         <Form.Item className={styles.formLabel} label="Nội dung thông báo" name="addressDetails">
-                            <TextArea rows={10} allowClear />
+                            <Editor></Editor>
                         </Form.Item>
                         <Form.Item className={styles.formLabel} label="Hình ảnh cho thông báo">
                             <ImgCrop grid rotate shape="round" modalTitle="Chỉnh sửa hình ảnh" modalCancel='Hủy'>
@@ -98,14 +98,14 @@ export default function OrganizationCreateNotification() {
                         </Form.Item>
                         <Form.Item>
                             <Link to="/organization/notification/create/preview">
-                                <Button className={styles.btn3} style={{ margin: '1rem 2%' }} type="primary" size="large">
+                                <Button id={styles.btn3} style={{ margin: '1rem 2%' }} type="primary" size="large">
                                     Xem trước
                                 </Button>
                             </Link>
-                            <Button className={styles.btn3} style={{ margin: '1rem 2%' }} type="primary" htmlType="submit" size="large">
+                            <Button id={styles.btn3} style={{ margin: '1rem 2%' }} type="primary" htmlType="submit" size="large">
                                 Hoàn thành
                             </Button>
-                            <Button className={styles.btn4} style={{ margin: '1rem 2%' }} size="large">
+                            <Button id={styles.btn4} style={{ margin: '1rem 2%' }} size="large">
                                 Hủy lưu
                             </Button>
                         </Form.Item>

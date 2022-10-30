@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 // import "./CreateCampaign.css";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";

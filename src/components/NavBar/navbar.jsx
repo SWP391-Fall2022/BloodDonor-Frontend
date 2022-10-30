@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import './navigation.css'
 import ScrollingText from './ScrollingText'
 import HomeIcon from '@mui/icons-material/Home';
@@ -15,6 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 
 export const Navbar = () => {
+    const navigate = useNavigate();
     const [click, setClick] = useState(false);
     function handleClick() {
         setClick(!click);
@@ -51,7 +52,7 @@ export const Navbar = () => {
 
     function handleLogout() {
         sessionStorage.clear()
-        window.location.reload(false);
+        navigate("/")
     }
 
     return (<>

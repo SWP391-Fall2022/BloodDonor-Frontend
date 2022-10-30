@@ -7,7 +7,7 @@ import OtpInput from "react-otp-input";
 export default function Otp() {
 
     const [otp, setOtp] = useState('')
-    const [seconds, setSeconds] = useState(60)
+    const [seconds, setSeconds] = useState(150)
     const { state } = useLocation();
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
@@ -25,23 +25,24 @@ export default function Otp() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/confirmCode/${otp}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
+        console.log(response)
         if (response.success) {
             if (state !== null) {
-                
-            }
-                if (JSON.parse(sessionStorage.getItem('restore'))) {
-                    navigate('/new-password')
-                } else {
-                    sessionStorage.clear()
-                    navigate('/login')
+                if (state.restore) {
+                    navigate('/new-password', { state: { otpAccess: true, userId: state.userId } })
                 }
+            }
+            if (response.status === 200) {
+                sessionStorage.clear()
+                navigate('/login')
+            }
         } else {
             setMessage("Mã không chính xác")
         }
     }
 
     const reSendOtp = async () => {
-        setSeconds(60)
+        setSeconds(150)
         const userId = state.userId
         let json = {
             method: 'PUT',

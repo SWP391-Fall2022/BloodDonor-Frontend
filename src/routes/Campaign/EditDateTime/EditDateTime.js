@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form} from 'antd';
 import RegisterCampaign from '../RegisterCampaign/RegisterCampaign';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import './EditDateTime.css';
 
 const EditDateTimeForm = ({ open, onCreate, onCancel, campaign, registered}) => {

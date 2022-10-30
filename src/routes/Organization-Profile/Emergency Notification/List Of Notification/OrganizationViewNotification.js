@@ -22,20 +22,20 @@ export default function OrganizationViewNotification() {
                     </div>
 
                     <div className='campaign-content'>
-                        <p className='sub-title'>Trung tâm hiến máu nhân đạo xin thông báo:</p>
+                        <p className='sub-title'><strong>Trung tâm hiến máu nhân đạo xin thông báo:</strong></p>
                         <p>
                             Quí tình nguyện viên tham gia hiến máu vui lòng đăng kí vào trang thông tin này
                             để thuận lợi hơn khi làm thủ thục chuẩn bị hiến máu.</p>
 
-                        <p className='sub-title'>Thời gian:</p>
+                        <p><strong>Thời gian:</strong></p>
                         <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
                             Buổi chiều bắt đầu lúc 13h30 đến 17h00
                         </p>
 
-                        <p className='sub-title'>Địa chỉ</p>
+                        <p><strong>Địa chỉ</strong></p>
                         <p>36 đường 1B, phường Bình trị đông B, quận Bình Tân</p>
 
-                        <p className='sub-title'>Nhóm máu cần</p>
+                        <p><strong>Nhóm máu cần</strong></p>
                         <div className='blood-type'>
                             <ul >
                                 <li className='blood-type-item'>{"Nhóm máu A".slice(8, 10)}</li>
@@ -44,7 +44,7 @@ export default function OrganizationViewNotification() {
                             </ul>
                         </div>
 
-                        <p className='sub-title'>Xin lưu ý</p>
+                        <p><strong>Xin lưu ý</strong></p>
                         <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
                         <p>Xin trân trọng thông báo!!!</p>
                         {/* <RegisterCampaign campaign={campaign} registered={registered}></RegisterCampaign> */}

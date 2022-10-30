@@ -1,3 +1,11 @@
+.listTitleContainer {
+    text-align: center;
+}
+
+.listTitle {
+    font-size: 2em;
+}
+
 .listContainer {
     width: 56rem;
     background-color: white;
@@ -13,6 +21,17 @@
     padding: 0 2%;
 }
 
-.table > thead {
-    background-color: red;
+@media only screen and (max-width: 1200px) {
+    .listContainer {
+        width: 35rem;
+        transform: scale(0.9);
+    }
+
+    .listTitle {
+        font-size: 1.5em;
+    }
+
+    .formContainer {
+        transform: scale(0.9);
+    }
 }

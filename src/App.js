@@ -1,4 +1,5 @@
 import React from 'react';
+import 'antd/dist/antd.min.css';
 import './index.css';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -52,6 +53,7 @@ import OrganizationUnRepliedQuestion from './routes/Organization-Question/Detail
 import OrganizationRepliedQuestion from './routes/Organization-Question/DetailQuestion/RepliedQuestion';
 
 import NoInternetConnection from './others/NoInternetConnection'
+import OrganizationGuide from './routes/Organization-Profile/Organization-Guide/organizationGuide';
 
 export default function App() {
   return (
@@ -95,7 +97,7 @@ export default function App() {
 
           {/* Pages for logged in organization */}
           <Route path="/organization" element={<OrganizationProfile />} >
-            {/* Change this component below to main page route */}
+            {/* Home Page */}
             <Route index element={<OrganizationHomepage />} />
             {/* Notification Emergency Management */}
             <Route path="notification" element={<OrganizationNotificationContainer />}>
@@ -105,34 +107,23 @@ export default function App() {
               <Route path="view" element={<OrganizationViewNotification />} />
               <Route path="*" element={<NoPageOrganization />} />
             </Route>
+            {/* Manage Campaign */}
             <Route path="manageCampaign" element={<OrganizationCampign />} >
               <Route index element={<OrganizationManageCampaign />} />
               <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
               <Route path="detailCampaign/:id" element={<OrganizationDetailCampaign />} />
             </Route>
+            {/* Manage Question */}
             <Route path="manageQuestion" element={<OrganizationQuestion />} >
               <Route index element={<OrganizationManageQuestion />} />
               <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
               <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
             </Route>
+            <Route path="manageGuide" element={<OrganizationGuide />} />
             <Route path="changePassword" element={<OrganizationChangePassword />} />
             <Route path="profile" element={<OrganizationInfo />} />
             <Route path="*" element={<NoPageOrganization />} />
           </Route>
-
-          {/* Org campaign management  */}
-          {/* <Route path="/organization/manageCampaign" element={<OrganizationCampign />} >
-            <Route index element={<OrganizationManageCampaign />} />
-            <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
-            <Route path="detailCampaign/:id" element={<OrganizationDetailCampaign />} />
-          </Route> */}
-
-          {/* Org campaign management  */}
-          {/* <Route path="/organization/manageQuestion" element={<OrganizationQuestion />} >
-            <Route index element={<OrganizationManageQuestion />} />
-            <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
-            <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
-          </Route> */}
 
           {/* Pages for admin */}
 

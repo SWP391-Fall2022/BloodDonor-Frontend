@@ -18,10 +18,6 @@ export const SideBarforOrganization = () => {
 
   function handleLogout() {
     sessionStorage.clear()
-    notification.success({
-      message: 'Đăng xuất Test',
-      placement: "top"
-  });
   }
 
   function handleSubMenu() {
@@ -49,15 +45,15 @@ export const SideBarforOrganization = () => {
     <>
       <div className="sidebar-container">
         <div className="sidebar-logo">
-          <p>MEDICHOR</p>
+          <Link to="/"><p style={{ color: 'white' }} title="Trang chủ">MEDICHOR</p></Link>
         </div>
         <div className={click ? "sidebar-links" : "unactive-sidebar-links"}>
-          <NavLink end to="/organization" className="sidebar-item" title="Trang chủ">
+          <NavLink end to="/organization" className="sidebar-item" title="Trang chủ của tổ chức">
             <HomeIcon className="sidebar-icon"></HomeIcon>
             <p>Trang chủ</p>
           </NavLink>
 
-          <NavLink to="/organization/notification" className="sidebar-item">
+          <NavLink to="/organization/notification" className="sidebar-item" title="Quản lý thông báo khẩn cấp">
             <ReportProblemIcon className="sidebar-icon"></ReportProblemIcon>
             <p>Quản lý thông báo khẩn cấp</p>
           </NavLink>
@@ -84,7 +80,7 @@ export const SideBarforOrganization = () => {
 
           {subMenu}
 
-          <NavLink to="/sidebar_for_organization/qna" className="sidebar-item" title="Hướng dẫn sử dụng">
+          <NavLink to="/organization/manageGuide" className="sidebar-item" title="Hướng dẫn sử dụng">
             <SupportIcon className="sidebar-icon"></SupportIcon>
             <p>Hướng dẫn sử dụng</p>
           </NavLink>

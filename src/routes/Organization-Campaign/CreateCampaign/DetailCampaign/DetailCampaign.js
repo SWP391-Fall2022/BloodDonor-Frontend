@@ -1,6 +1,6 @@
 import { React,  useContext, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Breadcrumb,Button,Radio } from "antd";
 import './DetailCampaign.css';

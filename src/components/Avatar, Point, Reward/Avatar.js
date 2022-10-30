@@ -110,8 +110,8 @@ export default function AvatarContainer() {
     return (
         <div className={styles.leftContainer}>
             <div className={styles.avaContainer}>
-                <Avatar className={styles.ava} size={160} src={imageUrl} style={{ backgroundColor: randomColor, fontSize: "60px" }} >{avaName}</Avatar>
-                <Button onClick={showModal} shape='circle' size='large' type="link" icon={<EditOutlined />} className={styles.editIcon} />
+                <Avatar className={styles.ava} size={140} src={imageUrl} style={{ backgroundColor: randomColor, fontSize: "60px" }} >{avaName}</Avatar>
+                <Button onClick={showModal} shape='circle' size='large' type="link" icon={<EditOutlined />} id={styles.editIcon} />
             </div>
             <div className={styles.leftSideText}>{name}</div>
             <Modal open={open} onCancel={handleCancel} footer={false} style={{ transform: 'scale(0.8)' }} maskClosable={false}>
@@ -146,10 +146,10 @@ export default function AvatarContainer() {
                 {
                     imageUrlPreview !== null ?
                         <div style={{ textAlign: 'center' }}>
-                            <Button className={`${styles.btn2}`} size="large" onClick={handleCancel}>
+                            <Button id={styles.btn2} size="large" onClick={handleCancel}>
                                 Hủy
                             </Button>
-                            <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large" onClick={onAcceptImage}>
+                            <Button id={styles.btn1} type="primary" htmlType="submit" size="large" onClick={onAcceptImage}>
                                 Xác nhận
                             </Button>
                         </div> :

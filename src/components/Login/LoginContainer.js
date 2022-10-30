@@ -56,18 +56,29 @@ export default function LoginContainer() {
                 .catch((error) => { console.log(error) })
             console.log(response)
             if (response.status === 401) {
-                notification.error({
-                    message: "Tài khoản này chưa được xác nhận hoặc duyệt bởi admin",
-                    placement: "top"
-                });
+                if (response.body === "Username or password is incorrect") {
+                    notification.error({
+                        message: "Tài khoản hoặc mật khẩu không đúng",
+                        placement: "top"
+                    });
+                }
+                if (response.body === "The account is locked") {
+                    notification.error({
+                        message: "Tài khoản đã bị khóa",
+                        placement: "top"
+                    });
+                }
+                if (response.body === "The account is not verified or accepted by Admin") {
+                    notification.error({
+                        message: "Tài khoản chưa được xác nhận otp hoặc chưa duyệt bởi admin",
+                        description: "Vui lòng đăng kí lại với chính xác tài khoản và email đã đăng kí nếu chưa xác nhận otp",
+                        duration: 0,
+                        placement: "top"
+                    });
+                    navigate("/register")
+                }
             }
-            else if (response === undefined || !response.success) {
-                notification.error({
-                    message: "Tài khoản hoặc mật khẩu không đúng",
-                    placement: "top"
-                });
-            }
-            if (response.success) {
+            if (response.status === 200) {
                 sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
                 navigate("/auth")
             }
@@ -90,14 +101,26 @@ export default function LoginContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login/google`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        // console.log(response)
-        if (response.status === 403) {
+        console.log(response)
+        if (response.status === 302) {
             notification.error({
-                message: "Tài khoản này chưa được xác nhận hoặc duyệt bởi admin",
+                message: "Email này chưa từng đăng kí app",
+                description: "Vui lòng nhập email này để đăng kí. Sau khi đăng kí bạn có thể đăng nhập bằng Google mà không cần tài khoản, mật khẩu.",
+                duration: 10,
                 placement: "top"
             });
+            navigate("/register", { state: { email: data.profileObj.email } })
         }
-        if (response.success) {
+        if (response.status === 403) {
+            notification.error({
+                message: "Tài khoản chưa được xác nhận otp hoặc chưa duyệt bởi admin",
+                description: "Nếu bạn chưa xác nhận otp hãy đăng kí lại với chính xác tài khoản và email bạn đã đăng kí",
+                duration: 0,
+                placement: "top"
+            });
+            navigate("/register")
+        }
+        if (response.status === 200) {
 
             // console.log(response)
             sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
@@ -110,6 +133,9 @@ export default function LoginContainer() {
     return (
         <div className={styles.mainBackground}>
             <div className={styles.container}>
+                <div className="logo-general">
+                    <Link to="/"><p title="Trang chủ">MEDICHOR</p></Link>
+                </div>
                 <h1 className={`${styles.title}`}>ĐĂNG NHẬP</h1>
                 <Form layout="vertical">
                     <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>

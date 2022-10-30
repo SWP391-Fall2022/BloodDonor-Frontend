@@ -1,5 +1,5 @@
 import React from "react";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import { SideBarforOrganization } from "../../components/SideBar/SideBarforOrganization";
 import { Outlet, Navigate } from 'react-router-dom';
 import './OrganizationCampaign.css'

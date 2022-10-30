@@ -32,6 +32,9 @@ function Forget() {
     return (
         <div className={styles.mainBackground}>
             <div className={`${styles.container} ${styles.font}`}>
+                <div className="logo-general">
+                    <Link to="/"><p title="Trang chủ">MEDICHOR</p></Link>
+                </div>
                 <h1 className={`${styles.title}`}>QUÊN MẬT KHẨU</h1>
                 <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
                     {message}

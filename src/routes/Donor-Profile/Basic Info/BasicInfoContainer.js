@@ -155,10 +155,10 @@ export default function BasicInfoContainer() {
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
+                    <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
                         Thay đổi
                     </Button>
-                    <Button className={`${styles.btn2}`} size="large" onClick={onReset}>
+                    <Button id={`${styles.btn2}`} size="large" onClick={onReset}>
                         Hủy
                     </Button>
                 </Form.Item>

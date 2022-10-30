@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import styles from './register.module.css';
 import packageInfo from "../../shared/ProvinceDistrict.json";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Form, Input, Select, notification } from 'antd';
 import { RegisterStepPanel } from './RegisterStepsPanel';
 const { TextArea } = Input;
 const { Option } = Select;
 
 function RegisterPlace() {
+    const location = useLocation();
     const [stepForm] = Form.useForm();
     const navigate = useNavigate()
     const [message, setMessage] = useState()
-    const email = JSON.parse(sessionStorage.getItem('GoogleEmail'))
     const provinceList = packageInfo.provinces
     const [districtList, setDistrictList] = useState(provinceList[0].district)
     const [districtId, setDistrictId] = useState(provinceList[0].district[0].id);
@@ -27,12 +27,12 @@ function RegisterPlace() {
     }
 
     let emailInput;
-    if (email === null) {
+    if (location.state.email === undefined) {
         emailInput = <Form.Item className={styles.formLabel} label="Email" name="email" rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
             <Input placeholder="Nhập Email" />
         </Form.Item>
     } else {
-        emailInput = <Form.Item className={styles.formLabel} label="Email" name="email" initialValue={email} disabled rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
+        emailInput = <Form.Item className={styles.formLabel} label="Email" name="email" initialValue={location.state.email} disabled rules={[{ required: true, message: 'Vui lòng nhập email' }]}>
             <Input placeholder="Nhập Email" disabled />
         </Form.Item>
     }
@@ -114,7 +114,7 @@ function RegisterPlace() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/organization`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
+        // console.log(response)
         if (response.status === 200) {
             navigate("/otp", { state: { otpAccess: true, userId: response.body.userId } })
         } else if (response.status === 400) {
@@ -167,6 +167,9 @@ function RegisterPlace() {
     return (
         <div className={styles.mainBackgroundChild} >
             <div className={`${styles.container} ${styles.containerChild}`}>
+                <div className="logo-general">
+                    <Link to="/"><p title="Trang chủ">MEDICHOR</p></Link>
+                </div>
                 <h1 className={styles.titleChild}>ĐĂNG KÝ</h1>
                 <Form form={stepForm} layout="vertical" onFinish={onFinish}>
                     <RegisterStepPanel steps={steps} />
