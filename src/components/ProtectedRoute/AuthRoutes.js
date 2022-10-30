@@ -1,11 +1,12 @@
 //A Gate keeper to check if Google Logged in User has registered the app before
+import { LoadingOutlined } from "@ant-design/icons";
+import { notification, Spin } from "antd";
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function AuthGoogleRoutes() {
-    const [role, setRole] = useState(null);
     const [authorized, setAuthorized] = useState(false);
-    // Need a render state because first render will not run useEffect until it has done the first return
+    const navigate = useNavigate();
     const [rendered, setRendered] = useState(false)
 
     useEffect(() => {
@@ -26,31 +27,38 @@ export default function AuthGoogleRoutes() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
 
-            // console.log(donorResponse)
-            // console.log(organizationResponse)
+            console.log(donorResponse)
+            console.log(organizationResponse)
+
+            //No JWT, kick back to home page
+            if (donorResponse.status === 400 && organizationResponse.status === 400) {
+                setAuthorized(true)
+            }
 
             // First time login with google success (Have not registered before)
-            if (donorResponse === undefined && organizationResponse === undefined) {
+            if (donorResponse.status === 404 && organizationResponse.status === 500) {
                 setAuthorized(false)
+                notification.error({
+                    message: "Email này chưa từng đăng kí app",
+                    description: "Vui lòng nhập email này để đăng kí. Sau khi đăng kí bạn có thể đăng nhập bằng Google mà không cần tài khoản, mật khẩu.",
+                    duration: 10,
+                    placement: "top"
+                });
                 setRendered(true)
             }
             // Login Donor
             if (donorResponse.success) {
                 setAuthorized(true)
-                setRendered(true)
-                sessionStorage.removeItem('GoogleEmail');
                 sessionStorage.setItem('userRole', JSON.stringify("/donor"))
             }
             // Login Organization
             if (organizationResponse.success) {
                 setAuthorized(true)
-                setRendered(true)
-                sessionStorage.removeItem('GoogleEmail');
                 sessionStorage.setItem('userRole', JSON.stringify("/organization"))
             }
         }
         fetchAPI();
-    }, []);
+    }, [navigate]);
 
     if (authorized) {
         return <Navigate to={`/`} />
@@ -58,7 +66,7 @@ export default function AuthGoogleRoutes() {
         if (rendered) {
             return <Navigate to={`/register`} />
         } else {
-            return <h2 style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>Đang chuyển hướng ...</h2>
+            return <div style={{ textAlign: 'center' }}><Spin indicator={<LoadingOutlined style={{ fontSize: 150 }} spin />} /></div>
         }
     }
 }

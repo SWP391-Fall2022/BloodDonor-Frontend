@@ -25,15 +25,16 @@ function Forget() {
             setMessage("Tài khoản này đã bị cấm")
         }
         if (response.status === 200) {
-            sessionStorage.setItem('restore', JSON.stringify(true))
-            sessionStorage.setItem('userId', JSON.stringify(response.body.userId))
-            navigate("/otp", { state: { otpAccess: true, userId: response.body.userId } })
+            navigate("/otp", { state: { otpAccess: true, userId: response.body.userId, restore: true } })
         }
     }
 
     return (
         <div className={styles.mainBackground}>
             <div className={`${styles.container} ${styles.font}`}>
+                <div className="logo-general">
+                    <Link to="/"><p title="Trang chủ">MEDICHOR</p></Link>
+                </div>
                 <h1 className={`${styles.title}`}>QUÊN MẬT KHẨU</h1>
                 <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
                     {message}

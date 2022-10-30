@@ -3,13 +3,15 @@ import styles from '../donor.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
 import moment from 'moment';
 import { Form, Input, Select, DatePicker, Button, notification } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 const { Option } = Select;
 const { TextArea } = Input;
 export default function BasicInfoContainer() {
 
-    const navigate = useNavigate();
-    const user = JSON.parse(sessionStorage.getItem('user'))
+    const [user, setUser] = useOutletContext();
+    if (user === null) {
+        window.location.reload(false);
+    }
     const [form] = Form.useForm();
     let userDefaultDistrict;
     let userDefaultDistrictList;
@@ -53,7 +55,7 @@ export default function BasicInfoContainer() {
             "birthday": formData.birthday,
             "sex": formData.sex,
             "identityNum": formData.identityNum,
-            "avatar": "something",
+            "avatar": JSON.parse(sessionStorage.getItem('avatar')),
             "bloodType": formData.bloodType,
             "anamnesis": formData.anamnesis,
             "user": {
@@ -153,10 +155,10 @@ export default function BasicInfoContainer() {
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
+                    <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
                         Thay đổi
                     </Button>
-                    <Button className={`${styles.btn2}`} size="large" onClick={onReset}>
+                    <Button id={`${styles.btn2}`} size="large" onClick={onReset}>
                         Hủy
                     </Button>
                 </Form.Item>

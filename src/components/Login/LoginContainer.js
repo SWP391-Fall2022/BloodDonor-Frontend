@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from '../Login/login.module.css';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script'
@@ -10,11 +10,9 @@ import { gapi } from 'gapi-script'
 export default function LoginContainer() {
 
     const navigate = useNavigate()
-    const location = useLocation()
 
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
-    const [message, setMessage] = useState(location.state)
     const [recaptchaCheck, setRecaptchaCheck] = useState(false)
 
     useEffect(() => {
@@ -41,9 +39,11 @@ export default function LoginContainer() {
 
     const handleLogin = async () => {
         if (!recaptchaCheck) {
-            setMessage('Vui lòng xác nhận reCaptcha')
+            notification.error({
+                message: "Vui lòng xác nhận recaptcha",
+                placement: "top"
+            });
         } else {
-            setMessage('')
             let json = {
                 method: 'POST',
                 body: JSON.stringify({ "username": username, "password": password }),
@@ -55,11 +55,30 @@ export default function LoginContainer() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             console.log(response)
-            if (response === undefined || !response.success) {
-                sessionStorage.setItem('OTPAcess', JSON.stringify(true))
-                setMessage('Tài khoản hoặc mật khẩu của bạn không đúng')
+            if (response.status === 401) {
+                if (response.body === "Username or password is incorrect") {
+                    notification.error({
+                        message: "Tài khoản hoặc mật khẩu không đúng",
+                        placement: "top"
+                    });
+                }
+                if (response.body === "The account is locked") {
+                    notification.error({
+                        message: "Tài khoản đã bị khóa",
+                        placement: "top"
+                    });
+                }
+                if (response.body === "The account is not verified or accepted by Admin") {
+                    notification.error({
+                        message: "Tài khoản chưa được xác nhận otp hoặc chưa duyệt bởi admin",
+                        description: "Vui lòng đăng kí lại với chính xác tài khoản và email đã đăng kí nếu chưa xác nhận otp",
+                        duration: 0,
+                        placement: "top"
+                    });
+                    navigate("/register")
+                }
             }
-            if (response.success) {
+            if (response.status === 200) {
                 sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
                 navigate("/auth")
             }
@@ -82,12 +101,30 @@ export default function LoginContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login/google`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
-        if (response.success) {
+        console.log(response)
+        if (response.status === 302) {
+            notification.error({
+                message: "Email này chưa từng đăng kí app",
+                description: "Vui lòng nhập email này để đăng kí. Sau khi đăng kí bạn có thể đăng nhập bằng Google mà không cần tài khoản, mật khẩu.",
+                duration: 10,
+                placement: "top"
+            });
+            navigate("/register", { state: { email: data.profileObj.email } })
+        }
+        if (response.status === 403) {
+            notification.error({
+                message: "Tài khoản chưa được xác nhận otp hoặc chưa duyệt bởi admin",
+                description: "Nếu bạn chưa xác nhận otp hãy đăng kí lại với chính xác tài khoản và email bạn đã đăng kí",
+                duration: 0,
+                placement: "top"
+            });
+            navigate("/register")
+        }
+        if (response.status === 200) {
 
-            console.log(response)
+            // console.log(response)
             sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
-            sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
+            // sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
             navigate("/auth")
         }
 
@@ -96,6 +133,9 @@ export default function LoginContainer() {
     return (
         <div className={styles.mainBackground}>
             <div className={styles.container}>
+                <div className="logo-general">
+                    <Link to="/"><p title="Trang chủ">MEDICHOR</p></Link>
+                </div>
                 <h1 className={`${styles.title}`}>ĐĂNG NHẬP</h1>
                 <Form layout="vertical">
                     <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
@@ -115,9 +155,6 @@ export default function LoginContainer() {
                     sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                     onChange={onChangeRecaptcha}
                 />
-                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                    {message}
-                </div>
                 <div className={`${styles.underInfo}`}>
                     <div><Link className={`${styles.link}`} to={"/restore"}>Quên mật khẩu?</Link></div>
                     <div>Chưa có tài khoản? Đăng kí <Link className={`${styles.link}`} to={"/register"}>tại đây</Link></div>

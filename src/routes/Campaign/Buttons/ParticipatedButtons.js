@@ -27,7 +27,7 @@ export default function ParticipatedButtons({ registered, campaign}) {
             <Button type="primary" onClick={showModal}>
                 Thông tin sức khỏe
             </Button>
-            <Modal title="THÔNG TIN SỨC KHỎE" open={isModalOpen} open={isModalOpen} onOk={handleOk} onCancel={handleCancel} className='health-info-modal'>
+            <Modal title="THÔNG TIN SỨC KHỎE" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} className='health-info-modal'>
                 <p><strong>Cân nặng: </strong> 50kg</p>
                 <p><strong>Nhóm máu: </strong>AB</p>
                 <p><strong>Lượng máu: </strong>450cc</p>

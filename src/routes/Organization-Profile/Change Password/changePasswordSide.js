@@ -82,10 +82,10 @@ export default function ChangePasswordSide() {
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
+                    <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
                         Thay đổi
                     </Button>
-                    <Button className={`${styles.btn2}`} htmlType="submit" size="large" onClick={onReset}>
+                    <Button id={`${styles.btn2}`} htmlType="submit" size="large" onClick={onReset}>
                         Hủy
                     </Button>
                 </Form.Item>

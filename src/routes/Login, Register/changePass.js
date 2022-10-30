@@ -1,15 +1,15 @@
 import styles from '../../components/Login/login.module.css';
 import { Button, Form, Input } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
-import { useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 function NewPass() {
 
     const [form] = Form.useForm();
     const [message, setMessage] = useState('')
+    const { state } = useLocation();
     const navigate = useNavigate();
-    const userId = JSON.parse(sessionStorage.getItem('userId'))
 
     const onChangeRecaptcha = (value) => {
         if (value !== null) {
@@ -30,6 +30,7 @@ function NewPass() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
+        const userId = state.userId
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/password-reset/${userId}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
@@ -45,36 +46,42 @@ function NewPass() {
         }
     }
 
-    return (
-        <div className={styles.mainBackground}>
-            <div className={`${styles.container} shadowDP02-border10`}>
-                <h1 className={`${styles.title}`}>ĐỔI MẬT KHẨU</h1>
-                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                    {message}
+    if (state === null) {
+        return <Navigate to={'/'} replace />
+    } else
+        return (
+            <div className={styles.mainBackground}>
+                <div className={`${styles.container} shadowDP02-border10`}>
+                    <div className="logo-general">
+                        <Link to="/"><p title="Trang chủ">MEDICHOR</p></Link>
+                    </div>
+                    <h1 className={`${styles.title}`}>ĐỔI MẬT KHẨU</h1>
+                    <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
+                        {message}
+                    </div>
+                    <Form form={form} layout="vertical" onFinish={onFinish}>
+                        <Form.Item className={styles.formLabel} label="Nhập mật khẩu mới" name="newPassword" rules={[{ required: true, message: 'Vui lòng nhập' }]}>
+                            <Input.Password placeholder="Nhập mật khẩu mới" />
+                        </Form.Item>
+                        <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu mới" name="confirmNewPassword" rules={[{ required: true, message: 'Vui lòng nhập' }]}>
+                            <Input.Password placeholder="Nhập lại mật khẩu mới" />
+                        </Form.Item>
+                        <Form.Item className={`${styles.formLabel} ${styles.recapcha}`}>
+                            <ReCAPTCHA
+                                style={{ margin: "0 25px" }}
+                                sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                                onChange={onChangeRecaptcha}
+                            />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button id={`${styles.btn}`} type="primary" htmlType="submit" size="large">
+                                Đổi mật khẩu
+                            </Button>
+                        </Form.Item>
+                    </Form>
                 </div>
-                <Form form={form} layout="vertical" onFinish={onFinish}>
-                    <Form.Item className={styles.formLabel} label="Nhập mật khẩu mới" name="newPassword" rules={[{ required: true, message: 'Vui lòng nhập' }]}>
-                        <Input.Password placeholder="Nhập mật khẩu mới" />
-                    </Form.Item>
-                    <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu mới" name="confirmNewPassword" rules={[{ required: true, message: 'Vui lòng nhập' }]}>
-                        <Input.Password placeholder="Nhập lại mật khẩu mới" />
-                    </Form.Item>
-                    <Form.Item className={`${styles.formLabel} ${styles.recapcha}`}>
-                        <ReCAPTCHA
-                            style={{ margin: "0 25px" }}
-                            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-                            onChange={onChangeRecaptcha}
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button id={`${styles.btn}`} type="primary" htmlType="submit" size="large">
-                            Đổi mật khẩu
-                        </Button>
-                    </Form.Item>
-                </Form>
             </div>
-        </div>
-    )
+        )
 };
 
 export default NewPass;

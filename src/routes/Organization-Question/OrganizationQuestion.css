@@ -1,0 +1,11 @@
+#manage-question{
+    display: grid;
+    grid-template-columns: 270px auto;
+}
+
+@media only screen and(max-width:800px){
+    #manage-question{
+        display: grid;
+        grid-template-columns: 60px auto;
+    }
+}

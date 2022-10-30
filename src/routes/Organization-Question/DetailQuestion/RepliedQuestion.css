@@ -1,0 +1,28 @@
+.replied-header {
+    padding: 15px 20px;
+    box-shadow: var(--shadow-dp-01);
+    background-color: white;
+}
+
+.replied-breadcrumb{
+    margin-bottom: 10px;
+}
+
+.replied-body{
+    background-color: white;
+    width: 70%;
+    padding:  40px 40px 20px 40px;
+    margin: 40px auto 40px auto;
+    box-shadow: var(--shadow-dp-02);
+    font-size: 16px;
+}
+
+.replied-body h2{
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+}
+
+.replied-title{
+    font-weight: 600;
+}

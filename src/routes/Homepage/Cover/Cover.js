@@ -2,14 +2,16 @@ import { Button, DatePicker, Space } from 'antd';
 import moment from "moment";
 import React from 'react'
 import "./cover.css"
+import img_1 from "../../../assets/homepage-background-1.png"
 const Cover = () => {
     const { RangePicker } = DatePicker;
     const dateFormat = "DD/MM/YYYY";
     return <section className="cover">
+    {/* <img src={img_1} className="cover-img"></img> */}
     <div className="container-content">
       <h1>
-        Đặt lịch hẹn <br />
-        Hiến máu cứu người
+        Chọn thời gian mà bạn<br />
+        muốn tham gia hiến máu
       </h1>
       <h3>
         Với mỗi lần hiến máu bạn có thể mang lại cơ hội cứu sống 3 người.
