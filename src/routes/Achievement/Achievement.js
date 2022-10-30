@@ -3,7 +3,6 @@ import { Footer } from "../../components/Footer/Footer";
 import React from "react";
 import { Navbar } from "../../components/NavBar/navbar";
 import "./achievement.css";
-import { height } from "@mui/system";
 const data = [
   {
     title: "Ant Design Title 1",

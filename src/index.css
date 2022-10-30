@@ -83,3 +83,18 @@ code {
     text-align: center;
     font-size: 20px;
 }
+
+.ant-btn-primary {
+    border-color: var(--primary-600) !important;
+    background: var(--primary-600) !important;
+}
+
+.ant-btn-primary:active {
+    border-color: var(--primary-600);
+    background: var(--primary-600);
+}
+
+.ant-btn-default {
+    border-color: var(--primary-600) !important;
+    color: var(--primary-600) !important;
+}

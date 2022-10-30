@@ -37,6 +37,9 @@ import OrganizationProfile from './routes/Organization-Profile/organization-prof
 import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
 
 import NoInternetConnection from './others/NoInternetConnection'
+import OrganizationCampaignDonorList from './routes/Organization-Campaign-Donor/DonorList/OrganizationCampaignDonorList';
+import OrganizationCampaignHealthInf from './routes/Organization-Campaign-Donor/HealthInformation/OrganizationCampaignHealthInf';
+import OrganizationHomepage from './routes/Organization-Homepage/OrganizationHomepage';
 
 export default function App() {
   return (
@@ -90,7 +93,11 @@ export default function App() {
             <Route path="profile" element={<OrganizationInfo />} />
             <Route path="*" element={<NoPageOrganization />} />
           </Route>
-
+          {/*DOANKHANH*/}
+          <Route path="/organization-donor-health-inf" element={<OrganizationCampaignHealthInf />} />
+          <Route path="/organization-donor-list" element={<OrganizationCampaignDonorList />} />
+          <Route path="/organization-homepage" element={<OrganizationHomepage />} />
+          
           {/* Pages for admin */}
 
           {/* 404 error page */}
