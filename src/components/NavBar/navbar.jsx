@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import './navigation.css'
 import ScrollingText from './ScrollingText'
 import HomeIcon from '@mui/icons-material/Home';
@@ -15,16 +15,15 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 
 export const Navbar = () => {
+    const navigate = useNavigate();
     const [click, setClick] = useState(false);
     function handleClick() {
         setClick(!click);
-        console.log(click);
+        console.log("click",click);
     }
-
-    const user = JSON.parse(sessionStorage.getItem('user'))
     const role = JSON.parse(sessionStorage.getItem('userRole'))
     let loginState;
-    if (user === null) {
+    if (role === null) {
         loginState = <div className={click ? 'nav-logs' : 'unactive-nav-logs'}>
             <NavLink to="/login">
                 <ExitToAppIcon className='nav-icon'></ExitToAppIcon>
@@ -37,7 +36,7 @@ export const Navbar = () => {
             </NavLink>
         </div>
     }
-    if (user !== null) {
+    if (role !== null) {
         loginState = <div className={click ? 'nav-logs' : 'unactive-nav-logs'}>
             <Link to={role}>
                 <AccountCircleIcon className='nav-icon'></AccountCircleIcon>
@@ -52,10 +51,8 @@ export const Navbar = () => {
     }
 
     function handleLogout() {
-        sessionStorage.removeItem('user');
-        sessionStorage.removeItem('JWT_Key');
-        sessionStorage.removeItem('userRole');
-        user = null;
+        sessionStorage.clear()
+        navigate("/")
     }
 
     return (<>
@@ -82,7 +79,7 @@ export const Navbar = () => {
                         </NavLink>
 
 
-                        <NavLink to="/achivement">
+                        <NavLink to="/achievement" onClick={() => window.onscroll({top: 0})}>
                             <EmojiEventsIcon className='nav-icon'></EmojiEventsIcon>
                             <p>Thành tích</p>
                         </NavLink>

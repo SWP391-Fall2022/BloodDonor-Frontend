@@ -1,16 +1,22 @@
 import "./campaign.css";
 import logo_1 from "../../../assets/organization-logo-1.png";
 import logo_2 from "../../../assets/organization-logo-2.png";
-import React from "react";
+import React, { useEffect } from "react";
 import { Carousel } from "antd";
+import Aos from "aos";
+import "aos/dist/aos.css";
+import "aos/dist/aos"
 const Campaign = () => {
+  useEffect(() => {
+    Aos.init({duration: 1500});
+  }, []);
   return (
     <section className="campaign">
-      <h2>CÁC CHIẾN DỊCH ĐANG DIỄN RA</h2>
-      <Carousel autoplay draggable={true} touchThreshold={30} dots={false}>
+       <Carousel autoplay draggable={true} touchThreshold={30} dots={false}>
         {/* SLIDE 2 */}
         <div>
-          <div className="container-campaign">
+          <h2 data-aos="slide-up">CÁC CHIẾN DỊCH ĐANG DIỄN RA Ở TP HỒ CHÍ MINH</h2>
+          <div data-aos="slide-up" className="container-campaign">
             {/* ===1=== */}
             <div className="campaign-card">
               <div className="campaign-header">
@@ -40,7 +46,7 @@ const Campaign = () => {
               </div>
             </div>
             {/* ===2=== */}
-            <div className="campaign-card">
+            <div className="campaign-card campaign-card-2nd">
               <div className="campaign-header">
                 <a className="campaign-organization-name" href="#organization">
                   BV Truyền máu huyết học
@@ -68,7 +74,7 @@ const Campaign = () => {
               </div>
             </div>
             {/* ===3=== */}
-            <div className="campaign-card">
+            <div className="campaign-card campaign-card-3rd">
               <div className="campaign-header">
                 <a className="campaign-organization-name" href="#organization">
                   BV Truyền máu huyết học
@@ -96,7 +102,7 @@ const Campaign = () => {
               </div>
             </div>
             {/* ===4=== */}
-            <div className="campaign-card">
+            <div className="campaign-card campaign-card-4th">
               <div className="campaign-header">
                 <a className="campaign-organization-name" href="#organization">
                   BV Truyền máu huyết học
@@ -127,7 +133,9 @@ const Campaign = () => {
         </div>
         {/* SLIDE 2 */}
         <div>
-          <div className="container-campaign">
+        
+        <h2 data-aos="slide-up">CÁC CHIẾN DỊCH ĐANG DIỄN RA Ở HÀ NỘI</h2>
+          <div data-aos="slide-up" className="container-campaign">
             {/* ===1=== */}
             <div className="campaign-card">
               <div className="campaign-header">
@@ -157,7 +165,7 @@ const Campaign = () => {
               </div>
             </div>
             {/* ===2=== */}
-            <div className="campaign-card">
+            <div className="campaign-card campaign-card-2nd">
               <div className="campaign-header">
                 <a className="campaign-organization-name" href="#organization">
                   BV Truyền máu huyết học
@@ -185,7 +193,7 @@ const Campaign = () => {
               </div>
             </div>
             {/* ===3=== */}
-            <div className="campaign-card">
+            <div className="campaign-card campaign-card-3rd">
               <div className="campaign-header">
                 <a className="campaign-organization-name" href="#organization">
                   BV Truyền máu huyết học
@@ -213,7 +221,7 @@ const Campaign = () => {
               </div>
             </div>
             {/* ===4=== */}
-            <div className="campaign-card">
+            <div className="campaign-card  campaign-card-4th">
               <div className="campaign-header">
                 <a className="campaign-organization-name" href="#organization">
                   BV Truyền máu huyết học

@@ -1,20 +1,25 @@
 import React, { useState } from 'react'
 import styles from '../organization.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
-import { Form, Input, Select, Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Form, Input, Select, Button, notification, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { useOutletContext } from 'react-router-dom';
 const { Option } = Select;
 const { TextArea } = Input;
+const { confirm } = Modal;
 export default function BasicInfoContainer() {
 
-    const [message, setMessage] = useState('')
-    const navigate = useNavigate();
-    const user = JSON.parse(sessionStorage.getItem('user'))
+    const [user, setUser] = useOutletContext();
+    let introduction1 = "";
+    let introduction2 = "";
     // console.log(user)
     const [form] = Form.useForm();
-    const splitArr = user.introduction.split("-")
-    const introduction1 = splitArr[0];
-    const introduction2 = splitArr[1];
+    if (user.introduction !== null) {
+        const splitArr = user.introduction.split("-")
+        introduction1 = splitArr[0];
+        introduction2 = splitArr[1];
+    }
+
     // console.log(introduction1)
     // console.log(introduction2)
     let userDefaultDistrict;
@@ -42,8 +47,21 @@ export default function BasicInfoContainer() {
         setDistrictList(userDefaultDistrictList)
     };
 
-    //Submit Button
-    const onFinish = async () => {
+    //Submit
+    const onFinish = () => {
+        confirm({
+            title: 'Bạn có muốn kiểm tra lại thông tin trước khi lưu không?',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Lưu',
+            cancelText: 'Xem lại',
+            onOk() {
+                onConfirm();
+            },
+        });
+    }
+
+    //Confirm Submit
+    const onConfirm = async () => {
         const formData = form.getFieldsValue(true);
         let districtId = 0;
         for (let i = 0; i < provinceList.length; i++) {
@@ -76,18 +94,15 @@ export default function BasicInfoContainer() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.success) {
-            requestData.email = user.email
-            requestData.taxCode = user.taxCode
-            requestData.id = user.id
-            requestData.username = user.username
-            requestData.avatar = user.avatar
-            sessionStorage.setItem('user', JSON.stringify(requestData))
-            navigate("/organization")
-            setMessage("Thay đổi thành công")
+            notification.success({
+                message: 'Đổi thông tin thành công',
+                description: 'Đang tải lại thông tin mới',
+                placement: "top"
+            });
         }
         setTimeout(() => {
-            setMessage('');
-        }, 3000);
+            window.location.reload(false);
+        }, 1000);
     };
 
     const onProvinceChange = (value) => {
@@ -99,13 +114,11 @@ export default function BasicInfoContainer() {
         <div className={styles.infoContainer}>
             <div className={styles.title}>THAY ĐỔI THÔNG TIN</div>
             <Form layout="vertical" form={form} onFinish={onFinish}>
-                <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="Tên tổ chức" initialValue={user.name} name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
-                        <Input placeholder="Nhập họ và tên" />
-                    </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
-                        <Input placeholder="Nhập số điện thoại" />
-                    </Form.Item>
+                <Form.Item className={styles.FormLabel} label="Tên tổ chức" initialValue={user.name} name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} >
+                    <Input placeholder="Nhập tên tổ chức" />
+                </Form.Item>
+                <Form.Item className={styles.FormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} >
+                    <Input placeholder="Nhập số điện thoại" />
                 </Form.Item>
                 <div className={styles.textLabel}><strong>Email: </strong>{user.email}</div>
                 <div className={styles.textLabel}><strong>Mã số thuế: </strong>{user.taxCode}</div>
@@ -138,17 +151,14 @@ export default function BasicInfoContainer() {
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
+                    <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
                         Thay đổi
                     </Button>
-                    <Button className={`${styles.btn2}`} size="large" onClick={onReset}>
+                    <Button id={`${styles.btn2}`} size="large" onClick={onReset}>
                         Hủy
                     </Button>
                 </Form.Item>
             </Form>
-            <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                {message}
-            </div>
         </div>
     )
 }

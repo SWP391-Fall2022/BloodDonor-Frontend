@@ -14,12 +14,12 @@
 .container-standard {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    padding: 0 20%;
+    padding: 0 12%;
 }
 
 .standard-card {
-    margin: 2% 0.5%;
-    width: 95%;
+    margin: 1% 0.5%;
+    width: 97%;
     background-color: white;
     border-radius: 5px;
     box-shadow: var(--shadow-dp-02);
@@ -32,9 +32,9 @@
 
 .standard-bullet {
     font-weight: 800 !important;
-    font-size: 28px;
+    font-size: 24px;
     display: inline-block;
-    padding: 3% 0 1% 0;
+    padding: 2% 0 1% 0;
     color: var(--primary-900);
     /* background-color: var(--primary-900);
     width: 20%;
@@ -47,7 +47,7 @@
 
 .standard-card p {
     margin-top: 1% !important;
-    padding: 0% 8% 8% 8%;
+    padding: 0% 10% 5% 10%;
     transition: all 0.4s;
 }
 
@@ -83,8 +83,8 @@
 
 .standard-card:hover .standard-bullet {
     transition: all 0.4s ease-out;
-    transform: scale(1.1);
-    color: white;
+    transform: scale(0.7);
+    color: var(--primary-800);
 }
 
 @media only screen and (max-width: 900px) {

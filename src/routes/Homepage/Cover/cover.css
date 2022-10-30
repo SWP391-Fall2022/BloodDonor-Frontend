@@ -5,11 +5,20 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    text-align: center;
-    padding: 6% 12% 8% 12%;
-    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 85px;
+    height: 100vh;
+    position: relative;
 }
-
+.cover-img{
+    position: absolute;
+    object-fit: center;
+    padding-top: 85px;
+    top: 0;
+}
 .container-content {
     display: inline-block;
     text-align: left;

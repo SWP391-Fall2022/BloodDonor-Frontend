@@ -1,0 +1,28 @@
+
+/* qna style-------------------- */
+.campaignDetail-q-and-a{
+    background-color: white;
+    padding: 20px 15px;
+    box-shadow: var(--shadow-dp-02);
+}
+
+.campaignDetail-q-and-a h3{
+    text-align: center;
+}
+
+.campaignDetail-q-and-a .ant-collapse > .ant-collapse-item > .ant-collapse-header{
+    padding: 5px 16px;
+}
+
+.campaignDetail-q-and-a .ant-collapse-content-box{
+    list-style: disc;
+}
+
+.campaignDetail-q-and-a-card{
+    margin-bottom: 15px;
+}
+
+.campaignDetail-q-and-a .ant-collapse-header-text{
+    font-weight: 600;
+}
+

@@ -1,6 +1,8 @@
 import styles from '../donor.module.css'
-import { Modal, Space, Table, Tag } from 'antd';
+import { Button, Modal, Space, Table, Tag } from 'antd';
 import { Link } from 'react-router-dom';
+
+const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 const columns = [
     {
@@ -16,19 +18,13 @@ const columns = [
     {
         title: 'Thông tin sức khỏe',
         key: 'tags',
-        dataIndex: 'info',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    return (
-                        <Link onClick={info}>
-                            <Tag color='green' key={tag}>
-                                {tag.toUpperCase()}
-                            </Tag>
-                        </Link>
-                    );
-                })}
-            </>
+        dataIndex: 'tags',
+        render: (index) => (
+            <Button onClick={info}>
+                <Tag color='green' key={index}>
+                    Chi tiết
+                </Tag>
+            </Button>
         ),
     },
     {
@@ -47,52 +43,52 @@ const data = [
     {
         stt: '1',
         campaign: 'John Brown',
-        tags: ['Chi tiết'],
+        tags: 1,
     },
     {
         stt: '2',
         campaign: 'Jim Green',
-        tags: ['Chi tiết'],
+        tags: 2,
     },
     {
         stt: '3',
         campaign: 'Joe Black',
-        tags: ['Chi tiết'],
+        tags: 3,
     },
     {
         stt: '4',
         campaign: 'Joe Black',
-        tags: ['Chi tiết'],
+        tags: 4,
     },
     {
         stt: '5',
         campaign: 'Joe Black',
-        tags: ['Chi tiết'],
+        tags: 5,
     },
     {
         stt: '6',
         campaign: 'Joe Black',
-        tags: ['Chi tiết'],
+        tags: 6,
     },
     {
         stt: '7',
         campaign: 'Joe Black',
-        tags: ['Chi tiết'],
+        tags: 7,
     },
     {
         stt: '8',
         campaign: 'Joe Black',
-        tags: ['Chi tiết'],
+        tags: 8,
     },
     {
         stt: '9',
         campaign: 'Joe Black',
-        tags: ['Chi tiết'],
+        tags: 9,
     },
     {
         stt: '10',
         campaign: 'Joe Black',
-        tags: ['Chi tiết'],
+        tags: 10,
     },
 ];
 
@@ -115,7 +111,7 @@ function info() {
 
 export default function HistoryContainer() {
     return (
-        <div className={styles.infoContainer} style={{ width: '700px' }}>
+        <div className={styles.infoContainerHistory}>
             <div className={styles.title}>LỊCH SỬ CHIẾN DỊCH</div>
             <Table rowKey={data => data.stt} columns={columns} dataSource={data} pagination={{ defaultPageSize: 5 }} style={{ textAlign: 'center' }} />
         </div>

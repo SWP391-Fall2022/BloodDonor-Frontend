@@ -1,18 +1,17 @@
 import styles from '../donor.module.css'
-import { Form, Input, Button } from 'antd';
-import { useState } from 'react';
+import { Form, Input, Button, notification, Modal } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+const { confirm } = Modal;
 export default function ChangePasswordSide() {
 
     const [form] = Form.useForm();
-    const [message, setMessage] = useState('')
 
     //Cancel Button
     const onReset = () => {
         form.resetFields();
     };
 
-    //Submit Button
-    const onFinish = async () => {
+    const sendBackend = async () => {
         const formData = form.getFieldsValue(true);
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
         let json = {
@@ -27,16 +26,46 @@ export default function ChangePasswordSide() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.success) {
-            setMessage("Đổi mật khẩu thành công")
-        } else if (response.status === 400) {
-            if (response.body === "Old password is incorrect.")
-                setMessage("Mật khẩu cũ không chính xác")
-            if (response.body === "Confirm password not match")
-                setMessage("Hai mật khẩu mới không trùng khớp")
+            notification.success({
+                message: 'Đổi mật khẩu thành công',
+                placement: "top"
+            });
+
+            setTimeout(() => {
+                window.location.reload(false);
+            }, 2000);
         }
-        setTimeout(() => {
-            setMessage('');
-        }, 3000);
+        else if (response.status === 400) {
+            if (response.body === "Old password is incorrect.")
+                notification.error({
+                    message: 'Mật khẩu cũ không chính xác',
+                    placement: "top"
+                });
+            if (response.body === "Confirm password not match")
+                notification.error({
+                    message: 'Hai mật khẩu mới không trùng khớp',
+                    placement: "top"
+                });
+        };
+    }
+
+    //Submit Button
+    const onFinish = () => {
+        confirm({
+            title: 'Bạn có chắc chắn muốn đổi mật khẩu không?',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Đổi',
+            cancelText: 'Hủy',
+            onOk() {
+                sendBackend();
+            },
+            onCancel() {
+                notification.success({
+                    message: 'Đã hủy',
+                    placement: "top"
+                });
+            },
+        });
     }
 
     return (
@@ -52,14 +81,11 @@ export default function ChangePasswordSide() {
                 <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu mới" name="confirmNewPassword" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
-                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                    {message}
-                </div>
                 <Form.Item className={styles.formLabel}>
-                    <Button className={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
+                    <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
                         Thay đổi
                     </Button>
-                    <Button className={`${styles.btn2}`} htmlType="submit" size="large" onClick={onReset}>
+                    <Button id={`${styles.btn2}`} htmlType="submit" size="large" onClick={onReset}>
                         Hủy
                     </Button>
                 </Form.Item>

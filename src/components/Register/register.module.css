@@ -41,12 +41,16 @@
 }
 
 @media only screen and (max-width: 767px) {
+    .mainBackground {
+        height: 200%;
+    }
+
     .detailCol {
         grid-template-columns: 100%;
     }
 }
 
-.btn {
+#registerBtn {
     width: fit-content;
     height: auto;
     background-color: white;
@@ -60,7 +64,7 @@
     font-weight: 600;
 }
 
-.btn:hover, .btn:focus {
+#registerBtn:hover, #registerBtn:focus {
     background-color: var(--secondary-300);
     color: black;
 }
@@ -111,7 +115,7 @@
     color: var(--secondary-900);
     margin: 0%;
     font-weight: 700;
-    font-size: 150%;
+    font-size: 200%;
 }
 
 .formLabel {
@@ -123,7 +127,7 @@
     font-weight: 400;
 }
 
-.btnChild {
+#registerBtnChild {
     width: fit-content;
     margin: 1%;
     background-color: var(--primary-500);
@@ -135,7 +139,7 @@
     font-weight: 600;
 }
 
-.btnChild:hover, .btnChild:focus {
+#registerBtnChild:hover, #registerBtnChild:focus {
     background-color: var(--primary-700);
     color: white;
 }

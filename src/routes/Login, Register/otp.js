@@ -7,9 +7,8 @@ import OtpInput from "react-otp-input";
 export default function Otp() {
 
     const [otp, setOtp] = useState('')
-    const [seconds, setSeconds] = useState(60)
+    const [seconds, setSeconds] = useState(150)
     const { state } = useLocation();
-    const { otpAccess, userId } = state;
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
     const handleChange = (otp) => {
@@ -26,19 +25,25 @@ export default function Otp() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/confirmCode/${otp}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
+        console.log(response)
         if (response.success) {
-            if (JSON.parse(sessionStorage.getItem('restore'))) {
-                navigate('/new-password')
-            } else {
+            if (state !== null) {
+                if (state.restore) {
+                    navigate('/new-password', { state: { otpAccess: true, userId: state.userId } })
+                }
+            }
+            if (response.status === 200) {
+                sessionStorage.clear()
                 navigate('/login')
             }
         } else {
-            setMessage(response.body)
+            setMessage("Mã không chính xác")
         }
     }
 
     const reSendOtp = async () => {
-        setSeconds(60)
+        setSeconds(150)
+        const userId = state.userId
         let json = {
             method: 'PUT',
             headers: new Headers({
@@ -67,14 +72,15 @@ export default function Otp() {
 
     let button;
     if (seconds > 0) {
-        button = <Button className={`${styles.btn}`} disabled>Gửi lại mã</Button>
+        button = <Button id={`${styles.btnDisabled}`} disabled>Gửi lại mã</Button>
     } else {
-        button = <Button className={`${styles.btn}`} onClick={reSendOtp}>Gửi lại mã</Button>
+        button = <Button id={`${styles.btn}`} onClick={reSendOtp}>Gửi lại mã</Button>
     }
 
-    if (otpAccess === null || !otpAccess) {
+    if (state === null) {
         return <Navigate to={'/login'} replace />
-    } else
+    }
+    if (state !== null && state.otpAccess) {
         return (
             <div className={styles.container}>
                 <div className={styles.content}>Mã xác nhận đã được gửi qua mail của bạn</div>
@@ -86,16 +92,16 @@ export default function Otp() {
                     isInputNum={true}
                     containerStyle={{ display: "flex", justifyContent: "center" }}
                     inputStyle={{
-                        width: "60px",
-                        height: "90px",
-                        margin: "30px 15px",
-                        fontSize: "64px",
+                        width: "40px",
+                        height: "60px",
+                        margin: "5px 5px",
+                        fontSize: "45px",
                         borderRadius: 10,
                         border: "3px solid"
                     }} />
                 <div className={styles.content}>Gửi lại mã trong {seconds}s</div>
                 <div style={{ textAlign: 'center' }}>
-                    <Button className={`${styles.btn}`} onClick={handleSubmit}>Xác nhận</Button>
+                    <Button id={`${styles.btn}`} onClick={handleSubmit}>Xác nhận</Button>
                     {button}
                 </div>
                 <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', fontSize: '120%' }}>
@@ -103,4 +109,5 @@ export default function Otp() {
                 </div>
             </div>
         )
+    }
 }
