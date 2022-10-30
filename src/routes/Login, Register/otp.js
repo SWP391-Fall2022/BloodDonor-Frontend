@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../components/Otp/otp.module.css';
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { Button } from 'antd';
+import { Button, notification } from 'antd';
 import OtpInput from "react-otp-input";
 
 export default function Otp() {
 
     const [otp, setOtp] = useState('')
-    const [seconds, setSeconds] = useState(150)
+    const [seconds, setSeconds] = useState(5)
     const { state } = useLocation();
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
@@ -26,17 +26,16 @@ export default function Otp() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log(response)
-        if (response.success) {
-            if (state !== null) {
-                if (state.restore) {
-                    navigate('/new-password', { state: { otpAccess: true, userId: state.userId } })
-                }
-            }
-            if (response.status === 200) {
-                sessionStorage.clear()
-                navigate('/login')
-            }
-        } else {
+        if (response.status === 200) {
+            if (state.restore) {
+                navigate('/new-password', { state: { userId: state.userId } })
+            } else {
+                navigate("/login")
+                notification.success({
+                    message: 'Xác nhận otp thành công',
+                });
+            };
+        } else if (response.status === 400 && response.body === "Invalid code") {
             setMessage("Mã không chính xác")
         }
     }
@@ -50,10 +49,13 @@ export default function Otp() {
                 'Content-Type': 'application/json; charset=UTF-8'
             })
         }
-        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/resendCode/${userId}`, json)
+        await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/resendCode/${userId}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
+        // console.log(response)
+        notification.success({
+            message: 'Đã gửi lại mã. Vui lòng xem trong email của bạn',
+        });
     }
 
     useEffect(() => {
