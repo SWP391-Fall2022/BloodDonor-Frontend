@@ -1,11 +1,11 @@
-#manage-campaign{
+.manage-campaign{
     display: grid;
     grid-template-columns: 270px auto;
 }
 
-@media only screen and(max-width:800px){
-    #manage-campaign{
+ @media (max-width:800px){  
+    .manage-campaign{
         display: grid;
-        grid-template-columns: 60px auto;
+        grid-template-columns: 60px 100%; 
     }
-}
+} 

@@ -1,20 +1,13 @@
-.org-campaignDetail-header {
-    padding: 15px 20px;
-    box-shadow: var(--shadow-dp-01);
-    background-color: white;
+.org-campaignDetail{
+    font-size: 16px;
+
 }
 
-.org-campaignDetail-header a{
-   
-    font-weight: 500;
-    font-size: 18px;
-    color: black;
-}
 
 #org-campaign-detail-container{
     background-color: white;
-    width: 70%;
-    margin: 40px auto;
+    width: 65%;
+    margin-right: 30px;
     padding: 25px 35px;
     text-align: center;
     box-shadow: var(--shadow-dp-02);
@@ -27,12 +20,12 @@
 .org-campaign-title{
     font-weight: 700;
     margin-top: 15px;
+    text-transform: uppercase;
 }
 
 .org-campaign-detail-img{
-    width: 40%;
-    max-width: 225px;
-    height: 220px;
+    width: 70%;
+   
     margin: 30px auto;
 }
 
@@ -44,7 +37,7 @@
 }
 
 #org-campaign-detail-container  .sub-title{
-    font-weight: 600;
+    font-weight: 700;
     margin-top: 20px;
 }
 
@@ -63,6 +56,66 @@
     background-color: var(--primary-500);
     color: white;
     border-radius: 50%;
-    padding: 5px 10px;
     margin: 5px 20px;
+    height: 39px;
+    width: 39px;
+    padding: 7px;
+}
+
+.org-campaign-header {
+    padding: 15px 20px;
+    box-shadow: var(--shadow-dp-01);
+    background-color: white;
+    margin-bottom: 50px;
+}
+
+.org-campaign-header a{
+   color: black;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+
+#org-campaign-detail-container .register-date-cover .ant-radio-group {
+    line-height: 40px;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: start;
+}
+
+#org-campaign-detail-container .register-time  .ant-radio-group{
+    line-height: 30px;
+}
+
+#org-campaign-body{
+    display: flex;
+    
+    justify-content: center;
+    margin-bottom: 40px;
+
+
+}
+
+/* action-table style */
+#action-table{
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 50%;
+    background-color: white;
+    padding: 10px;
+    box-shadow: var(--shadow-dp-02);
+    
+}
+
+.action-table-item{
+    margin: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+   display: flex;
+   flex-direction: column;
+
+}
+
+.action-table-icon{
+    color: var(--primary-500);
 }
