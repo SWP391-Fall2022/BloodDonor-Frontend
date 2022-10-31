@@ -1,15 +1,24 @@
 @import "../homepage.css";
 /*---------------COVER------------*/
 .cover {
-    background-image: url(../../../assets/homepage-background.png);
+    background-image: url("../../../../src/assets/homepage-background.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    text-align: center;
-    padding: 8% 10% 10% 10%;
-    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 85px;
+    height: 100vh;
+    position: relative;
 }
-
+.cover-img{
+    position: absolute;
+    object-fit: center;
+    padding-top: 85px;
+    top: 0;
+}
 .container-content {
     display: inline-block;
     text-align: left;
@@ -20,7 +29,7 @@
     background-color: white;
     padding: 2% 3%;
     border-radius: 5px;
-    box-shadow: var(--shadow-dp-02);
+    box-shadow: var(--shadow-dp-01);
     margin-top: 0.5%;
 }
 

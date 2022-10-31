@@ -1,0 +1,178 @@
+@import url(../../../index.css);
+
+#homepage-detail h1 {
+  padding-top: 6%;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+#homepage-detail h2 {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 29px;
+  margin-bottom: 0.4rem !important;
+}
+
+#homepage-detail h3 {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+#homepage-detail h4 {
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 20px;
+}
+
+#homepage-detail h5 {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+#homepage-detail .site-page-header {
+  border: 1px solid rgb(235, 237, 240);
+  background-color: white;
+}
+
+#homepage-detail .homepage-col-2 {
+  display: grid;
+  grid-template-columns: 45.5% 51.5%;
+  grid-gap: 3%;
+  margin: 2% 10%;
+}
+
+#homepage-detail .qna-shortcut {
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: var(--shadow-dp-02);
+  padding: 8% 8% 4% 8%;
+}
+#homepage-detail .qna-list {
+  text-align: left;
+}
+
+#homepage-detail .ant-list-item-action {
+  margin: 0;
+}
+
+#homepage-detail .qna-list a {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+#homepage-detail .qna-list .list-qna-detail {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 22px;
+  color: #333333;
+}
+
+#homepage-detail .ant-btn-primary {
+  background-color: var(--primary-900);
+  border-color: var(--primary-900);
+  box-shadow: var(--shadow-dp-01);
+}
+
+#homepage-detail .ant-btn-primary:hover {
+  color: white;
+  background-color: var(--primary-1000);
+  border-color: var(--primary-1000);
+  box-shadow: none;
+}
+
+#homepage-detail .ant-btn:hover, #homepage-detail .ant-btn:focus{
+  border-color: var(--primary-1000);
+  color: var(--primary-300);
+}
+@media only screen and (max-width: 1200px){
+  #homepage-detail .homepage-col-2 .qna-shortcut{
+    margin-bottom: 3%;
+  }
+  #homepage-detail h1 {
+    padding-top: 6%;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 29px;
+  }
+  
+  #homepage-detail h2 {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 26px;
+    margin-bottom: 0.4rem !important;
+  }
+  
+  #homepage-detail h3 {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 21px;
+  }
+  
+  #homepage-detail h4 {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 28px;
+  }
+  
+  #homepage-detail h5 {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+  }
+}
+@media only screen and (max-width: 900px){
+  #homepage-detail .homepage-col-2 {
+    display: block;
+  }
+  #homepage-detail h1 {
+    padding-top: 6%;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  #homepage-detail h2 {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 24px;
+    margin-bottom: 0.4rem !important;
+  }
+  
+  #homepage-detail h3 {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+  }
+  
+  #homepage-detail h4 {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 24px;
+  }
+  
+  #homepage-detail h5 {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+@media only screen and (max-width: 950px){
+  #homepage-detail .homepage-col-2 {
+    display: block;
+  }
+}

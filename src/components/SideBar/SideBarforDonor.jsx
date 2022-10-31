@@ -21,32 +21,25 @@ export const SideBarforDonor = () => {
             <p>MEDICHOR</p>
           </div> */}
           <div className={click ? "sidebar-links" : "unactive-sidebar-links"}>
-            <NavLink end to="/sidebar_for_donor" className="sidebar-item">
+            <NavLink end to="/donor" className="sidebar-item" title="Thông tin cá nhân">
               <AccountBoxIcon className="sidebar-icon"></AccountBoxIcon>
               <p>Thông tin cá nhân</p>
             </NavLink>
-
-            <NavLink to="/sidebar_for_donor/campaign_history" className="sidebar-item">
+            <NavLink to="/donor/history" className="sidebar-item" title="Lịch sử chiến dịch">
               <LocalHospitalIcon className="sidebar-icon"></LocalHospitalIcon>
               <p>Lịch sử chiến dịch</p>
             </NavLink>
-
-            <NavLink to="/sidebar_for_donor/change_pw" className="sidebar-item">
+            <NavLink to="/donor/changePassword" className="sidebar-item" title="Thay đổi mật khẩu">
               <KeyIcon className="sidebar-icon"></KeyIcon>
               <p>Thay đổi mật khẩu</p>
             </NavLink>
 
-            <NavLink to="/sidebar_for_donor/change_pnb" className="sidebar-item">
-              <LocalPhoneIcon className="sidebar-icon"></LocalPhoneIcon>
-              <p>Thay đổi số điện thoại</p>
-            </NavLink>
-
-            <NavLink to="/sidebar_for_donor/voucher" className="sidebar-item">
+            <NavLink to="/donor/vouchers" className="sidebar-item" title="Kho voucher">
               <LocalActivityIcon className="sidebar-icon"></LocalActivityIcon>
               <p>Kho voucher</p>
             </NavLink>
 
-            <NavLink to="/sidebar_for_donor/qna" className="sidebar-item">
+            <NavLink to="/donor/qna" className="sidebar-item" title="Hỏi đáp">
               <HelpCenterIcon className="sidebar-icon"></HelpCenterIcon>
               <p>Hỏi đáp</p>
             </NavLink>

@@ -31,6 +31,10 @@ import Vouchers from './routes/Donor-Profile/Voucher Storage/Vouchers';
 import OrganizationProfile from './routes/Organization-Profile/organization-profile';
 import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
 import OrganizationInfo from './routes/Organization-Profile/Basic Info/Info';
+import OrganizationCampaignHealthInf from './routes/Organization-Campaign-Donor/HealthInformation/OrganizationCampaignHealthInf';
+import OrganizationCampaignDonorList from './routes/Organization-Campaign-Donor/DonorList/OrganizationCampaignDonorList';
+import OrganizationHomepage from './routes/Organization-Homepage/OrganizationHomepage';
+import OrganizationCampaignStatistical from './routes/Organization-Campaign-Statistical/OrganizationCampaignStatistical';
 
 export default function App() {
   return (
@@ -78,6 +82,12 @@ export default function App() {
 
         {/* 404 error page */}
         <Route path="*" element={<NoPage />} />
+         {/*DOANKHANH*/}
+         <Route path="/organization-donor-health-inf" element={<OrganizationCampaignHealthInf />} />
+          <Route path="/organization-donor-list" element={<OrganizationCampaignDonorList />} />
+          <Route path="/organization-homepage" element={<OrganizationHomepage />} />
+          <Route path="/statistical" element={<OrganizationCampaignStatistical />} />
+          
       </Routes>
     </BrowserRouter>
   );

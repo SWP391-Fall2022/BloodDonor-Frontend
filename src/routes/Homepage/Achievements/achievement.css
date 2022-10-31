@@ -13,26 +13,28 @@
     padding: 1% 10% 7% 10%;
     grid-gap: 2%;
 }
-.achievement-card{
+
+.achievement-card {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     position: relative;
 }
-.achievement-avatar{
+
+.achievement-avatar {
     height: 120px;
     width: 120px;
     border-radius: 100px;
     background-color: #71D94D;
-    position:absolute;
+    position: absolute;
     top: 10%;
     border: 5px solid white;
-    box-shadow: var(--shadow-dp-01);
 }
+
 .achievement-chart {
     background-color: white;
-    box-shadow: var(--shadow-dp-02);
+    box-shadow: var(--shadow-dp-01);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -46,7 +48,8 @@
     font-weight: 800 !important;
     font-size: 30px;
 }
-.achievement-name{
+
+.achievement-name {
     margin-top: 35%;
     font-size: 16px;
     font-weight: 700;
@@ -57,39 +60,52 @@
     align-items: center;
 }
 
-.place-1st .achievement-chart{
+.place-1st .achievement-chart {
     border-bottom: 20px solid var(--primary-500);
-    border-top:90px solid var(--primary-500);
+    border-top: 90px solid var(--primary-500);
 }
-.place-2nd .achievement-chart{
-    border-bottom: 18px solid var(--primary-600);
-    border-top:80px solid var(--primary-600);
+
+.place-2nd .achievement-chart {
+    border-bottom: 20px solid var(--primary-600);
+    border-top: 90px solid var(--primary-600);
 }
-.place-3rd .achievement-chart{
-    border-bottom: 15px solid var(--primary-900);
-    border-top:70px solid var(--primary-900);
+
+.place-3rd .achievement-chart {
+    border-bottom: 20px solid var(--primary-900);
+    border-top: 90px solid var(--primary-900);
 }
-.place-4th .achievement-chart, .place-5th .achievement-chart{
-    border-bottom: 12px solid var(--primary-1000);
-    border-top:60px solid var(--primary-1000);
+
+.place-4th .achievement-chart,
+.place-5th .achievement-chart {
+    border-bottom: 20px solid var(--primary-1000);
+    border-top: 90px solid var(--primary-1000);
 }
+
 @media only screen and (max-width: 1000px) {
-    .place-4th, .place-5th{
+
+    .place-4th,
+    .place-5th {
         display: none;
     }
+
     .achievement-list {
         grid-template-columns: repeat(3, 1fr);
         padding: 3% 20% 7% 20%;
         grid-gap: 2%;
     }
-  }
+}
 
-  @media only screen and (max-width: 800px) {
-    .place-4th, .place-5th, .place-3rd, .place-2nd{
+@media only screen and (max-width: 800px) {
+
+    .place-4th,
+    .place-5th,
+    .place-3rd,
+    .place-2nd {
         display: none;
     }
+
     .achievement-list {
         grid-template-columns: repeat(1, 1fr);
         padding: 3% 35% 7% 35%;
     }
-  }
+}
