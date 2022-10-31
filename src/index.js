@@ -35,10 +35,7 @@ import OrganizationCampaignHealthInf from './routes/Organization-Campaign-Donor/
 import OrganizationCampaignDonorList from './routes/Organization-Campaign-Donor/DonorList/OrganizationCampaignDonorList';
 import OrganizationHomepage from './routes/Organization-Homepage/OrganizationHomepage';
 import OrganizationCampaignStatistical from './routes/Organization-Campaign-Statistical/OrganizationCampaignStatistical';
-<<<<<<< HEAD
 import TemplateTable from './components/Table/TemplateTable';
-=======
->>>>>>> 0a1cbabb86bade0d1d62998540a1acd178b4ed1a
 
 export default function App() {
   return (
@@ -91,10 +88,7 @@ export default function App() {
           <Route path="/organization-donor-list" element={<OrganizationCampaignDonorList />} />
           <Route path="/organization-homepage" element={<OrganizationHomepage />} />
           <Route path="/statistical" element={<OrganizationCampaignStatistical />} />
-<<<<<<< HEAD
           <Route path="/test" element={<TemplateTable />} />
-=======
->>>>>>> 0a1cbabb86bade0d1d62998540a1acd178b4ed1a
           
       </Routes>
     </BrowserRouter>
