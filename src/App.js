@@ -45,6 +45,7 @@ import OrganizationCampign from './routes/Organization-Campaign/OrganizationCamp
 import OrganizationManageCampaign from './routes/Organization-Campaign/ManageCampaign/ManageCampaign';
 import OrganizationCreateCampaign from './routes/Organization-Campaign/CreateCampaign/CreateCampaign';
 import OrganizationDetailCampaign from './routes/Organization-Campaign/CreateCampaign/DetailCampaign/DetailCampaign';
+import OrganizationPreviewCampaign from './routes/Organization-Campaign/CreateCampaign/PreView/Preview';
 
 // org question management
 import OrganizationQuestion from './routes/Organization-Question/OrganizationQuestion';
@@ -111,7 +112,8 @@ export default function App() {
             <Route path="manageCampaign" element={<OrganizationCampign />} >
               <Route index element={<OrganizationManageCampaign />} />
               <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
-              <Route path="detailCampaign/:id" element={<OrganizationDetailCampaign />} />
+              <Route path="detailCampaign" element={<OrganizationDetailCampaign />} />
+              <Route path="preview" element={<OrganizationPreviewCampaign />} />
             </Route>
             {/* Manage Question */}
             <Route path="manageQuestion" element={<OrganizationQuestion />} >
