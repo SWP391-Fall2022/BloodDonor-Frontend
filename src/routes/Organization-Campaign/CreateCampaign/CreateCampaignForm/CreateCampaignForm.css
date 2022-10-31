@@ -72,3 +72,12 @@
     background-color: var(--primary-500);
     border: none;
 }
+
+/* multi datepicker style */
+.create-campaign-form-item-days-in-month .rmdp-header{
+    display: none;
+}
+
+.create-campaign-form-item-days-in-month .rmdp-week-day{
+    display: none !important;
+}
