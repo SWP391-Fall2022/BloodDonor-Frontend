@@ -1,0 +1,49 @@
+#organization-donorlist-col {
+    display: grid;
+    grid-template-columns: 270px auto;
+}
+#organization-donorlist-col .site-page-header {
+    border: 1px solid rgb(235, 237, 240);
+    background-color: white;
+  }
+  
+@media only screen and (max-width: 800px) {
+    #organization-donorlist-col {
+        display: grid;
+        grid-template-columns: 60px auto;
+    }
+}
+
+#organization-donorlist-col .content-col {
+    display: grid;
+    grid-template-columns: 71% 26%;
+    grid-gap: 3%;
+    padding: 4% 8%;
+}
+
+#organization-donorlist-col .donor-inf, #organization-donorlist-col .donor-achievement {
+    padding: 10% 0;
+    text-align: center;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(220, 220, 220);
+    margin-bottom: 5%;
+}
+
+#organization-donorlist-col img {
+    width: 160px;
+    height: 160px;
+    border-radius: 90px;
+}
+
+#organization-donorlist-col .donor-name{
+    font-weight: 500;
+    font-size: 20px;
+    padding: 3% 0;
+}
+
+#organization-donorlist-col .donor-achievement-title {
+    font-weight: 600;
+    font-size: 16px;
+    padding: 1% 0;
+}

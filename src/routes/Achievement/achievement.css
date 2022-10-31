@@ -1,0 +1,202 @@
+@import url(../../index.css);
+#Achievement h1 {
+    font-weight: 800 !important;
+    font-size: 50px;
+    line-height: 65px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem !important;
+    color: #1F364B;
+
+}
+
+#Achievement h2 {
+    font-weight: 700 !important;
+    font-size: 28px;
+    line-height: 39px;
+    text-transform: uppercase;
+    padding: 1.5rem 0 1.5rem 0;
+    color: #1F364B;
+}
+
+#Achievement h3 {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 22px;
+    margin-bottom: 0.2rem;
+    padding: 3% 5%;
+}
+
+#Achievement h4 {
+    font-weight: 600 !important;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+#Achievement li {
+    font-weight: 500 !important;
+    font-size: 15px;
+    line-height: 22px;
+    margin: 0 0 !important;
+}
+
+@media only screen and (max-width: 950px) {
+    #Achievement h1 {
+        font-size: 42px !important;
+        line-height: 56px !important;
+    }
+    #Achievement h2{
+        font-size: 22px !important;
+        line-height: 30px;
+    }
+    #Achievement h3 {
+        font-size: 16px !important;
+        line-height: 25px !important;
+    }
+    #Achievement h4 {
+        font-size: 12px !important;
+        line-height: 20px !important;
+    }
+}
+
+@media only screen and (max-width: 740px) {
+    #Achievement h1 {
+        font-size: 30px !important;
+        line-height: 45px !important;
+    }
+    #Achievement h2{
+        font-size: 18px !important;
+        line-height: 24px !important;
+    }
+    #Achievement h3 {
+        font-size: 12px !important;
+        line-height: 20px !important;
+    }
+    #Achievement h4 {
+        font-size: 10px !important;
+        line-height: 15px !important;
+    }
+}
+.achievement-cover{
+    margin-top: 85px;
+    background-image: url(../../assets/achievement-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+}
+.achievement-content{
+    text-align: center;
+    padding: 0 15%;
+    margin-bottom: 10%;
+}
+.achievement-col{
+    display: grid;
+    grid-template-columns: 31% 31% 31%;
+    grid-gap: 3.5%;
+}
+.achievement-table{
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-02);
+    padding: 2% 5%;
+    margin-bottom: 20%;
+}
+.achievement-table h3{
+    margin-bottom: 5%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.128);
+    padding-bottom: 3%;
+}
+.achievement-style{
+    text-align: left;
+    /* padding: 1% 2%; */
+}
+.ant-list-split .ant-list-item{
+    padding: 3% 2%;
+}
+.ant-list-item-meta-description{
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+}
+
+.achievement-cols{
+    margin:  4% 15%;
+    display: grid;
+    height: 265px;
+    grid-template-columns: repeat(5, 20%);
+}
+
+.container-col{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+.container-col h3{
+    z-index: 1;
+}
+.col{
+    width: 150px;
+    position: absolute;
+    animation: moveSmooth 1s linear;
+    bottom: 0;
+}
+.container-col h3{
+    animation: 1s linear;
+}
+.col::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    border-radius: 100rem/20rem;
+    top: 0;
+    transform: translate(-50%, -50%);
+}
+
+/* set up color per col [1..5] */
+.col1 {
+    background: #5177D8;
+}
+.col1::before {
+    background: #7A9FFF;
+}
+
+.col2 {
+    background: #51D856;
+}
+.col2::before {
+    background: #7AFF8F;
+}
+
+.col3 {
+    background: var(--primary-600);
+}
+.col3::before {
+    background: var(--primary-200);
+}
+
+.col4 {
+    background: #FFB800;
+}
+.col4::before {
+    background: #FFD27A;
+}
+
+.col5 {
+    background: #00CDFF;
+}
+.col5::before {
+    background: #7AE5FF;
+}
+/* set up keyframe */
+@keyframes moveSmooth {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}

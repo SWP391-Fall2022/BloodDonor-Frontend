@@ -1,0 +1,74 @@
+#edit-date-time-form .register-date .ant-radio-group {
+    line-height: 40px;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: start;
+}
+
+#edit-date-time-form .register-date-cover{
+    margin-bottom: 30px;
+}
+
+
+#edit-date-time-form .register-time{
+    margin: 0 auto 20px auto;
+    padding: 20px 17px 10px 19px;
+    width: 50%;
+}
+
+#edit-date-time-form .register-time .ant-radio-group {
+line-height: 30px;
+}
+
+#edit-date-time-form  p{
+    text-align: center;
+    font-size: 18px;
+}
+
+#edit-date-time-form .num-of-registered{
+    margin: 0;
+}
+
+.edit-date-time-modal{
+    width: 600px !important;
+}
+
+.edit-date-time-modal .ant-modal-title{
+    font-weight: 700;
+    font-size: 24px ;
+    text-align: center ;
+    line-height: 35px ;
+    text-transform: uppercase;
+    padding: 20px 85px 0 85px;
+}
+
+.edit-date-time-modal .ant-modal-header{
+    border: none;
+}
+
+.edit-date-time-modal .ant-modal-body{
+    padding: 0 24px;
+}
+
+.edit-date-time-modal .ant-modal-body .sub-title{
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.edit-date-time-modal .ant-modal-footer {
+    text-align: center;
+    border: none;
+    padding: 0 16px 25px  16px;
+
+}
+
+.edit-date-time-modal .ant-btn-primary{
+    border-color: var(--primary-600) !important;
+    background:  var(--primary-600) !important;
+}
+
+.edit-date-time-modal .ant-btn-primary:active{
+    border-color: var(--primary-600);
+    background:  var(--primary-600);
+}
