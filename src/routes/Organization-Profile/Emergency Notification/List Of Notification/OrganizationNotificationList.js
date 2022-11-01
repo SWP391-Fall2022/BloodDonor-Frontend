@@ -146,9 +146,12 @@ export default function OrganizationNotificationList() {
                                     <QuestionCircleOutlined style={{ position: 'relative', left: '20px', top: '5px' }} />
                                 </Tooltip>
                             </div>
-                            <Link to="/organization/notification/create">
-                                <Button id={styles.btn3}>Tạo mới</Button>
-                            </Link>
+                            <div>
+                                <Button id={styles.btn3} style={{ margin: '0 10px' }} onClick={() => setSearchValue('')}>Hiện tất cả</Button>
+                                <Link to="/organization/notification/create">
+                                    <Button id={styles.btn3}>Tạo mới</Button>
+                                </Link>
+                            </div>
                         </div>
                         {!empty ?
                             <>

@@ -3,53 +3,77 @@ import styles from '../../organization.module.css'
 import stylesNoti from './createReview.module.css'
 import { OrBread } from '../../organization-breadcrumb'
 import { Link } from "react-router-dom"
+import { Button } from "antd"
+import packageInfo from "../../../../shared/ProvinceDistrict.json";
 
-export default function OrganizationReviewNotification() {
+export default function OrganizationReviewNotification({ setReview, notificationInfo }) {
     //Breadcrumb props
-    const breadName = <><Link to="/organization/notification/create"><ArrowLeftOutlined style={{ marginRight: '2%', color: 'black' }} /></Link>Xem trước</>
+    const breadName = <><Link onClick={() => setReview(false)}><ArrowLeftOutlined style={{ marginRight: '2%', color: 'black' }} /></Link>Xem trước</>
     const layer1 = <Link to="/organization/notification">Quản lí thông báo khẩn cấp</Link>
-    const layer2 = <Link to="/organization/notification/create">Tạo thông báo khẩn cấp</Link>
+    const layer2 = <Link onClick={() => setReview(false)}>Tạo thông báo khẩn cấp</Link>
+
+    //Get now date
+    const date = new Date(Date.now()).getDate()
+    const month = new Date(Date.now()).getMonth() + 1
+    const year = new Date(Date.now()).getFullYear()
+
+    //Get Bloodtype
+    const bloodTypes = notificationInfo.bloodTypes
+    const bloodTypeList = bloodTypes.map((item) =>
+        <li className='blood-type-item'>{item}</li>
+    );
+
+    console.log(notificationInfo)
+
+    //Get district and province name based on its id
+    const provinceList = packageInfo.provinces
+    let districtName = notificationInfo.district
+    let provinceName = notificationInfo.province
+    if (provinceName !== "Hồ Chí Minh") {
+        provinceName = provinceList[notificationInfo.province + 1].name
+    }
+    if (districtName !== "Bình Chánh") {
+        for (let i = 0; i < provinceList.length; i++) {
+            for (let j = 0; j < provinceList[i].district.length; j++) {
+                if (provinceList[i].district[j].id === districtName) {
+                    districtName = provinceList[i].district[j].name
+                }
+            }
+        }
+    }
+
     return (
         <>
             <div className={styles.breadcrumb}><OrBread layer1={layer1} layer2={layer2} layer3="Xem trước" name={breadName} /></div>
             <div className={styles.mainContainer}>
-                <div className={stylesNoti.formContainer}>
+                <div className={stylesNoti.previewContainer}>
                     <div className='campaignDetail-left-title'>
-                        <h1><strong>THÔNG BÁO NÀY LÀ TỰA ĐỀ</strong></h1>
-                        <div>Ngày đăng: 06-09-2022 |  Trung Tâm Hiến Máu Nhân Đạo Thành Phố Hồ Chí Minh  </div>
+                        <h1><strong>{notificationInfo.name}</strong></h1>
+                        <div>Ngày đăng: {date < 10 ? "0" + date : date}/{month < 10 ? "0" + month : month}/{year} | {JSON.parse(sessionStorage.getItem("name"))}  </div>
                     </div>
 
                     <div className='campaign-detail-left-img'>
-                        <img src="https://static.giotmauvang.org.vn/ihpstatic/LOGO/CTD.png" alt="" />
+                        <img src={notificationInfo.images} alt="" />
                     </div>
 
                     <div className='campaign-content'>
-                        <p className='sub-title'>Trung tâm hiến máu nhân đạo xin thông báo:</p>
-                        <p>
-                            Quí tình nguyện viên tham gia hiến máu vui lòng đăng kí vào trang thông tin này
-                            để thuận lợi hơn khi làm thủ thục chuẩn bị hiến máu.</p>
+                        <p><strong>{JSON.parse(sessionStorage.getItem("name"))} xin thông báo:</strong></p>
+                        <div dangerouslySetInnerHTML={{ __html: notificationInfo.description }} />
 
-                        <p className='sub-title'>Thời gian:</p>
-                        <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
-                            Buổi chiều bắt đầu lúc 13h30 đến 17h00
-                        </p>
+                        <p><strong>Địa chỉ</strong></p>
+                        <p>{notificationInfo.addressDetails}, {districtName}, {provinceName}</p>
 
-                        <p className='sub-title'>Địa chỉ</p>
-                        <p>36 đường 1B, phường Bình trị đông B, quận Bình Tân</p>
-
-                        <p className='sub-title'>Nhóm máu cần</p>
+                        <p><strong>Nhóm máu cần</strong></p>
                         <div className='blood-type'>
-                            <ul >
-                                <li className='blood-type-item'>{"Nhóm máu A".slice(8, 10)}</li>
-                                <li className='blood-type-item'>{"Nhóm máu B".slice(8, 10)}</li>
-                                <li className='blood-type-item'>{"Nhóm máu O".slice(8, 10)}</li>
-                            </ul>
+                            <ul>{bloodTypeList}</ul>
                         </div>
 
-                        <p className='sub-title'>Xin lưu ý</p>
+                        <p><strong>Xin lưu ý</strong></p>
                         <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
                         <p>Xin trân trọng thông báo!!!</p>
-                        {/* <RegisterCampaign campaign={campaign} registered={registered}></RegisterCampaign> */}
+                        <Button onClick={() => setReview(false)} id={styles.btn3} style={{ margin: '1rem 2%' }} type="primary" size="large">
+                            Quay lại
+                        </Button>
                     </div>
                 </div>
             </div>
