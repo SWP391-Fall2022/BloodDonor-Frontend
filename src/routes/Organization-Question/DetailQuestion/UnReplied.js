@@ -1,20 +1,28 @@
-import React from "react";
+import  { React,  useState } from "react";
 import "antd/dist/antd.min.css";
 import "./UnReplied.css";
-import moment from 'moment';
-
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { Form, Input, DatePicker, Breadcrumb, Checkbox, Button, Modal } from "antd";
+import { Form, Input,Button, Modal } from "antd";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { OrBread } from "../../Organization-Profile/organization-breadcrumb";
 
 const { TextArea } = Input;
-const { RangePicker } = DatePicker;
+
 
 
 export default function DetailQuestion() {
     const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [answer, setAnswer]=useState("");
+
+
+    const location = useLocation();
+//   console.log("location answer:", location)
+
+  //nhận state từ navigation
+  const question = location.state.question;
+  const id = location.state.id;
 
 
     const onFinish = async (values) => {
@@ -24,50 +32,48 @@ export default function DetailQuestion() {
         const requestData = {
             "answer": formData.answer
         }
+        console.log("requestData",requestData)
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
 
         let json = {
-            method: 'POST',
+            method: 'PUT',
             body: JSON.stringify(requestData),
             headers: new Headers({
                 'Content-Type': 'application/json; charset=UTF-8',
                 'Authorization': "Bearer " + token,
             })
         }
-        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/organization/answer-question/{id}`, json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/answer/${id}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log("response", response)
         if (response.success) {
-
-            //   navigate("/organization/manageCampaign")
-            //   setMessage("Tạo chiến dịch thành công")
+console.log("Bạn đã trả lời câu hỏi thành công")
+navigate("/organization/manageQuestion")
         }
-        // setTimeout(() => {
-        //   setMessage('');
-        // }, 3000);
-
-        // modal
-        // const showConfirm = () => {
-        //     Modal.confirm({
-        //       title: 'Bạn có chắc muốn đăng câu trả lời này một cách công khai?',
-        //       icon: <ExclamationCircleOutlined />,
-        //       okText: 'Đăng',
-        //       cancelText: 'Xem Lại',
-        //       onOk() {
-        //         console.log('Đăng');
-        //       },
-        //       onCancel() {
-        //         console.log('Hủy');
-        //       },
-        //     });
-        //   };
-
+       
 
     };
+        // modal
+    const [open, setOpen] = useState(false);
+
+        const showConfirm = () => {
+            Modal.confirm({
+              title: 'Bạn có chắc muốn đăng câu trả lời này một cách công khai?',
+              icon: <ExclamationCircleOutlined />,
+              okText: 'Đăng',
+              cancelText: 'Xem Lại',
+              onOk() {
+                onFinish();
+                setOpen(false)
+              }
+              
+            });
+          };
+
     const breadName = <>
-        <Link to="/organization/notification">
+        <Link to="/organization/manageQuestion">
             <ArrowLeftOutlined style={{ marginRight: '2%', color: 'black' }} />
         </Link>Chi tiết câu hỏi
     </>
@@ -83,20 +89,19 @@ export default function DetailQuestion() {
 
                 <div className="detail-question-body">
                     <h2>Trả lời câu hỏi</h2>
-                    <p className="detail-question-title">Người bị cao huyết áp có hiến máu được không?</p>
-                    <p className="detail-question-content">Chào anh/chị, tôi là nam, năm nay 23 tuổi. Do lịch sử bệnh có cao huyết áp nhưng nhóm máu tôi là nhóm máu hiếm Rh-. Vậy tôi có được hiến máu không?</p>
+                    {/* <p className="detail-question-title">Người bị cao huyết áp có hiến máu được không?</p> */}
+                    <p className="detail-question-content">{question}</p>
 
                     <Form
                         id="answer-question-form"
                         form={form}
-                        onFinish={onFinish} >
+                        // onFinish={onFinish}
+                         >
                         <Form.Item
                             label="Trả lời"
                             name="answer"
-
-
-                            rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }]}>
-                            <TextArea showCount maxLength={100}></TextArea>
+                            rules={[{ required: true, message: 'Vui lòng nhập câu trả lời cho câu hỏi' }]}>
+                            <TextArea showCount maxLength={100} onChange={(e)=>(setAnswer(e.target.value))}></TextArea>
                         </Form.Item>
 
                         <Form.Item
@@ -107,14 +112,22 @@ export default function DetailQuestion() {
                             <Button id="refuseButton" type="primary" htmlType="button">
                                 Từ chối trả lời
                             </Button>
-                            <Button id="publicSend" type="primary" htmlType="button" >
+                            <Button 
+                            id="publicSend" 
+                            type="primary" 
+                            htmlType="submit" 
+                            onClick={showConfirm}
+                            disabled={answer ===""? true:false}
+                            >
                                 Đăng công khai
                             </Button>
-                            <Button id="privateSend" type="primary" htmlType="button">
-                                Gửi riêng tư
-                            </Button>
+                        
+                            <Button 
+                            id="cancelButton" 
+                            type="primary" 
+                            htmlType="button" 
 
-                            <Button id="cancelButton" type="primary" htmlType="button" onClick={() => {
+                            onClick={() => {
                                 form.resetFields();
                             }}>
                                 Hủy

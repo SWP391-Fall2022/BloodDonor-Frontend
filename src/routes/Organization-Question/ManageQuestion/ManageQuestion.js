@@ -1,90 +1,84 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "antd/dist/antd.min.css";
 import { useNavigate } from "react-router-dom";
 
 import "./ManageQuestion.css";
 
-import { Input, Table, Button, Tabs } from 'antd';
+import {  Table, Tabs } from 'antd';
 
-const { Search } = Input;
+function checkQuestionStatus(answer, status) {
 
-const onChange = (key) => {
-  console.log(key);
-};
+  if (status === false)
+    return "Đã xóa"
+  else if (answer === "" || answer === null)
+    return "Chưa trả lời"
+  else
+    return "Đã trả lời"
 
-const data = [
- 
 
-  {
-    key: '1',
-    id: '1',
-    donorName: 'Nguyễn Văn A',
-
-    camName: 'Chiến dịch 105',
-    detail: <a href="/organization/manageQuestion/detailQuestion">Chi tiết</a>,
-    status: 'Chưa trả lời'
-  },
-  {
-    key: '2',
-    id: '2',
-    donorName: 'Nguyễn Văn B',
-
-    camName: 'Chiến dịch 104',
-    detail: 'link',
-    status: 'Đã trả lời'
-  },
-  {
-    key: '3',
-    id: '3',
-    donorName: 'Trần Thị M',
-
-    camName: 'Chiến dịch 106',
-    detail: 'link',
-    status: 'Chưa trả lời'
-  },
-  {
-    key: '4',
-    id: '4',
-    donorName: 'Lê Thị T',
-
-    camName: 'Chiến dịch 101',
-    detail: 'link',
-    status: 'Chưa trả lời'
-  },
-  {
-    key: '5',
-    id: '5',
-    donorName: 'Bùi Văn N',
-    camName: 'Chiến dịch 109',
-    detail: 'link',
-    status: 'Đã trả lời'
-  },
-  {
-    key: '6',
-    id: '6',
-    donorName: 'Nguyễn Văn A',
-
-    camName: 'Chiến dịch 101',
-    detail: 'link',
-    status: 'Từ chối'
-  },
-];
-
-// filter with status
-
-const waiting = data.filter(
-  (camp) => { return camp.status.includes('Chưa trả lời') }
-)
-
-const replied = data.filter(
-  (camp) => { return camp.status.includes('Đã trả lời') }
-)
-
-const refuse = data.filter(
-  (camp) => { return camp.status.includes('Từ chối') }
-)
+}
 
 export default function ManageQuestion() {
+
+  const [tableRow, setTableRow] = useState([]);
+
+  const navigate = useNavigate();
+  const [questions, setQuestions] = useState([{}])
+
+
+  // fetch data function
+  function getQuestionsFromAPI() {
+    const asyncFn = async () => {
+      const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+      let json = {
+        method: 'GET',
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer " + token,
+        })
+      }
+      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-organization`, json)
+        .then((res) => res.json())
+        .catch((error) => { console.log(error) })
+
+      if (response.success) {
+        console.log("response", response)
+        setQuestions(response)
+        console.log("question after set", questions)
+        setTableRow(
+          response.body.map(row => ({
+            donorName: row.donorName,
+            camName: row.campaignName,
+            id: row.questionId,
+            status: checkQuestionStatus(row.answer, row.status),
+            answer: row.answer,
+            question: row.question
+          })))
+
+      }
+
+    }
+    asyncFn();
+  }
+
+
+  //call etch API function
+  useEffect(() => {
+    getQuestionsFromAPI();
+  }, []
+  )
+
+  const waiting = tableRow.filter(
+    (camp) => { return camp.status.includes('Chưa trả lời') }
+  )
+
+  const replied = tableRow.filter(
+    (camp) => { return camp.status.includes('Đã trả lời') }
+  )
+
+  const refuse = tableRow.filter(
+    (camp) => { return camp.status.includes('Từ chối') }
+  )
 
   const columns = [
     {
@@ -97,57 +91,50 @@ export default function ManageQuestion() {
       title: 'Tên người hỏi',
       dataIndex: 'donorName',
       key: 'donorName',
-  
+
     },
     {
       title: 'Tên chiến dịch',
       dataIndex: 'camName',
       key: 'camName',
-  
+
     },
-    
-    
+
+
     {
       title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
     },
-    {
-      title: 'Chi tiết',
-      dataIndex: 'detail',
-      key: 'detail',
-      render: (text, record, index) => < div className="btn-wrap" >
-        < Button 
-      
-        onClick={
-          (e) => {
-            setQuestionStatus(record.status) 
-            if(record.status==`Chưa trả lời`){
-              navigate("/organization/manageQuestion/unReplyQuestion")
-            }else{
-              navigate("/organization/manageQuestion/repliedQuestion")
-            }
-            console.log("status:", questionStatus)
-          }
-        } >
-          Chi tiết
-        </Button>
-      </div >
-    },
+    // {
+    //   title: 'Chi tiết',
+    //   dataIndex: 'detail',
+    //   key: 'detail',
+    //   render: (text, record, index) => < div className="btn-wrap" >
+    //     < Button
+
+    //       onClick={
+    //         (e) => {
+    //           setQuestionStatus(record.status)
+    //           if (record.status == `Chưa trả lời`) {
+    //             navigate("/organization/manageQuestion/unReplyQuestion")
+    //           } else {
+    //             navigate("/organization/manageQuestion/repliedQuestion")
+    //           }
+    //           console.log("status:", questionStatus)
+    //         }
+    //       } >
+    //       Chi tiết
+    //     </Button>
+    //   </div >
+    // },
   ];
-  
-
-  const navigate = useNavigate();
-
-  const [questionStatus, setQuestionStatus]=useState()
 
 
   return (
 
 
     <>
-
-
       <div id="manage-question-container">
         <div className="manage-question-header">
           <p >Quản lý hỏi đáp</p>
@@ -155,28 +142,43 @@ export default function ManageQuestion() {
 
         <div className="manage-question-container">
           <p className="manage-question-title">Danh sách HỎI ĐÁP</p>
+          {/* <div className="search-buttons">
+            <Input className="question-search-box"
+              suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+              id="question-search-box" 
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Điền tên chiến dịch bạn muốn tìm..." />
+
+
+            />
+
+          </div> */}
           <Tabs
             className="manage-question-content"
             defaultActiveKey="1"
-            onChange={onChange}
+
             items={[
               {
                 label: `Tất cả`,
                 key: '1',
                 children: <>
-                  <div className="search-buttons">
-                    <Search className="cam-search-box" />
 
-                  </div>
 
-                  <Table columns={columns} dataSource={data}
+                  <Table columns={columns} dataSource={tableRow}
                     pagination={{
 
                       pageSize: 5,
                     }}
 
                     onRow={record => ({
-                      onClick: (e) => console.log("e status: ", e)
+                      onClick: (e) => {
+                        if (record.status == `Chưa trả lời`) {
+                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+                        } else {
+                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+                        }
+                      }
+
                     })}
 
 
@@ -188,10 +190,7 @@ export default function ManageQuestion() {
                 label: `Chưa trả lời`,
                 key: '2',
                 children: <>
-                  <div className="search-buttons">
-                    <Search className="cam-search-box" />
 
-                  </div>
 
                   <Table columns={columns} dataSource={waiting}
                     pagination={{
@@ -199,9 +198,15 @@ export default function ManageQuestion() {
                       pageSize: 5,
                     }}
 
-
                     onRow={record => ({
-                      onClick: (e) => (questionStatus ==`Chưa trả lời` ? navigate("/organization/manageQuestion/detailQuestion"):navigate("/organization/manageQuestion"))
+                      onClick: (e) => {
+                        if (record.status == `Chưa trả lời`) {
+                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+                        } else {
+                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+                        }
+                      }
+
                     })}
 
                   />
@@ -212,10 +217,7 @@ export default function ManageQuestion() {
                 label: `Đã trả lời`,
                 key: '3',
                 children: <>
-                  <div className="search-buttons">
-                    <Search className="cam-search-box" />
 
-                  </div>
 
                   <Table columns={columns} dataSource={replied}
                     pagination={{
@@ -225,7 +227,14 @@ export default function ManageQuestion() {
 
 
                     onRow={record => ({
-                      onClick: (e) => navigate("/organization/manageQuestion/detailQuestion")
+                      onClick: (e) => {
+                        if (record.status == `Chưa trả lời`) {
+                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+                        } else {
+                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+                        }
+                      }
+
                     })}
 
                   />
@@ -236,10 +245,6 @@ export default function ManageQuestion() {
                 label: `Từ chối`,
                 key: '4',
                 children: <>
-                  <div className="search-buttons">
-                    <Search className="cam-search-box" />
-
-                  </div>
 
                   <Table columns={columns} dataSource={refuse}
                     pagination={{
@@ -249,7 +254,14 @@ export default function ManageQuestion() {
 
 
                     onRow={record => ({
-                      onClick: (e) => navigate("/organization/manageQuestion/detailQuestion")
+                      onClick: (e) => {
+                        if (record.status == `Chưa trả lời`) {
+                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+                        } else {
+                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+                        }
+                      }
+
                     })}
 
                   />
