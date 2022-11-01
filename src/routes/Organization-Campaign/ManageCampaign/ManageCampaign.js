@@ -14,11 +14,13 @@ function checkCampStatus(camp) {
   const today = new Date();
   var start = new Date(camp.startDate);
   var end = new Date(camp.endDate);
+  if( camp.status === false ) return "Đã xóa"
 
   if ((start <= today && today <= end) || start > today)
     return "Đang diễn ra"
-  else /*if(endDate < today)*/
+  else // if(endDate < today)
     return "Kết thúc"
+  
 }
 
 
@@ -98,9 +100,7 @@ export default function ManageCampaign() {
         // navigate("/organization/manageCampaign")
        
       }
-      setTimeout(() => {
-        setMessage('');
-      }, 3000);
+    
     }
     asyncFn();
   }
@@ -119,6 +119,10 @@ export default function ManageCampaign() {
 
   const endedCamp = tableRow.filter(
     (camp) => { return camp.status.includes('Kết thúc') }
+  )
+
+  const canceledCamp = tableRow.filter(
+    (camp) => { return camp.status.includes('Đã xóa') }
   )
 
   // SEARCH fnction
@@ -164,16 +168,19 @@ export default function ManageCampaign() {
     );
   };
   const [query, setQuery] = useState("");
+
   const filterState = (data, keys) => {
     return data.filter((item) => item.state.includes(keys));
   };
+
   return (
 
     <>
-      <div id="manage-campaign-container">
-        <div className="manage-campaign-header">
+      <div className="manage-campaign-header">
           <p >Quản lý chiến dịch</p>
         </div>
+      <div id="manage-campaign-container">
+      
 
         <div className="manage-campaign-container">
           <p className="manage-campaign-title"> Danh sách các chiến dịch của tổ chức hiến máu</p>
@@ -204,11 +211,13 @@ export default function ManageCampaign() {
                     pagination={{
                       pageSize: 5,
                     }}
+                    scroll={{x: "100wh"}}
+
 
                     onRow={record => ({
                       onClick: (e) => {
 
-                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id } })
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status } })
                       }
 
                     })}
@@ -227,6 +236,7 @@ export default function ManageCampaign() {
                     pagination={{
                       pageSize: 5,
                     }}
+                    scroll={{x: "100wh"}}
 
                     onRow={record => ({
                       onClick: (e) => {
@@ -249,6 +259,31 @@ export default function ManageCampaign() {
                     pagination={{
                       pageSize: 5,
                     }}
+                    scroll={{x: "100wh"}}
+
+
+                    onRow={record => ({
+                      onClick: (e) => {
+
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id } })
+                      }
+
+                    })}
+
+                  />
+
+                </>,
+              }, {
+                label: `Đã xóa`,
+                key: '4',
+                children: <>
+                 
+
+                  <Table columns={columns} dataSource={search(canceledCamp)}
+                    pagination={{
+                      pageSize: 5,
+                    }}
+                    scroll={{x: "100wh"}}
 
                     onRow={record => ({
                       onClick: (e) => {

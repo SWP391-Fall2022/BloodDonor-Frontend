@@ -35,6 +35,7 @@ function DetailCampaign() {
   //nhận state từ navigation
   const campId = location.state.id;
   const campList = location.state.cam.body;
+  const campStatus = location.state.status;
 
   // tìm ra campaign được chọn
   const selectedCampaign = campList.find(obj => {
@@ -239,11 +240,11 @@ function DetailCampaign() {
             <ContentPasteIcon className="action-table-icon" ></ContentPasteIcon>{registerNum}
           </div>
 
-          <div className="action-table-item"  onClick={showConfirm}>
+          <div className="action-table-item"  onClick={showConfirm}   style={campStatus==="Đã xóa"?{display:"none"}:null}  >
             <DeleteIcon className="action-table-icon" ></DeleteIcon>Xóa
           </div>
 
-          <div className="action-table-item" >
+          <div className="action-table-item"  style={campStatus==="Đã xóa"?{display:"none"}:null}  >
             <BorderColorIcon className="action-table-icon" ></BorderColorIcon>Sửa
           </div>
         </div>

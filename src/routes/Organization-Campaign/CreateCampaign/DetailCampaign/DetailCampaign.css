@@ -119,3 +119,8 @@
 .action-table-icon{
     color: var(--primary-500);
 }
+
+
+.action-table-icon-non{
+    color: var(--primary-500);
+}
