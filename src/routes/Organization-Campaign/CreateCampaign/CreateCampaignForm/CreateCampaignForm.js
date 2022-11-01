@@ -86,6 +86,8 @@ function CreateCampaignForm() {
   };
 
   // confirm modal
+  const [open, setOpen] = useState(false);
+
   const showConfirm = () => {
     Modal.confirm({
       title: 'Bạn có muốn kiểm tra lại thông tin trước khi đăng chiến dịch không?',
@@ -93,6 +95,10 @@ function CreateCampaignForm() {
       okText: 'Đăng',
       cancelText: 'Xem Lại',
       className: 'create-campaign-confirm',
+      onOk() {
+        onFinish();
+        setOpen(false)
+      }
 
     });
   };
@@ -112,7 +118,7 @@ function CreateCampaignForm() {
       "districtId": districtId,
       "addressDetails": formData.addressDetails,
       "sendMail": formData.sendMail,
-      "onSiteDates": onSiteDates[0] === "2022-11-20" ? null : String(onSiteDates).split(","),
+      "onSiteDates": onSiteDates[0] === "1970-01-01" ? null : String(onSiteDates).split(","),
       "weekRepetition": weekRepetition,
       "monthRepetition": monthRepetition,
       "daysOfWeek": formData.daysOfWeek,
@@ -216,7 +222,7 @@ function CreateCampaignForm() {
   // };
 
   //setup onSiteDates
-  const [onSiteDates, setOnSiteDates] = useState(["2022-11-20"])
+  const [onSiteDates, setOnSiteDates] = useState(["1970-01-01"])
 
   // setup for repetition by month 
   const [monthRepetition, setMonthRepetition] = useState(false);
@@ -238,17 +244,17 @@ function CreateCampaignForm() {
   return (
     <>
 
+      <div className="create-campaign-header">
+        <Breadcrumb className="manage-campaign-breadcrumb">
+          <Breadcrumb.Item>Quản lý chiến dịch</Breadcrumb.Item>
+          <Breadcrumb.Item>Tạo chiến dịch</Breadcrumb.Item>
+        </Breadcrumb>
+        <Link to="/organization/manageCampaign"><ArrowLeftOutlined style={{ marginRight: "10px" }} />Tạo chiến dịch</Link>
+      </div>
 
       {/* {!preview ? ( */}
       <div id="create-campaign-container">
 
-        <div className="create-campaign-header">
-          <Breadcrumb className="manage-campaign-breadcrumb">
-            <Breadcrumb.Item>Quản lý chiến dịch</Breadcrumb.Item>
-            <Breadcrumb.Item>Tạo chiến dịch</Breadcrumb.Item>
-          </Breadcrumb>
-          <Link to="/organization/manageCampaign"><ArrowLeftOutlined style={{ marginRight: "10px" }} />Tạo chiến dịch</Link>
-        </div>
 
         <div className="create-campaign-form">
           <p style={{ fontSize: "25px", fontWeight: "700", textAlign: "center" }}>TẠO CHIẾN DỊCH</p>
@@ -258,15 +264,13 @@ function CreateCampaignForm() {
               'bloods': ["A"],
               'description': "",
               'name': "",
-              // 'province': "1",
-              // 'campDate': [""],
               'addressDetails': "",
               'images': []
             }}
 
 
             form={form}
-            onFinish={onFinish}
+            // onFinish={onFinish}
 
             id="create-campaign-form"
             name="basic"
@@ -341,9 +345,10 @@ function CreateCampaignForm() {
               <DatePickerReact
                 disabled={isRepetition !== 1}
                 onChange={(values) => {
-                  setOnSiteDates("")
+                  // setOnSiteDates("")
                   setOnSiteDates(values)
                 }}
+                id="onSiteDates"
 
                 multiple
                 format="YYYY-MM-DD"
@@ -363,10 +368,9 @@ function CreateCampaignForm() {
 
               <DatePickerReact
                 value={daysOfMonth}
+                id="daysOfMonth"
                 onChange={dateObject => {
-                  // dateObject.map(
-                  //   (object)=> (setDaysOfMonth(object.day))
-                  // )
+                 
                   setDaysOfMonth(dateObject)
                   dateObject.map(
                     (e) => (
@@ -413,11 +417,11 @@ function CreateCampaignForm() {
             <div className="Mess" style={{ textAlign: "center", color: "red", marginBottom: "20px" }}>{message}</div>
 
             <Form.Item className="create-campaign-form-buttons">
-              
+
               <Button
                 disabled={(campaigName === "" || dates.length !== 2 || address === "") ? true : false}
                 id="finishButton" type="primary" htmlType="submit" size="large"
-              // onClick={showConfirm}
+                onClick={showConfirm}
               >
                 Hoàn thành
               </Button>

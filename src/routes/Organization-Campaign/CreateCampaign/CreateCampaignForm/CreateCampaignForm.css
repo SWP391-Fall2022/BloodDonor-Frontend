@@ -2,14 +2,14 @@
 
 #create-campaign-container{
     background: white;
-    width: 100%;
+    /* width: 100%; */
     background-color: hsl(194, 100%, 97%) !important;
-
+padding: 5% 7%;
 }
 
 .create-campaign-form{
-    width: 70%;
-    margin: 50px auto;
+    /* width: 70%;
+    margin: 50px auto; */
     box-shadow: var(--shadow-dp-02);
     background-color: white;
     padding: 30px;
@@ -81,3 +81,39 @@
 .create-campaign-form-item-days-in-month .rmdp-week-day{
     display: none !important;
 }
+
+#create-campaign-container .ant-btn-primary[disabled]{
+    opacity: 0.7;
+}
+
+#onSiteDates[disabled]{
+    opacity: 0.7;
+}
+
+#onSiteDates, #daysOfMonth{
+    height: 32px;
+    padding: 4px 11px;
+    border-radius: 2px;
+    background: white;
+    width: 105%;
+}
+
+@media (max-width:800px){  
+    #create-campaign-container .ant-radio-group{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #basic_daysOfWeek, #basic_bloods{
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+    
+} 
+
+@media (max-width: 575px){
+    #create-campaign-container .ant-form-item .ant-form-item-label > label {
+   margin-bottom: 20px;
+}
+}
+
