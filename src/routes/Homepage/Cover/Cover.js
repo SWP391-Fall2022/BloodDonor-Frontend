@@ -2,7 +2,7 @@ import { Button, DatePicker, Space } from 'antd';
 import moment from "moment";
 import React from 'react'
 import "./cover.css"
-import img_1 from "../../../assets/homepage-background-1.png"
+
 const Cover = () => {
     const { RangePicker } = DatePicker;
     const dateFormat = "DD/MM/YYYY";

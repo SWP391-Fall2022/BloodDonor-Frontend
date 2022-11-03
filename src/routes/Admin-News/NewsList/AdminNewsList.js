@@ -1,153 +1,34 @@
 import { Button, Divider, Input, Radio, Table, Tabs } from "antd";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./donorlist.css";
+import "./adminnewslist.css";
 const columns = [
   {
     title: "STT",
     dataIndex: "stt",
   },
   {
-    title: "Họ và Tên",
+    title: "Tên bài viết",
     dataIndex: "fullName",
     render: (text) => <a>{text}</a>,
   },
   {
-    title: "CMND",
+    title: "Tác giả",
     dataIndex: "cmnd",
   },
   {
-    title: "Mã xác nhận",
+    title: "Ngày đăng",
     dataIndex: "code",
-  },
-  {
-    title: "Thông tin sức khỏe",
-    dataIndex: "inf",
-    render: (_, user) => (
-      <Link to={`/organization-campaign-health-inf`}>
-        <a >Bấm để xem </a>
-      </Link>
-    ),
   },
   {
     title: "Trạng thái",
     dataIndex: "state",
   },
 ];
-const data = [
-  {
-    stt: "1",
-    key: "1",
-    fullName: "Nguyễn Văn A",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "2",
-    key: "2",
-    fullName: "Phạm Minh Tiến",
-    cmnd: "567",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Tham gia",
-  },
-  {
-    stt: "3",
-    key: "3",
-    fullName: "Đào Duy Thanh",
-    cmnd: "789",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Hủy",
-  },
-  {
-    stt: "4",
-    key: "4",
-    fullName: "Lê Ngọc Bảo",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "5",
-    key: "5",
-    fullName: "Từ Minh Ngọc",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "6",
-    key: "6",
-    fullName: "Hải Văn Phong",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Tham gia",
-  },
-  {
-    stt: "7",
-    key: "7",
-    fullName: "Nguyễn Văn Huy",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Hủy",
-  },
-  {
-    stt: "8",
-    key: "8",
-    fullName: "Huỳnh Minh Đăng",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "9",
-    key: "9",
-    fullName: "Trần Đức Tài",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "10",
-    key: "10",
-    fullName: "Đoàn Nguyễn Đức Minh",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Tham gia",
-  },
-  {
-    stt: "11",
-    key: "11",
-    fullName: "Phạm Long",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Hủy",
-  },
-  {
-    stt: "12",
-    key: "12",
-    fullName: "John Brown",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-];
 
-// rowSelection object indicates the need for row selection
-
-const DonorList = () => {
+//Hàm dùng cho hỗ trợ việc search không phân biệt dấu `.~
+//*Không cần đổi thông tin gì ở đây
+const AdminNewsList = () => {
   function removeVietnameseTones(str) {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
@@ -163,11 +44,9 @@ const DonorList = () => {
     str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
     str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
     str = str.replace(/Đ/g, "D");
-    // Some system encode vietnamese combining accent as individual utf-8 characters
     // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
     str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
     str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
-    // Remove extra spaces
     // Bỏ các khoảng trắng liền nhau
     str = str.replace(/ + /g, " ");
     str = str.trim();
@@ -179,7 +58,21 @@ const DonorList = () => {
     );
     return str;
   }
+  // Biến keys chứa các cột muốn search ra thông tin (vd: cột Họ và tên, cmnd..)
+  //*Bỏ tên cột cần search dô
   const keys = ["fullName", "cmnd", "code"];
+
+  //Hàm Lọc lấy những thông tin trùng khớp với keys
+  //*Không cần đổi thông tin gì ở đây*
+  const filterState = (data, keys) => {
+    return data.filter((item) => item.state.includes(keys));
+  };
+
+  //Lấy thông tin từ input của search
+  //*Không cần đổi thông tin gì ở đây
+  const [query, setQuery] = useState("");
+
+  //Hàm search FINAL khi trộn 77 49 trò vào
   const search = (data) => {
     return data.filter((item) =>
       keys.some((key) =>
@@ -189,16 +82,14 @@ const DonorList = () => {
       )
     );
   };
-  const [query, setQuery] = useState("");
-  const filterState = (data, keys) => {
-    return data.filter((item) => item.state.includes(keys));
-  };
+
   return (
-    <section id="organization-donor-list">
-      <div className="donor-list-title">
+    <section id="admin-news-list">
+      <div className="admin-list-title">
         Danh sách TÌNH NGUYỆN viên HIẾN MÁU
       </div>
-      <div className="donor-list-search">
+      <div className="admin-list-search">
+      {/*Chỗ lấy input nè, search là ra, không cần button bấm search*/}
         <Input.Group compact>
           <Input
             placeholder="Hãy điền thông tin mà bạn muốn tìm kiếm"
@@ -206,10 +97,15 @@ const DonorList = () => {
           />
         </Input.Group>
       </div>
-      <div className="donor-list-table">
+      <div className="admin-list-table">
         <Tabs defaultActiveKey="1">
           <Tabs.TabPane tab="Tất cả" key="1">
-            <Table columns={columns} dataSource={search(data)} size="middle" scroll={{ x: "100wh" }}/>
+            <Table
+              columns={columns}
+              dataSource={search(data)}
+              size="middle"
+              scroll={{ x: "100wh" }}
+            />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Đăng ký" key="2">
             <Table
@@ -241,4 +137,9 @@ const DonorList = () => {
     </section>
   );
 };
-export default DonorList;
+export default AdminNewsList;
+
+
+const data = [
+  
+];

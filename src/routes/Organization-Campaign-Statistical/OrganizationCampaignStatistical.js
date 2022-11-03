@@ -1,7 +1,7 @@
 import {SideBarforOrganization} from "../../components/SideBar/SideBarforOrganization"
-import HomepageDetail from "./Homepage/HomepageDetail"
-import "./OrganizationHomepage.css"
-const OrganizationHomepage = () =>{
+import CampaignStatistical from "./CampaignStatistical/CampaignStatistical"
+import "./organizationcampaignstatistical.css"
+const OrganizationCampaignStatistical = () =>{
     // const user = JSON.parse(sessionStorage.getItem('user'))
     // const rolePath = JSON.parse(sessionStorage.getItem('userRole'))
     // if (user === null) {
@@ -12,9 +12,9 @@ const OrganizationHomepage = () =>{
         return (
             <div className="organization-homepage-col">
                     <div> <SideBarforOrganization/></div>
-                    <div><HomepageDetail/></div>
+                    <div><CampaignStatistical/></div>
             </div>
         )
     // }
 }
-export default OrganizationHomepage
+export default OrganizationCampaignStatistical

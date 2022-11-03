@@ -54,6 +54,8 @@ import OrganizationRepliedQuestion from './routes/Organization-Question/DetailQu
 
 import NoInternetConnection from './others/NoInternetConnection'
 import OrganizationGuide from './routes/Organization-Profile/Organization-Guide/organizationGuide';
+import OrganizationCampaignStatistical from './routes/Organization-Campaign-Statistical/OrganizationCampaignStatistical';
+import AdminNewsList from './routes/Admin-News/NewsList/AdminNewsList';
 
 export default function App() {
   return (
@@ -85,6 +87,8 @@ export default function App() {
           <Route exact strict path="/organization-homepage" element={<OrganizationHomepage />} />
           <Route exact strict path="/organization-campaign-donorlist" element={<OrganizationCampaignDonorList />} />
           <Route exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf />} />
+          <Route exact strict path="/statistical" element={<OrganizationCampaignStatistical />} />
+          <Route exact strict path="/test" element={<AdminNewsList />} />
 
           {/* Pages for logged in donor */}
           <Route path="/donor" element={<DonorProfile />} >
@@ -113,6 +117,7 @@ export default function App() {
               <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
               <Route path="detailCampaign/:id" element={<OrganizationDetailCampaign />} />
             </Route>
+
             {/* Manage Question */}
             <Route path="manageQuestion" element={<OrganizationQuestion />} >
               <Route index element={<OrganizationManageQuestion />} />
