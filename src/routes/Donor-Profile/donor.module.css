@@ -17,6 +17,13 @@
     z-index: 2;
 }
 
+.donorFooterSmall {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 270px;
+}
+
 .breadcrumb {
     margin-top: 90px;
     position: fixed;
@@ -26,7 +33,7 @@
     z-index: 2;
 }
 
-.infoContainer, .leftContainer, .infoContainerHistory {
+.infoContainer, .leftContainer, .infoContainerHistory, .voucherContainer {
     margin: 0 20px;
     background-color: white;
     height: auto;
@@ -37,16 +44,18 @@
 
 .infoContainer {
     width: 510px;
+    margin-bottom: 2rem;
+    height: fit-content;
 }
 
 .infoContainerHistory {
     width: 700px;
+    height: fit-content;
 }
 
-.leftContainer {
-    width: 270px;
-    text-align: center;
-    margin-bottom: 20px;
+.voucherContainer {
+    width: 780px;
+    height: fit-content;
 }
 
 .leftContainerMain {
@@ -54,28 +63,22 @@
     text-align: center;
 }
 
-@media only screen and (max-width: 1280px) {
-    .infoContainerHistory {
-        width: 90%;
+@media only screen and (max-width: 1300px) {
+    .leftContainerMain, .infoContainer, .infoContainerHistory, .voucherContainer {
+        width: 70%;
     }
 }
 
 @media only screen and (max-width: 800px) {
-    .mainContainer {
-        margin-left: 0;
+    .mainContainer, .donorFooterSmall {
+        margin-left: 60px;
     }
 
-    .leftContainerMain {
-        transform: scale(0.8);
+    .donorFooterSmall {
+        left: 0;
     }
-
-    .infoContainer {
+    .leftContainerMain, .infoContainer, .infoContainerHistory, .voucherContainer {
         width: 90%;
-    }
-
-    .infoContainerHistory {
-        width: 100%;
-        transform: scale(0.8);
     }
 }
 
@@ -161,10 +164,6 @@
     height: 470px;
 }
 
-.voucherContainer {
-    text-align: center;
-}
-
 .img {
-    width: 70%;
+    width: 50%;
 }

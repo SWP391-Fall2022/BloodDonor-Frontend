@@ -33,7 +33,6 @@ import OrganizationNotificationContainer from './routes/Organization-Profile/Eme
 import OrganizationNotificationListContainer from './routes/Organization-Profile/Emergency Notification/List Of Notification/OrganizationNotificationListContainer';
 import OrganizationCreateNotification from './routes/Organization-Profile/Emergency Notification/Create Notification/CreateNotification';
 import OrganizationViewNotification from './routes/Organization-Profile/Emergency Notification/List Of Notification/OrganizationViewNotification';
-import OrganizationReviewNotification from './routes/Organization-Profile/Emergency Notification/Create Notification/ReviewNotification';
 import OrganizationProfile from './routes/Organization-Profile/organization-profile';
 import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
 import OrganizationHomepage from './routes/Organization-Homepage/OrganizationHomepage';

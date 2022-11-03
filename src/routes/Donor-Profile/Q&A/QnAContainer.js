@@ -5,7 +5,7 @@ import empty from '../../../assets/empty-list.png'
 const { Panel } = Collapse;
 
 export default function QnAContainer() {
-    const [emptyList, setEmptyList] = useState(true);
+    const [emptyList, setEmptyList] = useState(false);
     if (!emptyList) {
         return (
             <div className={styles.infoContainer}>
