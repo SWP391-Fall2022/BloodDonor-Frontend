@@ -52,6 +52,14 @@ import OrganizationManageQuestion from './routes/Organization-Question/ManageQue
 import OrganizationUnRepliedQuestion from './routes/Organization-Question/DetailQuestion/UnReplied';
 import OrganizationRepliedQuestion from './routes/Organization-Question/DetailQuestion/RepliedQuestion';
 
+//Admin routes
+import AdminProfile from './routes/Admin-Profile/adminContainer';
+import AdminManageCampaign from './routes/Admin-Profile/Admin-Campaign/AdminCampaign'
+import AdminManageDonor from './routes/Admin-Profile/Admin-Donor/AdminDonor';
+import AdminManageOrganization from './routes/Admin-Profile/Admin-Organization/AdminOrganization';
+import AdminManageNews from './routes/Admin-Profile/Admin-News/AdminNews';
+import AdminManageVouchers from './routes/Admin-Profile/Admin-Voucher/AdminVoucher'
+
 import NoInternetConnection from './others/NoInternetConnection'
 import OrganizationGuide from './routes/Organization-Profile/Organization-Guide/organizationGuide';
 import OrganizationCampaignStatistical from './routes/Organization-Campaign-Statistical/OrganizationCampaignStatistical';
@@ -131,6 +139,13 @@ export default function App() {
           </Route>
 
           {/* Pages for admin */}
+          <Route path="/admin" element={<AdminProfile />} >
+            <Route path="manage_campaign" element={<AdminManageCampaign />} />
+            <Route path="manage_donor" element={<AdminManageDonor />} />
+            <Route path="manage_organization" element={<AdminManageOrganization />} />
+            <Route path="manage_news" element={<AdminManageNews />} />
+            <Route path="manage_vouchers" element={<AdminManageVouchers />} />
+          </Route>
 
           {/* 404 error page */}
           <Route path="/404" element={<NoPage />} />
