@@ -1,6 +1,6 @@
 import AvatarContainer from '../../../components/Avatar, Point, Reward/Avatar'
 import Points from '../../../components/Avatar, Point, Reward/Points'
-import Award from '../../../components/Avatar, Point, Reward/Award'
+// import Award from '../../../components/Avatar, Point, Reward/Award'
 import VouchersContainer from './VouchersContainer'
 import VouchersContainer2 from './VouchersCointainer2'
 import styles from '../donor.module.css'

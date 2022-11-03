@@ -1,6 +1,5 @@
 import styles from '../donor.module.css'
-import { Button, Empty, Modal, Space, Table, Tag, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+import { Empty, Modal, Table, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 const columns = [

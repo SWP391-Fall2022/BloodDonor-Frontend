@@ -116,11 +116,15 @@ export default function OrganizationCreateNotification() {
             "images": image,
             "description": formData.description,
             "startDate": year + '-' + (month < 10 ? "0" + month : month) + '-' + (date < 10 ? "0" + date : date),
+            "endDate": null,
             "emergency": true,
             "bloodTypes": bloodTypeString,
             "districtId": districtId,
             "addressDetails": formData.addressDetails,
             "sendMail": sendMail,
+            "onSiteDates": [
+                year + '-' + (month < 10 ? "0" + month : month) + '-' + (date < 10 ? "0" + date : date)
+            ],
         }
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
         let json = {
