@@ -111,7 +111,6 @@ export default function App() {
             <Route path="notification" element={<OrganizationNotificationContainer />}>
               <Route index element={<OrganizationNotificationListContainer />} />
               <Route path="create" element={<OrganizationCreateNotification />} />
-              <Route path="create/preview" element={<OrganizationReviewNotification />} />
               <Route path="view" element={<OrganizationViewNotification />} />
               <Route path="*" element={<NoPageOrganization />} />
             </Route>
@@ -137,6 +136,7 @@ export default function App() {
           <Route path="/admin" element={<AdminProfile />} >
             <Route path="manage_campaign" element={<AdminManageCampaign />} />
             <Route path="manage_donor" element={<AdminManageDonor />} />
+            <Route path="manage_donor/:id" element={<AdminManageDonor />} />
             <Route path="manage_organization" element={<AdminManageOrganization />} />
             <Route path="manage_news" element={<AdminManageNews />} />
             <Route path="manage_vouchers" element={<AdminManageVouchers />} />
