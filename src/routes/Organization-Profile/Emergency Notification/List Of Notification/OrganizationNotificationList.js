@@ -139,7 +139,7 @@ export default function OrganizationNotificationList() {
                             <div>
                                 <Search enterButton style={{ width: '90%' }} onSearch={onSearch} />
                                 <Tooltip
-                                    title="Nhấn vào cột để xem thông tin chi tiết của thông báo"
+                                    title="Nhấn vào một dòng để xem thông tin chi tiết của thông báo"
                                     arrowPointAtCenter
                                     placement="right"
                                 >

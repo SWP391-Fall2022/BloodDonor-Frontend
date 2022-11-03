@@ -11,10 +11,10 @@ export default function Vouchers() {
                 <div className={styles.leftContainerMain}>
                     <AvatarContainer />
                     <Points />
-                    <Award />
+                    {/* <Award /> */}
                 </div>
-                <div><VouchersContainer /></div>
-                <div><VouchersContainer2 /></div>
+                <VouchersContainer />
+                <VouchersContainer2 />
             </div>
         </div>
     )
