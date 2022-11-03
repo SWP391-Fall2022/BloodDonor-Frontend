@@ -93,7 +93,7 @@ export default function App() {
           {/* Pages for logged in donor */}
           <Route path="/donor" element={<DonorProfile />} >
             <Route index element={<Info />} />
-            <Route path="changePassword" element={<ChangePassword />} />
+            <Route path="changePassword" element={< npm ChangePassword />} />
             <Route path="history" element={<History />} />
             <Route path="qna" element={<QnADonor />} />
             <Route path="vouchers" element={<Vouchers />} />
