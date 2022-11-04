@@ -61,6 +61,7 @@ import AdminManageVouchers from './routes/Admin-Profile/Admin-Voucher/AdminVouch
 
 import NoInternetConnection from './others/NoInternetConnection'
 import OrganizationGuide from './routes/Organization-Profile/Organization-Guide/organizationGuide';
+import AdminCreateVoucher from './routes/Admin-Profile/Admin-Voucher/AdminCreateVoucher';
 
 export default function App() {
   return (
@@ -135,10 +136,10 @@ export default function App() {
           <Route path="/admin" element={<AdminProfile />} >
             <Route path="manage_campaign" element={<AdminManageCampaign />} />
             <Route path="manage_donor" element={<AdminManageDonor />} />
-            <Route path="manage_donor/:id" element={<AdminManageDonor />} />
             <Route path="manage_organization" element={<AdminManageOrganization />} />
             <Route path="manage_news" element={<AdminManageNews />} />
             <Route path="manage_vouchers" element={<AdminManageVouchers />} />
+            <Route path="manage_vouchers/create" element={<AdminCreateVoucher />} />
           </Route>
 
           {/* 404 error page */}

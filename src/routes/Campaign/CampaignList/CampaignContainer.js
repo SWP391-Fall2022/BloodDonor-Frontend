@@ -139,7 +139,7 @@ const CampaignContainer = () => {
                     size="large"
                     pagination={{
                         onChange: (page) => {
-                            console.log(page);
+                            // console.log(page);
                         },
                         pageSize: 6,
                     }}

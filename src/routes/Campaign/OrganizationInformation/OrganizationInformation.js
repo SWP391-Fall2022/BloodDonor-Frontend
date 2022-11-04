@@ -25,7 +25,7 @@ export default function OrganizationInformation() {
         return campaign.organizationId == organization.id;
     }
     )
-    console.log(campaignList);
+    // console.log(campaignList);
 
     return (
         <>
@@ -115,7 +115,7 @@ export default function OrganizationInformation() {
                             size="large"
                             pagination={{
                                 onChange: (page) => {
-                                    console.log(page);
+                                    // console.log(page);
                                 },
                                 pageSize: 2,
                             }}

@@ -1,8 +1,7 @@
 import { AdBread } from '../AdminBreadcrumbs'
-import { Button, Menu, Table, Tooltip } from "antd"
+import { Button, Menu, Skeleton, Table, Tooltip } from "antd"
 import { Input } from 'antd';
 import { useState } from "react"
-import { useNavigate } from "react-router-dom";
 import styles from '../admin.module.css'
 import stylesDonor from './adminDonorList.module.css'
 import emptyListImg from '../../../assets/empty-list.png'
@@ -20,9 +19,10 @@ export default function AdminManageDonor() {
     //Data that will be displayed in table
     const [dataSource, setDataSource] = useState([])
     const [searchValue, setSearchValue] = useState('')
-    const navigate = useNavigate();
     const [detail, setDetail] = useState(false)
     const [user, setUser] = useState()
+
+    const [rendered, setRendered] = useState(false)
 
     //Second render: Show the list from databse (This won't run in first render)
     //The list will change based on list state and search keyword
@@ -31,12 +31,12 @@ export default function AdminManageDonor() {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors`)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-
+            // console.log(response)
             const list = [];
             if (response.status === 200) {
                 response.body.forEach(e => list.push({
                     key: e.userId, userId: e.userId, name: e.name, identityNum: e.identityNum,
-                    email: e.user.email, phone: e.user.phone, avatar: e.avatar, districtId: e.user.districtId, listState: "Hoạt động"
+                    email: e.user.email, phone: e.user.phone, avatar: e.avatar, districtId: e.user.districtId, listState: e.user.status ? "Hoạt động" : "Cấm"
                 }))
             }
 
@@ -58,11 +58,12 @@ export default function AdminManageDonor() {
             }
         }
         fetchDonorList();
-    }, [listState, searchValue])
+        setRendered(true)
+    }, [listState, searchValue, detail])
 
     function onDetail(record) {
         setUser(record)
-        console.log(record)
+        // console.log(record)
         setDetail(true)
     }
 
@@ -79,7 +80,7 @@ export default function AdminManageDonor() {
             title: 'Họ và tên',
             dataIndex: 'name',
             key: 'name',
-            align: 'center',
+            align: 'left',
             fixed: 'left'
         },
         {
@@ -126,44 +127,51 @@ export default function AdminManageDonor() {
         <>
             {!detail ?
                 <>
+
                     <div className={styles.breadcrumb}><AdBread name="Quản lý tình nguyện" /></div>
                     <div className={styles.mainContainer}>
                         <div className={stylesDonor.listTitleContainer}>
                             <div className={stylesDonor.listTitle}><strong>DANH SÁCH TÌNH NGUYỆN VIÊN</strong></div>
                             <div className={stylesDonor.listContainer}>
-                                <Menu mode="horizontal" items={menuItems} defaultSelectedKeys={['Tất cả']} onSelect={handleMenuSelect} />
-                                <div className={stylesDonor.searchBar}>
-                                    <div>
-                                        <Search enterButton style={{ width: '90%' }} onSearch={onSearch} />
-                                        <Tooltip
-                                            title="Nhấn vào cột để xem thông tin chi tiết của tình nguyện viên"
-                                            arrowPointAtCenter
-                                            placement="right"
-                                        >
-                                            <QuestionCircleOutlined style={{ position: 'relative', left: '20px', top: '5px' }} />
-                                        </Tooltip>
-                                    </div>
-                                    <Button id={styles.btn3} onClick={() => setSearchValue('')}>Hiện tất cả</Button>
-                                </div>
-                                {!empty ?
+                                {rendered ?
                                     <>
-                                        <Table
-                                            dataSource={dataSource}
-                                            columns={columns}
-                                            pagination={{ total: dataSource.length, pageSize: '5', hideOnSinglePage: true }}
-                                            className={stylesDonor.table}
-                                            onRow={(record, rowIndex) => ({
-                                                onClick: event => onDetail(record)
-                                            })}
-                                            scroll={{
-                                                x: 800,
-                                            }}
-                                        />
-                                    </> :
-                                    <>
-                                        <img className={styles.emptyImg} src={emptyListImg} alt="empty" />
-                                        <div style={{ paddingBottom: '1rem', width: '60%', marginLeft: 'auto', marginRight: 'auto' }}><strong>Không có thông tin của tình nguyện viên {listState === "Tất cả" ? "nào" : listState === "Hoạt động" ? "đang hoạt động" : "đã bị cấm"} được tìm thấy</strong></div>
+                                        <Menu mode="horizontal" items={menuItems} defaultSelectedKeys={['Tất cả']} onSelect={handleMenuSelect} />
+                                        <div className={stylesDonor.searchBar}>
+                                            <div>
+                                                <Search enterButton style={{ width: '90%' }} onSearch={onSearch} />
+                                                <Tooltip
+                                                    title="Nhấn vào một hàng để xem thông tin chi tiết của tình nguyện viên"
+                                                    arrowPointAtCenter
+                                                    placement="right"
+                                                >
+                                                    <QuestionCircleOutlined style={{ position: 'relative', left: '20px', top: '5px' }} />
+                                                </Tooltip>
+                                            </div>
+                                            <Button id={styles.btn3} onClick={() => setSearchValue('')}>Hiện tất cả</Button>
+                                        </div>
+                                        {!empty ?
+                                            <>
+                                                <Table
+                                                    dataSource={dataSource}
+                                                    columns={columns}
+                                                    pagination={{ total: dataSource.length, pageSize: '5', hideOnSinglePage: true }}
+                                                    className={stylesDonor.table}
+                                                    onRow={(record, rowIndex) => ({
+                                                        onClick: event => onDetail(record)
+                                                    })}
+                                                    scroll={{
+                                                        x: 800,
+                                                    }}
+                                                />
+                                            </> :
+                                            <>
+                                                <img className={styles.emptyImg} src={emptyListImg} alt="empty" />
+                                                <div style={{ paddingBottom: '1rem', width: '60%', marginLeft: 'auto', marginRight: 'auto' }}><strong>Không có thông tin của tình nguyện viên {listState === "Tất cả" ? "nào" : listState === "Hoạt động" ? "đang hoạt động" : "đã bị cấm"} được tìm thấy</strong></div>
+                                            </>
+                                        }
                                     </>
+                                    :
+                                    <Skeleton active />
                                 }
                             </div>
                         </div>

@@ -52,7 +52,7 @@ export default function BasicInfoContainer() {
 
         const requestData = {
             "name": formData.name,
-            "birthday": formData.birthday,
+            "birthday": formData.birthday.format("YYYY-MM-DD"),
             "sex": formData.sex,
             "identityNum": formData.identityNum,
             "avatar": JSON.parse(sessionStorage.getItem('avatar')),
@@ -64,6 +64,7 @@ export default function BasicInfoContainer() {
                 "addressDetails": formData.addressDetails
             }
         }
+        // console.log(requestData)
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
         let json = {
             method: 'PUT',
@@ -154,7 +155,7 @@ export default function BasicInfoContainer() {
                 <Form.Item className={styles.formLabel} label="Tiền sử bệnh lý" name="anamnesis" initialValue={user.anamnesis}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
-                <Form.Item className={styles.formLabel}>
+                <Form.Item className={styles.buttonLabel}>
                     <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
                         Thay đổi
                     </Button>

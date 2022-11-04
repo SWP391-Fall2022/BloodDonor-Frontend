@@ -27,8 +27,8 @@ export default function AuthGoogleRoutes() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
 
-            console.log(donorResponse)
-            console.log(organizationResponse)
+            // console.log(donorResponse)
+            // console.log(organizationResponse)
 
             //No JWT, kick back to home page
             if (donorResponse.status === 400 && organizationResponse.status === 400) {

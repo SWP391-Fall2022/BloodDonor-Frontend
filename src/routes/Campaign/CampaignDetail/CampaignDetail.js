@@ -44,7 +44,7 @@ export default function CampaignDetail() {
     }else if(!participated && registered){
         buttons = <RegisterButtons registered={registered} campaign={campaign} callback={callbackFunction}/>;
     }
-    console.log(buttons);
+    // console.log(buttons);
 
 
 

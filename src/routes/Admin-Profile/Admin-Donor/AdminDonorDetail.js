@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom'
 import { AdBread } from '../AdminBreadcrumbs'
 import styles from '../admin.module.css'
 import stylesDonor from './adminDonorList.module.css'
-import { Avatar, Button, Table } from 'antd'
+import { Avatar, Button, Modal, notification, Table } from 'antd'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
+import { useState } from 'react'
 
 export default function AdminDonorDetail({ setDetail, user }) {
     const breadName = <><Link onClick={() => setDetail(false)}><ArrowLeftOutlined style={{ marginRight: '2%', color: 'black' }} /></Link>Thông tin chi tiết</>
     const layer1 = <Link onClick={() => setDetail(false)}>Quản lý tình nguyện viên</Link>
+    const [open, setOpen] = useState(false)
+
     var randomColor = '#';
     for (var i = 0; i < 6; i++) {
         randomColor += Math.floor(Math.random() * 10);
@@ -39,6 +42,35 @@ export default function AdminDonorDetail({ setDetail, user }) {
             key: 'date',
         },
     ];
+
+    const lockAccount = async () => {
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/admin/lock/${user.userId}`, { method: "PUT" })
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
+        // console.log(response)
+        if (response.status === 200) {
+            notification.success({
+                message: "Đã khóa tài khoản",
+                placement: "top"
+            });
+        }
+        if (response.status === 400) {
+            if (response.body === "User ID not found") {
+                notification.success({
+                    message: "Tài khoản không tồn tại",
+                    placement: "top"
+                });
+            }
+            if (response.body === "Cannot lock user with role ADMIN") {
+                notification.success({
+                    message: "Không được khóa tài khoản của Admin",
+                    placement: "top"
+                });
+            }
+        }
+        setOpen(false)
+    }
+
     return (
         <>
             <div className={styles.breadcrumb}><AdBread layer1={layer1} layer2="Thông tin chi tiết" name={breadName} /></div>
@@ -57,11 +89,21 @@ export default function AdminDonorDetail({ setDetail, user }) {
                             className={stylesDonor.table}
                         />
                         <div style={{ textAlign: 'center' }}>
-                            <Button id={styles.btn3} style={{ margin: '1rem 0' }}>Cấm tài khoản</Button>
+                            <Button id={styles.btn3} style={{ margin: '1rem 0' }} onClick={() => setOpen(true)}>Cấm tài khoản</Button>
+                            <Modal
+                                closable={false}
+                                open={open}
+                                onCancel={() => setOpen(false)}
+                                onOk={lockAccount}
+                                cancelText="Hủy"
+                                okText="Xác nhận"
+                            >
+                                <p><strong>Khóa tài khoản này ?</strong></p>
+                            </Modal>
                         </div>
                     </div>
                     <div className={stylesDonor.avaContainer}>
-                        <Avatar className={stylesDonor.donorAva} size={200} src={user.avatar} style={{ backgroundColor: randomColor, fontSize: "60px" }} >{user.name.charAt(0)}</Avatar>
+                        <Avatar className={stylesDonor.donorAva} size={160} src={user.avatar} style={{ backgroundColor: randomColor, fontSize: "60px" }} >{user.name.charAt(0)}</Avatar>
                         <div>{user.name}</div>
                     </div>
                 </div>
