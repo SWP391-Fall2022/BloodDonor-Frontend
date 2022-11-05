@@ -221,11 +221,8 @@ export default function ManageQuestion() {
 
                     onRow={record => ({
                       onClick: (e) => {
-                        if (record.status == `Chưa trả lời`) {
-                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
-                        } else {
-                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
-                        }
+                        navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+
                       }
 
                     })}
@@ -250,11 +247,8 @@ export default function ManageQuestion() {
 
                     onRow={record => ({
                       onClick: (e) => {
-                        if (record.status == `Chưa trả lời`) {
-                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
-                        } else {
-                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
-                        }
+                        navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+
                       }
 
                     })}
@@ -278,11 +272,8 @@ export default function ManageQuestion() {
 
                     onRow={record => ({
                       onClick: (e) => {
-                        if (record.status == `Chưa trả lời`) {
-                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
-                        } else {
-                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
-                        }
+                        navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+
                       }
 
                     })}

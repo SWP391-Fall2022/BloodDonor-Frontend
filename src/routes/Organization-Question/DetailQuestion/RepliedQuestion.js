@@ -45,7 +45,7 @@ export default function DetailQuestion() {
                     <p className="replied-content">{question}</p>
 
                     <p style={{ fontWeight: "600", margin: "30px 0 15px 0 " }}>Câu trả lời:</p>
-                    <p className="replied-answer-content">{answer}</p>
+                    <p className="replied-answer-content">{answer ==="REFUSED" ? "Câu hỏi đã bị từ chối trả lời":answer}</p>
 
 
                 </div>
