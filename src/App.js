@@ -56,8 +56,11 @@ import OrganizationRepliedQuestion from './routes/Organization-Question/DetailQu
 //Admin routes
 import AdminProfile from './routes/Admin-Profile/adminContainer';
 import AdminManageCampaign from './routes/Admin-Profile/Admin-Campaign/AdminCampaign'
+import AdminDetailCampaign from './routes/Admin-Profile/Admin-Campaign/DetailCampaign/AdminDetailCampaign'
 import AdminManageDonor from './routes/Admin-Profile/Admin-Donor/AdminDonor';
 import AdminManageOrganization from './routes/Admin-Profile/Admin-Organization/AdminOrganization';
+import AdminApproveOrganization from './routes/Admin-Profile/Admin-Organization/Approve-Organization/ApproveOrganization';
+import AdminInfoOrganization from './routes/Admin-Profile/Admin-Organization/Info-Oranization/InfoOrganization';
 import AdminManageNews from './routes/Admin-Profile/Admin-News/AdminNews';
 import AdminManageVouchers from './routes/Admin-Profile/Admin-Voucher/AdminVoucher'
 
@@ -138,8 +141,11 @@ export default function App() {
           {/* Pages for admin */}
           <Route path="/admin" element={<AdminProfile />} >
             <Route path="manage_campaign" element={<AdminManageCampaign />} />
+            <Route path="manage_campaign/detail_campaign" element={<AdminDetailCampaign />} />
             <Route path="manage_donor" element={<AdminManageDonor />} />
             <Route path="manage_organization" element={<AdminManageOrganization />} />
+            <Route path="manage_organization/approveOrganization" element={<AdminApproveOrganization />} />
+            <Route path="manage_organization/infoOrganization" element={<AdminInfoOrganization />} />
             <Route path="manage_news" element={<AdminManageNews />} />
             <Route path="manage_vouchers" element={<AdminManageVouchers />} />
           </Route>
