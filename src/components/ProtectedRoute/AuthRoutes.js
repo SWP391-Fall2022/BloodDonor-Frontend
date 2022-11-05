@@ -1,6 +1,6 @@
 //A Gate keeper to check if Google Logged in User has registered the app before
 import { LoadingOutlined } from "@ant-design/icons";
-import { notification, Spin } from "antd";
+import { Spin } from "antd";
 import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
