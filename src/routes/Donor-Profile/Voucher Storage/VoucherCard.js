@@ -18,7 +18,7 @@ export function VoucherCard() {
 
 export function VoucherCard2() {
     return (
-        <Card headStyle={{ fontSize: '16px', fontWeight: '700', background: 'var(--blue-02)' }} style={{ marginBottom: '20px', boxShadow: 'var(--shadow-dp-01)', width: '360px' }}
+        <Card headStyle={{ fontSize: '16px', fontWeight: '700', background: 'var(--blue-02)' }} style={{ marginBottom: '20px', boxShadow: 'var(--shadow-dp-01)' }}
             title="Cửa hàng tiện lợi 7-Eleven"
             extra={<Link style={{ color: 'var(--blue-01)' }}>Đổi</Link>}>
             <div className={styles.innerTitle}>100 điểm</div>

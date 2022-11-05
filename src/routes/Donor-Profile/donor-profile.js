@@ -54,7 +54,7 @@ function DonorProfile() {
             }
         }
         fetchAPI();
-    }, []);
+    }, [navigate]);
 
     if (rolePath === null || rolePath !== "/donor") {
         return <Navigate to={`/`} />
@@ -62,9 +62,9 @@ function DonorProfile() {
         return (
             <>
                 <Navbar />
-                <div class={styles.donorSideBar}><SideBarforDonor /></div>
-                <div ><Outlet context={[user, setUser]}/></div>
-                <FooterSmall />
+                <div className={styles.donorSideBar}><SideBarforDonor /></div>
+                <div ><Outlet context={[user, setUser]} /></div>
+                <div className={styles.donorFooterSmall}><FooterSmall /></div>
             </>
         )
     } else {

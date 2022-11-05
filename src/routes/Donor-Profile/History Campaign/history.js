@@ -1,6 +1,6 @@
 import AvatarContainer from '../../../components/Avatar, Point, Reward/Avatar'
 import Points from '../../../components/Avatar, Point, Reward/Points'
-import Award from '../../../components/Avatar, Point, Reward/Award'
+// import Award from '../../../components/Avatar, Point, Reward/Award'
 import HistoryContainer from './historyContainer'
 import styles from '../donor.module.css'
 export default function History() {
@@ -9,7 +9,7 @@ export default function History() {
             <div className={styles.leftContainerMain}>
                 <AvatarContainer />
                 <Points />
-                <Award />
+                {/* <Award /> */}
             </div>
             <HistoryContainer />
         </div>

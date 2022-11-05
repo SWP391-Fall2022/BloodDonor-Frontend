@@ -11,7 +11,7 @@
 
 .container {
     position: absolute;
-    left: 60%;
+    left: 55%;
     top: 5%;
     background-color: white;
     width: 400px;
@@ -54,6 +54,11 @@
     color: white;
 }
 
+#buttonDiv {
+    position: relative;
+    left: 30%
+}
+
 .link {
     color: black;
     font-weight: 700;
@@ -68,19 +73,23 @@
     .container {
         width: 400px;
         left: 50%;
-        top: 4%;
+        top: 35%;
         transform: translateX(-50%);
     }
 }
 
 @media only screen and (max-width: 600px) {
-    .container {
-        width: 350px;
-        left: 50%;
-        top: 10%;
-        transform: translateX(-50%);
+    .mainBackground {
+        height: 1000px;
     }
-    
+
+    .container {
+        left: 50%;
+        top: 30%;
+        transform: translateX(-50%);
+        margin-bottom: 100px;
+    }
+
     .title {
         font-size: 20px;
     }

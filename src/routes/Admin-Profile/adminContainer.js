@@ -5,7 +5,7 @@ import styles from './admin.module.css'
 export default function AdminProfile() {
     return (
         <>
-            <div class={styles.donorSideBar}><SideBarforAdmin /></div>
+            <div class={styles.adminSideBar}><SideBarforAdmin /></div>
             <div ><Outlet /></div>
         </>
     )

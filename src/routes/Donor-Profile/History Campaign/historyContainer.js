@@ -1,8 +1,6 @@
 import styles from '../donor.module.css'
-import { Button, Modal, Space, Table, Tag } from 'antd';
-import { Link } from 'react-router-dom';
-
-const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+import { Empty, Modal, Table, Tooltip } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 
 const columns = [
     {
@@ -14,89 +12,60 @@ const columns = [
         title: 'Chiến dịch',
         dataIndex: 'campaign',
         key: 'campaign',
-    },
-    {
-        title: 'Thông tin sức khỏe',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (index) => (
-            <Button onClick={info}>
-                <Tag color='green' key={index}>
-                    Chi tiết
-                </Tag>
-            </Button>
-        ),
+        align: 'center',
     },
     {
         title: 'Trạng thái',
-        key: 'action',
-        render: () => (
-            <Space size="middle">
-                <Link>Đã đăng ký</Link>
-                <Link>Đã tham gia</Link>
-                <Link>Hủy tham gia</Link>
-            </Space>
-        ),
+        key: 'state',
+        dataIndex: 'state',
+        align: 'right',
     },
 ];
 const data = [
     {
+        key: '1',
         stt: '1',
         campaign: 'John Brown',
-        tags: 1,
+        state: "Đã hủy",
     },
     {
+        key: '2',
         stt: '2',
         campaign: 'Jim Green',
-        tags: 2,
+        state: "Đã tham gia",
     },
     {
+        key: '3',
         stt: '3',
         campaign: 'Joe Black',
-        tags: 3,
+        state: "Đã hủy",
     },
     {
+        key: '4',
         stt: '4',
         campaign: 'Joe Black',
-        tags: 4,
+        state: "Đã đăng ký",
     },
     {
+        key: '5',
         stt: '5',
         campaign: 'Joe Black',
-        tags: 5,
+        state: "Đã tham gia",
     },
     {
+        key: '6',
         stt: '6',
         campaign: 'Joe Black',
-        tags: 6,
-    },
-    {
-        stt: '7',
-        campaign: 'Joe Black',
-        tags: 7,
-    },
-    {
-        stt: '8',
-        campaign: 'Joe Black',
-        tags: 8,
-    },
-    {
-        stt: '9',
-        campaign: 'Joe Black',
-        tags: 9,
-    },
-    {
-        stt: '10',
-        campaign: 'Joe Black',
-        tags: 10,
+        state: "Đã hủy",
     },
 ];
 
-function info() {
+function info(record) {
     Modal.info({
         title: <h2><strong>THÔNG TIN SỨC KHỎE</strong></h2>,
         content: (
             <div>
+                <div><strong>Test: </strong>{record.state}</div>
                 <div><strong>Cân nặng: </strong>50kg</div>
                 <div><strong>Nhóm máu: </strong>AB</div>
                 <div><strong>Lượng máu: </strong>450cc</div>
@@ -112,8 +81,21 @@ function info() {
 export default function HistoryContainer() {
     return (
         <div className={styles.infoContainerHistory}>
-            <div className={styles.title}>LỊCH SỬ CHIẾN DỊCH</div>
-            <Table rowKey={data => data.stt} columns={columns} dataSource={data} pagination={{ defaultPageSize: 5 }} style={{ textAlign: 'center' }} />
+            <div className={styles.title}>LỊCH SỬ CHIẾN DỊCH
+                <Tooltip
+                    title="Nhấn vào một dòng để xem thông tin sức khỏe của bạn"
+                    arrowPointAtCenter
+                    placement="right"
+                >
+                    <QuestionCircleOutlined style={{ position: 'relative', left: '20px' }} />
+                </Tooltip>
+            </div>
+            <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Lịch sử rỗng" /> }}
+                onRow={(record, rowIndex) => ({
+                    onClick: event => { info(record) }
+                })}
+                columns={columns} dataSource={data} pagination={{ defaultPageSize: 5 }} style={{ textAlign: 'center' }}
+            />
         </div>
     )
 }
