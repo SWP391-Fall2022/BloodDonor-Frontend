@@ -1,0 +1,13 @@
+.donorSideBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    z-index: 2;
+}
+
+.breadcrumb {
+    margin-left: 270px;
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+}
