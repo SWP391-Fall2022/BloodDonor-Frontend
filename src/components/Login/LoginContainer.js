@@ -25,7 +25,7 @@ export default function LoginContainer() {
             { theme: "outline", size: "large" }  // customization attributes
         );
         window.google.accounts.id.prompt(); // also display the One Tap dialog
-    })
+    }, [])
 
     // ReCAPTCHA
     const onChangeRecaptcha = (value) => {
@@ -85,7 +85,8 @@ export default function LoginContainer() {
                 }
             }
             if (response.status === 200) {
-                sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
+                sessionStorage.setItem('JWT_Key', JSON.stringify(response.body.token))
+                sessionStorage.setItem('userRole', JSON.stringify(response.body.role))
                 navigate("/auth")
             }
         }
@@ -130,7 +131,8 @@ export default function LoginContainer() {
         if (response.status === 200) {
 
             // console.log(response)
-            sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
+            sessionStorage.setItem('JWT_Key', JSON.stringify(response.body.token))
+            sessionStorage.setItem('userRole', JSON.stringify(response.body.role))
             // sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
             navigate("/auth")
         }
