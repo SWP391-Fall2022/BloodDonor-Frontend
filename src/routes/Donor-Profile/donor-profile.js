@@ -9,7 +9,6 @@ function DonorProfile() {
 
     const [rendered, setRendered] = useState(false)
     const rolePath = JSON.parse(sessionStorage.getItem('userRole'))
-    console.log(rolePath)
     const [user, setUser] = useState(null)
     const navigate = useNavigate();
     const effectRan = useRef(false)

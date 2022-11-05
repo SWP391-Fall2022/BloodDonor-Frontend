@@ -15,7 +15,7 @@ export default function BasicInfoContainer() {
     // console.log(user)
     const [form] = Form.useForm();
     if (user.introduction !== null) {
-        const splitArr = user.introduction.split("-")
+        const splitArr = user.introduction.split("¥£$€")
         introduction1 = splitArr[0];
         introduction2 = splitArr[1];
     }
@@ -77,7 +77,7 @@ export default function BasicInfoContainer() {
             "districtId": districtId,
             "addressDetails": formData.addressDetails,
             "phone": formData.phone,
-            "introduction": formData.introduction1 + "-" + formData.introduction2,
+            "introduction": formData.introduction1 + "¥£$€" + formData.introduction2,
             "website": formData.website
         }
         // console.log(requestData)
