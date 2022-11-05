@@ -25,7 +25,7 @@ export default function DetailQuestion() {
   const id = location.state.id;
 
 
-    const onFinish = async (values) => {
+    const onFinish = async () => {
 
         const formData = form.getFieldsValue(true);
 
@@ -72,6 +72,31 @@ navigate("/organization/manageQuestion")
             });
           };
 
+        //   fetch API refuse answer question
+        const refuseQuestion = async () => {
+
+            const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+    
+            let json = {
+                method: 'PUT',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': "Bearer " + token,
+                })
+            }
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/refuse/${id}`, json)
+                .then((res) => res.json())
+                .catch((error) => { console.log(error) })
+            console.log("response", response)
+            if (response.success) {
+    console.log("Bạn đã từ chối trả lời câu hỏi!")
+    navigate("/organization/manageQuestion")
+            }
+           
+    
+        };
+
+
     const breadName = <>
         <Link to="/organization/manageQuestion">
             <ArrowLeftOutlined style={{ marginRight: '2%', color: 'black' }} />
@@ -109,7 +134,12 @@ navigate("/organization/manageQuestion")
                             className="detail-question-buttons"
                         >
 
-                            <Button id="refuseButton" type="primary" htmlType="button">
+                            <Button 
+                            id="refuseButton" 
+                            type="primary" 
+                            htmlType="button"
+                            onClick={refuseQuestion}
+                            >
                                 Từ chối trả lời
                             </Button>
                             <Button 

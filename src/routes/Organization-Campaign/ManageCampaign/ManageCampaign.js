@@ -112,19 +112,6 @@ export default function ManageCampaign() {
   }, []
   )
 
-  // filter data for tabs with status
-  const ongoingCamp = tableRow.filter(
-    (camp) => { return camp.status.includes('Đang diễn ra') }
-  )
-
-  const endedCamp = tableRow.filter(
-    (camp) => { return camp.status.includes('Kết thúc') }
-  )
-
-  const canceledCamp = tableRow.filter(
-    (camp) => { return camp.status.includes('Đã xóa') }
-  )
-
   // SEARCH fnction
   function removeVietnameseTones(str) {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -169,8 +156,8 @@ export default function ManageCampaign() {
   };
   const [query, setQuery] = useState("");
 
-  const filterState = (data, keys) => {
-    return data.filter((item) => item.state.includes(keys));
+  const filterStatus = (data, keys) => {
+    return data.filter((item) => item.status.includes(keys));
   };
 
   return (
@@ -190,7 +177,8 @@ export default function ManageCampaign() {
                      suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
                      id="cam-search-box" 
                      onChange={(e) => setQuery(e.target.value)}
-                     placeholder="Điền tên chiến dịch bạn muốn tìm..." />
+                     placeholder="Điền tên chiến dịch bạn muốn tìm..." 
+                     />
                     <div className="cre-del-buttons">
                       <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
                         Tạo mới
@@ -232,7 +220,8 @@ export default function ManageCampaign() {
                 children: <>
                  
 
-                  <Table columns={columns} dataSource={search(ongoingCamp)}
+                  <Table columns={columns}
+                   dataSource={filterStatus( search(tableRow), 'Đang diễn ra')}
                     pagination={{
                       pageSize: 5,
                     }}
@@ -255,7 +244,7 @@ export default function ManageCampaign() {
                 children: <>
                  
 
-                  <Table columns={columns} dataSource={search(endedCamp)}
+                  <Table columns={columns} dataSource={filterStatus( search(tableRow), 'Kết thúc')}
                     pagination={{
                       pageSize: 5,
                     }}
@@ -279,7 +268,7 @@ export default function ManageCampaign() {
                 children: <>
                  
 
-                  <Table columns={columns} dataSource={search(canceledCamp)}
+                  <Table columns={columns} dataSource={filterStatus( search(tableRow), 'Đã xóa')}
                     pagination={{
                       pageSize: 5,
                     }}

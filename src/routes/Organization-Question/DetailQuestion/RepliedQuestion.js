@@ -48,15 +48,6 @@ export default function DetailQuestion() {
                     <p className="replied-answer-content">{answer}</p>
 
 
-                    <div className="delete-button" style={{ textAlign: "center" }}>
-
-                        <Button id="deleteQuestion" type="primary" htmlType="button" style={{ backgroundColor: `var(--primary-500)`, border: "none", margin: "30px 0 20px 0" }}>
-                            Xóa
-                        </Button>
-                    </div>
-
-
-
                 </div>
             </div>
         </>
