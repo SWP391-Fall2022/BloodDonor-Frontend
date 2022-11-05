@@ -142,13 +142,13 @@ export default function BasicInfoContainer() {
                     </Form.Item>
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" initialValue={user.addressDetails}>
-                    <TextArea rows={2} allowClear showCount maxLength={100} />
+                    <TextArea rows={2} allowClear showCount maxLength={50} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Chức năng và nhiệm vụ chung" name="introduction1" initialValue={introduction1}>
-                    <TextArea rows={2} allowClear showCount maxLength={100} />
+                    <TextArea rows={10} allowClear showCount maxLength={1000}/>
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Phạm vi hoạt động" name="introduction2" initialValue={introduction2}>
-                    <TextArea rows={2} allowClear showCount maxLength={100} />
+                    <TextArea rows={10} allowClear showCount maxLength={1000}/>
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
                     <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
