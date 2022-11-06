@@ -15,7 +15,7 @@ export default function BasicInfoContainer() {
     // console.log(user)
     const [form] = Form.useForm();
     if (user.introduction !== null) {
-        const splitArr = user.introduction.split("-")
+        const splitArr = user.introduction.split("¥£$€")
         introduction1 = splitArr[0];
         introduction2 = splitArr[1];
     }
@@ -77,7 +77,7 @@ export default function BasicInfoContainer() {
             "districtId": districtId,
             "addressDetails": formData.addressDetails,
             "phone": formData.phone,
-            "introduction": formData.introduction1 + "-" + formData.introduction2,
+            "introduction": formData.introduction1 + "¥£$€" + formData.introduction2,
             "website": formData.website
         }
         // console.log(requestData)
@@ -142,13 +142,13 @@ export default function BasicInfoContainer() {
                     </Form.Item>
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Địa chỉ chi tiết" name="addressDetails" initialValue={user.addressDetails}>
-                    <TextArea rows={2} allowClear showCount maxLength={100} />
+                    <TextArea rows={2} allowClear showCount maxLength={50} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Chức năng và nhiệm vụ chung" name="introduction1" initialValue={introduction1}>
-                    <TextArea rows={2} allowClear showCount maxLength={100} />
+                    <TextArea rows={10} allowClear showCount maxLength={1000}/>
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Phạm vi hoạt động" name="introduction2" initialValue={introduction2}>
-                    <TextArea rows={2} allowClear showCount maxLength={100} />
+                    <TextArea rows={10} allowClear showCount maxLength={1000}/>
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
                     <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
