@@ -10,7 +10,7 @@ const PostImage = ({campaignImg,callback}) => {
   const [linkList, setLinkList] = useState('');
 
   const uploadImage = async (options) => {
-    const { onSuccess, onError, file, onProgress } = options;
+    const { onSuccess, onError, file} = options;
 
     const fmData = new FormData();
 
@@ -24,7 +24,7 @@ const PostImage = ({campaignImg,callback}) => {
       );
 
       onSuccess('Ok');
-      setLinkList(linkList + res.data.url);
+      setLinkList( res.data.url);
       console.log(res.data.url)
       callback(res.data.url);
     } catch (err) {
@@ -37,10 +37,7 @@ const PostImage = ({campaignImg,callback}) => {
   const normFile = (e) => {
     console.log("e",e)
 
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
+    return linkList;
   };
 
 
@@ -56,20 +53,15 @@ const PostImage = ({campaignImg,callback}) => {
       name="images"
       getValueFromEvent={normFile}
 
-    // valuePropName="fileList"
-
     >
       <Upload
         accept="image/*"
         customRequest={uploadImage}
         listType="picture-card"
-        // fileList={fileList}
-        // initialValues={defaultFileList}
         className="image-upload-grid"
         onChange={onChange}
 
       >
-        {/* {defaultFileList.length >= 1 ? null : <div><PlusOutlined></PlusOutlined></div>} */}
         {fileList.length < 1 && '+ Upload'}
 
       </Upload>

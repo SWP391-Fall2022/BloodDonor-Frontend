@@ -48,3 +48,8 @@
     text-align: center;
     margin-top: 40px;
 }
+
+.ant-modal-confirm-btns .ant-btn.ant-btn-primary{
+    background: var(--primary-500);
+    border: none;
+}

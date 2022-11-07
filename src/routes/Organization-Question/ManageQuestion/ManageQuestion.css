@@ -6,9 +6,6 @@
     width: 100%;
 }
 
-.manage-question-container{
-    padding: 0 100px;
-}
 
 .manage-question-header{
     background-color: white;
@@ -31,17 +28,6 @@
     font-weight: 500;
 }
 
-/* style for tabs header------------------ */
-#manage-question-container .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn  {
-    color: var( --primary-500); 
- }
-
- 
- #manage-question-container .ant-tabs-ink-bar {
-    position: absolute;
-    background: var( --primary-500);
-    pointer-events: none;
- }
 
  #manage-question-container .ant-pagination {
     margin: 20px auto;
@@ -57,7 +43,7 @@
  }
 
 .manage-question-container{
-    margin-top: 50px;
+    padding: 5% 10%;
 }
 
 .manage-question-title{
@@ -67,17 +53,6 @@
 }
 
 
-#manage-question-container .manage-question-content .ant-input-group-wrapper {
-    display: block;
-    /* style  width of search-box*/
-    width: 60%;
-    text-align: start;
-}
-
-#manage-question-container .manage-question-content .ant-input-search-button {
-    background-color: var(--primary-400) !important;
-}
-
 
 /* style search & buttons side */
 
@@ -85,16 +60,14 @@
     display: flex;
     justify-content: space-between;
     margin: 10px 0 25px 0;
+    width: 50%;
 
   }
   
-  .cre-del-buttons{
-    display: flex;
+
   
-  }
-  
-#manage-question-container .cam-search-box span{
-    color: white;
+.cam-search-box{
+    width: 50%;
 }
 
 #manage-question-container .ant-table-cell{
