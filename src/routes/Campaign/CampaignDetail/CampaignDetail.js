@@ -16,17 +16,19 @@ import ParticipatedButtons from '../Buttons/ParticipatedButtons';
 export default function CampaignDetail() {
 
     // fetch data function
-    const [campaigns, setCampaigns] = useState([])
+    const [selectedCampaign, setSelectedCampaign] = useState([])
+    console.log("selectedCampaign", selectedCampaign)
+    
 
 
     function getCampFromAPI() {
         const asyncFn = async () => {
-            const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+            // const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
             let json = {
                 method: 'GET',
                 headers: new Headers({
                     'Content-Type': 'application/json; charset=UTF-8',
-                    'Authorization': "Bearer " + token,
+                    // 'Authorization': "Bearer " + token,
                 })
             }
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`, json)
@@ -34,13 +36,14 @@ export default function CampaignDetail() {
                 .catch((error) => { console.log(error) })
 
             if (response.success) {
-                setCampaigns(response.body.filter((camp) => {
+                console.log("response",response)
+                // setCampaigns(response.body)
+                const campaign = response.body.find(obj => {
 
-                    if (camp.emergency === false && new Date(camp.endDate) > new Date()) {
-                        return true
-                    }
-
-                }))
+                    return obj.id == campaignTitle.id;
+                });
+                setSelectedCampaign(campaign)
+            // console.log("campaign",campaign)
 
             }
 
@@ -52,6 +55,8 @@ export default function CampaignDetail() {
     //call etch API function
     useEffect(() => {
         getCampFromAPI();
+      
+
     }, []
     )
 
@@ -59,12 +64,22 @@ export default function CampaignDetail() {
 
     // take the campaign
     const campaignTitle = useParams();
+    console.log("campaignTitle", campaignTitle)
 
-    const campaign = campaigns.find(obj => {
 
-        return obj.id == campaignTitle.id;
-    });
-    console.log(campaign)
+    // const campaign = campaigns.find(obj => {
+
+    //     return obj.id == campaignTitle.id;
+    // });
+    // console.log(campaign)
+    // setSelectedCampaign(
+    //     ()=>{
+    //         campaigns.find(obj => {
+
+    //             return obj.id == campaignTitle.id;
+    //         })
+    //     }
+    // )
 
     // // check donor unregistered registerd
     // const [registered, setRegistered] = useState(false);
@@ -92,7 +107,7 @@ export default function CampaignDetail() {
 
 
     //  render blood types
-    const listBloodType = campaign.bloodTypes.split("-").map((bloodType) =>
+    const listBloodType = String(selectedCampaign.bloodTypes).split("-").map((bloodType) =>
         <li className='blood-type-item'>{bloodType}</li>
     );
 
@@ -115,17 +130,17 @@ export default function CampaignDetail() {
                             <Breadcrumb.Item>THÔNG BÁO</Breadcrumb.Item>
                         </Breadcrumb>
 
-                        <h2 className='campaign-title' > {campaign.name}</h2>
-                        <div>Ngày đăng: {moment(campaign.startDate).format("DD/MM/YYYY")} |  {campaign.organizationName}  </div>
+                        <h2 className='campaign-title' > {selectedCampaign.name}</h2>
+                        <div>Ngày đăng: {moment(selectedCampaign.startDate).format("DD/MM/YYYY")} |  {selectedCampaign.organizationName}  </div>
                     </div>
 
                     <div className='campaign-detail-left-img'>
-                        <img src={campaign.images} alt={campaign.organizationName} />
+                        <img src={selectedCampaign.images} alt={selectedCampaign.organizationName} />
                     </div>
 
                     <div className='campaign-content'>
-                        <p className='sub-title'>{campaign.organizationName} xin thông báo:</p>
-                        <p>{campaign.description}</p>
+                        <p className='sub-title'>{selectedCampaign.organizationName} xin thông báo:</p>
+                        <p>{selectedCampaign.description}</p>
 
                         <p className='sub-title'>Thời gian:</p>
                         <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
@@ -134,7 +149,7 @@ export default function CampaignDetail() {
 
 
                         <p className='sub-title'>Địa chỉ</p>
-                        <p>{campaign.addressDetails}</p>
+                        <p>{selectedCampaign.addressDetails}</p>
 
                         <p className='sub-title'>Nhóm máu cần</p>
                         <div className='blood-type'>
@@ -144,11 +159,10 @@ export default function CampaignDetail() {
                         <p className='sub-title'>Xin lưu ý</p>
                         <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
                         <p>Xin trân trọng thông báo!!!</p>
-                        <RegisterCampaign campaign={campaign} registered={false}></RegisterCampaign>
-                        {/*<UnRegisterButtons registered={registered} campaign={campaign} callback={callbackFunction} />; */}
-                    </div>
+                        <RegisterCampaign campaign={selectedCampaign} ></RegisterCampaign>
+                     </div>
 
-                         </div>
+                        </div>
 
                <div className='campaignDetail-right'>
                     

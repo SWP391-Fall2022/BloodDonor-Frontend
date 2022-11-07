@@ -282,7 +282,7 @@ function CreateCampaignForm() {
                   setCampaigName(e.target.value)
                 }}
                 name="name"
-
+                maxLength={120}
               />
             </Form.Item>
 
@@ -310,9 +310,14 @@ function CreateCampaignForm() {
 
 
             <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }]}>
-              <TextArea rows={2} allowClear showCount maxLength={100}
+              <TextArea 
+              rows={2} 
+              allowClear 
+              showCount 
+              maxLength={100}
                 onChange={(e) => {
                   setAddress(e.target.value)
+                  
                 }} />
             </Form.Item>
 

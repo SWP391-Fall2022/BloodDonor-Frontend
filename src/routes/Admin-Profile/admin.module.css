@@ -11,3 +11,11 @@
     background-color: white;
     box-shadow: var(--shadow-dp-02);
 }
+
+@media screen and (max-width:800px) {
+    
+.breadcrumb {
+    margin-left: 60px;
+    
+}
+}

@@ -39,6 +39,24 @@
 
 }
 
+.register-time .ant-form-item{
+    margin-bottom: 0;
+}
+
 .register-time .ant-radio-group{
     display: block;
+}
+
+#medical-infor{
+    background-color: var(--primary-500);
+    border: none;
+}
+
+/* unreistered buttons style */
+#join{
+    background-color: var(--primary-500);
+    color: white;
+    margin-right: 20px;
+    margin-top: 20px;
+    border: none;
 }

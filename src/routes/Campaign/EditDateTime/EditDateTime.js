@@ -1,53 +1,233 @@
-import React, { useState } from 'react';
-import { Button, Modal, Form} from 'antd';
-import RegisterCampaign from '../RegisterCampaign/RegisterCampaign';
+import React, { useState, useEffect } from 'react';
+import { Button, Modal, Form, Radio, message } from 'antd';
 import 'antd/dist/antd.min.css';
 import './EditDateTime.css';
+import moment from 'moment';
 
-const EditDateTimeForm = ({ open, onCreate, onCancel, campaign, registered}) => {
-    const [form] = Form.useForm();
-    return (
-        <Modal
-            open={open}
-            title="Chỉnh sửa lịch tham gia 
-      hiến máu"
-            className="edit-date-time-modal"
-            okText="Chỉnh sửa"
-            cancelText="Thoát"
-            onCancel={onCancel}
-            onOk={() => {
-                form
-                    .validateFields()
-                    .then((values) => {
-                        form.resetFields();
-                        onCreate(values);
-                    })
-                    .catch((info) => {
-                        console.log('Validate Failed:', info);
-                    });
-            }}
-        >
-            <Form
-                form={form}
-                layout="vertical"
-                name="edit-date-time-form"
 
-            >
-                <Form.Item>
-                    <RegisterCampaign campaign={campaign} registered={registered}></RegisterCampaign>
-                </Form.Item>
 
-            </Form>
-        </Modal>
-    );
-};
 
-const EditDateTime= (props) => {
+const EditDateTime = (props) => {
+    const [oldDate, setOldDate] = useState("")
+    console.log("oldDate:", oldDate)
+
+    const [oldPeriod, setOldPeriod] = useState("")
+    console.log("oldPeriod:", typeof(oldPeriod))
+
+    const [message, setMessage] = useState('')
+
+
+    // fetch API get detail of registration
+
+    function getRegistration() {
+        const asyncFn = async () => {
+            const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+            let json = {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': "Bearer " + token,
+                })
+            }
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
+                .then((res) => res.json())
+                .catch((error) => { console.log(error) })
+
+            if (response.success) {
+                console.log("registration response:", response)
+                response.body.map((registration) => {
+                    //only registration has status NOT_CHECKED_IN can be edit
+                    if (registration.status === "NOT_CHECKED_IN")
+                        setDateValue(registration.registeredDate)
+                    setTimeValue(registration.period)
+                }
+
+                )
+
+
+            }
+
+        }
+        asyncFn();
+    }
+
+
+    //call etch API function
+    useEffect(() => {
+        getRegistration();
+    }, []
+    )
+
+
+
+    // setup date radio-------------------------------------
+    const [dateValue, setDateValue] = useState("");
+    console.log('dateValue', dateValue);
+
+    const onDateChange = (e) => {
+        // console.log('radio checked', e.target.value);
+        setDateValue(moment(e.target.value).format("YYYY-MM-DD"));
+    };
+
+    //Get days for choose day ----------------------
+    var getDaysArray = function (start, end) {
+        for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+            arr.push(moment(dt).format("YYYY-MM-DD"));
+        }
+        return arr;
+    };
+    var daylist = getDaysArray(new Date(props.campaign.startDate), new Date(props.campaign.endDate));
+
+    // setup time of day radio-------------------------------------
+    const [timeValue, setTimeValue] = useState("");
+    // console.log("timeValue", timeValue)
+
+    const onTimeChange = (e) => {
+        // console.log('radio checked', e.target.value);
+        setTimeValue(e.target.value);
+    };
+
+    const getDayOfWeek = (day) => {
+        var useday = new Date(day);
+        switch (useday.getDay()) {
+            case 0:
+                return "Chủ Nhật";
+            case 1:
+                return "Thứ hai";
+            case 2:
+                return "Thứ ba";
+            case 3:
+                return "Thứ tư";
+            case 4:
+                return "Thứ năm";
+            case 5:
+                return "Thứ sáu";
+            case 6:
+                return "Thứ bảy";
+            default:
+                break;
+        }
+    }
+
     const [open, setOpen] = useState(false);
 
     const onCreate = (values) => {
         console.log('Received values of form: ', values);
         setOpen(false);
+    };
+
+
+
+    // edit schedule API
+
+    const onEditFinish = async (values) => {
+
+
+        const requestData = {
+            "campaignId": props.campaign.id,
+            "registerDate": dateValue,
+            "period": timeValue
+
+        }
+        console.log("reques:", requestData)
+        const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+
+
+        let json = {
+            method: 'PUT',
+            body: JSON.stringify(requestData),
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': "Bearer " + token,
+            })
+        }
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered/${props.campaign.id}?oldDate=${dateValue}`, json)
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
+        console.log("response", response)
+        if (response.success) {
+            setOpen(false);
+
+              setMessage("Chỉnh sửa lịch hiến máu thành công.")
+            console.log("Chỉnh sửa thành công:", response)
+        }
+        else {
+            if (response.body === "The time between donations must be at least 12 weeks")
+                setMessage("Thời gian giữa những lần hiến máu của bạn phải cách nhau ít nhất 12 tuần!")
+            
+            console.log("ko Chỉnh sửa được")
+
+        }
+        setTimeout(() => {
+            //   setMessage('');
+        }, 3000);
+
+
+    };
+
+
+
+    const EditDateTimeForm = ({ open, onCreate, onCancel, campaign, registered }) => {
+        const [form] = Form.useForm();
+        return (
+            <Modal
+                open={open}
+                title="Chỉnh sửa lịch tham gia 
+          hiến máu"
+                className="edit-date-time-modal"
+                okText="Chỉnh sửa"
+                cancelText="Thoát"
+                onCancel={onCancel}
+                onOk={() => {
+                    onEditFinish()
+                }}
+            >
+                <Form
+                    form={form}
+                    layout="vertical"
+                    name="edit-date-time-form"
+                // onFinish={onEditFinish}
+
+                >
+                    <Form.Item>
+
+                        <p className='sub-title'>Chọn ngày</p>
+
+                        <div className='register-date-cover'>
+                            <div className='register-date'>
+                                <Form.Item name="registerDate">
+                                    <Radio.Group onChange={onDateChange} value={dateValue} disabled={registered ? true : false} defaultValue={dateValue} >
+
+                                        {
+                                            daylist.map((day) =>
+                                                <div>
+                                                    <Radio value={day} disabled={(moment(day) < moment()) ? true : false}>{getDayOfWeek(new Date(day))},{moment(day).format("DD-MM-YYYY")}</Radio>
+                                                </div>
+                                            )
+
+                                        }
+                                    </Radio.Group>
+                                </Form.Item>
+                            </div>
+                        </div>
+
+                        <p className='sub-title'>Chọn buổi</p>
+                        <div className='register-time'>
+                            <Form.Item name="period">
+                                <Radio.Group onChange={onTimeChange} value={timeValue} disabled={registered ? true : false} defaultValue={timeValue}>
+
+                                    <Radio value={"MORNING"}>Buổi sáng: 8h00 đến 11h00</Radio>
+                                    <Radio value={"AFTERNOON"}>Buổi chiều: 13h30 đến 17h00</Radio>
+
+                                </Radio.Group>
+                            </Form.Item>
+                        </div>
+                        {message}
+                    </Form.Item>
+
+                </Form>
+            </Modal>
+        );
     };
 
     return (
