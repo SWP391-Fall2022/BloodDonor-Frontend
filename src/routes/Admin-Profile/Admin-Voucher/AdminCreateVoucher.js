@@ -18,11 +18,17 @@ export default function AdminCreateVoucher() {
     const onFinish = async () => {
         const formData = form.getFieldsValue(true)
         // console.log(formData)
+        let code = '';
+        for (let i = 0; i < 8; i++) {
+            code += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.charAt(Math.floor(Math.random() * 36));
+        }
+        //Still need to handle duplicate with existed voucher's code, but that's usually rare
+
         const requestData = {
             "expiredDate": formData.expiredDate.format("YYYY-MM-DD"),
             "level": formData.level,
             "sponsor": formData.sponsor,
-            "code": "26HG1U7H",
+            "code": code,
             "status": true,
             "details": formData.details,
             "amount": formData.amount
