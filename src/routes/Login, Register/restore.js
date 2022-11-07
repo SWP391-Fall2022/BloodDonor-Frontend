@@ -17,7 +17,7 @@ function Forget() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/password-reset/account/${formData.email}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
+        // console.log(response)
         if (response.body === "This email has not been registered yet") {
             setMessage("Email này chưa được đăng ký")
         }

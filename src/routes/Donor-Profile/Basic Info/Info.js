@@ -1,6 +1,6 @@
 import AvatarContainer from '../../../components/Avatar, Point, Reward/Avatar'
 import Points from '../../../components/Avatar, Point, Reward/Points'
-import Award from '../../../components/Avatar, Point, Reward/Award'
+// import Award from '../../../components/Avatar, Point, Reward/Award'
 import BasicInfoContainer, { } from './BasicInfoContainer'
 import styles from '../donor.module.css'
 export default function Info() {
@@ -9,9 +9,9 @@ export default function Info() {
             <div className={styles.leftContainerMain}>
                 <AvatarContainer />
                 <Points />
-                <Award />
+                {/* <Award /> */}
             </div>
-            <div><BasicInfoContainer /></div>
+            <BasicInfoContainer />
         </div>
     )
 }

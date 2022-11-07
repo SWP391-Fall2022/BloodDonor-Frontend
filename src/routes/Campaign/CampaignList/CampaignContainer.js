@@ -317,10 +317,12 @@ const CampaignContainer = () => {
             <div id="donor-emergency-campaign">
                 <p className="donor-emergency-campaign-title">Thông báo khẩn cấp</p>
                 <List
+
                     itemLayout="horizontal"
 
                     dataSource={emergencyCampaigns}
                     className="donor-emergency-campaign-list"
+
 
                     renderItem={(item) => (
 

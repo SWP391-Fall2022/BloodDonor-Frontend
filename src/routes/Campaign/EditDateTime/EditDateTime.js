@@ -4,9 +4,6 @@ import 'antd/dist/antd.min.css';
 import './EditDateTime.css';
 import moment from 'moment';
 
-
-
-
 const EditDateTime = (props) => {
     const [oldDate, setOldDate] = useState("")
     console.log("oldDate:", oldDate)
@@ -112,7 +109,7 @@ const EditDateTime = (props) => {
     const [open, setOpen] = useState(false);
 
     const onCreate = (values) => {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
         setOpen(false);
     };
 

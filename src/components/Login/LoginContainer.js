@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from '../Login/login.module.css';
 import { Button, Form, Input, notification } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
-import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script'
+import jwt_decode from "jwt-decode";
 
 
 export default function LoginContainer() {
@@ -16,10 +15,17 @@ export default function LoginContainer() {
     const [recaptchaCheck, setRecaptchaCheck] = useState(false)
 
     useEffect(() => {
-        gapi.load("client:auth2", () => {
-            gapi.auth2.init({ clientId: process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID })
-        })
-    })
+        window.google.accounts.id.initialize({
+            client_id: process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID,
+            callback: handleCredentialResponse,
+            prompt_parent_id: 'g_id_onload',
+        });
+        window.google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"),
+            { theme: "outline", size: "large" }  // customization attributes
+        );
+        window.google.accounts.id.prompt(); // also display the One Tap dialog
+    }, [])
 
     // ReCAPTCHA
     const onChangeRecaptcha = (value) => {
@@ -79,21 +85,23 @@ export default function LoginContainer() {
                 }
             }
             if (response.status === 200) {
-                sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
+                sessionStorage.setItem('JWT_Key', JSON.stringify(response.body.token))
+                sessionStorage.setItem('userRole', JSON.stringify(response.body.role))
                 navigate("/auth")
             }
         }
     }
 
     // Google Login
-    const handleFailure = (result) => {
-        console.log(result)
+    const handleCredentialResponse = (response) => {
+        var decoded = jwt_decode(response.credential);
+        handleGoogleLogin(response.credential, decoded.email)
     }
 
-    const handleGoogleLogin = async (data) => {
+    const handleGoogleLogin = async (tokenId, email) => {
         let json = {
             method: 'POST',
-            body: JSON.stringify({ tokenId: data.tokenId }),
+            body: JSON.stringify({ tokenId: tokenId }),
             headers: new Headers({
                 'Content-Type': 'application/json; charset=UTF-8'
             })
@@ -101,7 +109,7 @@ export default function LoginContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/login/google`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
+        // console.log(response)
         if (response.status === 302) {
             notification.error({
                 message: "Email này chưa từng đăng kí app",
@@ -109,7 +117,7 @@ export default function LoginContainer() {
                 duration: 10,
                 placement: "top"
             });
-            navigate("/register", { state: { email: data.profileObj.email } })
+            navigate("/register", { state: { email: email } })
         }
         if (response.status === 403) {
             notification.error({
@@ -123,7 +131,8 @@ export default function LoginContainer() {
         if (response.status === 200) {
 
             // console.log(response)
-            sessionStorage.setItem('JWT_Key', JSON.stringify(response.body))
+            sessionStorage.setItem('JWT_Key', JSON.stringify(response.body.token))
+            sessionStorage.setItem('userRole', JSON.stringify(response.body.role))
             // sessionStorage.setItem('GoogleEmail', JSON.stringify(data.profileObj.email))
             navigate("/auth")
         }
@@ -155,18 +164,17 @@ export default function LoginContainer() {
                     sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                     onChange={onChangeRecaptcha}
                 />
-                <div className={`${styles.underInfo}`}>
-                    <div><Link className={`${styles.link}`} to={"/restore"}>Quên mật khẩu?</Link></div>
+                <div className={`${styles.underInfo}`} style={{ marginTop: '1rem' }}>
+                    <Link className={`${styles.link}`} to={"/restore"}>Quên mật khẩu?</Link>
                     <div>Chưa có tài khoản? Đăng kí <Link className={`${styles.link}`} to={"/register"}>tại đây</Link></div>
-                    <div>HOẶC</div>
-                    <GoogleLogin
-                        clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
-                        buttonText="Đăng nhập bằng Google"
-                        onSuccess={handleGoogleLogin}
-                        onFailure={handleFailure}
-                        cookiePolicy={'single_host_origin'}
-                    />
+                    <div style={{ marginBottom: '1rem' }}>HOẶC</div>
+                    <div id='buttonDiv' style={{ width: '60%', marginLeft: 'auto', marginRight: 'auto' }}></div>
                 </div>
+            </div>
+            <div id="g_id_onload"
+                data-prompt_parent_id="g_id_onload"
+                data-cancel_on_tap_outside="false"
+                style={{ position: 'absolute', left: '30px', top: '30px', width: '0', height: '0', zIndex: '1001', boxShadow: 'var(--shadow-dp-02)' }}>
             </div>
         </div>
     )

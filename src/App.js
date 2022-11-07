@@ -33,7 +33,6 @@ import OrganizationNotificationContainer from './routes/Organization-Profile/Eme
 import OrganizationNotificationListContainer from './routes/Organization-Profile/Emergency Notification/List Of Notification/OrganizationNotificationListContainer';
 import OrganizationCreateNotification from './routes/Organization-Profile/Emergency Notification/Create Notification/CreateNotification';
 import OrganizationViewNotification from './routes/Organization-Profile/Emergency Notification/List Of Notification/OrganizationViewNotification';
-import OrganizationReviewNotification from './routes/Organization-Profile/Emergency Notification/Create Notification/ReviewNotification';
 import OrganizationProfile from './routes/Organization-Profile/organization-profile';
 import OrganizationChangePassword from './routes/Organization-Profile/Change Password/changePassword';
 import OrganizationHomepage from './routes/Organization-Homepage/OrganizationHomepage';
@@ -66,6 +65,7 @@ import AdminManageVouchers from './routes/Admin-Profile/Admin-Voucher/AdminVouch
 
 import NoInternetConnection from './others/NoInternetConnection'
 import OrganizationGuide from './routes/Organization-Profile/Organization-Guide/organizationGuide';
+import AdminCreateVoucher from './routes/Admin-Profile/Admin-Voucher/AdminCreateVoucher';
 
 export default function App() {
   return (
@@ -115,7 +115,6 @@ export default function App() {
             <Route path="notification" element={<OrganizationNotificationContainer />}>
               <Route index element={<OrganizationNotificationListContainer />} />
               <Route path="create" element={<OrganizationCreateNotification />} />
-              <Route path="create/preview" element={<OrganizationReviewNotification />} />
               <Route path="view" element={<OrganizationViewNotification />} />
               <Route path="*" element={<NoPageOrganization />} />
             </Route>
@@ -148,6 +147,7 @@ export default function App() {
             <Route path="manage_organization/infoOrganization" element={<AdminInfoOrganization />} />
             <Route path="manage_news" element={<AdminManageNews />} />
             <Route path="manage_vouchers" element={<AdminManageVouchers />} />
+            <Route path="manage_vouchers/create" element={<AdminCreateVoucher />} />
           </Route>
 
           {/* 404 error page */}

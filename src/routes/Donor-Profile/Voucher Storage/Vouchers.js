@@ -1,6 +1,6 @@
 import AvatarContainer from '../../../components/Avatar, Point, Reward/Avatar'
 import Points from '../../../components/Avatar, Point, Reward/Points'
-import Award from '../../../components/Avatar, Point, Reward/Award'
+// import Award from '../../../components/Avatar, Point, Reward/Award'
 import VouchersContainer from './VouchersContainer'
 import VouchersContainer2 from './VouchersCointainer2'
 import styles from '../donor.module.css'
@@ -11,10 +11,10 @@ export default function Vouchers() {
                 <div className={styles.leftContainerMain}>
                     <AvatarContainer />
                     <Points />
-                    <Award />
+                    {/* <Award /> */}
                 </div>
-                <div><VouchersContainer /></div>
-                <div><VouchersContainer2 /></div>
+                <VouchersContainer />
+                <VouchersContainer2 />
             </div>
         </div>
     )

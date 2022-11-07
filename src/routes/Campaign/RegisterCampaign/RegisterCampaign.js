@@ -44,7 +44,7 @@ export default function RegisterCampaign({ campaign }) {
     console.log("timeValue", timeValue)
 
     const onTimeChange = (e) => {
-        console.log('radio checked', e.target.value);
+        // console.log('radio checked', e.target.value);
         setTimeValue(e.target.value);
     };
 

@@ -87,20 +87,6 @@ export default function CampaignDetail() {
     //  // check donor participated the campaign
     //  const [participated, setParticipated] = useState(false);
 
-    // //get state after register at UnRegisterButtons component
-    // function callbackFunction(isRegistered){
-    //     setRegistered(isRegistered);
-    // }
-
-    // let buttons;
-
-    // if (participated) {
-    //     buttons = <ParticipatedButtons registered={registered} campaign={campaign} />;
-    // } else if(!participated && !registered){
-    //     buttons = <UnRegisterButtons registered={registered} campaign={campaign} callback={callbackFunction} />;
-    // }else if(!participated && registered){
-    //     buttons = <RegisterButtons registered={registered} campaign={campaign} callback={callbackFunction}/>;
-    // }
     // console.log(buttons);
 
 

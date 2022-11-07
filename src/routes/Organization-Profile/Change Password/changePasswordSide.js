@@ -81,7 +81,7 @@ export default function ChangePasswordSide() {
                 <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu mới" name="confirmNewPassword" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel}>
+                <Form.Item>
                     <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">
                         Thay đổi
                     </Button>
