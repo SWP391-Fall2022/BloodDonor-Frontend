@@ -2,8 +2,8 @@ import { ArrowLeftOutlined } from "@ant-design/icons"
 import styles from '../../Admin-Profile/admin.module.css'
 import stylesVoucher from '../Admin-Voucher/adminVoucherList.module.css'
 import { AdBread } from '../AdminBreadcrumbs'
-import { Link } from "react-router-dom"
-import { Button, DatePicker, Form, Input } from "antd"
+import { Link, useNavigate } from "react-router-dom"
+import { Button, DatePicker, Form, Input, notification } from "antd"
 import TextArea from "antd/lib/input/TextArea";
 
 export default function AdminCreateVoucher() {
@@ -13,6 +13,7 @@ export default function AdminCreateVoucher() {
 
     //Others define
     const [form] = Form.useForm();
+    const navigate = useNavigate();
 
     //Submit Button
     const onFinish = async () => {
@@ -44,7 +45,14 @@ export default function AdminCreateVoucher() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/rewards`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
+        // console.log(response)
+        if (response.status === 200) {
+            notification.success({
+                message: 'Tạo voucher thành công',
+                placement: "top"
+            });
+            navigate("/admin/manage_vouchers")
+        }
     }
 
     return (
@@ -55,7 +63,7 @@ export default function AdminCreateVoucher() {
                     <h1 style={{ textAlign: 'center', padding: '2%' }}><strong>TẠO VOUCHER</strong></h1>
                     <Form form={form} layout="vertical" onFinish={onFinish}>
                         <Form.Item className={stylesVoucher.formLabel} label="Mô tả voucher" name="details">
-                            <TextArea rows={2} allowClear showCount maxLength={20} />
+                            <TextArea rows={2} allowClear showCount maxLength={100} />
                         </Form.Item>
                         <Form.Item className={stylesVoucher.formLabel} label="Hạn của voucher" name="expiredDate" rules={[{ required: true, message: 'Vui lòng chọn' }]}>
                             <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày" />
