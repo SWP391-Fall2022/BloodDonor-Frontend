@@ -95,3 +95,27 @@ code {
     color: white;
     text-align: center;
 }
+.ant-btn-primary {
+    background-color: var(--primary-900);
+    border-color: var(--primary-900);
+    box-shadow: var(--shadow-dp-01);
+  }
+  
+  .ant-btn-primary:hover {
+    color: white;
+    background-color: var(--primary-1000);
+    border-color: var(--primary-1000);
+    box-shadow: none;
+  }
+  
+  .ant-btn:hover, .ant-btn:focus{
+    border-color: var(--primary-1000);
+    color: var(--primary-300);
+  }
+
+  .ant-btn:active {
+    
+    background-color: var(--primary-1000);
+    outline: 0;
+    box-shadow: none;
+}

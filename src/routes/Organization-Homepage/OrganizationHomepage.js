@@ -1,7 +1,3 @@
-import { Col, Row } from "antd"
-import { Navigate, Outlet } from "react-router-dom"
-import { FooterSmall } from "../../components/Footer/FooterSmall"
-import { Navbar } from "../../components/NavBar/navbar"
 import {SideBarforOrganization} from "../../components/SideBar/SideBarforOrganization"
 import HomepageDetail from "./Homepage/HomepageDetail"
 import "./OrganizationHomepage.css"

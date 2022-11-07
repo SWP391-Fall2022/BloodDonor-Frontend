@@ -1,0 +1,118 @@
+@import "../../../index.css";
+
+#campaign-statistical .statistical-col {
+    padding: 2% 8%;
+}
+
+#campaign-statistical .statistical-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    text-transform: uppercase;
+    padding-bottom: 5%;
+}
+
+#campaign-statistical .statistical-left {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-01);
+    padding: 4% 5%;
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+#campaign-statistical .statistical-right {
+    display: grid;
+    grid-template-columns: 57% 41%;
+    grid-gap: 2%;
+}
+
+#campaign-statistical .statistical-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 2%;
+}
+
+#campaign-statistical .statistical-card {
+    background-color: var(--blue-02);
+    border-bottom: 10px solid var(--blue-01);
+    border-radius: 5px;
+    padding: 8% 10% 5% 10%;
+    margin-bottom: 2%;
+}
+
+#campaign-statistical .card-col {
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+}
+
+
+#campaign-statistical .card-number {
+    font-weight: 600;
+    font-size: 27px;
+    line-height: 30px;
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+}
+
+#campaign-statistical .MuiSvgIcon-root {
+    color: var(--blue-01);
+    margin-right: 10%;
+    background-color: white;
+    padding: 8%;
+    font-size: 30px;
+    border-radius: 20px;
+}
+
+#campaign-statistical .card-content {
+    text-align: left;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    padding-top: 5%;
+    text-align: justify;
+}
+
+#campaign-statistical .chart-card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-01);
+    margin-bottom: 5%;
+    padding: 2% 5%;
+    text-align: center;
+}
+
+#campaign-statistical .chart-title {
+    font-size: 18px;
+    padding: 10px 0;
+    font-weight: 600;
+    border-bottom: 1.5px solid rgb(243, 243, 243);
+    margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 950px) {
+    #campaign-statistical .statistical-list {
+        grid-template-columns: 1fr 1fr;
+    }
+    #campaign-statistical .statistical-card {
+        padding: 5% 6% 2% 6%;
+    }
+    #campaign-statistical .statistical-right {
+        display: block;
+    }
+    #campaign-statistical .chart-card {
+        padding: 2% 10%;
+    }
+    #campaign-statistical .statistical-title {
+        font-size: 20px;
+        line-height: 24px;
+        padding-bottom: 5%;
+    }
+    
+    #campaign-statistical .statistical-left {
+        
+        padding: 8% 5%;
+    }
+}
