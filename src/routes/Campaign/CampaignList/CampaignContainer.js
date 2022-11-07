@@ -294,7 +294,7 @@ const CampaignContainer = () => {
                                     style={{ background: "white", padding: "20px", paddingBottom: "10px" }}
                                 >
                                     <List.Item.Meta
-                                        avatar={<Avatar src={item.avatar} />}
+                                        // avatar={<Avatar src={item.avatar} />}
                                         title={<div className="campaign-name" style={{ fontWeight: "600", overflow: "hidden" }} href={item.href}>{item.name}</div>}
                                         description={item.organizationName}
                                     />

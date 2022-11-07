@@ -14,7 +14,6 @@ export default function RegisterCampaign({ campaign }) {
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
     const [registered, setRegistered] = useState(false)
-    const [registrations, setRegistrations] = useState("")
     const [medicalInfor, setMedicalInfor] = useState(false)
     const [medicalDoc, setMedicalDoc] = useState({})
 
@@ -32,16 +31,16 @@ export default function RegisterCampaign({ campaign }) {
 
     // setup date radio-------------------------------------
     const [dateValue, setDateValue] = useState("");
-    console.log('dateValue', dateValue);
+    // console.log('dateValue', dateValue);
 
     const onDateChange = (e) => {
-        console.log('radio checked', e.target.value);
+        // console.log('radio checked', e.target.value);
         setDateValue(moment(e.target.value).format("YYYY-MM-DD"));
     };
 
     // setup time of day radio-------------------------------------
     const [timeValue, setTimeValue] = useState("");
-    console.log("timeValue", timeValue)
+    // console.log("timeValue", timeValue)
 
     const onTimeChange = (e) => {
         // console.log('radio checked', e.target.value);
@@ -106,7 +105,7 @@ export default function RegisterCampaign({ campaign }) {
                 "period": timeValue
 
             }
-            console.log("reques:", requestData)
+            // console.log("reques:", requestData)
             const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
 
@@ -121,7 +120,7 @@ export default function RegisterCampaign({ campaign }) {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-            console.log("response", response)
+            // console.log("response", response)
             if (response.success) {
                 registerSuccess();
 
@@ -138,7 +137,6 @@ export default function RegisterCampaign({ campaign }) {
 
                 }
                 console.log("ko đăng ký được")
-                //   console.log("REGIS", formData.registerDate)
 
             }
             setTimeout(() => {
@@ -167,6 +165,7 @@ export default function RegisterCampaign({ campaign }) {
         });
     };
 
+
     //fetch api check register status
 
     const getStatus = async () => {
@@ -183,9 +182,7 @@ export default function RegisterCampaign({ campaign }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/campaigns/${campaign.id}/status`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log("response", response)
         if (response.success) {
-            console.log(response)
             if (response.body.hasRegistered === true)
                 setRegistered(true)
         }
@@ -199,45 +196,6 @@ export default function RegisterCampaign({ campaign }) {
 
     }, [campaign]
     )
-
-    //fetch api get num of registrations per day
-
-    // const getNumOfRegistration = async () => {
-
-    //     const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
-
-    //     let json = {
-    //         method: 'GET',
-    //         headers: new Headers({
-    //             'Content-Type': 'application/json; charset=UTF-8',
-    //             'Authorization': "Bearer " + token,
-    //         })
-    //     }
-    //     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getNumberOfRegistrationPerDay/${campaign.id}?period=AFTERNOON&registeredDate=2022-12-05`, json)
-    //         .then((res) => res.json())
-    //         .catch((error) => { console.log(error) })
-    //     console.log("response", response)
-    //     if (response.success) {
-    //         // setRegistrations(response.)
-
-    //         console.log(response)
-
-    //     }
-
-
-    // };
-    // useEffect(() => {
-    //     getNumOfRegistration();
-
-
-    // }, []
-    // )
-
-    // function getRestOfRegistration (){
-    //     if(timeValue !== "" && dateValue!== ""){
-    //         getNumOfRegistration();
-    //     }
-    // }
 
 
     //fetch api get donated list of donor
@@ -256,17 +214,17 @@ export default function RegisterCampaign({ campaign }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/donated`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log("response", response)
+        // console.log("response", response)
         if (response.success) {
 
             const lastestDonated = response.body[Array(response.body).length - 1];
             console.log("donated response", response)
 
 
-            if (moment().subtract(3, 'weeks') < moment(lastestDonated.registeredDate)) {
+            if (moment().subtract(12, 'weeks') < moment(lastestDonated.registeredDate)) {
 
                 setMedicalInfor(true)
-                // getMedicalDoc(lastestDonated.campaignId, lastestDonated.registeredDate)
+                getMedicalDoc(lastestDonated.campaignId, lastestDonated.registeredDate)
             }
 
 
@@ -303,22 +261,17 @@ export default function RegisterCampaign({ campaign }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/medicalDocument/getByDonor`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log("response", response)
+        console.log("getMedicalDoc outside response", response)
         if (response.success) {
-
-            setMedicalDoc(response)
-
             console.log("getMedicalDoc response".response)
+
+            setMedicalDoc(response.body)
+
 
         }
 
 
     };
-    useEffect(() => {
-        getMedicalDoc();
-
-    }, []
-    )
 
 
     //fetch API cancel registration
@@ -332,7 +285,7 @@ export default function RegisterCampaign({ campaign }) {
             className: 'cancel-confirm',
             onOk() {
                 cancelRegistration();
-                console.log('Hủy tham gia');
+                // console.log('Hủy tham gia');
                 navigate(`/campaign/campaign-detail/${campaign.id}`)
 
             },
@@ -358,18 +311,33 @@ export default function RegisterCampaign({ campaign }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered/${campaign.id}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log("response", response)
+        // console.log("response", response)
         if (response.success) {
             setRegistered(false)
-
-
-            console.log("cancel response", response)
-
 
         }
 
 
     };
+
+    // set up for health information modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+   
+
+
 
 
 
@@ -412,23 +380,30 @@ export default function RegisterCampaign({ campaign }) {
                 <div className='unregistered-buttons' style={{ display: registered === true || medicalInfor === true ? "none" : "block" }}>
                     <div style={{ color: "red" }}> {message}</div>
                     <Button id='join' htmlType='submit' >Tham gia</Button>
-                    <SendQuestion className='send-qaa'></SendQuestion>
+                    <SendQuestion campaignId={campaign.id} className='send-qaa'></SendQuestion>
                 </div>
 
                 <div className='registered-buttons' style={{ display: registered === true && medicalInfor !== true ? "block" : "none" }}>
                     <Button className="cancel-camp" onClick={showCancelConfirm}>Hủy tham gia</Button>
                     <EditDateTime campaign={campaign} registered={false} />
-                    <SendQuestion className='send-qaa'></SendQuestion>
+                    <SendQuestion campaignId={campaign.id}  className='send-qaa'></SendQuestion>
                 </div>
 
 
-                <div className='paticipated-buttons' style={{ display: medicalInfor === true ? "block" : "none" }}>
-                    <Button type="primary" id='medical-infor'>
+                <div className='participated-buttons' style={{ display: medicalInfor === true ? "block" : "none" }}>
+                    <Button type="primary" id='medical-infor'  onClick={showModal}>
                         Thông tin sức khỏe
                     </Button>
+                    <Modal title="THÔNG TIN SỨC KHỎE" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} className='health-info-modal'>
+                <p><strong>Cân nặng: </strong> {medicalDoc.weight}</p>
+                <p><strong>Nhóm máu: </strong> {medicalDoc.bloodType}</p>
+                <p><strong>Lượng máu: </strong>{medicalDoc.amount}</p>
+                <p><strong>Chi tiết sức khỏe: </strong>{medicalDoc.details}</p>
+
+            </Modal>
                 </div>
 
-                <p className='num-of-registered'>Còn n lượt đăng ký vào buổi ... thứ ... </p>
+                {/* <p className='num-of-registered'>Còn n lượt đăng ký vào buổi ... thứ ... </p> */}
             </Form>
         </>
 

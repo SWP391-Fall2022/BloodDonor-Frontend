@@ -4,13 +4,8 @@ import { Breadcrumb } from 'antd';
 import './CampaignDetail.css';
 import moment from 'moment';
 import RegisterCampaign from '../RegisterCampaign/RegisterCampaign';
-import GoldShield from '../../../assets/awards/Gold-Shield.png';
-import SilSol from '../../../assets/awards/Sil-Sol.png';
-import CopCoin from '../../../assets/awards/Cop-Coin.png';
 import QaA from '../QaA/QaA';
-import RegisterButtons from '../Buttons/RegisteredButtons';
-import UnRegisterButtons from '../Buttons/UnRegisteredButtons';
-import ParticipatedButtons from '../Buttons/ParticipatedButtons';
+
 
 
 export default function CampaignDetail() {

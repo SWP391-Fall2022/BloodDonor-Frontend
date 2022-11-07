@@ -9,7 +9,7 @@ const EditDateTime = (props) => {
     console.log("oldDate:", oldDate)
 
     const [oldPeriod, setOldPeriod] = useState("")
-    console.log("oldPeriod:", typeof(oldPeriod))
+    console.log("oldPeriod:",oldPeriod)
 
     const [message, setMessage] = useState('')
 
@@ -35,7 +35,9 @@ const EditDateTime = (props) => {
                 response.body.map((registration) => {
                     //only registration has status NOT_CHECKED_IN can be edit
                     if (registration.status === "NOT_CHECKED_IN")
+                        setOldDate(registration.registeredDate)
                         setDateValue(registration.registeredDate)
+                    setOldPeriod(registration.period)
                     setTimeValue(registration.period)
                 }
 
@@ -58,7 +60,7 @@ const EditDateTime = (props) => {
 
 
     // setup date radio-------------------------------------
-    const [dateValue, setDateValue] = useState("");
+    const [dateValue, setDateValue] = useState(oldDate);
     console.log('dateValue', dateValue);
 
     const onDateChange = (e) => {
@@ -76,7 +78,7 @@ const EditDateTime = (props) => {
     var daylist = getDaysArray(new Date(props.campaign.startDate), new Date(props.campaign.endDate));
 
     // setup time of day radio-------------------------------------
-    const [timeValue, setTimeValue] = useState("");
+    const [timeValue, setTimeValue] = useState(oldPeriod);
     // console.log("timeValue", timeValue)
 
     const onTimeChange = (e) => {
@@ -119,7 +121,6 @@ const EditDateTime = (props) => {
 
     const onEditFinish = async (values) => {
 
-
         const requestData = {
             "campaignId": props.campaign.id,
             "registerDate": dateValue,
@@ -138,20 +139,20 @@ const EditDateTime = (props) => {
                 'Authorization': "Bearer " + token,
             })
         }
-        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered/${props.campaign.id}?oldDate=${dateValue}`, json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered/${props.campaign.id}?oldDate=${oldDate}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log("response", response)
         if (response.success) {
-            setOpen(false);
-
-              setMessage("Chỉnh sửa lịch hiến máu thành công.")
+            
+      
             console.log("Chỉnh sửa thành công:", response)
+            updateSuccess()
         }
         else {
             if (response.body === "The time between donations must be at least 12 weeks")
                 setMessage("Thời gian giữa những lần hiến máu của bạn phải cách nhau ít nhất 12 tuần!")
-            
+
             console.log("ko Chỉnh sửa được")
 
         }
@@ -160,6 +161,18 @@ const EditDateTime = (props) => {
         }, 3000);
 
 
+    };
+
+    const updateSuccess = () => {
+        Modal.success({
+            content: 'Lịch tham gia đã được chỉnh sửa thành công',
+            okText: 'Đóng',
+            onOk() {
+                setOpen(false);
+
+            }
+
+        });
     };
 
 
@@ -192,8 +205,8 @@ const EditDateTime = (props) => {
 
                         <div className='register-date-cover'>
                             <div className='register-date'>
-                                <Form.Item name="registerDate">
-                                    <Radio.Group onChange={onDateChange} value={dateValue} disabled={registered ? true : false} defaultValue={dateValue} >
+                                <Form.Item name="registerDate" initialValue={oldDate}>
+                                    <Radio.Group onChange={onDateChange} value={dateValue} disabled={registered ? true : false} defaultValue={oldDate} >
 
                                         {
                                             daylist.map((day) =>
@@ -210,8 +223,8 @@ const EditDateTime = (props) => {
 
                         <p className='sub-title'>Chọn buổi</p>
                         <div className='register-time'>
-                            <Form.Item name="period">
-                                <Radio.Group onChange={onTimeChange} value={timeValue} disabled={registered ? true : false} defaultValue={timeValue}>
+                            <Form.Item name="period" initialValue={oldPeriod}>
+                                <Radio.Group onChange={onTimeChange} value={timeValue} disabled={registered ? true : false} defaultValue={oldPeriod}>
 
                                     <Radio value={"MORNING"}>Buổi sáng: 8h00 đến 11h00</Radio>
                                     <Radio value={"AFTERNOON"}>Buổi chiều: 13h30 đến 17h00</Radio>

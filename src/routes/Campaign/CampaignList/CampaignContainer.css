@@ -4,8 +4,12 @@
     padding-bottom: 3%;
 }
 
-.filter-campaign-list{
+.filter-campaign-list {
     display: flex;
+}
+
+#campaign-container .ant-list-item {
+    border-radius: 5px;
 }
 
 /* Filter table style ----------------------------------------------------------*/
@@ -21,6 +25,7 @@
     box-shadow: var(--shadow-dp-02);
     position: sticky;
     top: 25%;
+    border-radius: 5px;
 
 }
 
@@ -52,6 +57,7 @@
 .date-seach .ant-picker-range {
     height: 35px;
     width: 40%;
+    border-radius: 5px;
 }
 
 
@@ -64,8 +70,9 @@
     background-color: var(--primary-900) !important;
 }
 
-#campaign-container span.ant-input-affix-wrapper.cam-search{
+#campaign-container span.ant-input-affix-wrapper.cam-search {
     width: 57%;
+    border-radius: 5px;
 }
 
 /*-----------campaign CARD------------*/
@@ -173,7 +180,7 @@
 
 .camp-address {
     margin-bottom: 5px;
-   height: 50px;
+    height: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -189,6 +196,9 @@
 }
 
 /* emergency camp list */
+#donor-emergency-campaign {
+    border-radius: 5px;
+}
 
 #donor-emergency-campaign .donor-emergency-campaign-title {
     font-weight: 600;
@@ -203,7 +213,7 @@
     box-shadow: var(--shadow-dp-01);
     height: fit-content;
     margin-left: 20px;
-    
+
     position: sticky;
     top: 25%;
 
@@ -218,148 +228,144 @@
     padding: 0;
     margin-bottom: 20px;
     box-shadow: var(--shadow-dp-01);
+    border-radius: 5px;
 }
 
 
 
-#donor-emergency-campaign .donor-emergency-campaign-org{
+#donor-emergency-campaign .donor-emergency-campaign-org {
     max-height: 45px;
-    overflow:hidden;
+    overflow: hidden;
     font-weight: 600;
     margin-bottom: 10px;
- }
+}
 
- @media screen and (min-width:500px) and (max-width:650px) {
+@media screen and (min-width:500px) and (max-width:650px) {
     .campaign-container {
         padding: 25% 5%;
     }
- }
+}
 
- 
- @media  only screen and (min-width:651px) and (max-width: 899px) {
+
+@media only screen and (min-width:651px) and (max-width: 899px) {
     .campaign-container {
         display: block;
         padding: 17% 5%;
     }
-    
-    #campaign-container .ant-list-item-main{
+
+    #campaign-container .ant-list-item-main {
         min-width: 220px;
 
     }
 
-    #campaign-container .ant-list-item-extra{
+    #campaign-container .ant-list-item-extra {
         min-width: 165px;
 
     }
 
-    #donor-emergency-campaign{
-        background-color:hsl(194, 100%, 97%) ;
+    #donor-emergency-campaign {
+        background-color: hsl(194, 100%, 97%);
         box-shadow: none;
     }
-    
- #donor-emergency-campaign .ant-list-items{
-    display: flex;
-    flex-direction: row;
-justify-content: space-around
 
- }
+    #donor-emergency-campaign .ant-list-items {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around
+    }
 
- #donor-emergency-campaign .ant-list-item{
-    height: 100%;
+    #donor-emergency-campaign .ant-list-item {
+        height: 100%;
 
- }
+    }
 
- #donor-emergency-campaign .donor-emergency-campaign-org{
-    height: 45px;
-    overflow:hidden;
- }
+    #donor-emergency-campaign .donor-emergency-campaign-org {
+        height: 45px;
+        overflow: hidden;
+    }
 
- .filter-table {
+    .filter-table {
+        position: sticky;
+        top: 10%;
 
-        
-    position: sticky;
-    top: 10%;
+    }
+
 
 }
 
-
- }
-
-@media  only screen and (min-width: 901px) and ( max-width: 1100px) {
+@media only screen and (min-width: 901px) and (max-width: 1100px) {
     .campaign-container {
         display: block;
         padding: 13% 13%;
     }
 
-    #donor-emergency-campaign{
-        background-color:hsl(194, 100%, 97%) ;
+    #donor-emergency-campaign {
+        background-color: hsl(194, 100%, 97%);
         box-shadow: none;
     }
-    
- #donor-emergency-campaign .ant-list-items{
-    display: flex;
-    flex-direction: row;
-justify-content: space-around
 
- }
+    #donor-emergency-campaign .ant-list-items {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around
+    }
 
- #donor-emergency-campaign .ant-list-item{
-    height: 100%;
+    #donor-emergency-campaign .ant-list-item {
+        height: 100%;
 
- }
+    }
 
- #donor-emergency-campaign .donor-emergency-campaign-org{
-    height: 45px;
-    overflow:hidden;
- }
+    #donor-emergency-campaign .donor-emergency-campaign-org {
+        height: 45px;
+        overflow: hidden;
+    }
 
- .filter-table {
+    .filter-table {
 
-        
-    position: sticky;
-    top: 13%;
 
+        position: sticky;
+        top: 13%;
+
+    }
 }
-}
 
-@media  only screen and (min-width: 1101px) and ( max-width: 1240px) {
+@media only screen and (min-width: 1101px) and (max-width: 1240px) {
     .campaign-container {
         display: block;
         padding: 12% 13%;
     }
 
-    #donor-emergency-campaign{
-        background-color:hsl(194, 100%, 97%) ;
+    #donor-emergency-campaign {
+        background-color: hsl(194, 100%, 97%);
         box-shadow: none;
     }
-    
- #donor-emergency-campaign .ant-list-items{
-    display: flex;
-    flex-direction: row;
-justify-content: space-around
 
- }
+    #donor-emergency-campaign .ant-list-items {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around
+    }
 
- #donor-emergency-campaign .ant-list-item{
-    height: 100%;
+    #donor-emergency-campaign .ant-list-item {
+        height: 100%;
 
- }
+    }
 
- #donor-emergency-campaign .donor-emergency-campaign-org{
-    height: 45px;
-    overflow:hidden;
- }
+    #donor-emergency-campaign .donor-emergency-campaign-org {
+        height: 45px;
+        overflow: hidden;
+    }
 
- .filter-table {
+    .filter-table {
 
-        
-    position: sticky;
-    top: 13%;
 
+        position: sticky;
+        top: 13%;
+
+    }
 }
-}
 
-@media  only screen and (min-width: 1281px) {
+@media only screen and (min-width: 1281px) {
     .campaign-container {
         /* display: flex; */
         padding: 10% 15%;
@@ -368,17 +374,17 @@ justify-content: space-around
 
     .filter-table {
 
-        
+
         position: sticky;
         top: 15%;
-    
+
     }
-    
+
     #donor-emergency-campaign {
-      
+
         position: sticky;
         top: 15%;
-    
+
     }
-    
+
 }
