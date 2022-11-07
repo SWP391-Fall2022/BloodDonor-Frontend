@@ -113,7 +113,7 @@ function CreateCampaignForm() {
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/create`, json)
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
-    console.log("response", response)
+    // console.log("response", response)
     if (response.success) {
 
       navigate("/organization/manageCampaign")

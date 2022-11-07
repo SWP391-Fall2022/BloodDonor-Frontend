@@ -7,6 +7,15 @@
     border-radius: 5px;
 }
 
+.previewContainer {
+    text-align: center;
+    width: 45rem;
+    background-color: white;
+    padding: 3% 5%;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+}
+
 .avatarUploader,
 .avatarUploaderTrigger,
 .avatar {

@@ -139,16 +139,19 @@ export default function OrganizationNotificationList() {
                             <div>
                                 <Search enterButton style={{ width: '90%' }} onSearch={onSearch} />
                                 <Tooltip
-                                    title="Nhấn vào cột để xem thông tin chi tiết của thông báo"
+                                    title="Nhấn vào một dòng để xem thông tin chi tiết của thông báo"
                                     arrowPointAtCenter
                                     placement="right"
                                 >
                                     <QuestionCircleOutlined style={{ position: 'relative', left: '20px', top: '5px' }} />
                                 </Tooltip>
                             </div>
-                            <Link to="/organization/notification/create">
-                                <Button id={styles.btn3}>Tạo mới</Button>
-                            </Link>
+                            <div>
+                                <Button id={styles.btn3} style={{ margin: '0 10px' }} onClick={() => setSearchValue('')}>Hiện tất cả</Button>
+                                <Link to="/organization/notification/create">
+                                    <Button id={styles.btn3}>Tạo mới</Button>
+                                </Link>
+                            </div>
                         </div>
                         {!empty ?
                             <>

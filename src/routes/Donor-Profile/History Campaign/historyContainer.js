@@ -1,119 +1,153 @@
 import styles from '../donor.module.css'
-import { Button, Modal, Space, Table, Tag } from 'antd';
+import { Empty, Modal, Skeleton, Table, Tooltip } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-const columns = [
-    {
-        title: 'STT',
-        dataIndex: 'stt',
-        key: 'stt',
-    },
-    {
-        title: 'Chiến dịch',
-        dataIndex: 'campaign',
-        key: 'campaign',
-    },
-    {
-        title: 'Thông tin sức khỏe',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (index) => (
-            <Button onClick={info}>
-                <Tag color='green' key={index}>
-                    Chi tiết
-                </Tag>
-            </Button>
-        ),
-    },
-    {
-        title: 'Trạng thái',
-        key: 'action',
-        render: () => (
-            <Space size="middle">
-                <Link>Đã đăng ký</Link>
-                <Link>Đã tham gia</Link>
-                <Link>Hủy tham gia</Link>
-            </Space>
-        ),
-    },
-];
-const data = [
-    {
-        stt: '1',
-        campaign: 'John Brown',
-        tags: 1,
-    },
-    {
-        stt: '2',
-        campaign: 'Jim Green',
-        tags: 2,
-    },
-    {
-        stt: '3',
-        campaign: 'Joe Black',
-        tags: 3,
-    },
-    {
-        stt: '4',
-        campaign: 'Joe Black',
-        tags: 4,
-    },
-    {
-        stt: '5',
-        campaign: 'Joe Black',
-        tags: 5,
-    },
-    {
-        stt: '6',
-        campaign: 'Joe Black',
-        tags: 6,
-    },
-    {
-        stt: '7',
-        campaign: 'Joe Black',
-        tags: 7,
-    },
-    {
-        stt: '8',
-        campaign: 'Joe Black',
-        tags: 8,
-    },
-    {
-        stt: '9',
-        campaign: 'Joe Black',
-        tags: 9,
-    },
-    {
-        stt: '10',
-        campaign: 'Joe Black',
-        tags: 10,
-    },
-];
-
-function info() {
-    Modal.info({
-        title: <h2><strong>THÔNG TIN SỨC KHỎE</strong></h2>,
-        content: (
-            <div>
-                <div><strong>Cân nặng: </strong>50kg</div>
-                <div><strong>Nhóm máu: </strong>AB</div>
-                <div><strong>Lượng máu: </strong>450cc</div>
-                <div><strong>Chi tiết sức khỏe: </strong>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non</div>
-            </div>
-        ),
-        closable: true,
-        okText: 'Đóng',
-        width: '600px'
-    });
-}
-
 export default function HistoryContainer() {
+
+    const [dataSource, setDataSource] = useState([])
+    const [rendered, setRendered] = useState(false)
+    const effectRan = useRef(false)
+
+    useEffect(() => {
+        if (effectRan.current === true) {
+            setDataSource([]);
+            fetchCampaignList()
+            setRendered(true)
+        }
+        return () => {
+            effectRan.current = true
+        }
+    }, [])
+
+    const columns = [
+        {
+            title: 'STT',
+            dataIndex: 'STT',
+            key: 'STT',
+            render: (text, record, index) => index + 1,
+        },
+        {
+            title: 'Chiến dịch',
+            dataIndex: 'campaignName',
+            key: 'campaignName',
+            align: 'center',
+            render: (text, record) => <Link to={'/organization/' + record.key} title="Chi tiết chiến dịch">{text}</Link>
+        },
+        {
+            title: 'Thông tin sức khỏe',
+            key: 'detail',
+            dataIndex: 'detail',
+            align: 'center',
+            render: (text, record, index) => <Link onClick={event => { info(record) }} title="Chi tiết chiến dịch">Chi tiết</Link>
+        },
+        {
+            title: 'Trạng thái',
+            key: 'status',
+            dataIndex: 'status',
+            align: 'right',
+        },
+    ];
+
+    async function fetchCampaignList() {
+        const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+        let json = {
+            headers: new Headers({
+                'Authorization': "Bearer " + token,
+            })
+        }
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
+        // console.log(response)
+        if (response.status === 200) {
+            if (response.body.length !== 0) {
+                response.body.forEach(body => {
+                    fetchCampaignName(body.campaignId, body)
+                })
+            }
+        }
+    }
+
+    async function fetchCampaignName(id, body) {
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/readOne/${id}`)
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
+        // console.log(response)
+        if (response.status === 200) {
+            const info = { key: id, campaignName: response.body.name, status: body.status === "NOT_CHECKED_IN" ? "Đã đăng ký" : body.status === "CHECKED_IN" ? "Đã tham gia" : "Đã hủy" }
+            setDataSource(curr => [...curr, info])
+        }
+    }
+
+    async function info(record) {
+        // console.log(record)
+        let weight = ""
+        let bloodType = ""
+        let amount = ""
+        let detail = ""
+
+        const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+        let json = {
+            headers: new Headers({
+                'Authorization': "Bearer " + token,
+            })
+        }
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/donated`, json)
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
+        // console.log(response)
+        if (response.status === 200) {
+            response.body.forEach(e => {
+                if (e.campaignId === record.key) {
+                    weight = e.weight
+                    bloodType = e.bloodType
+                    amount = e.amount
+                    detail = e.details
+                }
+            })
+        }
+        Modal.info({
+            title: <h2><strong>THÔNG TIN SỨC KHỎE</strong></h2>,
+            content: (
+                <div>
+                    <div><strong>Cân nặng: </strong>{weight}kg</div>
+                    <div><strong>Nhóm máu: </strong>{bloodType}</div>
+                    <div><strong>Lượng máu: </strong>{amount}cc</div>
+                    <div><strong>Chi tiết sức khỏe: </strong>{detail}</div>
+                </div>
+            ),
+            closable: true,
+            okText: 'Đóng',
+            width: '600px'
+        });
+    }
+
     return (
         <div className={styles.infoContainerHistory}>
-            <div className={styles.title}>LỊCH SỬ CHIẾN DỊCH</div>
-            <Table rowKey={data => data.stt} columns={columns} dataSource={data} pagination={{ defaultPageSize: 5 }} style={{ textAlign: 'center' }} />
+            {rendered ?
+                <>
+                    <div className={styles.title}>LỊCH SỬ CHIẾN DỊCH
+                        <Tooltip
+                            title="Nhấn vào một dòng để xem thông tin sức khỏe của bạn"
+                            arrowPointAtCenter
+                            placement="right"
+                        >
+                            <QuestionCircleOutlined style={{ position: 'relative', left: '20px' }} />
+                        </Tooltip>
+                    </div>
+                    <Table
+                        locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Lịch sử rỗng" /> }}
+                        columns={columns}
+                        dataSource={dataSource}
+                        pagination={{ total: dataSource.length, pageSize: '5', hideOnSinglePage: true }}
+                        style={{ textAlign: 'center' }}
+                    />
+                </>
+                :
+                <Skeleton active />
+            }
         </div>
     )
 }

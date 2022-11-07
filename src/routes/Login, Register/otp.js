@@ -7,7 +7,7 @@ import OtpInput from "react-otp-input";
 export default function Otp() {
 
     const [otp, setOtp] = useState('')
-    const [seconds, setSeconds] = useState(5)
+    const [seconds, setSeconds] = useState(150)
     const { state } = useLocation();
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
@@ -25,7 +25,7 @@ export default function Otp() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/register/confirmCode/${otp}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log(response)
+        // console.log(response)
         if (response.status === 200) {
             if (state.restore) {
                 navigate('/new-password', { state: { userId: state.userId } })

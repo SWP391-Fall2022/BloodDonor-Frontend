@@ -24,7 +24,7 @@ const SendQuestionForm = ({ open, onCreate, onCancel }) => {
             onCreate(values);
           })
           .catch((info) => {
-            console.log('Validate Failed:', info);
+            // console.log('Validate Failed:', info);
           });
       }}
     >
@@ -63,7 +63,7 @@ const SendQuestion = () => {
   const [open, setOpen] = useState(false);
 
   const onCreate = (values) => {
-    console.log('Received values of form: ', values);
+    // console.log('Received values of form: ', values);
     setOpen(false);
   };
 

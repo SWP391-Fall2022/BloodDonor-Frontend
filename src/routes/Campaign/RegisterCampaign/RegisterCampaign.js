@@ -19,7 +19,7 @@ export default function RegisterCampaign({ campaign , registered}) {
     const [dateValue, setDateValue] = useState("1999-01-01");
 
     const onDateChange = (e) => {
-        console.log('radio checked', e.target.value);
+        // console.log('radio checked', e.target.value);
         setDateValue(e.target.value);
     };
 
@@ -27,7 +27,7 @@ export default function RegisterCampaign({ campaign , registered}) {
     const [timeValue, setTimeValue] = useState("sa");
 
     const onTimeChange = (e) => {
-        console.log('radio checked', e.target.value);
+        // console.log('radio checked', e.target.value);
         setTimeValue(e.target.value);
     };
 
