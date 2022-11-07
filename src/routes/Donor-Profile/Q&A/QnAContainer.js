@@ -48,7 +48,7 @@ export default function QnAContainer() {
                                                         header={v.question}
                                                         key={v.questionId.toString()}
                                                     >
-                                                        <p>{v.answer}</p>
+                                                        <p>{v.answer === null ? "Rất tiếc, bạn vẫn chưa có hồi âm nào từ tổ chức ;(" : v.answer}</p>
                                                     </Panel>
                                                 </Collapse>
                                             )
