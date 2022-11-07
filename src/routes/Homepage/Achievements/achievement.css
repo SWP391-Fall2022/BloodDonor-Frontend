@@ -30,12 +30,11 @@
     position: absolute;
     top: 10%;
     border: 5px solid white;
-    box-shadow: var(--shadow-dp-01);
 }
 
 .achievement-chart {
     background-color: white;
-    box-shadow: var(--shadow-dp-02);
+    box-shadow: var(--shadow-dp-01);
     border-radius: 5px;
     display: flex;
     flex-direction: column;

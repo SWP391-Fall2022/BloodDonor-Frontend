@@ -1,4 +1,12 @@
-import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
+import {
+  AutoComplete,
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Select,
+} from "antd";
 import "./writehealthinf.css";
 import { Option } from "antd/lib/mentions";
 import { useState } from "react";
@@ -7,21 +15,9 @@ import { useContext } from "react";
 import { FormContext } from "./OrganizationCampaignHealthInfContext";
 import { NavLink } from "react-router-dom";
 const WriteHealthInf = () => {
-  // const valueForm = {
-  //   stt: "1",
-  //   fullName: "Nguyễn Văn A",
-  //   phone: "0982123456",
-  //   email: "nguyenvana@gmail.com",
-  //   cmnd: "12412341234",
-  //   code: "2345235",
-  //   place: "123 đường 494 quận Thủ Đức, TP Hồ Chí Minh",
-  //   status: "",
-  //   weight: "",
-  //   bloodGroup:"",
-  //   amountOfBlood: "",
-  //   detail: ""
-  // };
+  //Biến lưu thông qua các component
   const { valueForm, setForm } = useContext(FormContext);
+  //Lưu tạm, biến trung gian
   const [value, setValue] = useState();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,11 +35,13 @@ const WriteHealthInf = () => {
   };
 
   const onFinish = (values) => {
+    values.status = "true";
     setValue({
       ...valueForm,
       ...values,
     });
     showModal();
+    console.log(values);
   };
   const validateMessages = {
     required: "Bạn đang để trống ${label}",
@@ -60,7 +58,7 @@ const WriteHealthInf = () => {
   return (
     <section id="write-health-inf">
       <div className="health-form">
-        <div className="health-form-title">THÔNG TIN SỨC KHỎE</div>
+        <div className="health-form-title">ĐIỀN THÔNG TIN SỨC KHỎE</div>
         <div className="health-form-text">
           <b>Họ và Tên: </b> {valueForm.fullName}
         </div>
@@ -90,77 +88,74 @@ const WriteHealthInf = () => {
             layout="vertical"
           >
             <Form.Item
-              label="Tình trạng"
-              name="status"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              name="weight"
-              label="Cân nặng"
-              rules={[
-                {
-                  required: true,
-                  type: "number",
-                  min: 42,
-                  max: 150,
-                },
-              ]}
-            >
-              <InputNumber addonAfter="kg" />
-            </Form.Item>
-            <div className="health-group-input">
+                name="weight"
+                label="Cân nặng"
+                rules={[
+                  {
+                    required: true,
+                    type: "number",
+                    min: 42,
+                    max: 150,
+                  },
+                ]}
+                initialValue={Number(valueForm.weight)}
+              >
+                <InputNumber addonAfter="kg" defaultValue={valueForm.weight} />
+              </Form.Item>
+              <div className="health-group-input">
+                <Form.Item
+                  name="bloodType"
+                  label="Nhóm máu"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                  initialValue={valueForm.bloodType}
+                >
+                  <Select
+                    placeholder="Nhóm máu của tình nguyện viện"
+                    allowClear
+                    defaultValue={valueForm.bloodType}
+                    addonBefore="ml"
+                  >
+                    <Option value="O">O</Option>
+                    <Option value="A">A</Option>
+                    <Option value="B">B</Option>
+                    <Option value="AB">AB</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  name="amount"
+                  label="Lượng máu (ml)"
+                  defaultValue={valueForm.amount}
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Select placeholder="Lượng máu đã hiến" allowClear addonAfter="ml" >
+                    <Option value="250">250</Option>
+                    <Option value="300">300</Option>
+                    <Option value="350">350</Option>
+                    <Option value="400">400</Option>
+                    <Option value="450">450</Option>
+                  </Select>
+                </Form.Item>
+              </div>
               <Form.Item
-                name="bloodGroup"
-                label="Nhóm máu"
+                label="Chi tiết sức khỏe"
+                name="details"
                 rules={[
                   {
                     required: true,
                   },
                 ]}
+                initialValue={valueForm.details}
               >
-                <Select placeholder="Nhóm máu của tình nguyện viện" allowClear>
-                  <Option value="O">Nhóm máu O</Option>
-                  <Option value="A">Nhóm máu A</Option>
-                  <Option value="B">Nhóm máu B</Option>
-                  <Option value="AB">Nhóm máu AB</Option>
-                </Select>
+                <Input.TextArea  defaultValue={valueForm.details}/>
               </Form.Item>
-              <Form.Item
-                name="amountOfBlood"
-                label="Lượng máu"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Select placeholder="Lượng máu đã hiến" allowClear>
-                  <Option value="250ml">250ml</Option>
-                  <Option value="300ml">300ml</Option>
-                  <Option value="350ml">350ml</Option>
-                  <Option value="400ml">400ml</Option>
-                  <Option value="450ml">450ml</Option>
-                </Select>
-              </Form.Item>
-            </div>
-            <Form.Item
-              label="Chi tiết sức khỏe"
-              name="detail"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input.TextArea />
-            </Form.Item>
 
             <Form.Item>
               <Button htmlType="button" onClick={onReset}>
@@ -175,7 +170,7 @@ const WriteHealthInf = () => {
                   <Button key="back" onClick={handleCancel}>
                     Xem lại
                   </Button>,
-                  <NavLink end to="/organization-campaign-health-inf">
+                  <NavLink end to="/organization-donor-health-inf">
                     <Button
                       key="submit"
                       type="primary"

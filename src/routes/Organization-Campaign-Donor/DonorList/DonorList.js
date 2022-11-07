@@ -11,6 +11,7 @@ const columns = [
     title: "Họ và Tên",
     dataIndex: "fullName",
     render: (text) => <a>{text}</a>,
+    
   },
   {
     title: "CMND",
@@ -48,7 +49,7 @@ const data = [
     stt: "2",
     key: "2",
     fullName: "Phạm Minh Tiến",
-    cmnd: "12412341234",
+    cmnd: "567",
     code: "2345235",
     inf: "Phiếu sức khỏe",
     state: "Tham gia",
@@ -57,7 +58,7 @@ const data = [
     stt: "3",
     key: "3",
     fullName: "Đào Duy Thanh",
-    cmnd: "12412341234",
+    cmnd: "789",
     code: "2345235",
     inf: "Phiếu sức khỏe",
     state: "Hủy",
@@ -216,6 +217,7 @@ const DonorList = () => {
               columns={columns}
               dataSource={filterState(search(data), "Đăng ký")}
               size="middle"
+              scroll={{ x: "100wh" }}
             />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Tham gia" key="3">
@@ -223,6 +225,7 @@ const DonorList = () => {
               columns={columns}
               dataSource={filterState(search(data), "Tham gia")}
               size="middle"
+              scroll={{ x: "100wh" }}
             />
           </Tabs.TabPane>
           <Tabs.TabPane tab="Hủy" key="4">
@@ -230,6 +233,7 @@ const DonorList = () => {
               columns={columns}
               dataSource={filterState(search(data), "Hủy")}
               size="middle"
+              scroll={{ x: "100wh" }}
             />
           </Tabs.TabPane>
           <Tabs></Tabs>
