@@ -1,20 +1,30 @@
 import React from "react";
-import "antd/dist/antd.min.css";
+import "antd/dist/antd.css";
 import "./ManageCampaign.css";
 import { Input, Table, Button, Tabs } from 'antd';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { SearchOutlined } from "@ant-design/icons";
 
 
 const { Search } = Input;
 
-const onChange = (key) => {
-  console.log(key);
-};
+// check status of campaign to render on table
+function checkCampStatus(camp) {
+  const today = new Date();
+  var start = new Date(camp.startDate);
+  var end = new Date(camp.endDate);
+  if( camp.status === false ) return "Đã xóa"
+
+  if ((start <= today && today <= end) || start > today)
+    return "Đang diễn ra"
+  else // if(endDate < today)
+    return "Kết thúc"
+  
+}
 
 
-
-
+//Set columns for table
 const columns = [
   {
     title: 'STT',
@@ -51,252 +61,236 @@ const columns = [
 ];
 
 
-
-const data = [
-  //   campaigns.map((camp)=>
-
-  //   )
-
-  {
-    key: '1',
-    id: '1',
-    camName: 'Chiến dịch 105',
-    camTime: '20/9/2022 -> 20/10/2022',
-    donorList: 'link',
-    questions: 'link',
-    status: 'Kết thúc'
-  },
-  {
-    key: '2',
-    id: '2',
-    camName: 'Chiến dịch 104',
-    camTime: '20/10/2022 -> 22/12/2022',
-    donorList: 'link',
-
-    questions: 'link',
-    status: 'Sắp diễn ra'
-  },
-  {
-    key: '3',
-    id: '3',
-    camName: 'Chiến dịch 102',
-    camTime: '23/11/2022 -> 24/12/2022',
-    donorList: 'link',
-
-    questions: 'link',
-    status: 'Đang diễn ra'
-  },
-  {
-    key: '4',
-    id: '4',
-    camName: 'Chiến dịch 102',
-    camTime: '23/11/2022 -> 24/12/2022',
-    donorList: 'link',
-
-    questions: 'link',
-    status: 'Đang diễn ra'
-  },
-  {
-    key: '5',
-    id: '5',
-    camName: 'Chiến dịch 102',
-    camTime: '23/11/2022 -> 24/12/2022',
-    donorList: 'link',
-
-    questions: 'link',
-    status: 'Đã hủy'
-  },
-  {
-    key: '6',
-    id: '6',
-    camName: 'Chiến dịch 102',
-    camTime: '23/11/2022 -> 24/12/2022',
-    donorList: 'link',
-
-    questions: 'link',
-    status: 'Đang diễn ra'
-  },
-];
-
-// filter with status
-
-const waitingCampaign = data.filter(
-  (camp) => { return camp.status.includes('Sắp diễn ra') }
-)
-
-const ongoingCamp = data.filter(
-  (camp) => { return camp.status.includes('Đang diễn ra') }
-)
-
-const endedCamp = data.filter(
-  (camp) => { return camp.status.includes('Kết thúc') }
-)
-
-const cancelCamp = data.filter(
-  (camp) => { return camp.status.includes('Đã hủy') }
-  // data.status == "Sắp diễn ra")
-)
 export default function ManageCampaign() {
+  const [tableRow, setTableRow] = useState([]);
+  const [message, setMessage] = useState('')
 
-
-  // fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`)
-  // .then(res => res.json())
-  // .then(
-  //   (result) => {
-  //     setCampaigns(result.body);
-  //     setCampaigns(
-  //       result.body.map(row => ({
-  //         camName: row.name,
-  //         camTime: row.startDate ,
-  //         donorList: "link",
-  //         questions: "link",
-  //         status:row.startDate
-  //       }))
-  //     );
-
-  //   },
-  //   // Note: it's important to handle errors here
-  //   // instead of a catch() block so that we don't swallow
-  //   // exceptions from actual bugs in components.
-  //   (error) => {
-
-  //     console.log(error)
-  //   }
-  // )
-
-  const [campaigns, setCampaigns] = useState([]);
   const navigate = useNavigate();
+  const [campaigns, setCampaigns] = useState({})
+
+  // fetch data function
+  function getCampFromAPI() {
+    const asyncFn = async () => {
+      const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+      let json = {
+        method: 'GET',
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': "Bearer " + token,
+        })
+      }
+      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAllByOrganization`, json)
+        .then((res) => res.json())
+        .catch((error) => { console.log(error) })
+
+      if (response.success) {
+        console.log("response", response)
+        setCampaigns(response)
+        setTableRow(
+          response.body.map(row => ({
+            camName: row.name,
+            camTime: row.startDate + " -> " + row.endDate,
+            id: row.id,
+            donorList: 'link',
+
+            questions: 'link',
+            status: checkCampStatus(row)
+          })))
+        console.log("camps", tableRow)
+        // navigate("/organization/manageCampaign")
+       
+      }
+    
+    }
+    asyncFn();
+  }
+
+
+  //call etch API function
+  useEffect(() => {
+    getCampFromAPI();
+  }, []
+  )
+
+  // SEARCH fnction
+  function removeVietnameseTones(str) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    // Some system encode vietnamese combining accent as individual utf-8 characters
+    // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+    // Remove extra spaces
+    // Bỏ các khoảng trắng liền nhau
+    str = str.replace(/ + /g, " ");
+    str = str.trim();
+    // Remove punctuations
+    // Bỏ dấu câu, kí tự đặc biệt
+    str = str.replace(
+      /!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g,
+      " "
+    );
+    return str;
+  }
+  const keys = ["camName"];
+  const search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) =>
+        removeVietnameseTones(item[key])
+          .toLowerCase()
+          .includes(removeVietnameseTones(query.toLowerCase()))
+      )
+    );
+  };
+  const [query, setQuery] = useState("");
+
+  const filterStatus = (data, keys) => {
+    return data.filter((item) => item.status.includes(keys));
+  };
 
   return (
 
-
-
     <>
-
-
-      <div id="manage-campaign-container">
-        <div className="manage-campaign-header">
+      <div className="manage-campaign-header">
           <p >Quản lý chiến dịch</p>
         </div>
+      <div id="manage-campaign-container">
+      
 
         <div className="manage-campaign-container">
           <p className="manage-campaign-title"> Danh sách các chiến dịch của tổ chức hiến máu</p>
+          <div className="search-buttons">
+                    <Input
+                     className="cam-search-box" 
+                     suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+                     id="cam-search-box" 
+                     onChange={(e) => setQuery(e.target.value)}
+                     placeholder="Điền tên chiến dịch bạn muốn tìm..." 
+                     />
+                    <div className="cre-del-buttons">
+                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
+                        Tạo mới
+                      </Button>
+                    </div>
+                  </div>
           <Tabs
             className="manage-campaign-content"
             defaultActiveKey="1"
-            onChange={onChange}
             items={[
               {
                 label: `Tất cả`,
                 key: '1',
                 children: <>
-                  <div className="search-buttons">
-                    <Search className="cam-search-box" />
-                    <div className="cre-del-buttons">
-                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                        Tạo mới
-                      </Button>
-                    </div>
-                  </div>
-                  <Table columns={columns} dataSource={data}
+                  
+
+                  <Table columns={columns} dataSource={search(tableRow)}
                     pagination={{
                       pageSize: 5,
                     }}
+                    scroll={{x: "100wh"}}
+
+
                     onRow={record => ({
-                      onClick: (e) => navigate("/organization/manageCampaign/detailCampaign/1")
+                      onClick: (e) => {
+
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status } })
+                      }
+
                     })}
                   />
+
                 </>,
               },
-              {
-                label: `Sắp diễn ra`,
-                key: '2',
-                children: <>
-                  <div className="search-buttons">
-                    <Search className="cam-search-box" />
-                    <div className="cre-del-buttons">
-                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                        Tạo mới
-                      </Button>
-                    </div>
-                  </div>
-                  <Table columns={columns} dataSource={waitingCampaign}
-                    pagination={{
-                      pageSize: 5,
-                    }}
-                    onRow={record => ({
-                      onClick: (e) => navigate("/organization/manageCampaign/detailCampaign/2")
-                    })}
-                  />
-                </>,
-              },
+
               {
                 label: `Đang diễn ra`,
-                key: '3',
+                key: '2',
                 children: <>
-                  <div className="search-buttons">
-                    <Search className="cam-search-box" />
-                    <div className="cre-del-buttons">
-                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                        Tạo mới
-                      </Button>
-                    </div>
-                  </div>
-                  <Table columns={columns} dataSource={ongoingCamp}
+                 
+
+                  <Table columns={columns}
+                   dataSource={filterStatus( search(tableRow), 'Đang diễn ra')}
                     pagination={{
                       pageSize: 5,
                     }}
+                    scroll={{x: "100wh"}}
+
                     onRow={record => ({
-                      onClick: (e) => navigate("/organization/manageCampaign/detailCampaign/3")
+                      onClick: (e) => {
+
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id } })
+                      }
+
                     })}
                   />
+
                 </>,
               },
               {
                 label: `Kết thúc`,
+                key: '3',
+                children: <>
+                 
+
+                  <Table columns={columns} dataSource={filterStatus( search(tableRow), 'Kết thúc')}
+                    pagination={{
+                      pageSize: 5,
+                    }}
+                    scroll={{x: "100wh"}}
+
+
+                    onRow={record => ({
+                      onClick: (e) => {
+
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id } })
+                      }
+
+                    })}
+
+                  />
+
+                </>,
+              }, {
+                label: `Đã xóa`,
                 key: '4',
                 children: <>
-                  <div className="search-buttons">
-                    <Search className="cam-search-box" />
-                    <div className="cre-del-buttons">
-                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                        Tạo mới
-                      </Button>
-                    </div>
-                  </div>
-                  <Table columns={columns} dataSource={endedCamp}
+                 
+
+                  <Table columns={columns} dataSource={filterStatus( search(tableRow), 'Đã xóa')}
                     pagination={{
                       pageSize: 5,
                     }}
+                    scroll={{x: "100wh"}}
+
                     onRow={record => ({
-                      onClick: (e) => navigate("/organization/manageCampaign/detailCampaign/4")
+                      onClick: (e) => {
+
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id } })
+                      }
+
                     })}
+
                   />
-                </>,
-              },
-              {
-                label: `Hủy`,
-                key: '5',
-                children: <>
-                  <div className="search-buttons">
-                    <Search className="cam-search-box" />
-                    <div className="cre-del-buttons">
-                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                        Tạo mới
-                      </Button>
-                    </div>
-                  </div>
-                  <Table columns={columns} dataSource={cancelCamp}
-                    pagination={{
-                      pageSize: 5,
-                    }}
-                  />
+
                 </>,
               }
             ]}
           />
         </div>
       </div>
+
     </>
   );
 }
