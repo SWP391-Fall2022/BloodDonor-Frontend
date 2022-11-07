@@ -11,6 +11,7 @@ const columns = [
     title: "Họ và Tên",
     dataIndex: "fullName",
     render: (text) => <a>{text}</a>,
+    
   },
   {
     title: "CMND",

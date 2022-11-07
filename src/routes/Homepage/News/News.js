@@ -35,7 +35,7 @@ const News = () => {
                       .join("/")}
                   </div>
                   <a className="title" href="#.">
-                    {data[0].title}
+                    {data[0].title} 
                   </a>
                   <div className="summary">{data[0].content}</div>
                 </div>

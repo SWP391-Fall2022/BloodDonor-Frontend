@@ -60,7 +60,7 @@ const OrganizationCampaignHealthInf = () => {
       state: "Hủy",
       weight: "",
       bloodType: "",
-      amount: "",
+      amount: "", 
       details: "",
       status: "false",
     },
@@ -92,8 +92,11 @@ const OrganizationCampaignHealthInf = () => {
         <div className="content-col">
           <div>
             <FormContext.Provider value={value}>
+            {/*status: Already filled out a health form(true) or not(false) */}
+            {/*valueState: need to edit(true) or watch(false); */}
               {valueForm.status === "false" ? (
                 <WriteHealthInf />
+    
               ) : valueState === "false" ? (
                 <RecheckHealthInf />
               ) : (

@@ -15,21 +15,9 @@ import { useContext } from "react";
 import { FormContext } from "./OrganizationCampaignHealthInfContext";
 import { NavLink } from "react-router-dom";
 const WriteHealthInf = () => {
-  // const valueForm = {
-  //   stt: "1",
-  //   fullName: "Nguyễn Văn A",
-  //   phone: "0982123456",
-  //   email: "nguyenvana@gmail.com",
-  //   cmnd: "12412341234",
-  //   code: "2345235",
-  //   place: "123 đường 494 quận Thủ Đức, TP Hồ Chí Minh",
-  //   status: "",
-  //   weight: "",
-  //   bloodGroup:"",
-  //   amountOfBlood: "",
-  //   detail: ""
-  // };
+  //Biến lưu thông qua các component
   const { valueForm, setForm } = useContext(FormContext);
+  //Lưu tạm, biến trung gian
   const [value, setValue] = useState();
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
