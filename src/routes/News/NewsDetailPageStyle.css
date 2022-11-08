@@ -32,6 +32,8 @@
     display: flex;
 }
 
+/* other-news styles */
+
 .other-news {
         background-color: #fff;
         display: flex;
@@ -40,6 +42,7 @@
         width: 30%;
         height: fit-content;
         flex-direction: column;
+        margin-bottom: 30px;
 }
 
 .other-news-title {
@@ -50,6 +53,14 @@
     line-height: 22px;
     padding: 20px 0;
 }
+.other-news .ant-pagination{
+    display: none;
+}
+
+.other-news .news-search{
+    display: none;
+}
+
 
 
 .detail-container .news-item-content p {
@@ -108,7 +119,4 @@
     background-size: cover;
 }
 
-.other-news .ant-pagination{
-    display: none;
-}
 
