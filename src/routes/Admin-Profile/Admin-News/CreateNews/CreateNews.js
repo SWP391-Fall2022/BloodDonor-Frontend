@@ -6,6 +6,9 @@ import React from "react";
 import Editor from "../Editor/Editor";
 import { CreateNewsContext } from "./AdminCreateNewsContext";
 import PostImage from "../PostImage/PostImage";
+import { Link } from "react-router-dom";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { AdBread } from "../../AdminBreadcrumbs";
 
 const CreateNews = () => {
   const category = [
@@ -70,7 +73,23 @@ const CreateNews = () => {
   function callbackImageFunction(campaignImg) {
     setCampaignImg(campaignImg);
   }
-  return (
+  const breadName = (
+    <>
+      <Link to="/admin/news_list">
+        <ArrowLeftOutlined style={{ marginRight: "2%", color: "black" }} />
+      </Link>
+      Tạo tin tức
+    </>
+  );
+  const layer1 = <Link to="/admin/news_list">Quản lí tin tức</Link>;
+  return (<>
+  <div className="create-news-breadcrumb">
+        <AdBread
+          layer1={layer1}
+          layer2="Tạo tin tức"
+          name={breadName}
+        />
+      </div>
     <section id="create-news">
       <div className="news-form">
         <div className="news-form-title">TẠO TIN TỨC</div>
@@ -107,15 +126,12 @@ const CreateNews = () => {
             >
               <Input initialvalue={valueCreateNews.title} />
             </Form.Item>
+
             <Form.Item value={valueContent} name="content">
               <Editor updateContent={normFile} content={valueContent}></Editor>
             </Form.Item>
-            {console.log("TEST image create")}
-            {console.log(valueCreateNews.images)}
-            <PostImage
-              campaignImg={campaignImg}
-              callback={callbackImageFunction}
-            ></PostImage>
+            <PostImage campaignImg={campaignImg} callback={callbackImageFunction}></PostImage>
+
             <Form.Item
               name="category"
               label="Thể loại tin tức"
@@ -171,7 +187,7 @@ const CreateNews = () => {
           </Form>
         </div>
       </div>
-    </section>
+    </section></>
   );
 };
 export default CreateNews;

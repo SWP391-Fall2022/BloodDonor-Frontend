@@ -67,6 +67,7 @@ import AdminCreateNews from "./routes/Admin-Profile/Admin-News/CreateNews/AdminC
 import AdminViewNews from "./routes/Admin-Profile/Admin-News/ViewNews/AdminViewNews";
 import PreviewNews from "./routes/Admin-Profile/Admin-News/PreviewNews/PreviewNews";
 import EditNews from "./routes/Admin-Profile/Admin-News/EditNews/EditNews";
+import OverViewNews from "./routes/Admin-Profile/Admin-News/OverviewNews/OverViewNews";
 
 export default function App() {
   return (
@@ -195,6 +196,7 @@ export default function App() {
             <Route path="preview_news" element={<PreviewNews />} />
             <Route path="view_news" element={<AdminViewNews />} />
             <Route path="edit_news" element={<EditNews />} />
+            <Route path="overview_news" element={<OverViewNews />} />
             <Route path="manage_vouchers" element={<AdminManageVouchers />} />
           </Route>
 

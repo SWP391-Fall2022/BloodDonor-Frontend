@@ -19,7 +19,8 @@ export default function EditNews() {
     </>
   );
   const layer1 = <Link to="/admin/news_list">Quản lý tin tức</Link>;
-  const layer2 = <Link to="/admin/view_News">Xem tin tức</Link>;
+  const layer2 = <Link to="/admin/view_news" >Xem tin tức</Link>;
+ 
   const category = [
     "Chưa chọn thể loại",
     "Hoạt động sự kiện",
@@ -64,6 +65,9 @@ export default function EditNews() {
   const handleSubmit = () => {
     setFlag(0);
   };
+  const handleReturn = () => {
+    setPage(0);
+  }
   const onFinish = (values) => {
     values.images = campaignImg ;
     values.content = valueContent;

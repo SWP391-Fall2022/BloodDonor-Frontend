@@ -1,6 +1,7 @@
 import { Button, Input, Table, Tabs } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AdBread } from "../../AdminBreadcrumbs";
 import "./newslist.css";
 const columns = [
   {
@@ -98,50 +99,53 @@ const NewsList = () => {
     return data.filter((item) => item.status === status);
   };
   return (
-    <section id="admin-news-list">
-      <div className="admin-list-title">Danh sách quản lý tin tức</div>
-      <div className="admin-list-tools">
-        <Input.Group className="admin-list-search" compact>
-          <Input
-            placeholder="Hãy điền thông tin mà bạn muốn tìm kiếm"
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </Input.Group>
-        <Link to="/admin/create_news">
-          <Button type="primary">Tạo mới</Button>
-        </Link>
-      </div>
-      {data && (
-        <div className="admin-list-table">
-          <Tabs defaultActiveKey="1">
-            <Tabs.TabPane tab="Tất cả" key="1">
-              <Table
-                columns={columns}
-                dataSource={search(data)}
-                size="middle"
-                scroll={{ x: "100wh" }}
-              />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Công khai" key="2">
-              <Table
-                columns={columns}
-                dataSource={filterStatus(search(data), true)}
-                size="middle"
-                scroll={{ x: "100wh" }}
-              />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Ẩn" key="3">
-              <Table
-                columns={columns}
-                dataSource={filterStatus(search(data), false)}
-                size="middle"
-                scroll={{ x: "100wh" }}
-              />
-            </Tabs.TabPane>
-          </Tabs>
+    <>
+     <div className="news-list-breadcrumb"><AdBread name="Quản lý tin tức" /></div>
+      <section id="admin-news-list">
+        <div className="admin-list-title">Danh sách quản lý tin tức</div>
+        <div className="admin-list-tools">
+          <Input.Group className="admin-list-search" compact>
+            <Input
+              placeholder="Hãy điền thông tin mà bạn muốn tìm kiếm"
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </Input.Group>
+          <Link to="/admin/create_news">
+            <Button type="primary">Tạo mới</Button>
+          </Link>
         </div>
-      )}
-    </section>
+        {data && (
+          <div className="admin-list-table">
+            <Tabs defaultActiveKey="1">
+              <Tabs.TabPane tab="Tất cả" key="1">
+                <Table
+                  columns={columns}
+                  dataSource={search(data)}
+                  size="middle"
+                  scroll={{ x: "100wh" }}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Công khai" key="2">
+                <Table
+                  columns={columns}
+                  dataSource={filterStatus(search(data), true)}
+                  size="middle"
+                  scroll={{ x: "100wh" }}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Ẩn" key="3">
+                <Table
+                  columns={columns}
+                  dataSource={filterStatus(search(data), false)}
+                  size="middle"
+                  scroll={{ x: "100wh" }}
+                />
+              </Tabs.TabPane>
+            </Tabs>
+          </div>
+        )}
+      </section>
+    </>
   );
 };
 export default NewsList;
