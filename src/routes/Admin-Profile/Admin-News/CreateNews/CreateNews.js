@@ -81,7 +81,7 @@ const CreateNews = () => {
       Tạo tin tức
     </>
   );
-  const layer1 = <Link to="/admin/news_list">Quản lí tin tức</Link>;
+  const layer1 = <Link to="/admin/news">Quản lí tin tức</Link>;
   return (<>
   <div className="create-news-breadcrumb">
         <AdBread

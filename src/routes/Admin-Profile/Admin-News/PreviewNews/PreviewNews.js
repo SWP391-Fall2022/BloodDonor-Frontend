@@ -12,14 +12,14 @@ export default function PreviewNews() {
   }
   const breadName = (
     <>
-      <Link to="/admin/create_news">
+      <Link onClick={handleReturn}>
         <ArrowLeftOutlined style={{ marginRight: "2%", color: "black" }} />
       </Link>
       Xem trước tin tức
     </>
   );
-  const layer1 = <Link to="/admin/news_list">Quản lí tin tức</Link>;
-  const layer2 = <Link onClick={handleReturn} to="/admin/create_news">Tạo tin tức</Link>;
+  const layer1 = <Link to="/admin/news">Quản lí tin tức</Link>;
+  const layer2 = <Link onClick={handleReturn} >Tạo tin tức</Link>;
   
   return (
     <>

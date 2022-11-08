@@ -11,20 +11,26 @@ export default function OverViewNews() {
     console.log("Test return edit page");
     setPage(1);
   };
-  const handleCancel = () => {
+  const handleView = () => {
     setPage(0);
+  };
+  const handleEdit = () => {
+    setPage(1);
+  };
+  const handleList = () => {
+    setPage(3);
   };
   const breadName = (
     <>
-      <Link to="/admin/edit_news">
+      <Link  onClick={handleEdit}>
         <ArrowLeftOutlined style={{ marginRight: "2%", color: "black" }} />
       </Link>
       Xem trước tin tức
     </>
   );
-  const layer1 = <Link to="/admin/news_list">Quản lý tin tức</Link>;
-  const layer2 = <Link onClick={handleCancel} to="/admin/view_news">Xem tin tức</Link>;
-  const layer3 = <Link onClick={handleReturn} to="/admin/view_news">Chỉnh sửa tin tức</Link>;
+  const layer1 = <Link onClick={handleList}>Quản lý tin tức</Link>;
+  const layer2 = <Link onClick={handleView} >Xem tin tức</Link>;
+  const layer3 = <Link onClick={handleEdit} >Chỉnh sửa tin tức</Link>;
 
   return (
     <>
@@ -50,7 +56,6 @@ export default function OverViewNews() {
           <div dangerouslySetInnerHTML={{ __html: valueViewNews.content }} />
         </div>
         <Button onClick={handleReturn}> Quay lại</Button>
-        <Button onClick={handleCancel}> Hủy chỉnh sửa </Button>
       </div>
     </>
   );

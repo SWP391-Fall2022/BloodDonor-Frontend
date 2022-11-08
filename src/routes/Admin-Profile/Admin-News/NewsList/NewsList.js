@@ -1,44 +1,52 @@
 import { Button, Input, Table, Tabs } from "antd";
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AdBread } from "../../AdminBreadcrumbs";
+import { ViewNewsContext } from "../ViewNews/AdminViewNewsContext";
 import "./newslist.css";
-const columns = [
-  {
-    title: "STT",
-    dataIndex: "id",
-  },
-  {
-    title: "Tên bài viết",
-    dataIndex: "title",
-    render: (text, record) => (
-      <Link to={`/admin/view_news`} state={{ record: record }}>
-        <a>{text}</a>
-      </Link>
-    ),
-    width: "40%",
-  },
-  {
-    title: "Tác giả",
-    dataIndex: "author",
-  },
-  {
-    title: "Ngày đăng",
-    render: (_, record) => {
-      return record.postingTime.substring(0, 10).split("-").reverse().join("/");
-    },
-  },
-  {
-    title: "Trạng thái",
-    render: (_, record) => {
-      if (record.status === true) return "Công khai";
-      return "Ẩn";
-    },
-    width: "15%",
-  },
-];
 
 const NewsList = () => {
+  const { valueViewNews, setViewNews, setPage } = useContext(ViewNewsContext);
+  const [pageNumber, setPageNumber] = React.useState(1);
+  const columns = [
+    {
+      title: "STT",
+      render: (text, record, index) =>  (pageNumber - 1) * 10 + index + 1,
+    },
+    {
+      title: "Tên bài viết",
+      dataIndex: "title",
+      width: "40%",
+    },
+    {
+      title: "Tác giả",
+      dataIndex: "author",
+    },
+    {
+      title: "Ngày đăng",
+      render: (_, record) => {
+        return record.postingTime
+          .substring(0, 10)
+          .split("-")
+          .reverse()
+          .join("/");
+      },
+    },
+    {
+      title: "Trạng thái",
+      render: (_, record) => {
+        if (record.status === true) return "Công khai";
+        return "Ẩn";
+      },
+      width: "15%",
+    },
+  ];
+  const onChoose = (values) => {
+    console.log(values);
+    setViewNews(values);
+    setPage(0);
+  };
   const [data, setData] = useState();
   useEffect(() => {
     fetch("http://localhost:8080/v1/posts", { method: "GET" })
@@ -52,8 +60,6 @@ const NewsList = () => {
   }, []);
 
   function removeVietnameseTones(str) {
-    // {console.log("Test:")}
-    // {console.log(str)}
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
     str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
@@ -94,13 +100,14 @@ const NewsList = () => {
       )
     );
   };
-
   const filterStatus = (data, status) => {
     return data.filter((item) => item.status === status);
   };
   return (
     <>
-     <div className="news-list-breadcrumb"><AdBread name="Quản lý tin tức" /></div>
+      <div className="news-list-breadcrumb">
+        <AdBread name="Quản lý tin tức" />
+      </div>
       <section id="admin-news-list">
         <div className="admin-list-title">Danh sách quản lý tin tức</div>
         <div className="admin-list-tools">
@@ -123,6 +130,14 @@ const NewsList = () => {
                   dataSource={search(data)}
                   size="middle"
                   scroll={{ x: "100wh" }}
+                  onRow={(record) => ({
+                    onClick: () => onChoose(record),
+                  })}
+                  pagination={{
+                    onChange(current) {
+                      setPageNumber(current);
+                    },
+                  }}
                 />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Công khai" key="2">
