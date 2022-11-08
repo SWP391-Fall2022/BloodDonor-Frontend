@@ -25,7 +25,7 @@ export default class NewsList extends Component {
         size="large"
         pagination={{
           onChange: (page) => {
-            console.log(page);
+            // console.log(page);
           },
           pageSize: 5,
         }}

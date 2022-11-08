@@ -1,4 +1,8 @@
-.donorSideBar {
+.mainContainer {
+    margin-left: 270px;
+}
+
+.adminSideBar {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,16 +16,28 @@
     box-shadow: var(--shadow-dp-02);
 }
 
-.mainContainer {
-    margin-left: 270px;
+#btn3 {
+    background-color: var(--primary-600);
+    color: white;
+    border: 0px;
+    font-size: 14px;
+}
+
+#btn3:hover, .btn3:focus {
+    background-color: var(--primary-800);
+    color: white;
+}
+
+.emptyImg {
+    width: 30%;
 }
 
 @media only screen and (max-width: 800px) {
-    .breadcrumb {
+    .mainContainer {
         margin-left: 60px;
     }
 
-    .mainContainer {
+    .breadcrumb {
         margin-left: 60px;
     }
 }

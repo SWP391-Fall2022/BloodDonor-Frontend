@@ -23,7 +23,7 @@ const EditDateTimeForm = ({ open, onCreate, onCancel, campaign, registered}) => 
                         onCreate(values);
                     })
                     .catch((info) => {
-                        console.log('Validate Failed:', info);
+                        // console.log('Validate Failed:', info);
                     });
             }}
         >
@@ -46,7 +46,7 @@ const EditDateTime= (props) => {
     const [open, setOpen] = useState(false);
 
     const onCreate = (values) => {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
         setOpen(false);
     };
 

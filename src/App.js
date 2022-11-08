@@ -40,6 +40,7 @@ import OrganizationHomepage from "./routes/Organization-Homepage/OrganizationHom
 import OrganizationCampaignDonorList from "./routes/Organization-Campaign-Donor/OrganizationCampaignDonorList";
 import OrganizationCampaignHealthInf from "./routes/Organization-Campaign-Donor/HealthInformation/OrganizationCampaignHealthInf";
 
+
 // org campaign management
 import OrganizationCampign from "./routes/Organization-Campaign/OrganizationCampaign";
 import OrganizationManageCampaign from "./routes/Organization-Campaign/ManageCampaign/ManageCampaign";
@@ -67,7 +68,11 @@ import AdminCreateNews from "./routes/Admin-Profile/Admin-News/CreateNews/AdminC
 import AdminViewNews from "./routes/Admin-Profile/Admin-News/ViewNews/AdminViewNews";
 import PreviewNews from "./routes/Admin-Profile/Admin-News/PreviewNews/PreviewNews";
 import EditNews from "./routes/Admin-Profile/Admin-News/EditNews/EditNews";
+<<<<<<< HEAD
 import OverViewNews from "./routes/Admin-Profile/Admin-News/OverviewNews/OverViewNews";
+=======
+import AdminCreateVoucher from './routes/Admin-Profile/Admin-Voucher/AdminCreateVoucher';
+>>>>>>> 2f54582694957fa98a526944b51dac0021aa4886
 
 export default function App() {
   return (
@@ -198,6 +203,7 @@ export default function App() {
             <Route path="edit_news" element={<EditNews />} />
             <Route path="overview_news" element={<OverViewNews />} />
             <Route path="manage_vouchers" element={<AdminManageVouchers />} />
+            <Route path="manage_vouchers/create" element={<AdminCreateVoucher />} />
           </Route>
 
           {/* 404 error page */}

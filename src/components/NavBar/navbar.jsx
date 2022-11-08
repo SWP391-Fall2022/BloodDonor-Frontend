@@ -19,7 +19,7 @@ export const Navbar = () => {
     const [click, setClick] = useState(false);
     function handleClick() {
         setClick(!click);
-        console.log("click",click);
+        // console.log("click",click);
     }
     const role = JSON.parse(sessionStorage.getItem('userRole'))
     let loginState;

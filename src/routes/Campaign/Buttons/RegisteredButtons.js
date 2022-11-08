@@ -20,11 +20,11 @@ export default function CampaignDetail({registered,campaign,callback}) {
           onOk() {
         callback(!registered);
 
-            console.log('Hủy tham gia');
+            // console.log('Hủy tham gia');
           },
       
           onCancel() {
-            console.log('Thoát');
+            // console.log('Thoát');
           },
         });
       };

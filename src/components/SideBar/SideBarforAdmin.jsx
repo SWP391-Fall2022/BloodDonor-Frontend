@@ -18,7 +18,7 @@ export const SideBarforAdmin = () => {
   const [showSubMenu, setShowSubMenu] = useState(false);
   function handleClick() {
     setClick(!click);
-    console.log(click);
+    // console.log(click);
   }
 
   function handleLogout() {

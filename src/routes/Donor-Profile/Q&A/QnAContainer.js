@@ -1,80 +1,90 @@
 import styles from '../donor.module.css'
 import { Collapse } from 'antd';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import empty from '../../../assets/empty-list.png'
 const { Panel } = Collapse;
 
 export default function QnAContainer() {
     const [emptyList, setEmptyList] = useState(true);
+    const [collapse, setCollapse] = useState(true);
+    const effectRan = useRef(false)
+
+    useEffect(() => {
+        if (effectRan.current === true) {
+            async function fetchQaA() {
+                const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+                let json = {
+                    headers: new Headers({
+                        'Authorization': "Bearer " + token,
+                    })
+                }
+                const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-donor`, json)
+                    .then((res) => res.json())
+                    .catch((error) => { console.log(error) })
+                // console.log(response)
+                if (response.status === 200) {
+                    if (response.body.length === 0) {
+                        setEmptyList(true)
+                    } else {
+                        //Step 1: Get campaign id and name then remove duplicate
+                        const campaignList = response.body.map(({ campaignId, campaignName }) => (
+                            { campaignId, campaignName }
+                        )).filter((v, i, a) => a.findIndex(v2 => (v2.campaignId === v.campaignId)) === i)
+                        // console.log(campaignList)
+                        //Step 2: Add to collapse
+                        const list = campaignList.map((e) =>
+                            <Collapse style={{ marginBottom: '15px' }} key={e.campaignId.toString()}>
+                                <Panel
+                                    className={styles.questionPanel}
+                                    header={e.campaignName}
+                                    key={e.campaignId.toString()}
+                                >
+                                    {response.body.map(v => {
+                                        if (e.campaignId === v.campaignId) {
+                                            return (
+                                                <Collapse style={{ marginBottom: '15px' }} key={v.questionId.toString()}>
+                                                    <Panel
+                                                        className={styles.questionPanel}
+                                                        header={v.question}
+                                                        key={v.questionId.toString()}
+                                                    >
+                                                        <p>{v.answer === null ? "Rất tiếc, bạn vẫn chưa có hồi âm nào từ tổ chức ;(" : v.answer}</p>
+                                                    </Panel>
+                                                </Collapse>
+                                            )
+                                        }
+                                    })}
+                                </Panel>
+                            </Collapse>
+                        );
+                        setCollapse(list)
+                        setEmptyList(false)
+                    }
+                }
+            }
+            fetchQaA();
+        }
+        return () => {
+            effectRan.current = true
+        }
+    }, [])
+
     if (!emptyList) {
         return (
             <div className={styles.infoContainer}>
                 <div className={styles.title}>DANH SÁCH CÂU HỎI</div>
-                {/* Create a mapping through every panel of this user using key */}
-                <Collapse style={{ marginBottom: '15px' }}>
-                    <Panel
-                        className={styles.questionPanel}
-                        header="Ai có thể tham gia hiến máu"
-                        key="1">
-                        <li>
-                            Tất cả mọi người từ 18 - 60 tuổi, thực sự tình nguyện hiến máu của
-                            mình để cứu chữa người bệnh.
-                        </li>
-                        <li>
-                            Cân nặng ít nhất là 45kg đối với phụ nữ, nam giới. Lượng máu hiến
-                            mỗi lần không quá 9ml/kg cân nặng và không quá 500ml mỗi lần.
-                        </li>
-                        <li>
-                            Không bị nhiễm hoặc không có các hành vi lây nhiễm HIV và các bệnh
-                            lây nhiễm qua đường truyền máu khác.
-                        </li>
-                        <li>
-                            Thời gian giữa 2 lần hiến máu là 12 tuần đối với cả Nam và Nữ.
-                        </li>
-                        <li>Có giấy tờ tùy thân.</li>
-                    </Panel>
-                </Collapse>
-                <Collapse style={{ marginBottom: '15px' }}>
-                    <Panel
-                        className={styles.questionPanel}
-                        header="2. Ai là người không nên hiến máu?"
-                        key="2"
-                    >
-                        <li>
-                            Người đã nhiễm hoặc đã thực hiện hành vi có nguy cơ nhiễm HIV,
-                            viêm gan B, viêm gan C, và các vius lây qua đường truyền máu.
-                        </li>
-                        <li>
-                            Người có các bệnh mãn tính: tim mạch, huyết áp, hô hấp, dạ dày…
-                        </li>
-                    </Panel>
-                </Collapse>
-                <Collapse style={{ marginBottom: '15px' }}>
-                    <Panel
-                        className={styles.questionPanel}
-                        header="3. Máu của tôi sẽ được làm những xét nghiệm gì?"
-                        key="3"
-                    >
-                        <li>
-                            Tất cả những đơn vị máu thu được sẽ được kiểm tra nhóm máu (hệ
-                            ABO, hệ Rh), HIV, virus viêm gan B, virus viêm gan C, giang mai,
-                            sốt rét.
-                        </li>
-                        <li>
-                            Bạn sẽ được thông báo kết quả, được giữ kín và được tư vấn (miễn
-                            phí) khi phát hiện ra các bệnh nhiễm trùng nói trên.
-                        </li>
-                    </Panel>
-                </Collapse>
+                {collapse}
             </div>
         )
     } else {
         return (
-            <div className={`${styles.infoContainer} ${styles.voucherContainer}`}>
-                <div className={styles.title}>DANH SÁCH CÂU HỎI</div>
-                <img className={styles.img} src={empty} alt="empty" />
-                <div><strong>Bạn vẫn chưa có câu hỏi nào được giải đáp</strong></div>
-            </div>
+            <div className={styles.infoContainer}>
+                <div style={{ textAlign: 'center' }}>
+                    <div className={styles.title}>DANH SÁCH CÂU HỎI</div>
+                    <img className={styles.img} src={empty} alt="empty" />
+                    <div><strong>Bạn vẫn chưa có câu hỏi nào được giải đáp</strong></div>
+                </div>
+            </div >
         )
     }
 }
