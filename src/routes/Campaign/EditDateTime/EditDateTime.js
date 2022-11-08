@@ -12,6 +12,7 @@ const EditDateTime = (props) => {
     console.log("oldPeriod:",oldPeriod)
 
     const [message, setMessage] = useState('')
+    const [form] = Form.useForm();
 
 
     // fetch API get detail of registration
@@ -32,13 +33,14 @@ const EditDateTime = (props) => {
 
             if (response.success) {
                 console.log("registration response:", response)
-                response.body.map((registration) => {
+                response.body.find((registration) => {
                     //only registration has status NOT_CHECKED_IN can be edit
-                    if (registration.status === "NOT_CHECKED_IN")
+                    if (registration.status === "NOT_CHECKED_IN"){
                         setOldDate(registration.registeredDate)
                         setDateValue(registration.registeredDate)
                     setOldPeriod(registration.period)
                     setTimeValue(registration.period)
+                    }
                 }
 
                 )
@@ -121,10 +123,13 @@ const EditDateTime = (props) => {
 
     const onEditFinish = async (values) => {
 
+        const formData = form.getFieldsValue(true);
+        console.log(formData)
+
         const requestData = {
             "campaignId": props.campaign.id,
-            "registerDate": dateValue,
-            "period": timeValue
+            "registerDate": formData.registerDate,
+            "period": formData.period
 
         }
         console.log("reques:", requestData)
@@ -178,7 +183,7 @@ const EditDateTime = (props) => {
 
 
     const EditDateTimeForm = ({ open, onCreate, onCancel, campaign, registered }) => {
-        const [form] = Form.useForm();
+        
         return (
             <Modal
                 open={open}
@@ -206,7 +211,7 @@ const EditDateTime = (props) => {
                         <div className='register-date-cover'>
                             <div className='register-date'>
                                 <Form.Item name="registerDate" initialValue={oldDate}>
-                                    <Radio.Group onChange={onDateChange} value={dateValue} disabled={registered ? true : false} defaultValue={oldDate} >
+                                    <Radio.Group name="dateValue" value={dateValue} disabled={registered ? true : false} defaultValue={oldDate} >
 
                                         {
                                             daylist.map((day) =>
@@ -224,7 +229,7 @@ const EditDateTime = (props) => {
                         <p className='sub-title'>Chọn buổi</p>
                         <div className='register-time'>
                             <Form.Item name="period" initialValue={oldPeriod}>
-                                <Radio.Group onChange={onTimeChange} value={timeValue} disabled={registered ? true : false} defaultValue={oldPeriod}>
+                                <Radio.Group name="period" value={timeValue} disabled={registered ? true : false} defaultValue={oldPeriod}>
 
                                     <Radio value={"MORNING"}>Buổi sáng: 8h00 đến 11h00</Radio>
                                     <Radio value={"AFTERNOON"}>Buổi chiều: 13h30 đến 17h00</Radio>
