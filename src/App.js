@@ -43,12 +43,14 @@ import OrganizationCampaignHealthInf from './routes/Organization-Campaign-Donor/
 import OrganizationCampign from './routes/Organization-Campaign/OrganizationCampaign';
 import OrganizationManageCampaign from './routes/Organization-Campaign/ManageCampaign/ManageCampaign';
 import OrganizationCreateCampaign from './routes/Organization-Campaign/CreateCampaign/CreateCampaign';
+import OrganizationUpdateCampaign from './routes/Organization-Campaign/UpdateCampaign/UpdateCampaignForm';
 import OrganizationDetailCampaign from './routes/Organization-Campaign/CreateCampaign/DetailCampaign/DetailCampaign';
 import OrganizationPreviewCampaign from './routes/Organization-Campaign/CreateCampaign/PreView/Preview';
 
 // org question management
 import OrganizationQuestion from './routes/Organization-Question/OrganizationQuestion';
 import OrganizationManageQuestion from './routes/Organization-Question/ManageQuestion/ManageQuestion';
+import OrganizationCampaignQuestion from './routes/Organization-Question/CampaignQuestion/CampaignQuestion';
 import OrganizationUnRepliedQuestion from './routes/Organization-Question/DetailQuestion/UnReplied';
 import OrganizationRepliedQuestion from './routes/Organization-Question/DetailQuestion/RepliedQuestion';
 
@@ -122,12 +124,14 @@ export default function App() {
             <Route path="manageCampaign" element={<OrganizationCampign />} >
               <Route index element={<OrganizationManageCampaign />} />
               <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
+              <Route path="updateCampaign/:id" element={<OrganizationUpdateCampaign />} />
               <Route path="detailCampaign" element={<OrganizationDetailCampaign />} />
               <Route path="preview" element={<OrganizationPreviewCampaign />} />
             </Route>
             {/* Manage Question */}
             <Route path="manageQuestion" element={<OrganizationQuestion />} >
               <Route index element={<OrganizationManageQuestion />} />
+              <Route path="campaignQuestion" element={<OrganizationCampaignQuestion />} />
               <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
               <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
             </Route>

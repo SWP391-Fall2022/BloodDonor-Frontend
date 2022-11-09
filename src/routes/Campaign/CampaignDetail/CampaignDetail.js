@@ -11,91 +11,48 @@ import QaA from '../QaA/QaA';
 export default function CampaignDetail() {
 
     // fetch data function
-    const [selectedCampaign, setSelectedCampaign] = useState([])
-    console.log("selectedCampaign", selectedCampaign)
-    
+    const [selectedCampaign, setSelectedCampaign] = useState({})
 
 
-    function getCampFromAPI() {
-        const asyncFn = async () => {
-            // const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
-            let json = {
-                method: 'GET',
-                headers: new Headers({
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    // 'Authorization': "Bearer " + token,
-                })
-            }
-            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`, json)
-                .then((res) => res.json())
-                .catch((error) => { console.log(error) })
+     // fetch data function
+  function readOneFunction() {
+    const asyncFn = async () => {
 
-            if (response.success) {
-                console.log("response",response)
-                // setCampaigns(response.body)
-                const campaign = response.body.find(obj => {
+      let json = {
+        method: 'GET',
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+        })
+      }
+      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/readOne/${campaignTitle.id}`, json)
+        .then((res) => res.json())
+        .catch((error) => { console.log("readOneFunction error", error) })
+       
+      if (response.success) {
+        
+        setSelectedCampaign(response.body)
 
-                    return obj.id == campaignTitle.id;
-                });
-                setSelectedCampaign(campaign)
-            // console.log("campaign",campaign)
+      }
 
-            }
-
-        }
-        asyncFn();
     }
+    asyncFn();
+  }
 
 
-    //call etch API function
-    useEffect(() => {
-        getCampFromAPI();
-      
-
-    }, []
-    )
-
+  //call etch API function
+  useEffect(() => {
+    readOneFunction();
+  }, []
+  )
 
 
     // take the campaign
     const campaignTitle = useParams();
-    console.log("campaignTitle", campaignTitle)
-
-
-    // const campaign = campaigns.find(obj => {
-
-    //     return obj.id == campaignTitle.id;
-    // });
-    // console.log(campaign)
-    // setSelectedCampaign(
-    //     ()=>{
-    //         campaigns.find(obj => {
-
-    //             return obj.id == campaignTitle.id;
-    //         })
-    //     }
-    // )
-
-    // // check donor unregistered registerd
-    // const [registered, setRegistered] = useState(false);
-
-    //  // check donor participated the campaign
-    //  const [participated, setParticipated] = useState(false);
-
-    // console.log(buttons);
-
-
-
-
+    
     //  render blood types
     const listBloodType = String(selectedCampaign.bloodTypes).split("-").map((bloodType) =>
         <li className='blood-type-item'>{bloodType}</li>
     );
-
-
-    // // setup date
-    // var startDate = new Date(campaign.startDate);
-
 
     return (
 
@@ -121,7 +78,9 @@ export default function CampaignDetail() {
 
                     <div className='campaign-content'>
                         <p className='sub-title'>{selectedCampaign.organizationName} xin thông báo:</p>
-                        <p>{selectedCampaign.description}</p>
+                        {/* <p>{selectedCampaign.description}</p> */}
+                        <div dangerouslySetInnerHTML={{ __html: selectedCampaign.description }} />
+
 
                         <p className='sub-title'>Thời gian:</p>
                         <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
@@ -140,23 +99,23 @@ export default function CampaignDetail() {
                         <p className='sub-title'>Xin lưu ý</p>
                         <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
                         <p>Xin trân trọng thông báo!!!</p>
-                        <RegisterCampaign campaign={selectedCampaign} ></RegisterCampaign>
-                     </div>
+                        <RegisterCampaign campaign={selectedCampaign} org={false} ></RegisterCampaign>
+                    </div>
 
-                        </div>
+                </div>
 
-               <div className='campaignDetail-right'>
-                    
+                <div className='campaignDetail-right'>
+
 
                     <QaA className='list-qaa'></QaA>
 
 
-                    </div >
                 </div >
+            </div >
 
         </>
 
 
 
-            )
+    )
 }

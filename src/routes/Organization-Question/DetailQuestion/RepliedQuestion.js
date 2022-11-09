@@ -1,20 +1,14 @@
 import React from "react";
 import "antd/dist/antd.min.css";
 import "./RepliedQuestion.css";
-import moment from 'moment';
-
-import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { Form, Input, DatePicker, Breadcrumb, Checkbox, Button, Modal } from "antd";
-
-import { Link, useLocation } from "react-router-dom";
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { OrBread } from "../../Organization-Profile/organization-breadcrumb";
 
-const { TextArea } = Input;
-const { RangePicker } = DatePicker;
 
 
 export default function DetailQuestion() {
-    const [form] = Form.useForm();
+  
 
     const location = useLocation();
   console.log("location answer:", location)
@@ -31,6 +25,7 @@ export default function DetailQuestion() {
         </Link>Chi tiết câu hỏi
     </>
     const layer1 = <Link to="/organization/manageQuestion">Quản lý hỏi đáp</Link>
+    // const layer1 = <div onClick={() => navigate(-1)}>Quản lý hỏi đáp</div>
     return (
         <>
 

@@ -1,75 +1,41 @@
-import React from "react";
-import "antd/dist/antd.css";
-import "./ManageCampaign.css";
-import { Input, Table, Button, Tabs } from 'antd';
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import "antd/dist/antd.min.css";
+import { useNavigate, useLocation } from "react-router-dom";
+import "./CampaignQuestion.css";
+import { Table, Tabs, Input } from 'antd';
 import { SearchOutlined } from "@ant-design/icons";
 
 
-const { Search } = Input;
+function checkQuestionStatus(answer, status) {
 
-// check status of campaign to render on table
-function checkCampStatus(camp) {
-  const today = new Date();
-  var start = new Date(camp.startDate);
-  var end = new Date(camp.endDate);
-  if( camp.status === false ) return "Đã xóa"
+  if (answer === "REFUSED" && status === false)
+    return "Từ chối"
+  else if (status === false)
+    return "Đã xóa"
+  else if (answer === "" || answer === null)
+    return "Chưa trả lời"
+  else
+    return "Đã trả lời"
 
-  if ((start <= today && today <= end) || start > today)
-    return "Đang diễn ra"
-  else // if(endDate < today)
-    return "Kết thúc"
-  
+
 }
 
+export default function ManageQuestion() {
 
-//Set columns for table
-const columns = [
-  {
-    title: 'STT',
-    dataIndex: 'id',
-    key: 'id',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Tên chiến dịch',
-    dataIndex: 'camName',
-    key: 'camName',
-
-  },
-  {
-    title: 'Thời gian diễn ra',
-    dataIndex: 'camTime',
-    key: 'camTime',
-  },
-  {
-    title: 'DS câu hỏi',
-    dataIndex: 'questions',
-    key: 'questions',
-  },
-  {
-    title: 'DS tham gia hiến máu',
-    dataIndex: 'donorList',
-    key: 'donorList',
-  },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'status',
-    key: 'status',
-  },
-];
-
-
-export default function ManageCampaign() {
   const [tableRow, setTableRow] = useState([]);
-  const [message, setMessage] = useState('')
 
   const navigate = useNavigate();
-  const [campaigns, setCampaigns] = useState({})
+  //get camp id
+  const location = useLocation();
+
+  //nhận state từ navigation
+  const campId = location.state.id;
+
+  const [questions, setQuestions] = useState([{}])
+
 
   // fetch data function
-  function getCampFromAPI() {
+  function getQuestionsByCamp() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
       let json = {
@@ -79,28 +45,25 @@ export default function ManageCampaign() {
           'Authorization': "Bearer " + token,
         })
       }
-      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAllByOrganization`, json)
+      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-campaign/${campId}`, json)
         .then((res) => res.json())
         .catch((error) => { console.log(error) })
 
       if (response.success) {
-        console.log("response", response)
-        setCampaigns(response)
+        console.log("getQuestionsByCamp", response)
+        setQuestions(response)
         setTableRow(
           response.body.map(row => ({
-            camName: row.name,
-            camTime: row.startDate + " -> " + row.endDate,
-            id: row.id,
-            donorList: 'link',
-
-            questions: 'link',
-            status: checkCampStatus(row)
+            donorName: row.donorName,
+            camName: row.campaignName,
+            id: row.questionId,
+            status: checkQuestionStatus(row.answer, row.status),
+            answer: row.answer,
+            question: row.question
           })))
-        console.log("camps", tableRow)
-        // navigate("/organization/manageCampaign")
-       
+
       }
-    
+
     }
     asyncFn();
   }
@@ -108,9 +71,40 @@ export default function ManageCampaign() {
 
   //call etch API function
   useEffect(() => {
-    getCampFromAPI();
+    getQuestionsByCamp();
   }, []
   )
+
+
+  const columns = [
+    {
+      title: 'STT',
+      dataIndex: 'id',
+      key: 'id',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'Tên người hỏi',
+      dataIndex: 'donorName',
+      key: 'donorName',
+
+    },
+    {
+      title: 'Tên chiến dịch',
+      dataIndex: 'camName',
+      key: 'camName',
+
+    },
+
+
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      key: 'status',
+    },
+
+  ];
+
 
   // SEARCH fnction
   function removeVietnameseTones(str) {
@@ -160,101 +154,106 @@ export default function ManageCampaign() {
     return data.filter((item) => item.status.includes(keys));
   };
 
+
+
   return (
 
-    <>
-      <div className="manage-campaign-header">
-          <p >Quản lý chiến dịch</p>
-        </div>
-      <div id="manage-campaign-container">
-      
 
-        <div className="manage-campaign-container">
-          <p className="manage-campaign-title"> Danh sách các chiến dịch của tổ chức hiến máu</p>
+    <>
+      <div id="manage-question-container">
+        <div className="manage-question-header">
+          <p >Quản lý hỏi đáp</p>
+        </div>
+
+        <div className="manage-question-container">
+          <p className="manage-question-title">Danh sách HỎI ĐÁP</p>
           <div className="search-buttons">
-                    <Input
-                     className="cam-search-box" 
-                     suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
-                     id="cam-search-box" 
-                     onChange={(e) => setQuery(e.target.value)}
-                     placeholder="Điền tên chiến dịch bạn muốn tìm..." 
-                     />
-                    <div className="cre-del-buttons">
-                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                        Tạo mới
-                      </Button>
-                    </div>
-                  </div>
+            <Input className="question-search-box"
+              suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+              id="question-search-box"
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Điền tên chiến dịch bạn muốn tìm..."
+
+
+            />
+
+          </div>
           <Tabs
-            className="manage-campaign-content"
+            className="manage-question-content"
             defaultActiveKey="1"
+
             items={[
               {
                 label: `Tất cả`,
                 key: '1',
                 children: <>
-                  
+
 
                   <Table columns={columns} dataSource={search(tableRow)}
                     pagination={{
+
                       pageSize: 5,
                     }}
-                    scroll={{x: "100wh"}}
-
 
                     onRow={record => ({
                       onClick: (e) => {
-
-                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status } })
+                        if (record.status == `Chưa trả lời`) {
+                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+                        } else {
+                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+                        }
                       }
 
                     })}
+
+
                   />
 
                 </>,
               },
-
               {
-                label: `Đang diễn ra`,
+                label: `Chưa trả lời`,
                 key: '2',
                 children: <>
-                 
+
 
                   <Table columns={columns}
-                   dataSource={filterStatus( search(tableRow), 'Đang diễn ra')}
+                    dataSource={filterStatus(search(tableRow), 'Chưa trả lời')}
                     pagination={{
+
                       pageSize: 5,
                     }}
-                    scroll={{x: "100wh"}}
 
                     onRow={record => ({
                       onClick: (e) => {
+                        navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
 
-                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status  } })
                       }
 
                     })}
+
                   />
 
                 </>,
               },
               {
-                label: `Kết thúc`,
+                label: `Đã trả lời`,
                 key: '3',
                 children: <>
-                 
 
-                  <Table columns={columns} dataSource={filterStatus( search(tableRow), 'Kết thúc')}
+
+                  <Table columns={columns}
+                    dataSource={filterStatus(search(tableRow), 'Đã trả lời')}
                     pagination={{
+
                       pageSize: 5,
                     }}
-                    scroll={{x: "100wh"}}
 
 
                     onRow={record => ({
                       onClick: (e) => {
+                        navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
 
-                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status  } })
                       }
 
                     })}
@@ -262,22 +261,24 @@ export default function ManageCampaign() {
                   />
 
                 </>,
-              }, {
-                label: `Đã xóa`,
+              },
+              {
+                label: `Từ chối`,
                 key: '4',
                 children: <>
-                 
 
-                  <Table columns={columns} dataSource={filterStatus( search(tableRow), 'Đã xóa')}
+                  <Table columns={columns}
+                    dataSource={filterStatus(search(tableRow), 'Từ chối')}
                     pagination={{
+
                       pageSize: 5,
                     }}
-                    scroll={{x: "100wh"}}
+
 
                     onRow={record => ({
                       onClick: (e) => {
+                        navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
 
-                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status  } })
                       }
 
                     })}
@@ -285,10 +286,13 @@ export default function ManageCampaign() {
                   />
 
                 </>,
-              }
+              },
+
             ]}
           />
         </div>
+
+
       </div>
 
     </>

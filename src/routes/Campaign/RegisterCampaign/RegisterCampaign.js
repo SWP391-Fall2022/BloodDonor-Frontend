@@ -9,7 +9,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 
 
-export default function RegisterCampaign({ campaign }) {
+export default function RegisterCampaign({ campaign, org }) {
 
     const navigate = useNavigate();
     const [message, setMessage] = useState('')
@@ -24,26 +24,20 @@ export default function RegisterCampaign({ campaign }) {
         }
         return arr;
     };
-    var daylist = getDaysArray(new Date(campaign.startDate), new Date(campaign.endDate));
-
-
+    var daylist = campaign.onSiteDates !== undefined ?  campaign.onSiteDates.filter((e)=> moment(e) > moment()) : getDaysArray(new Date(campaign.startDate), new Date(campaign.endDate));
 
 
     // setup date radio-------------------------------------
     const [dateValue, setDateValue] = useState("");
-    // console.log('dateValue', dateValue);
 
     const onDateChange = (e) => {
-        // console.log('radio checked', e.target.value);
         setDateValue(moment(e.target.value).format("YYYY-MM-DD"));
     };
 
     // setup time of day radio-------------------------------------
     const [timeValue, setTimeValue] = useState("");
-    // console.log("timeValue", timeValue)
 
     const onTimeChange = (e) => {
-        // console.log('radio checked', e.target.value);
         setTimeValue(e.target.value);
     };
 
@@ -71,11 +65,10 @@ export default function RegisterCampaign({ campaign }) {
 
     // setup register result modal----------------------------------------------
     const registerError = (string) => {
-
         Modal.error({
             className: 'errorRegister',
             title: string,
-            content: 'Bạn hãy chọn ngày hoặc buổi khác để đăng ký.',
+            content:message,
             okText: 'Đóng'
         });
     };
@@ -105,7 +98,7 @@ export default function RegisterCampaign({ campaign }) {
                 "period": timeValue
 
             }
-            // console.log("reques:", requestData)
+            console.log("reques:", requestData)
             const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
 
@@ -120,46 +113,35 @@ export default function RegisterCampaign({ campaign }) {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-            // console.log("response", response)
+            console.log("response", response)
             if (response.success) {
                 registerSuccess();
-
-                //   setMessage("Tạo chiến dịch thành công")
                 console.log("Đăng ký thành công")
             }
             else {
                 if (response.message === "Missing request attribute 'user' of type User") {
-                    setMessage("Bạn cần đăng nhập trước khi đăng ký lịch.")
-                    nonLogin(response.message);
+                    nonLogin();
                 }
                 else {
+                    setMessage(response.message)
                     registerError(response.message);
-
                 }
                 console.log("ko đăng ký được")
 
             }
-            setTimeout(() => {
-                //   setMessage('');
-            }, 3000);
-
-
+           
         }
-
-
 
     };
 
 
     //modal for guest 
     const nonLogin = () => {
-        // callback(!registered);
         Modal.confirm({
             content: "Bạn cần đăng nhập trước khi đăng ký lịch hiến máu!",
             okText: 'OK',
             onOk() {
                 navigate("/login")
-
             }
 
         });
@@ -186,14 +168,10 @@ export default function RegisterCampaign({ campaign }) {
             if (response.body.hasRegistered === true)
                 setRegistered(true)
         }
-
-
     };
 
     useEffect(() => {
         getStatus();
-
-
     }, [campaign]
     )
 
@@ -214,22 +192,16 @@ export default function RegisterCampaign({ campaign }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/donated`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        // console.log("response", response)
         if (response.success) {
 
             const lastestDonated = response.body[Array(response.body).length - 1];
-            console.log("donated response", response)
-
-
             if (moment().subtract(12, 'weeks') < moment(lastestDonated.registeredDate)) {
 
                 setMedicalInfor(true)
                 getMedicalDoc(lastestDonated.campaignId, lastestDonated.registeredDate)
             }
 
-
         }
-
 
     };
     useEffect(() => {
@@ -263,10 +235,7 @@ export default function RegisterCampaign({ campaign }) {
             .catch((error) => { console.log(error) })
         console.log("getMedicalDoc outside response", response)
         if (response.success) {
-            console.log("getMedicalDoc response".response)
-
             setMedicalDoc(response.body)
-
 
         }
 
@@ -285,7 +254,6 @@ export default function RegisterCampaign({ campaign }) {
             className: 'cancel-confirm',
             onOk() {
                 cancelRegistration();
-                // console.log('Hủy tham gia');
                 navigate(`/campaign/campaign-detail/${campaign.id}`)
 
             },
@@ -311,7 +279,6 @@ export default function RegisterCampaign({ campaign }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered/${campaign.id}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        // console.log("response", response)
         if (response.success) {
             setRegistered(false)
 
@@ -336,26 +303,21 @@ export default function RegisterCampaign({ campaign }) {
         setIsModalOpen(false);
     };
    
-
-
-
-
-
     return (
         <>
-            <Form id='register-campaign-form' onFinish={onFinish}>
+            <Form id='register-campaign-form' onFinish={onFinish} style={{display: campaign.emergency === true ? "none" : "block"}}>
 
                 <p className='sub-title'>Chọn ngày</p>
 
-                <div className='register-date-cover'>
+                <div className='register-date-cover'  >
                     <div className='register-date'>
                         <Form.Item name="registerDate">
-                            <Radio.Group onChange={onDateChange} value={dateValue} disabled={registered === true || medicalInfor === true ? true : false}>
+                            <Radio.Group  onChange={onDateChange} value={dateValue} disabled={registered === true || medicalInfor === true || org===true ? true : false}>
 
                                 {
                                     daylist.map((day) =>
                                         <div>
-                                            <Radio value={day}>{getDayOfWeek(new Date(day))},{moment(day).format(" DD-MM-YYYY")}</Radio>
+                                            <Radio  value={day}>{getDayOfWeek(new Date(day))},{moment(day).format(" DD-MM-YYYY")}</Radio>
                                         </div>
                                     )
 
@@ -368,7 +330,7 @@ export default function RegisterCampaign({ campaign }) {
                 <p className='sub-title'>Chọn buổi</p>
                 <div className='register-time'>
                     <Form.Item name="period">
-                        <Radio.Group onChange={onTimeChange} value={timeValue} disabled={registered || medicalInfor === true ? true : false}>
+                        <Radio.Group onChange={onTimeChange} value={timeValue} disabled={registered || medicalInfor === true || org===true ? true : false}>
 
                             <Radio value={"MORNING"}>Buổi sáng: 8h00 đến 11h00</Radio>
                             <Radio value={"AFTERNOON"}>Buổi chiều: 13h30 đến 17h00</Radio>
@@ -377,20 +339,20 @@ export default function RegisterCampaign({ campaign }) {
                     </Form.Item>
                 </div>
 
-                <div className='unregistered-buttons' style={{ display: registered === true || medicalInfor === true ? "none" : "block" }}>
+                <div className='unregistered-buttons' style={{ display: registered === true || medicalInfor === true || org===true ? "none" : "block" }}>
                     <div style={{ color: "red" }}> {message}</div>
                     <Button id='join' htmlType='submit' >Tham gia</Button>
                     <SendQuestion campaignId={campaign.id} className='send-qaa'></SendQuestion>
                 </div>
 
-                <div className='registered-buttons' style={{ display: registered === true && medicalInfor !== true ? "block" : "none" }}>
+                <div className='registered-buttons' style={{ display: registered === true && medicalInfor !== true && org != true ? "block" : "none" }}>
                     <Button className="cancel-camp" onClick={showCancelConfirm}>Hủy tham gia</Button>
                     <EditDateTime campaign={campaign} registered={false} />
                     <SendQuestion campaignId={campaign.id}  className='send-qaa'></SendQuestion>
                 </div>
 
 
-                <div className='participated-buttons' style={{ display: medicalInfor === true ? "block" : "none" }}>
+                <div className='participated-buttons' style={{ display: medicalInfor === true && org===false ? "block" : "none" }}>
                     <Button type="primary" id='medical-infor'  onClick={showModal}>
                         Thông tin sức khỏe
                     </Button>
@@ -403,13 +365,9 @@ export default function RegisterCampaign({ campaign }) {
             </Modal>
                 </div>
 
-                {/* <p className='num-of-registered'>Còn n lượt đăng ký vào buổi ... thứ ... </p> */}
             </Form>
         </>
 
     )
-
-
-
 
 }

@@ -6,18 +6,19 @@ import moment from 'moment';
 
 const EditDateTime = (props) => {
     const [oldDate, setOldDate] = useState("")
-    console.log("oldDate:", oldDate)
 
     const [oldPeriod, setOldPeriod] = useState("")
-    console.log("oldPeriod:",oldPeriod)
 
     const [message, setMessage] = useState('')
+    
 
 
     // fetch API get detail of registration
+    const [form] = Form.useForm();
 
     function getRegistration() {
         const asyncFn = async () => {
+
             const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
             let json = {
                 method: 'GET',
@@ -29,21 +30,19 @@ const EditDateTime = (props) => {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-
             if (response.success) {
-                console.log("registration response:", response)
-                response.body.map((registration) => {
+                response.body.find((registration) => {
                     //only registration has status NOT_CHECKED_IN can be edit
-                    if (registration.status === "NOT_CHECKED_IN")
+                    if (registration.status === "NOT_CHECKED_IN"){
                         setOldDate(registration.registeredDate)
-                        setDateValue(registration.registeredDate)
                     setOldPeriod(registration.period)
-                    setTimeValue(registration.period)
+                    }
                 }
 
                 )
-
-
+            }
+            else{
+                setMessage(response.message)
             }
 
         }
@@ -57,17 +56,6 @@ const EditDateTime = (props) => {
     }, []
     )
 
-
-
-    // setup date radio-------------------------------------
-    const [dateValue, setDateValue] = useState(oldDate);
-    console.log('dateValue', dateValue);
-
-    const onDateChange = (e) => {
-        // console.log('radio checked', e.target.value);
-        setDateValue(moment(e.target.value).format("YYYY-MM-DD"));
-    };
-
     //Get days for choose day ----------------------
     var getDaysArray = function (start, end) {
         for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
@@ -75,16 +63,7 @@ const EditDateTime = (props) => {
         }
         return arr;
     };
-    var daylist = getDaysArray(new Date(props.campaign.startDate), new Date(props.campaign.endDate));
-
-    // setup time of day radio-------------------------------------
-    const [timeValue, setTimeValue] = useState(oldPeriod);
-    // console.log("timeValue", timeValue)
-
-    const onTimeChange = (e) => {
-        // console.log('radio checked', e.target.value);
-        setTimeValue(e.target.value);
-    };
+    var daylist = props.campaign.onSiteDates !== undefined ?  props.campaign.onSiteDates : getDaysArray(new Date(props.campaign.startDate), new Date(props.campaign.endDate));
 
     const getDayOfWeek = (day) => {
         var useday = new Date(day);
@@ -120,11 +99,14 @@ const EditDateTime = (props) => {
     // edit schedule API
 
     const onEditFinish = async (values) => {
+        const formData = form.getFieldsValue(true);
+        console.log("formData:", formData)
+
 
         const requestData = {
             "campaignId": props.campaign.id,
-            "registerDate": dateValue,
-            "period": timeValue
+            "registerDate": formData.registerDate,
+            "period": formData.period
 
         }
         console.log("reques:", requestData)
@@ -168,6 +150,8 @@ const EditDateTime = (props) => {
             content: 'Lịch tham gia đã được chỉnh sửa thành công',
             okText: 'Đóng',
             onOk() {
+        window.location.reload(false);
+
                 setOpen(false);
 
             }
@@ -177,8 +161,7 @@ const EditDateTime = (props) => {
 
 
 
-    const EditDateTimeForm = ({ open, onCreate, onCancel, campaign, registered }) => {
-        const [form] = Form.useForm();
+    const EditDateTimeForm = ({ open, onCancel, registered }) => {
         return (
             <Modal
                 open={open}
@@ -196,7 +179,7 @@ const EditDateTime = (props) => {
                     form={form}
                     layout="vertical"
                     name="edit-date-time-form"
-                // onFinish={onEditFinish}
+               
 
                 >
                     <Form.Item>
@@ -206,7 +189,7 @@ const EditDateTime = (props) => {
                         <div className='register-date-cover'>
                             <div className='register-date'>
                                 <Form.Item name="registerDate" initialValue={oldDate}>
-                                    <Radio.Group onChange={onDateChange} value={dateValue} disabled={registered ? true : false} defaultValue={oldDate} >
+                                    <Radio.Group name="registerDate" disabled={registered ? true : false} defaultValue={oldDate} >
 
                                         {
                                             daylist.map((day) =>
@@ -224,7 +207,7 @@ const EditDateTime = (props) => {
                         <p className='sub-title'>Chọn buổi</p>
                         <div className='register-time'>
                             <Form.Item name="period" initialValue={oldPeriod}>
-                                <Radio.Group onChange={onTimeChange} value={timeValue} disabled={registered ? true : false} defaultValue={oldPeriod}>
+                                <Radio.Group disabled={registered ? true : false} defaultValue={oldPeriod}>
 
                                     <Radio value={"MORNING"}>Buổi sáng: 8h00 đến 11h00</Radio>
                                     <Radio value={"AFTERNOON"}>Buổi chiều: 13h30 đến 17h00</Radio>
@@ -232,7 +215,7 @@ const EditDateTime = (props) => {
                                 </Radio.Group>
                             </Form.Item>
                         </div>
-                        {message}
+                        <div style={{color:"red"}}>{message}</div>
                     </Form.Item>
 
                 </Form>

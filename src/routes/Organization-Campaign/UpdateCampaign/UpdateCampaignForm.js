@@ -1,14 +1,15 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "antd/dist/antd.min.css";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,  useParams, useLocation } from "react-router-dom";
 import { Form, Input, DatePicker, Breadcrumb, Checkbox, Button, Modal, Switch, Radio, Select } from "antd";
 import moment from 'moment';
-import Editor from "../Editor/Editor";
-import './CreateCampaignForm.css';
-import PostImage from '../PostImage/PostImage';
+import Editor from "../CreateCampaign/Editor/Editor";
+import './UpdateCampaignForm.css';
+import PostImage from '../CreateCampaign/PostImage/PostImage';
 import DatePickerReact, { DateObject } from "react-multi-date-picker";
-import packageInfo from "../../../../shared/ProvinceDistrict.json";
+import packageInfo from "../../../shared/ProvinceDistrict.json";
+
 
 
 
@@ -16,22 +17,136 @@ const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const { Option } = Select;
 
-function CreateCampaignForm() {
+
+
+export default function UpdateCampaignForm() {
+
+  
+  const campaignId = useParams();
+  console.log("campaignId", campaignId)
+
+  const location = useLocation();
+  // console.log("location:", location)
+
+  //nhận state từ navigation
+  const campList = location.state.campaignsList;
+  console.log("campList",campList)
+  
+
   const navigate = useNavigate();
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('');
+  const [changedCampaign, setChangedCampaign] = useState(
+    {
+      
+      
+        id: 1,
+        name: "",
+        images: "",
+        description: "This is the description of the campaign 2",
+        startDate: "2022-06-20",
+        endDate: "2022-07-20",
+        emergency: false,
+        bloodTypes: "O",
+        districtId: 1,
+        addressDetails: "This is the address details",
+        organizationName: "Benh vien Ngo Viet Tien Main",
+        onSiteDates: [
+      "2022-10-30",
+      "2022-11-10"
+    ],
+  }
+    
+    )
+    
 
 
-  const [campaigName, setCampaigName] = useState("");
-  const [dates, setDates] = useState([])
+  let campaignDefaultDistrict;
+  let campaignDefaultDistrictList;
+  let campaignDefaultProvince;
+
+  const provinceList = packageInfo.provinces
+  const [districtId, setDistrictId] = useState(provinceList[0].district[0].id);
+
+
+  //Find province based on user's districtID
+  for (let i = 0; i < provinceList.length; i++) {
+      for (let j = 0; j < provinceList[i].district.length; j++) {
+          if (provinceList[i].district[j].id === changedCampaign.districtId) {
+            campaignDefaultDistrict = provinceList[i].district[j].name;
+            campaignDefaultDistrictList = provinceList[i].district;
+            campaignDefaultProvince = provinceList[i].name
+          }
+      }
+  }
+
+  const [districtList, setDistrictList] = useState(campaignDefaultDistrictList)
+
+
+
+  // fetch data function
+  function readOneFunction() {
+    const asyncFn = async () => {
+
+      let json = {
+        method: 'GET',
+        headers: new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+        })
+      }
+      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/readOne/${campaignId.id}`, json)
+        .then((res) => res.json())
+        .catch((error) => { console.log("readOneFunction error", error) })
+        console.log("readOneFunction response ", response.body)
+
+      if (response.success) {
+        console.log("readOneFunction response succ", response.body)
+        setChangedCampaign(response.body)
+       
+
+      }
+
+    }
+    asyncFn();
+  }
+
+
+  //call etch API function
+  useEffect(() => {
+    readOneFunction();
+  }, []
+  )
+
+
+  const [dates, setDates] = useState([changedCampaign.startDate, changedCampaign.endDate])
   const [campaignImg, setCampaignImg] = useState("");
-  const [address, setAddress] = useState("");
 
   // set up for province district register
   const [form] = Form.useForm();
+  
+//Chang initial value of form
+  useEffect(() => {
 
-  const provinceList = packageInfo.provinces
-  const [districtList, setDistrictList] = useState(provinceList[0].district)
-  const [districtId, setDistrictId] = useState(provinceList[0].district[0].id);
+    for (let i = 0; i < provinceList.length; i++) {
+      for (let j = 0; j < provinceList[i].district.length; j++) {
+          if (provinceList[i].district[j].id === changedCampaign.districtId) {
+            campaignDefaultDistrict = provinceList[i].district[j].name;
+            campaignDefaultDistrictList = provinceList[i].district;
+            campaignDefaultProvince = provinceList[i].name
+
+          }
+      }
+  }
+
+  form.setFieldsValue(changedCampaign)
+  form.setFieldValue("province", campaignDefaultProvince)
+  form.setFieldValue("district", campaignDefaultDistrict)
+  form.setFieldValue("campDate", [moment(changedCampaign.startDate), moment(changedCampaign.endDate)])
+  form.setFieldValue("bloods", changedCampaign.bloodTypes)
+  setDates( [moment(changedCampaign.startDate), moment(changedCampaign.endDate)])
+  
+
+   }, [form, changedCampaign])
+
 
   const onProvinceChange = (value) => {
     setDistrictList(provinceList[value - 1].district)
@@ -86,18 +201,27 @@ function CreateCampaignForm() {
   };
 
   // confirm modal
-  const [open, setOpen] = useState(false);
 
   const showConfirm = () => {
     Modal.confirm({
-      title: 'Bạn có muốn kiểm tra lại thông tin trước khi đăng chiến dịch không?',
+      title: 'Bạn có muốn kiểm tra lại thông tin trước khi chỉnh sửa chiến dịch không?',
       icon: <ExclamationCircleOutlined />,
-      okText: 'Đăng',
+      okText: 'Chỉnh sửa',
       cancelText: 'Xem Lại',
       className: 'create-campaign-confirm',
       onOk() {
         onFinish();
-        setOpen(false)
+      }
+
+    });
+  };
+
+  const success = () => {
+    Modal.success({
+      content: 'Chiến dịch đã được chỉnh sửa thành công.',
+      onOk() {
+        navigate("/organization/manageCampaign")
+
       }
 
     });
@@ -106,49 +230,48 @@ function CreateCampaignForm() {
   const onFinish = async (values) => {
 
     const formData = form.getFieldsValue(true);
+    console.log("formData dayofweek:", formData.daysOfWeek)
 
     const requestData = {
       "name": formData.name,
       "images": campaignImg,
       "description": formData.description,
-      "startDate": formData.campDate[0],
-      "endDate": formData.campDate[1],
+      "startDate": moment(formData.campDate[0]).add(1,'day'),
+      "endDate": moment(formData.campDate[1]).add(1,'day'),
       "emergency": false,
       "bloodTypes": bloodTypes.toString().replace(/,/g, '-'),
       "districtId": districtId,
       "addressDetails": formData.addressDetails,
       "sendMail": formData.sendMail,
-      "onSiteDates": onSiteDates[0] === "1970-01-01" ? null : String(onSiteDates).split(","),
+      "onSiteDates": onSiteDates[0] === "1970-01-01" || weekRepetition === true || monthRepetition === true  ? null : String(onSiteDates).split(","),
+      // "onSiteDates": onSiteDates[0] === "1970-01-01" || formData.daysOfWeek.length !==0  || daysOfMonth.length !==0 || formData.weekNumber !==0 ? null : String(onSiteDates).split(","),
       "weekRepetition": weekRepetition,
       "monthRepetition": monthRepetition,
       "daysOfWeek": formData.daysOfWeek,
       "daysOfMonth": daysOfMonth,
       "weekNumber": formData.weekNumber
-
+      // formData.weekNumber !==0 || daysOfMonth!==[] || || formData.daysOfWeek !==[]
     }
-    console.log("reques:", requestData)
+    console.log("EDIT request:", requestData)
     const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
-
-
     let json = {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(requestData),
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': "Bearer " + token,
       })
     }
-    const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/create`, json)
+    const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/update/${campaignId.id}`, json)
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
-    // console.log("response", response)
+    console.log("EDIT response", response)
     if (response.success) {
-      navigate("/organization/manageCampaign")
-      setMessage("Tạo chiến dịch thành công")
+      success();
+      setMessage("Chỉnh sửa chiến dịch thành công")
     }
     else {
-      if (response.body === "Campaign can not have duplicate name.")
-        setMessage("Bạn không được đặt trùng tên với chiến dịch hiện có.")
+        setMessage(response.body)
     }
     setTimeout(() => {
       setMessage('');
@@ -163,25 +286,35 @@ function CreateCampaignForm() {
   }
 
 
-  // setup for send email
-  const sendEmail = (checked) => {
-    console.log(`switch to ${checked}`);
-  };
+
 
   // setup for repetition by  
   const [isRepetition, setIsRepetition] = useState();
   function onIsRepetitionChange(e) {
     setIsRepetition(e.target.value)
-    if (e.target.value === 2)
+    if(e.target.value === 1){
+      setWeekRepetition(false)
+      setMonthRepetition(false)
+    }
+   else if (e.target.value === 2){
       setWeekRepetition(true)
-    else if (e.target.value === 3 || e.target.value === 4)
+      console.log("setWeekRepetition", weekRepetition)
+      setMonthRepetition(false)
+
+    }
+    else if (e.target.value === 3 || e.target.value === 4){
       setMonthRepetition(true)
+      setWeekRepetition(false)
+    }
+     
+
   }
-  
 
 
   // setup for repetition by week 
   const [weekRepetition, setWeekRepetition] = useState(false);
+  console.log("setWeekRepetition afterset", weekRepetition)
+
 
   const weeksData = [
     {
@@ -214,7 +347,7 @@ function CreateCampaignForm() {
     },
   ];
 
- 
+
   //setup onSiteDates
   const [onSiteDates, setOnSiteDates] = useState(["1970-01-01"])
 
@@ -232,30 +365,30 @@ function CreateCampaignForm() {
       <div className="create-campaign-header">
         <Breadcrumb className="manage-campaign-breadcrumb">
           <Breadcrumb.Item>Quản lý chiến dịch</Breadcrumb.Item>
-          <Breadcrumb.Item>Tạo chiến dịch</Breadcrumb.Item>
+          <Breadcrumb.Item>Thông tin chiến dịch</Breadcrumb.Item>
+          <Breadcrumb.Item>Chỉnh sửa chiến dịch</Breadcrumb.Item>
         </Breadcrumb>
-        <Link to="/organization/manageCampaign"><ArrowLeftOutlined style={{ marginRight: "10px" }} />Tạo chiến dịch</Link>
+        <Link to="/organization/manageCampaign/detailCampaign" state={{cam: campList, id: campaignId.id, status:null }}><ArrowLeftOutlined style={{ marginRight: "10px" }} />Chỉnh sửa chiến dịch</Link>
       </div>
 
-      {/* {!preview ? ( */}
       <div id="create-campaign-container">
 
 
         <div className="create-campaign-form">
-          <p style={{ fontSize: "25px", fontWeight: "700", textAlign: "center" }}>TẠO CHIẾN DỊCH</p>
+          <p style={{ fontSize: "25px", fontWeight: "700", textAlign: "center" }}>CHỈNH SỬA CHIẾN DỊCH</p>
           <Form
             initialValues={{
 
-              'bloods': ["A"],
-              'description': "",
-              'name': "",
-              'addressDetails': "",
-              'images': []
+              'bloods': changedCampaign.bloodTypes,
+              'description': changedCampaign.description,
+              'name': changedCampaign.name,
+              'addressDetails': changedCampaign.addressDetails,
+              'images': changedCampaign.images,
+              'sendEmail': changedCampaign.sendEmail,
+              
             }}
 
-
             form={form}
-            // onFinish={onFinish}
 
             id="create-campaign-form"
             name="basic"
@@ -263,9 +396,7 @@ function CreateCampaignForm() {
           >
             <Form.Item className="create-campaign-form-item" label="Tựa đề chiến dịch" name="name" rules={[{ required: true, message: 'Vui lòng nhập Tựa đề chiến dịch' }]}>
               <Input placeholder="Nhập tựa đề chiến dịch"
-                onChange={(e) => {
-                  setCampaigName(e.target.value)
-                }}
+               
                 name="name"
                 maxLength={120}
               />
@@ -273,7 +404,11 @@ function CreateCampaignForm() {
 
             {/* regiter province district  */}
             <Form.Item >
-              <Form.Item label="Tỉnh" name="province" initialValue={provinceList[0].name} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+              <Form.Item
+               label="Tỉnh" 
+               name="province"
+                 rules={[{ required: true, message: 'Vui lòng chọn' }]} 
+                 style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                 <Select
                   showSearch placeholder="Chọn"
                   onChange={onProvinceChange}
@@ -282,7 +417,7 @@ function CreateCampaignForm() {
                   {provinceList.map(a => (<Option key={a.id} >{a.name}</Option>))}
                 </Select>
               </Form.Item>
-              <Form.Item label="Quận/Huyện" name="district" initialValue={provinceList[0].district[0].name} rules={[{ required: true, message: 'Vui lòng chọn' },]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+              <Form.Item label="Quận/Huyện" name="district" rules={[{ required: true, message: 'Vui lòng chọn' },]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
                 <Select
                   showSearch placeholder="Chọn"
                   onChange={onDistrictChange}
@@ -300,14 +435,15 @@ function CreateCampaignForm() {
               allowClear 
               showCount 
               maxLength={100}
-                onChange={(e) => {
-                  setAddress(e.target.value)
-                  
-                }} />
+                />
             </Form.Item>
 
 
-            <Form.Item className="create-campaign-form-item" label="Thời gian mở đăng ký trên Medichor" name="campDate" rules={[{ required: true, message: 'Vui lòng nhập thời gian bạn muốn diễn ra chiến dịch' }]}>
+            <Form.Item 
+            className="create-campaign-form-item"
+             label="Thời gian mở đăng ký trên Medichor"
+              name="campDate"
+               rules={[{ required: true, message: 'Vui lòng nhập thời gian bạn muốn diễn ra chiến dịch' }]}>
 
               <RangePicker
                 format={'YYYY-MM-DD'}
@@ -316,6 +452,7 @@ function CreateCampaignForm() {
                   setDates(values)
                 }}
                 placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
+                defaultValue={[moment(changedCampaign.startDate), moment(changedCampaign.endDate)]}
               >
               </RangePicker>
             </Form.Item>
@@ -330,7 +467,7 @@ function CreateCampaignForm() {
               </Radio.Group>
             </Form.Item>
 
-            <Form.Item className="create-campaign-form-item-days" initialValue={" "} label="Chọn những ngày cụ thể bạn muốn mở đăng ký:" required={isRepetition === 1}>
+            <Form.Item className="create-campaign-form-item-days" initialValue={[dates[0],dates[1]]} label="Chọn những ngày cụ thể bạn muốn mở đăng ký:" required={isRepetition === 1}>
 
               <DatePickerReact
                 disabled={isRepetition !== 1}
@@ -338,9 +475,10 @@ function CreateCampaignForm() {
                   setOnSiteDates(values)
                 }}
                 id="onSiteDates"
-
                 multiple
                 format="YYYY-MM-DD"
+                // value={[moment(dates[0]).toDate(), moment(dates[1]).toDate()]}
+                
                 minDate={moment(dates[0]).toDate()}
                 maxDate={moment(dates[1]).toDate()}
                 placeholder={"Chọn những ngày mở đăng ký"}
@@ -367,10 +505,9 @@ function CreateCampaignForm() {
                     )
                   )
                   setDaysOfMonth(dayinmonth)
-                  // setMonthRepetition(true)
-                  if (dateObject.length === 0){
+                  setMonthRepetition(true)
+                  if (dateObject.length === 0)
                     setMonthRepetition(false)
-                  }
                 }}
                 multiple
                 format={"DD"}
@@ -401,7 +538,7 @@ function CreateCampaignForm() {
             <PostImage campaignImg={campaignImg} callback={callbackImageFunction}></PostImage>
 
             <Form.Item label="Tính năng nâng cao - Mặc định thông báo chiến dịch sẽ không gửi cho mọi người:" name="sendMail" initialValue={false}>
-              <Switch onChange={sendEmail} style={{ marginRight: "10px" }} /> Gửi mail cho tình nguyện hiến máu có địa chỉ thường trú trong khu vực.
+              <Switch style={{ marginRight: "10px" }} /> Gửi mail cho tình nguyện hiến máu có địa chỉ thường trú trong khu vực.
             </Form.Item>
 
             <div className="Mess" style={{ textAlign: "center", color: "red", marginBottom: "20px" }}>{message}</div>
@@ -409,7 +546,7 @@ function CreateCampaignForm() {
             <Form.Item className="create-campaign-form-buttons">
 
               <Button
-                disabled={(campaigName === "" || dates.length !== 2 || address === "") ? true : false}
+                // disabled={(campaigName === "" || dates.length !== 2 || address === "") ? true : false}
                 id="finishButton" type="primary" htmlType="submit" size="large"
                 onClick={showConfirm}
               >
@@ -433,5 +570,3 @@ function CreateCampaignForm() {
     </>
   )
 };
-
-export default CreateCampaignForm;
