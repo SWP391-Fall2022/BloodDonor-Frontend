@@ -2,11 +2,10 @@ import { Button, Collapse } from 'antd';
 import { Footer } from "../../../components/Footer/Footer";
 import React from 'react';
 import "./qanda.css"
-const { Panel } = Collapse;
+const { Panel } = Collapse; 
 const QAndA = () => {
     return <section className="q-and-a">
-    <h2>THẮC MẮC THƯỜNG GẶP</h2>
-
+<h2>THẮC MẮC THƯỜNG GẶP</h2>
     <Collapse className="q-and-a-container">
     <Panel
         header="Ai có thể tham gia hiến máu?"

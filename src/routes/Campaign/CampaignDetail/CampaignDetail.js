@@ -1,62 +1,100 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import packageInfo from '../../../shared/ListOfCampaign.json';
-import { Breadcrumb} from 'antd';
+import { Breadcrumb } from 'antd';
 import './CampaignDetail.css';
-import GoldShield from '../../../assets/awards/Gold-Shield.png';
-import SilSol from '../../../assets/awards/Sil-Sol.png';
-import CopCoin from '../../../assets/awards/Cop-Coin.png';
+import moment from 'moment';
+import RegisterCampaign from '../RegisterCampaign/RegisterCampaign';
 import QaA from '../QaA/QaA';
-import RegisterButtons from '../Buttons/RegisteredButtons';
-import UnRegisterButtons from '../Buttons/UnRegisteredButtons';
-import ParticipatedButtons from '../Buttons/ParticipatedButtons';
+
 
 
 export default function CampaignDetail() {
+
+    // fetch data function
+    const [selectedCampaign, setSelectedCampaign] = useState([])
+    console.log("selectedCampaign", selectedCampaign)
+    
+
+
+    function getCampFromAPI() {
+        const asyncFn = async () => {
+            // const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+            let json = {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    // 'Authorization': "Bearer " + token,
+                })
+            }
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`, json)
+                .then((res) => res.json())
+                .catch((error) => { console.log(error) })
+
+            if (response.success) {
+                console.log("response",response)
+                // setCampaigns(response.body)
+                const campaign = response.body.find(obj => {
+
+                    return obj.id == campaignTitle.id;
+                });
+                setSelectedCampaign(campaign)
+            // console.log("campaign",campaign)
+
+            }
+
+        }
+        asyncFn();
+    }
+
+
+    //call etch API function
+    useEffect(() => {
+        getCampFromAPI();
+      
+
+    }, []
+    )
 
 
 
     // take the campaign
     const campaignTitle = useParams();
+    console.log("campaignTitle", campaignTitle)
 
-    const campaign = packageInfo.listOfCampaign.find(obj => {
 
-        return obj.id == campaignTitle.id;
-    });
+    // const campaign = campaigns.find(obj => {
 
-    // check donor unregistered registerd
-    const [registered, setRegistered] = useState(false);
+    //     return obj.id == campaignTitle.id;
+    // });
+    // console.log(campaign)
+    // setSelectedCampaign(
+    //     ()=>{
+    //         campaigns.find(obj => {
 
-     // check donor participated the campaign
-     const [participated, setParticipated] = useState(false);
+    //             return obj.id == campaignTitle.id;
+    //         })
+    //     }
+    // )
 
-    //get state after register at UnRegisterButtons component
-    function callbackFunction(isRegistered){
-        setRegistered(isRegistered);
-    }
+    // // check donor unregistered registerd
+    // const [registered, setRegistered] = useState(false);
 
-    let buttons;
+    //  // check donor participated the campaign
+    //  const [participated, setParticipated] = useState(false);
 
-    if (participated) {
-        buttons = <ParticipatedButtons registered={registered} campaign={campaign} />;
-    } else if(!participated && !registered){
-        buttons = <UnRegisterButtons registered={registered} campaign={campaign} callback={callbackFunction} />;
-    }else if(!participated && registered){
-        buttons = <RegisterButtons registered={registered} campaign={campaign} callback={callbackFunction}/>;
-    }
     // console.log(buttons);
 
 
 
 
     //  render blood types
-    const listBloodType = campaign.blood.map((bloodType) =>
-        <li className='blood-type-item'>{bloodType.slice(8, 10)}</li>
+    const listBloodType = String(selectedCampaign.bloodTypes).split("-").map((bloodType) =>
+        <li className='blood-type-item'>{bloodType}</li>
     );
 
 
-    // setup date
-    var startDate = new Date(campaign.startDate);
+    // // setup date
+    // var startDate = new Date(campaign.startDate);
 
 
     return (
@@ -73,19 +111,17 @@ export default function CampaignDetail() {
                             <Breadcrumb.Item>THÔNG BÁO</Breadcrumb.Item>
                         </Breadcrumb>
 
-                        <h2 className='campaign-title' > THÔNG BÁO</h2>
-                        <div>Ngày đăng:{startDate.getDate()}/{startDate.getMonth() + 1}/{startDate.getFullYear()} |  {campaign.organization}  </div>
+                        <h2 className='campaign-title' > {selectedCampaign.name}</h2>
+                        <div>Ngày đăng: {moment(selectedCampaign.startDate).format("DD/MM/YYYY")} |  {selectedCampaign.organizationName}  </div>
                     </div>
 
                     <div className='campaign-detail-left-img'>
-                        <img src={campaign.image} alt={campaign.organization} />
+                        <img src={selectedCampaign.images} alt={selectedCampaign.organizationName} />
                     </div>
 
                     <div className='campaign-content'>
-                        <p className='sub-title'>{campaign.organization} xin thông báo:</p>
-                        <p>Điểm hiến máu cố định tại khu vực Bình tân từ ngày 17/09/2022 đến ngày 18/09/2022.
-                            Quí tình nguyện viên tham gia hiến máu vui lòng đăng kí vào trang thông tin này
-                            để thuận lợi hơn khi làm thủ thục chuẩn bị hiến máu.</p>
+                        <p className='sub-title'>{selectedCampaign.organizationName} xin thông báo:</p>
+                        <p>{selectedCampaign.description}</p>
 
                         <p className='sub-title'>Thời gian:</p>
                         <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
@@ -94,7 +130,7 @@ export default function CampaignDetail() {
 
 
                         <p className='sub-title'>Địa chỉ</p>
-                        <p>{campaign.AddressDetail}</p>
+                        <p>{selectedCampaign.addressDetails}</p>
 
                         <p className='sub-title'>Nhóm máu cần</p>
                         <div className='blood-type'>
@@ -104,54 +140,23 @@ export default function CampaignDetail() {
                         <p className='sub-title'>Xin lưu ý</p>
                         <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
                         <p>Xin trân trọng thông báo!!!</p>
-                        {/* <RegisterCampaign campaign={campaign} registered={registered}></RegisterCampaign> */}
-                        {buttons}
-                    </div>
+                        <RegisterCampaign campaign={selectedCampaign} ></RegisterCampaign>
+                     </div>
 
-                </div>
+                        </div>
 
-                <div className='campaignDetail-right'>
-                    <div className='medals-avatar'>
-
-                        <div className='avatar'>
-                            <Link to={`/organization/${campaign.organizationId}`}>
-                                <img src={campaign.image} alt={campaign.organization} />
-                            </Link>
-
-                        </div >
-                        <p className='organization-name'>{campaign.organization}</p>
-
-
-                        <div className='medals'>
-
-                            <div className='campaignDetail-medal-item'>
-                                <img src={GoldShield} alt='' />
-                                <p>Tổ chức <br></br> Hiến máu vàng </p>
-                            </div>
-
-                            <div className='campaignDetail-medal-item'>
-                                <img src={SilSol} alt='' />
-                                <p>Tổ chức <br></br> Năng động bạc </p>
-                            </div>
-
-                            <div className='campaignDetail-medal-item'>
-                                <img src={CopCoin} alt='' />
-                                <p>Tổ chức <br></br> Gắn bó đồng </p>
-                            </div>
-
-                        </div >
-
-                    </div >
+               <div className='campaignDetail-right'>
+                    
 
                     <QaA className='list-qaa'></QaA>
 
 
+                    </div >
                 </div >
-            </div >
 
         </>
 
 
 
-    )
+            )
 }

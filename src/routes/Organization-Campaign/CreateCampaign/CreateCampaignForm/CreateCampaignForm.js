@@ -1,18 +1,20 @@
 import { React, useState } from "react";
 import "antd/dist/antd.min.css";
-// import "./CreateCampaign.css";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Input, DatePicker, Breadcrumb, Checkbox, Button, Modal } from "antd";
-import RegisterPD from '../../../../components/Register/RegisterProvinceDistrict';
+import { Form, Input, DatePicker, Breadcrumb, Checkbox, Button, Modal, Switch, Radio, Select } from "antd";
 import moment from 'moment';
 import Editor from "../Editor/Editor";
 import './CreateCampaignForm.css';
 import PostImage from '../PostImage/PostImage';
+import DatePickerReact, { DateObject } from "react-multi-date-picker";
+import packageInfo from "../../../../shared/ProvinceDistrict.json";
+
 
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
+const { Option } = Select;
 
 function CreateCampaignForm() {
   const navigate = useNavigate();
@@ -24,7 +26,22 @@ function CreateCampaignForm() {
   const [campaignImg, setCampaignImg] = useState("");
   const [address, setAddress] = useState("");
 
+  // set up for province district register
+  const [form] = Form.useForm();
 
+  const provinceList = packageInfo.provinces
+  const [districtList, setDistrictList] = useState(provinceList[0].district)
+  const [districtId, setDistrictId] = useState(provinceList[0].district[0].id);
+
+  const onProvinceChange = (value) => {
+    setDistrictList(provinceList[value - 1].district)
+    form.setFieldsValue({ district: provinceList[value - 1].district[0].name })
+    setDistrictId(provinceList[value - 1].district[0].id)
+  };
+
+  const onDistrictChange = (value) => {
+    setDistrictId(value)
+  }
 
   // setup for dates
 
@@ -59,7 +76,7 @@ function CreateCampaignForm() {
   const onBloodTypesChange = (checkedValues) => {
     const checked = [];
     checkedValues.map((value) => {
-      checked.push(value);
+      return checked.push(value);
     },
 
       setBloodTypes(checked)
@@ -69,6 +86,8 @@ function CreateCampaignForm() {
   };
 
   // confirm modal
+  const [open, setOpen] = useState(false);
+
   const showConfirm = () => {
     Modal.confirm({
       title: 'Bạn có muốn kiểm tra lại thông tin trước khi đăng chiến dịch không?',
@@ -76,12 +95,13 @@ function CreateCampaignForm() {
       okText: 'Đăng',
       cancelText: 'Xem Lại',
       className: 'create-campaign-confirm',
+      onOk() {
+        onFinish();
+        setOpen(false)
+      }
 
     });
   };
-
-  const [form] = Form.useForm();
-
 
   const onFinish = async (values) => {
 
@@ -95,10 +115,18 @@ function CreateCampaignForm() {
       "endDate": formData.campDate[1],
       "emergency": false,
       "bloodTypes": bloodTypes.toString().replace(/,/g, '-'),
-      "districtId": JSON.parse(sessionStorage.getItem('districtId')),
+      "districtId": districtId,
       "addressDetails": formData.addressDetails,
-      "sendMail": true
+      "sendMail": formData.sendMail,
+      "onSiteDates": onSiteDates[0] === "1970-01-01" ? null : String(onSiteDates).split(","),
+      "weekRepetition": weekRepetition,
+      "monthRepetition": monthRepetition,
+      "daysOfWeek": formData.daysOfWeek,
+      "daysOfMonth": daysOfMonth,
+      "weekNumber": formData.weekNumber
+
     }
+    console.log("reques:", requestData)
     const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
 
@@ -119,6 +147,10 @@ function CreateCampaignForm() {
       navigate("/organization/manageCampaign")
       setMessage("Tạo chiến dịch thành công")
     }
+    else {
+      if (response.body === "Campaign can not have duplicate name.")
+        setMessage("Bạn không được đặt trùng tên với chiến dịch hiện có.")
+    }
     setTimeout(() => {
       setMessage('');
     }, 3000);
@@ -126,30 +158,103 @@ function CreateCampaignForm() {
 
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-
+  //setup for update image
   function callbackImageFunction(campaignImg) {
     setCampaignImg(campaignImg);
-    console.log("setCampaignImg: ", campaignImg)
   }
+
+
+  // setup for send email
+  const sendEmail = (checked) => {
+    console.log(`switch to ${checked}`);
+  };
+
+  // setup for repetition by  
+  const [isRepetition, setIsRepetition] = useState();
+  function onIsRepetitionChange(e) {
+    setIsRepetition(e.target.value)
+    if (e.target.value === 2)
+      setWeekRepetition(true)
+    else if (e.target.value === 3 || e.target.value === 4)
+      setMonthRepetition(true)
+  }
+  // const [weekNumber, setWeekNumber] = useState(0);
+
+
+  // setup for repetition by week 
+  const [weekRepetition, setWeekRepetition] = useState(false);
+
+  const weeksData = [
+    {
+      label: 'Thứ 2',
+      value: 'MONDAY',
+    },
+    {
+      label: 'Thứ 3',
+      value: 'TUESDAY',
+    },
+    {
+      label: 'Thứ 4',
+      value: 'WEDNESDAY',
+    },
+    {
+      label: 'Thứ 5',
+      value: 'THURSDAY',
+    },
+    {
+      label: 'Thứ 6',
+      value: 'FRIDAY',
+    },
+    {
+      label: 'Thứ 7',
+      value: 'SATURDAY',
+    },
+    {
+      label: 'Chủ Nhật',
+      value: 'SUNDAY',
+    },
+  ];
+
+  // const weekRepetionChange = (checkedValue) => {
+  //   setWeekRepetition(true);
+  //   if (checkedValue.length === 0) setWeekRepetition(false)
+
+  // };
+
+  //setup onSiteDates
+  const [onSiteDates, setOnSiteDates] = useState(["1970-01-01"])
+
+  // setup for repetition by month 
+  const [monthRepetition, setMonthRepetition] = useState(false);
+
+  const format = "DD"
+  const [daysOfMonth, setDaysOfMonth] = useState([]);
+  const dayinmonth = []
+
+  //Set up for preview
+  // const [previewCamp, setPreviewCamp]=useState({
+  //   "organizationName": 
+  // })
+
+
+
+
 
 
   return (
     <>
 
+      <div className="create-campaign-header">
+        <Breadcrumb className="manage-campaign-breadcrumb">
+          <Breadcrumb.Item>Quản lý chiến dịch</Breadcrumb.Item>
+          <Breadcrumb.Item>Tạo chiến dịch</Breadcrumb.Item>
+        </Breadcrumb>
+        <Link to="/organization/manageCampaign"><ArrowLeftOutlined style={{ marginRight: "10px" }} />Tạo chiến dịch</Link>
+      </div>
 
       {/* {!preview ? ( */}
       <div id="create-campaign-container">
 
-        <div className="create-campaign-header">
-          <Breadcrumb className="manage-campaign-breadcrumb">
-            <Breadcrumb.Item>Quản lý chiến dịch</Breadcrumb.Item>
-            <Breadcrumb.Item>Tạo chiến dịch</Breadcrumb.Item>
-          </Breadcrumb>
-          <Link to="/organization/manageCampaign"><ArrowLeftOutlined style={{ marginRight: "10px" }} />Tạo chiến dịch</Link>
-        </div>
 
         <div className="create-campaign-form">
           <p style={{ fontSize: "25px", fontWeight: "700", textAlign: "center" }}>TẠO CHIẾN DỊCH</p>
@@ -159,15 +264,14 @@ function CreateCampaignForm() {
               'bloods': ["A"],
               'description': "",
               'name': "",
-              'province': "1",
-              // 'campDate': [""],
               'addressDetails': "",
               'images': []
             }}
 
+
             form={form}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+            // onFinish={onFinish}
+
             id="create-campaign-form"
             name="basic"
             scrollToFirstError
@@ -178,34 +282,131 @@ function CreateCampaignForm() {
                   setCampaigName(e.target.value)
                 }}
                 name="name"
-
+                maxLength={120}
               />
             </Form.Item>
 
             {/* regiter province district  */}
-           <RegisterPD></RegisterPD>
+            <Form.Item >
+              <Form.Item label="Tỉnh" name="province" initialValue={provinceList[0].name} rules={[{ required: true, message: 'Vui lòng chọn' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                <Select
+                  showSearch placeholder="Chọn"
+                  onChange={onProvinceChange}
+                  filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
+                >
+                  {provinceList.map(a => (<Option key={a.id} >{a.name}</Option>))}
+                </Select>
+              </Form.Item>
+              <Form.Item label="Quận/Huyện" name="district" initialValue={provinceList[0].district[0].name} rules={[{ required: true, message: 'Vui lòng chọn' },]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                <Select
+                  showSearch placeholder="Chọn"
+                  onChange={onDistrictChange}
+                  filterOption={(input, option) => option.children.toLowerCase().includes(input.toLowerCase())}
+                >
+                  {districtList.map(a => (<Option key={a.id} value={a.id}>{a.name}</Option>))}
+                </Select>
+              </Form.Item>
+            </Form.Item>
 
 
             <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }]}>
-              <TextArea rows={2} allowClear showCount maxLength={100}
+              <TextArea 
+              rows={2} 
+              allowClear 
+              showCount 
+              maxLength={100}
                 onChange={(e) => {
                   setAddress(e.target.value)
+                  
                 }} />
             </Form.Item>
 
 
-            <Form.Item className="create-campaign-form-item" label="Thời gian diễn ra chiến dịch" name="campDate" >
+            <Form.Item className="create-campaign-form-item" label="Thời gian mở đăng ký trên Medichor" name="campDate" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }]}>
+
               <RangePicker
-               format={'YYYY-MM-DD'}
+                format={'YYYY-MM-DD'}
                 disabledDate={disabledDate}
                 onChange={(values) => {
-                setDates(values)
-              }}
+                  setDates(values)
+                }}
+                placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
               >
               </RangePicker>
             </Form.Item>
 
-          
+            <Form.Item label="Tính năng nâng cao: bạn muốn lặp lại chiến dịch theo" name="isRepetition">
+              <Radio.Group onChange={(e) => onIsRepetitionChange(e)} >
+                <Radio value={1}>Ngày cụ thể</Radio>
+                <Radio value={2}>Tuần</Radio>
+                <Radio value={3}>Ngày bất kỳ trong tháng</Radio>
+                <Radio value={4}>Ngày của tuần trong tháng</Radio>
+
+              </Radio.Group>
+            </Form.Item>
+
+            <Form.Item className="create-campaign-form-item-days" initialValue={" "} label="Chọn những ngày cụ thể bạn muốn mở đăng ký:" required={isRepetition === 1}>
+
+              <DatePickerReact
+                disabled={isRepetition !== 1}
+                onChange={(values) => {
+                  // setOnSiteDates("")
+                  setOnSiteDates(values)
+                }}
+                id="onSiteDates"
+
+                multiple
+                format="YYYY-MM-DD"
+                minDate={moment(dates[0]).toDate()}
+                maxDate={moment(dates[1]).toDate()}
+                placeholder={"Chọn những ngày mở đăng ký"}
+              />
+            </Form.Item>
+
+            <Form.Item className="create-campaign-form-item" initialValue={[]} label="Cài đặt nâng cao, chọn thứ trong tuần để lặp:" name="daysOfWeek" required={isRepetition === 4 || isRepetition === 2}>
+              <Checkbox.Group options={weeksData} disabled={isRepetition !== 2 && isRepetition !== 4} />
+
+            </Form.Item>
+
+
+            <Form.Item className="create-campaign-form-item-days-in-month" initialValue={new DateObject().set({ year: 2023, month: 1, day: 1, format })} label="Chọn những ngày cụ thể trong tháng bạn muốn mở đăng ký:" name="daysOfMonth" required={isRepetition === 3}>
+
+              <DatePickerReact
+                value={daysOfMonth}
+                id="daysOfMonth"
+                onChange={dateObject => {
+                 
+                  setDaysOfMonth(dateObject)
+                  dateObject.map(
+                    (e) => (
+                      dayinmonth.push(e.day.toString())
+                    )
+                  )
+                  setDaysOfMonth(dayinmonth)
+                  setMonthRepetition(true)
+                  if (dateObject.length === 0)
+                    setMonthRepetition(false)
+                }}
+                multiple
+                format={"DD"}
+                buttons={false}
+                placeholder={"Chọn những ngày mở đăng ký"}
+                disabled={isRepetition !== 3}
+              />
+            </Form.Item>
+
+            <Form.Item initialValue={0} label="Chọn tuần thứ mấy trong tháng bạn muốn lặp lại:" name="weekNumber" required={isRepetition === 4}>
+              <Radio.Group disabled={isRepetition !== 4}>
+                <Radio value={1}>Tuần 1</Radio>
+                <Radio value={2}>Tuần 2</Radio>
+                <Radio value={3}>Tuần 3</Radio>
+                <Radio value={4}>Tuần 4</Radio>
+
+              </Radio.Group>
+            </Form.Item>
+
+
+
             <Form.Item className="create-campaign-form-item" label="Yêu cầu về nhóm máu" name="bloods" >
               <Checkbox.Group options={typesOfBlood} onChange={onBloodTypesChange} />
             </Form.Item>
@@ -214,23 +415,18 @@ function CreateCampaignForm() {
 
             <PostImage campaignImg={campaignImg} callback={callbackImageFunction}></PostImage>
 
+            <Form.Item label="Tính năng nâng cao - Mặc định thông báo chiến dịch sẽ không gửi cho mọi người:" name="sendMail" initialValue={false}>
+              <Switch onChange={sendEmail} style={{ marginRight: "10px" }} /> Gửi mail cho tình nguyện hiến máu có địa chỉ thường trú trong khu vực.
+            </Form.Item>
+
+            <div className="Mess" style={{ textAlign: "center", color: "red", marginBottom: "20px" }}>{message}</div>
+
             <Form.Item className="create-campaign-form-buttons">
-              {/* <Button
-                id="previewButton"
-                type="primary"
-                htmlType="button"
-                size="large"
-              // disabled={btndisabled}
-              // onClick={(e) => {
-              //   setPreview(true)
-              // }}
-              >
-                Xem trước
-              </Button> */}
+
               <Button
-                disabled={(campaigName == "" || dates.length != 2 || address == "") ? true : false}
+                disabled={(campaigName === "" || dates.length !== 2 || address === "") ? true : false}
                 id="finishButton" type="primary" htmlType="submit" size="large"
-              // onClick={showConfirm}
+                onClick={showConfirm}
               >
                 Hoàn thành
               </Button>

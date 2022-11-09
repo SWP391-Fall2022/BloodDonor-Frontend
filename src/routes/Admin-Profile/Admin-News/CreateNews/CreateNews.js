@@ -130,7 +130,10 @@ const CreateNews = () => {
             <Form.Item value={valueContent} name="content">
               <Editor updateContent={normFile} content={valueContent}></Editor>
             </Form.Item>
-            <PostImage campaignImg={campaignImg} callback={callbackImageFunction}></PostImage>
+            <PostImage 
+            campaignImg={campaignImg} 
+            callback={callbackImageFunction}>
+            </PostImage>
 
             <Form.Item
               name="category"
@@ -155,7 +158,7 @@ const CreateNews = () => {
                 <Option value="6">{category[6]}</Option>
               </Select>
             </Form.Item>
-            <Form.Item>
+            <Form.Item> 
               <Button htmlType="submit" onClick={handlePreview}>
                 Xem trước
               </Button>

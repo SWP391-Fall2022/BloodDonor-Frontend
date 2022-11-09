@@ -42,10 +42,11 @@ import OrganizationCampaignHealthInf from "./routes/Organization-Campaign-Donor/
 
 
 // org campaign management
-import OrganizationCampign from "./routes/Organization-Campaign/OrganizationCampaign";
-import OrganizationManageCampaign from "./routes/Organization-Campaign/ManageCampaign/ManageCampaign";
-import OrganizationCreateCampaign from "./routes/Organization-Campaign/CreateCampaign/CreateCampaign";
-import OrganizationDetailCampaign from "./routes/Organization-Campaign/CreateCampaign/DetailCampaign/DetailCampaign";
+import OrganizationCampign from './routes/Organization-Campaign/OrganizationCampaign';
+import OrganizationManageCampaign from './routes/Organization-Campaign/ManageCampaign/ManageCampaign';
+import OrganizationCreateCampaign from './routes/Organization-Campaign/CreateCampaign/CreateCampaign';
+import OrganizationDetailCampaign from './routes/Organization-Campaign/CreateCampaign/DetailCampaign/DetailCampaign';
+import OrganizationPreviewCampaign from './routes/Organization-Campaign/CreateCampaign/PreView/Preview';
 
 // org question management
 import OrganizationQuestion from "./routes/Organization-Question/OrganizationQuestion";
@@ -54,11 +55,14 @@ import OrganizationUnRepliedQuestion from "./routes/Organization-Question/Detail
 import OrganizationRepliedQuestion from "./routes/Organization-Question/DetailQuestion/RepliedQuestion";
 
 //Admin routes
-import AdminProfile from "./routes/Admin-Profile/adminContainer";
-import AdminManageCampaign from "./routes/Admin-Profile/Admin-Campaign/AdminCampaign";
-import AdminManageDonor from "./routes/Admin-Profile/Admin-Donor/AdminDonor";
-import AdminManageOrganization from "./routes/Admin-Profile/Admin-Organization/AdminOrganization";
-import AdminManageVouchers from "./routes/Admin-Profile/Admin-Voucher/AdminVoucher";
+import AdminProfile from './routes/Admin-Profile/adminContainer';
+import AdminManageCampaign from './routes/Admin-Profile/Admin-Campaign/AdminCampaign'
+import AdminDetailCampaign from './routes/Admin-Profile/Admin-Campaign/DetailCampaign/AdminDetailCampaign'
+import AdminManageDonor from './routes/Admin-Profile/Admin-Donor/AdminDonor';
+import AdminManageOrganization from './routes/Admin-Profile/Admin-Organization/AdminOrganization';
+import AdminApproveOrganization from './routes/Admin-Profile/Admin-Organization/Approve-Organization/ApproveOrganization';
+import AdminInfoOrganization from './routes/Admin-Profile/Admin-Organization/Info-Oranization/InfoOrganization';
+import AdminManageVouchers from './routes/Admin-Profile/Admin-Voucher/AdminVoucher'
 
 import NoInternetConnection from "./others/NoInternetConnection";
 import OrganizationGuide from "./routes/Organization-Profile/Organization-Guide/organizationGuide";
@@ -123,7 +127,7 @@ export default function App() {
           {/* Pages for logged in donor */}
           <Route path="/donor" element={<DonorProfile />}>
             <Route index element={<Info />} />
-            <Route path="changePassword" element={<npm ChangePassword />} />
+            <Route path="changePassword" element={<ChangePassword />} />
             <Route path="history" element={<History />} />
             <Route path="qna" element={<QnADonor />} />
             <Route path="vouchers" element={<Vouchers />} />
@@ -156,14 +160,9 @@ export default function App() {
             {/* Manage Campaign */}
             <Route path="manageCampaign" element={<OrganizationCampign />}>
               <Route index element={<OrganizationManageCampaign />} />
-              <Route
-                path="createCampaign"
-                element={<OrganizationCreateCampaign />}
-              />
-              <Route
-                path="detailCampaign/:id"
-                element={<OrganizationDetailCampaign />}
-              />
+              <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
+              <Route path="detailCampaign" element={<OrganizationDetailCampaign />} />
+              <Route path="preview" element={<OrganizationPreviewCampaign />} />
             </Route>
 
             {/* Manage Question */}
@@ -190,8 +189,11 @@ export default function App() {
           {/* Pages for admin */}
           <Route path="/admin" element={<AdminProfile />}>
             <Route path="manage_campaign" element={<AdminManageCampaign />} />
+            <Route path="manage_campaign/detail_campaign" element={<AdminDetailCampaign />} />
             <Route path="manage_donor" element={<AdminManageDonor />} />
             <Route path="manage_organization" element={<AdminManageOrganization />} />
+            <Route path="manage_organization/approveOrganization" element={<AdminApproveOrganization />} />
+            <Route path="manage_organization/infoOrganization" element={<AdminInfoOrganization />} />
             <Route path="news" element={<AdminNewsList />} />
             <Route path="create_news" element={<AdminCreateNews />} />
             <Route path="manage_vouchers" element={<AdminManageVouchers />} />

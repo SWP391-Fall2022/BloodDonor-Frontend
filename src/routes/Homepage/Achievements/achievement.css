@@ -11,7 +11,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     padding: 1% 10% 7% 10%;
-    grid-gap: 2%;
+    grid-gap: 3%;
 }
 
 .achievement-card {
@@ -23,13 +23,12 @@
 }
 
 .achievement-avatar {
-    height: 120px;
-    width: 120px;
+    height: 95px;
+    width: 95px;
     border-radius: 100px;
-    background-color: #71D94D;
     position: absolute;
     top: 10%;
-    border: 5px solid white;
+    box-shadow: var(--shadow-dp-01);
 }
 
 .achievement-chart {
@@ -42,6 +41,11 @@
     align-items: center;
     padding: 2% 5% 2% 5%;
     width: 100%;
+}
+.achievement-chart img{
+    max-height: 100%;
+    max-width: 100%;
+    background-color: white;
 }
 
 .achievement-bullet {
@@ -62,23 +66,23 @@
 
 .place-1st .achievement-chart {
     border-bottom: 20px solid var(--primary-500);
-    border-top: 90px solid var(--primary-500);
+    border-top: 60px solid var(--primary-500);
 }
 
 .place-2nd .achievement-chart {
     border-bottom: 20px solid var(--primary-600);
-    border-top: 90px solid var(--primary-600);
+    border-top: 60px solid var(--primary-600);
 }
 
 .place-3rd .achievement-chart {
     border-bottom: 20px solid var(--primary-900);
-    border-top: 90px solid var(--primary-900);
+    border-top: 60px solid var(--primary-900);
 }
 
 .place-4th .achievement-chart,
 .place-5th .achievement-chart {
     border-bottom: 20px solid var(--primary-1000);
-    border-top: 90px solid var(--primary-1000);
+    border-top: 60px solid var(--primary-1000);
 }
 
 @media only screen and (max-width: 1000px) {

@@ -1,12 +1,93 @@
 import { Carousel } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import "./achievement.css";
+import HasData from "./HasData";
+import HasDataProvince from "./HasDataProvince";
 const height_col1 = 20;
 const height_col2 = 60;
 const height_col3 = 100;
 const height_col4 = 80;
 const height_col5 = 40;
 const Achievements = () => {
+  const [dataDonor, setDonor] = useState([
+    {
+      name: "Văn A",
+      avatar:
+        "https://media.istockphoto.com/vectors/emoticon-cute-line-art-and-flat-color-vector-id1157140670?b=1&k=20&m=1157140670&s=170667a&w=0&h=Sma21BtSsqUQscCVcf6qmHQqw0JRalTai7XIz_6kfkM=",
+    },
+    {
+      name: "Văn B",
+      avatar:
+        "https://media.istockphoto.com/vectors/emoticon-cute-line-art-and-flat-color-vector-id1157140670?b=1&k=20&m=1157140670&s=170667a&w=0&h=Sma21BtSsqUQscCVcf6qmHQqw0JRalTai7XIz_6kfkM=",
+    },
+    {
+      name: "Văn C",
+      avatar:
+        "https://media.istockphoto.com/vectors/emoticon-cute-line-art-and-flat-color-vector-id1157140670?b=1&k=20&m=1157140670&s=170667a&w=0&h=Sma21BtSsqUQscCVcf6qmHQqw0JRalTai7XIz_6kfkM=",
+    },
+  ]);
+  const [dataOrg, setOrg] = useState([
+    {
+      name: "Bệnh viện A",
+      avatar:
+        "https://media.istockphoto.com/vectors/emoticon-cute-line-art-and-flat-color-vector-id1157140670?b=1&k=20&m=1157140670&s=170667a&w=0&h=Sma21BtSsqUQscCVcf6qmHQqw0JRalTai7XIz_6kfkM=",
+    },
+    {
+      name: "Bệnh viện B",
+      avatar:
+        "https://media.istockphoto.com/vectors/emoticon-cute-line-art-and-flat-color-vector-id1157140670?b=1&k=20&m=1157140670&s=170667a&w=0&h=Sma21BtSsqUQscCVcf6qmHQqw0JRalTai7XIz_6kfkM=",
+    },
+    {
+      name: "Bệnh viện C",
+      avatar:
+        "https://media.istockphoto.com/vectors/emoticon-cute-line-art-and-flat-color-vector-id1157140670?b=1&k=20&m=1157140670&s=170667a&w=0&h=Sma21BtSsqUQscCVcf6qmHQqw0JRalTai7XIz_6kfkM=",
+    },
+  ]);
+  const [dataProvince, setProvince] = useState("");
+  //*DONOR
+  // useEffect(() => {
+  //   fetch(
+  //     "http://localhost:8080/v1/Datas/top5?from=2022-01-01&to=2022-12-31",
+  //     { method: "GET" }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((dataApi) => {
+  //       setData(dataApi.body);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // }, []);
+
+  //*ORGANIZATION
+  // useEffect(() => {
+  //   fetch(
+  //     "http://localhost:8080/v1/campaign/top5Orgs?from=2022-01-01&to=2022-12-31",
+  //     { method: "GET" }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((dataApi) => {
+  //       setOrg(dataApi.body);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // }, []);
+
+  //*PROVINCE
+  // useEffect(() => {
+  //   fetch(
+  //     "http://localhost:8080/v1/campaign/top5Provinces?from=2022-01-01&to=2022-12-31",
+  //     { method: "GET" }
+  //   )
+  //     .then((response) => response.json())
+  //     .then((dataApi) => {
+  //       setProvince(dataApi.body);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // }, []);
   return (
     <section className="achievements">
       <Carousel
@@ -19,176 +100,62 @@ const Achievements = () => {
         <div>
           <h2>Tình nguyện viên hiến máu nhiều lần nhất</h2>
           <div className="achievement-list">
-            <div className="achievement-card place-1st">
-              <div className="achievement-chart">
-                <img
-                  src="https://i1.sndcdn.com/artworks-RJG4jIrv6lZwWkQH-cWi6nA-t500x500.jpg"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">
-                  Nguyen Thi Huynh Hoang Nhi
-                </div>
-              </div>
-            </div>
-            <div className="achievement-card place-2nd">
-              <div className="achievement-chart">
-                {" "}
-                <img
-                  src="https://i1.sndcdn.com/artworks-RJG4jIrv6lZwWkQH-cWi6nA-t500x500.jpg"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Nguyễn Văn A</div>
-              </div>
+            <div className="achievement-card place-4th">
+              <HasData data={dataDonor} number={4} />
             </div>
             <div className="achievement-card place-3rd">
-              <div className="achievement-chart">
-                <img
-                  src="https://i1.sndcdn.com/artworks-RJG4jIrv6lZwWkQH-cWi6nA-t500x500.jpg"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Nguyễn Văn A</div>
-              </div>
+              <HasData data={dataDonor} number={2} />
             </div>
-            <div className="achievement-card place-4th">
-              <div className="achievement-chart">
-                <img
-                  src="https://i1.sndcdn.com/artworks-RJG4jIrv6lZwWkQH-cWi6nA-t500x500.jpg"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Nguyễn Văn A</div>
-              </div>
+            <div className="achievement-card place-1st">
+              <HasData data={dataDonor} number={1} />
+            </div>
+            <div className="achievement-card place-3rd">
+              <HasData data={dataDonor} number={3} />
             </div>
             <div className="achievement-card place-5th">
-              <div className="achievement-chart">
-                <img
-                  src="https://i1.sndcdn.com/artworks-RJG4jIrv6lZwWkQH-cWi6nA-t500x500.jpg"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Nguyễn Văn A</div>
-              </div>
+              <HasData data={dataDonor} number={5} />
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2>Bệnh viện có tỉ lệ tình nguyện viên tham gia nhiều nhất</h2>
+
+          <div className="achievement-list">
+            <div className="achievement-card place-4th">
+              <HasData data={dataOrg} number={4} />
+            </div>
+            <div className="achievement-card place-3rd">
+              <HasData data={dataOrg} number={2} />
+            </div>
+            <div className="achievement-card place-1st">
+              <HasData data={dataOrg} number={1} />
+            </div>
+            <div className="achievement-card place-3rd">
+              <HasData data={dataOrg} number={3} />
+            </div>
+            <div className="achievement-card place-5th">
+              <HasData data={dataOrg} number={5} />
             </div>
           </div>
         </div>
         <div>
           <h2>Tỉnh thành có tình nguyện viên tham gia nhiều nhất</h2>
           <div className="achievement-list">
-            <div className="achievement-card place-1st">
-              <div className="achievement-chart">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1200px-Flag_of_Vietnam.svg.png"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">
-                  TP Hồ Chí Minh
-                </div>
-              </div>
-            </div>
-            <div className="achievement-card place-2nd">
-              <div className="achievement-chart">
-                {" "}
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1200px-Flag_of_Vietnam.svg.png"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Hà Nội</div>
-              </div>
+            <div className="achievement-card place-4th">
+              <HasDataProvince data={dataProvince} number={4} />
             </div>
             <div className="achievement-card place-3rd">
-              <div className="achievement-chart">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1200px-Flag_of_Vietnam.svg.png"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Đà Nẳng</div>
-              </div>
+              <HasDataProvince data={dataProvince} number={2} />
             </div>
-            <div className="achievement-card place-4th">
-              <div className="achievement-chart">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1200px-Flag_of_Vietnam.svg.png"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Cần Thơ</div>
-              </div>
+            <div className="achievement-card place-1st">
+              <HasDataProvince data={dataProvince} number={1} />
+            </div>
+            <div className="achievement-card place-3rd">
+              <HasDataProvince data={dataProvince} number={3} />
             </div>
             <div className="achievement-card place-5th">
-              <div className="achievement-chart">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1200px-Flag_of_Vietnam.svg.png"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Quy Nhơn</div>
-              </div>
+              <HasDataProvince data={dataProvince} number={5} />
             </div>
-          </div>
-        </div>
-        <div>
-          <h2>Bệnh viện có tỉ lệ tình nguyện viên tham gia nhiều nhất</h2>
-          <div className="achievement-list">
-            <div className="achievement-card place-1st">
-              <div className="achievement-chart">
-                <img
-                  src="https://yt3.ggpht.com/ytc/AMLnZu8RlIUD9HkJCociWdwToKC-Rj1mKfC1drCVprFFTg=s900-c-k-c0x00ffffff-no-rj"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">
-                  Viện huyết học truyền máu trung ưng
-                </div>
-              </div>
-            </div>
-            <div className="achievement-card place-2nd">
-              <div className="achievement-chart">
-                {" "}
-                <img
-                  src="http://bthh.org.vn/uploads/2019/11-18/65.4621992239087logo15v-(2).png"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Bệnh viện truyền máu huyết học</div>
-              </div>
-            </div>
-            <div className="achievement-card place-3rd">
-              <div className="achievement-chart">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8NGE7qZE4tQ7jz5eHYDfX9HBUlUMcmgOx3CJhMoqjInjvfEsc2UnrGxGf7V7vvgGhA80&usqp=CAU"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Trung tâm truyền máu chợ trẫy</div>
-              </div>
-            </div>
-            <div className="achievement-card place-4th">
-              <div className="achievement-chart">
-                <img
-                  src="http://file.hstatic.net/1000115152/article/logo_trung_tam__34b67151b43f486e9139b01dbaaf868b_large.png"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Trung tâm hiến máu nhân đạo</div>
-              </div>
-            </div>
-            <div className="achievement-card place-4th">
-              <div className="achievement-chart">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/vi/thumb/5/5f/H%E1%BB%99i_Ch%E1%BB%AF_th%E1%BA%ADp_%C4%91%E1%BB%8F_Vi%E1%BB%87t_Nam.svg/1200px-H%E1%BB%99i_Ch%E1%BB%AF_th%E1%BA%ADp_%C4%91%E1%BB%8F_Vi%E1%BB%87t_Nam.svg.png"
-                  className="achievement-avatar"
-                  alt="chart"
-                ></img>
-                <div className="achievement-name">Hội chữ thập đỏ</div>
-              </div>
-            </div>
-           
           </div>
         </div>
       </Carousel>

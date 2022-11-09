@@ -1,42 +1,48 @@
-.org-campaignDetail{
-    font-size: 16px;
-
-}
-
-
-#org-campaign-detail-container{
+#admin-campaign-detail-container{
+    margin-left: 270px;
     background-color: white;
-    width: 65%;
-    margin-right: 30px;
+    /* width: 65%; */
+    /* margin-right: 30px; */
     padding: 25px 35px;
     text-align: center;
     box-shadow: var(--shadow-dp-02);
 }
 
-.org-campaignDetail-title {
+#admin-campaign-body{
+    padding: 5% 10%;
+}
+
+.admin-campaignDetail{
+    font-size: 16px;
+
+}
+
+
+
+.admin-campaignDetail-title {
     text-align: left;
 }
 
-.org-campaign-title{
+.admin-campaign-title{
     font-weight: 700;
     margin-top: 15px;
     text-transform: uppercase;
 }
 
-.org-campaign-detail-img{
+.admin-campaign-detail-img{
     width: 70%;
    
     margin: 30px auto;
 }
 
-.org-campaign-detail-img  img{
+.admin-campaign-detail-img  img{
     width: 100%;
     height: 100%;
     border-radius: 8px;
     transform: scale(1);
 }
 
-#org-campaign-detail-container  .sub-title{
+#admin-campaign-detail-container  .sub-title{
     font-weight: 700;
     margin-top: 20px;
 }
@@ -52,6 +58,7 @@
     justify-content: center
 }
 
+
 .blood-type-item{
     background-color: var(--primary-500);
     color: white;
@@ -62,32 +69,20 @@
     padding: 7px;
 }
 
-.org-campaign-header {
-    padding: 15px 20px;
-    box-shadow: var(--shadow-dp-01);
-    background-color: white;
-    margin-bottom: 50px;
-}
-
-.org-campaign-header a{
-   color: black;
-    font-weight: 500;
-    font-size: 18px;
-}
 
 
-#org-campaign-detail-container .register-date-cover .ant-radio-group {
+#admin-campaign-detail-container .register-date-cover .ant-radio-group {
     line-height: 40px;
     display: grid;
     grid-template-columns: auto auto;
     justify-items: start;
 }
 
-#org-campaign-detail-container .register-time  .ant-radio-group{
+#admin-campaign-detail-container .register-time  .ant-radio-group{
     line-height: 30px;
 }
 
-#org-campaign-body{
+#admin-campaign-body{
     display: flex;
     
     justify-content: center;
@@ -96,31 +91,32 @@
 
 }
 
-/* action-table style */
-#action-table{
-    display: grid;
-    grid-template-columns: auto auto;
-    height: 50%;
+/* action-table */
+#admin-campaign-action-table{
+    display: block;
     background-color: white;
-    padding: 10px;
+    height: 50%;
+    padding: 20px 15px 0 15px;
     box-shadow: var(--shadow-dp-02);
-    
+    margin-left: 30px;
+
+
 }
 
-.action-table-item{
-    margin: 10px 20px;
+.admin-campaign-action-table-item{
+    /* align-items: center; */
     text-align: center;
-    cursor: pointer;
-   display: flex;
-   flex-direction: column;
 
 }
 
-.action-table-icon{
+.admin-campaign-action-table-icon{
     color: var(--primary-500);
 }
 
 
-.action-table-icon-non{
-    color: var(--primary-500);
+
+@media screen and (max-width:800px) {
+    #admin-campaign-detail-container{
+        margin-left: 60px;
+    }
 }

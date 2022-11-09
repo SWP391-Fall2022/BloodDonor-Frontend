@@ -5,249 +5,94 @@ import React, { useEffect } from "react";
 import { Carousel } from "antd";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import "aos/dist/aos"
+import "aos/dist/aos";
+import { useState } from "react";
+import { MovingOutlined } from "@mui/icons-material";
+import DataCampaignCard from "./DataCampaignCard";
+import DataCampaign from "./DataCampaign";
 const Campaign = () => {
   useEffect(() => {
-    Aos.init({duration: 1500});
+    Aos.init({ duration: 1500 });
   }, []);
+  const [HoChiMinh, setHoChiMinh] = useState();
+  const [HaNoi, setHaNoi] = useState();
+  const [DaNang, setDaNang] = useState();
+  const [BinhThuan, setBinhThuan] = useState();
+  const [CanTho, setCanTho] = useState();
+
+  useEffect(() => {
+    fetch("http://localhost:8080/v1/campaign/getAllActive", { method: "GET" })
+      .then((response) => response.json())
+      .then((dataApi) => {
+        setHoChiMinh(dataApi.body.reverse(). filter(
+          (item) => item.districtId >= 1 && item.districtId <= 23
+        ))
+        setHaNoi(dataApi.body.reverse(). filter(
+          (item) => item.districtId >= 25 && item.districtId <= 54
+        ))
+        setDaNang(dataApi.body.reverse(). filter(
+          (item) => item.districtId >= 55 && item.districtId <= 62
+        ))
+        setBinhThuan(dataApi.body.reverse(). filter(
+          (item) => item.districtId >= 171 && item.districtId <= 180
+        ))
+        setCanTho(dataApi.body.reverse(). filter(
+          (item) => item.districtId >= 162 && item.districtId <= 170
+        ))
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
+  console.log(HoChiMinh);
+  
+  // const filterProvince = (data, minId, maxId) => {
+  //   return data.filter(
+  //     (item) => item.districtId >= minId && item.districtId <= maxId
+  //   );
+  // };
+  // const HoChiMinh = filterProvince(data, 1, 24);
+  // console.log(HoChiMinh)
+ 
   return (
     <section className="campaign">
-       <Carousel autoplay draggable={true} touchThreshold={30} dots={false}>
+      <Carousel autoplay draggable={true} touchThreshold={30} dots={false}>
         {/* SLIDE 2 */}
         <div>
-          <h2 data-aos="slide-up">CÁC CHIẾN DỊCH ĐANG DIỄN RA Ở TP HỒ CHÍ MINH</h2>
-          <div data-aos="slide-up" className="container-campaign">
-            {/* ===1=== */}
-            <div className="campaign-card">
-              <div className="campaign-header">
-                <a className="campaign-organization-name" href="#organization">
-                  BV Truyền máu huyết học
-                </a>
-              </div>
-              <div className="campaign-img-container">
-                <img src={logo_1} alt="logo_1"></img>
-              </div>
-              <div className="campaign-card-content">
-                <a href="#name" className="campaign-name">
-                  Chiến dịch 104
-                </a>
-                <a href="#address" className="campaign-address">
-                  118 Hồng Bàng, Phường 12, Quận 5, TP.HCM
-                </a>
-                <div className="campaign-time">
-                  Từ 15/09/2022 đến 20/10/2022{" "}
-                </div>
-              </div>
-              <div className="campaign-card-footer">
-                <div className="campaign-react">Tym</div>
-                <a className="campaign-report" href="#report">
-                  Báo cáo
-                </a>
-              </div>
-            </div>
-            {/* ===2=== */}
-            <div className="campaign-card campaign-card-2nd">
-              <div className="campaign-header">
-                <a className="campaign-organization-name" href="#organization">
-                  BV Truyền máu huyết học
-                </a>
-              </div>
-              <div className="campaign-img-container">
-                <img src={logo_1} alt="logo_1"></img>
-              </div>
-              <div className="campaign-card-content">
-                <a href="#name" className="campaign-name">
-                  Chiến dịch 104
-                </a>
-                <a href="#address" className="campaign-address">
-                  118 Hồng Bàng, Phường 12, Quận 5, TP.HCM
-                </a>
-                <div className="campaign-time">
-                  Từ 15/09/2022 đến 20/10/2022{" "}
-                </div>
-              </div>
-              <div className="campaign-card-footer">
-                <div className="campaign-react">Tym</div>
-                <a className="campaign-report" href="#report">
-                  Báo cáo
-                </a>
-              </div>
-            </div>
-            {/* ===3=== */}
-            <div className="campaign-card campaign-card-3rd">
-              <div className="campaign-header">
-                <a className="campaign-organization-name" href="#organization">
-                  BV Truyền máu huyết học
-                </a>
-              </div>
-              <div className="campaign-img-container">
-                <img src={logo_1} alt="logo_1"></img>
-              </div>
-              <div className="campaign-card-content">
-                <a href="#name" className="campaign-name">
-                  Chiến dịch 104
-                </a>
-                <a href="#address" className="campaign-address">
-                  118 Hồng Bàng, Phường 12, Quận 5, TP.HCM
-                </a>
-                <div className="campaign-time">
-                  Từ 15/09/2022 đến 20/10/2022{" "}
-                </div>
-              </div>
-              <div className="campaign-card-footer">
-                <div className="campaign-react">Tym</div>
-                <a className="campaign-report" href="#report">
-                  Báo cáo
-                </a>
-              </div>
-            </div>
-            {/* ===4=== */}
-            <div className="campaign-card campaign-card-4th">
-              <div className="campaign-header">
-                <a className="campaign-organization-name" href="#organization">
-                  BV Truyền máu huyết học
-                </a>
-              </div>
-              <div className="campaign-img-container">
-                <img src={logo_1} alt="logo_1"></img>
-              </div>
-              <div className="campaign-card-content">
-                <a href="#name" className="campaign-name">
-                  Chiến dịch 104
-                </a>
-                <a href="#address" className="campaign-address">
-                  118 Hồng Bàng, Phường 12, Quận 5, TP.HCM
-                </a>
-                <div className="campaign-time">
-                  Từ 15/09/2022 đến 20/10/2022{" "}
-                </div>
-              </div>
-              <div className="campaign-card-footer">
-                <div className="campaign-react">Tym</div>
-                <a className="campaign-report" href="#report">
-                  Báo cáo
-                </a>
-              </div>
-            </div>
+          <h2 >
+            CÁC CHIẾN DỊCH ĐANG DIỄN RA ở TP Hồ Chí Minh
+          </h2>
+          <div  className="container-campaign">
+            {HoChiMinh !== undefined && (<DataCampaign data={HoChiMinh}></DataCampaign>)}
           </div>
         </div>
         {/* SLIDE 2 */}
         <div>
-        
-        <h2 data-aos="slide-up">CÁC CHIẾN DỊCH ĐANG DIỄN RA Ở HÀ NỘI</h2>
-          <div data-aos="slide-up" className="container-campaign">
-            {/* ===1=== */}
-            <div className="campaign-card">
-              <div className="campaign-header">
-                <a className="campaign-organization-name" href="#organization">
-                  BV Truyền máu huyết học
-                </a>
-              </div>
-              <div className="campaign-img-container">
-                <img src={logo_2} alt="logo_1"></img>
-              </div>
-              <div className="campaign-card-content">
-                <a href="#name" className="campaign-name">
-                  Chiến dịch 104
-                </a>
-                <a href="#address" className="campaign-address">
-                  118 Hồng Bàng, Phường 12, Quận 5, TP.HCM
-                </a>
-                <div className="campaign-time">
-                  Từ 15/09/2022 đến 20/10/2022{" "}
-                </div>
-              </div>
-              <div className="campaign-card-footer">
-                <div className="campaign-react">Tym</div>
-                <a className="campaign-report" href="#report">
-                  Báo cáo
-                </a>
-              </div>
-            </div>
-            {/* ===2=== */}
-            <div className="campaign-card campaign-card-2nd">
-              <div className="campaign-header">
-                <a className="campaign-organization-name" href="#organization">
-                  BV Truyền máu huyết học
-                </a>
-              </div>
-              <div className="campaign-img-container">
-                <img src={logo_2} alt="logo_1"></img>
-              </div>
-              <div className="campaign-card-content">
-                <a href="#name" className="campaign-name">
-                  Chiến dịch 104
-                </a>
-                <a href="#address" className="campaign-address">
-                  118 Hồng Bàng, Phường 12, Quận 5, TP.HCM
-                </a>
-                <div className="campaign-time">
-                  Từ 15/09/2022 đến 20/10/2022{" "}
-                </div>
-              </div>
-              <div className="campaign-card-footer">
-                <div className="campaign-react">Tym</div>
-                <a className="campaign-report" href="#report">
-                  Báo cáo
-                </a>
-              </div>
-            </div>
-            {/* ===3=== */}
-            <div className="campaign-card campaign-card-3rd">
-              <div className="campaign-header">
-                <a className="campaign-organization-name" href="#organization">
-                  BV Truyền máu huyết học
-                </a>
-              </div>
-              <div className="campaign-img-container">
-                <img src={logo_2} alt="logo_1"></img>
-              </div>
-              <div className="campaign-card-content">
-                <a href="#name" className="campaign-name">
-                  Chiến dịch 104
-                </a>
-                <a href="#address" className="campaign-address">
-                  118 Hồng Bàng, Phường 12, Quận 5, TP.HCM
-                </a>
-                <div className="campaign-time">
-                  Từ 15/09/2022 đến 20/10/2022{" "}
-                </div>
-              </div>
-              <div className="campaign-card-footer">
-                <div className="campaign-react">Tym</div>
-                <a className="campaign-report" href="#report">
-                  Báo cáo
-                </a>
-              </div>
-            </div>
-            {/* ===4=== */}
-            <div className="campaign-card  campaign-card-4th">
-              <div className="campaign-header">
-                <a className="campaign-organization-name" href="#organization">
-                  BV Truyền máu huyết học
-                </a>
-              </div>
-              <div className="campaign-img-container">
-                <img src={logo_2} alt="logo_1"></img>
-              </div>
-              <div className="campaign-card-content">
-                <a href="#name" className="campaign-name">
-                  Chiến dịch 104
-                </a>
-                <a href="#address" className="campaign-address">
-                  118 Hồng Bàng, Phường 12, Quận 5, TP.HCM
-                </a>
-                <div className="campaign-time">
-                  Từ 15/09/2022 đến 20/10/2022{" "}
-                </div>
-              </div>
-              <div className="campaign-card-footer">
-                <div className="campaign-react">Tym</div>
-                <a className="campaign-report" href="#report">
-                  Báo cáo
-                </a>
-              </div>
-            </div>
+          <h2 >CÁC CHIẾN DỊCH ĐANG DIỄN RA Ở HÀ NỘI</h2>
+          <div  className="container-campaign">
+          {HaNoi !== undefined && (<DataCampaign data={HaNoi}></DataCampaign>)}
+           
+          </div>
+        </div>
+        <div>
+          <h2 >CÁC CHIẾN DỊCH ĐANG DIỄN RA Ở Đà Nẵng</h2>
+          <div  className="container-campaign">
+          {HaNoi !== undefined && (<DataCampaign data={DaNang}></DataCampaign>)}
+           
+          </div>
+        </div>
+        <div>
+          <h2 >CÁC CHIẾN DỊCH ĐANG DIỄN RA Ở Bình Thuận</h2>
+          <div  className="container-campaign">
+          {HaNoi !== undefined && (<DataCampaign data={BinhThuan}></DataCampaign>)}
+           
+          </div>
+        </div>
+        <div>
+          <h2 >CÁC CHIẾN DỊCH ĐANG DIỄN RA Ở Cần Thơ</h2>
+          <div  className="container-campaign">
+          {HaNoi !== undefined && (<DataCampaign data={CanTho}></DataCampaign>)}
+           
           </div>
         </div>
       </Carousel>
