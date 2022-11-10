@@ -27,7 +27,7 @@ function checkCampStatus(camp) {
 //Set columns for table
 const columns = [
   {
-    title: 'STT',
+    title: 'ID',
     dataIndex: 'id',
     key: 'id',
     render: (text) => <a>{text}</a>,
@@ -63,7 +63,6 @@ const columns = [
 
 export default function ManageCampaign() {
   const [tableRow, setTableRow] = useState([]);
-  const [message, setMessage] = useState('')
 
   const navigate = useNavigate();
   const [campaigns, setCampaigns] = useState({})
@@ -96,8 +95,6 @@ export default function ManageCampaign() {
             questions: 'link',
             status: checkCampStatus(row)
           })))
-        console.log("camps", tableRow)
-        // navigate("/organization/manageCampaign")
        
       }
     

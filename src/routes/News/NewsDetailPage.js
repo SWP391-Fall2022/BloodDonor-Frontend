@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Navbar } from '../../components/NavBar/navbar';
 import NewsDetail from './NewsContainer/NewsDetail';
-import packageInfo from "../../shared/ListOfNews.json";
 import NewsList from './NewsContainer/NewsList';
 import './NewsDetailPageStyle.css';
 

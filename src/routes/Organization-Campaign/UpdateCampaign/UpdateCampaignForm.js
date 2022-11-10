@@ -23,14 +23,12 @@ export default function UpdateCampaignForm() {
 
   
   const campaignId = useParams();
-  console.log("campaignId", campaignId)
 
   const location = useLocation();
   // console.log("location:", location)
 
   //nhận state từ navigation
   const campList = location.state.campaignsList;
-  console.log("campList",campList)
   
 
   const navigate = useNavigate();

@@ -24,7 +24,7 @@ export default function RegisterCampaign({ campaign, org }) {
         }
         return arr;
     };
-    var daylist = campaign.onSiteDates !== undefined ?  campaign.onSiteDates.filter((e)=> moment(e) > moment()) : getDaysArray(new Date(campaign.startDate), new Date(campaign.endDate));
+    var daylist = campaign.onSiteDates !== undefined ? campaign.onSiteDates.filter((e) => moment(e) > moment()) : getDaysArray(new Date(campaign.startDate), new Date(campaign.endDate));
 
 
     // setup date radio-------------------------------------
@@ -68,7 +68,7 @@ export default function RegisterCampaign({ campaign, org }) {
         Modal.error({
             className: 'errorRegister',
             title: string,
-            content:message,
+            content: "Đã có lỗi xảy ra khi đăng ký.",
             okText: 'Đóng'
         });
     };
@@ -79,6 +79,8 @@ export default function RegisterCampaign({ campaign, org }) {
             content: 'Chiến dịch đã được đăng ký thành công',
             okText: 'Đóng',
             onOk() {
+                window.location.reload(false);
+
                 setRegistered(true)
 
             }
@@ -129,7 +131,7 @@ export default function RegisterCampaign({ campaign, org }) {
                 console.log("ko đăng ký được")
 
             }
-           
+
         }
 
     };
@@ -218,7 +220,7 @@ export default function RegisterCampaign({ campaign, org }) {
         const requestData = {
             "campaignId": campaignId,
             "registeredDate": registerDate,
-        
+
         }
         console.log("reques:", requestData)
 
@@ -302,22 +304,22 @@ export default function RegisterCampaign({ campaign, org }) {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-   
+
     return (
         <>
-            <Form id='register-campaign-form' onFinish={onFinish} style={{display: campaign.emergency === true ? "none" : "block"}}>
+            <Form id='register-campaign-form' onFinish={onFinish} style={{ display: campaign.emergency === true ? "none" : "block" }}>
 
                 <p className='sub-title'>Chọn ngày</p>
 
                 <div className='register-date-cover'  >
                     <div className='register-date'>
                         <Form.Item name="registerDate">
-                            <Radio.Group  onChange={onDateChange} value={dateValue} disabled={registered === true || medicalInfor === true || org===true ? true : false}>
+                            <Radio.Group onChange={onDateChange} value={dateValue} disabled={registered === true || medicalInfor === true || org === true ? true : false}>
 
                                 {
                                     daylist.map((day) =>
                                         <div>
-                                            <Radio  value={day}>{getDayOfWeek(new Date(day))},{moment(day).format(" DD-MM-YYYY")}</Radio>
+                                            <Radio value={day}>{getDayOfWeek(new Date(day))},{moment(day).format(" DD-MM-YYYY")}</Radio>
                                         </div>
                                     )
 
@@ -330,7 +332,7 @@ export default function RegisterCampaign({ campaign, org }) {
                 <p className='sub-title'>Chọn buổi</p>
                 <div className='register-time'>
                     <Form.Item name="period">
-                        <Radio.Group onChange={onTimeChange} value={timeValue} disabled={registered || medicalInfor === true || org===true ? true : false}>
+                        <Radio.Group onChange={onTimeChange} value={timeValue} disabled={registered || medicalInfor === true || org === true ? true : false}>
 
                             <Radio value={"MORNING"}>Buổi sáng: 8h00 đến 11h00</Radio>
                             <Radio value={"AFTERNOON"}>Buổi chiều: 13h30 đến 17h00</Radio>
@@ -339,7 +341,7 @@ export default function RegisterCampaign({ campaign, org }) {
                     </Form.Item>
                 </div>
 
-                <div className='unregistered-buttons' style={{ display: registered === true || medicalInfor === true || org===true ? "none" : "block" }}>
+                <div className='unregistered-buttons' style={{ display: registered === true || medicalInfor === true || org === true ? "none" : "block" }}>
                     <div style={{ color: "red" }}> {message}</div>
                     <Button id='join' htmlType='submit' >Tham gia</Button>
                     <SendQuestion campaignId={campaign.id} className='send-qaa'></SendQuestion>
@@ -348,21 +350,21 @@ export default function RegisterCampaign({ campaign, org }) {
                 <div className='registered-buttons' style={{ display: registered === true && medicalInfor !== true && org != true ? "block" : "none" }}>
                     <Button className="cancel-camp" onClick={showCancelConfirm}>Hủy tham gia</Button>
                     <EditDateTime campaign={campaign} registered={false} />
-                    <SendQuestion campaignId={campaign.id}  className='send-qaa'></SendQuestion>
+                    <SendQuestion campaignId={campaign.id} className='send-qaa'></SendQuestion>
                 </div>
 
 
-                <div className='participated-buttons' style={{ display: medicalInfor === true && org===false ? "block" : "none" }}>
-                    <Button type="primary" id='medical-infor'  onClick={showModal}>
+                <div className='participated-buttons' style={{ display: medicalInfor === true && org === false ? "block" : "none" }}>
+                    <Button type="primary" id='medical-infor' onClick={showModal}>
                         Thông tin sức khỏe
                     </Button>
                     <Modal title="THÔNG TIN SỨC KHỎE" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} className='health-info-modal'>
-                <p><strong>Cân nặng: </strong> {medicalDoc.weight}</p>
-                <p><strong>Nhóm máu: </strong> {medicalDoc.bloodType}</p>
-                <p><strong>Lượng máu: </strong>{medicalDoc.amount}</p>
-                <p><strong>Chi tiết sức khỏe: </strong>{medicalDoc.details}</p>
+                        <p><strong>Cân nặng: </strong> {medicalDoc.weight}</p>
+                        <p><strong>Nhóm máu: </strong> {medicalDoc.bloodType}</p>
+                        <p><strong>Lượng máu: </strong>{medicalDoc.amount}</p>
+                        <p><strong>Chi tiết sức khỏe: </strong>{medicalDoc.details}</p>
 
-            </Modal>
+                    </Modal>
                 </div>
 
             </Form>

@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
-import { Breadcrumb, Modal } from "antd";
+import { Breadcrumb, Modal, Tooltip } from "antd";
 import "antd/dist/antd.css";
 import './DetailCampaign.css';
 import RegisterCampaign from '../../../Campaign/RegisterCampaign/RegisterCampaign'
@@ -212,14 +212,14 @@ function DetailCampaign() {
 
         <div id="action-table">
           <div className="action-table-item" >
-            <FavoriteIcon className="action-table-icon" style={{marginBottom : "5px"}}></FavoriteIcon>
+           <Tooltip title="Số lượt yêu Thích"> <FavoriteIcon className="action-table-icon"></FavoriteIcon></Tooltip>
              {likeNum}
           </div>
           <div className="action-table-item" >
            
             <Link to={"/organization/manageQuestion/campaignQuestion"}  state={{ id: selectedCampaign.id }}>
-               <HelpIcon className="action-table-icon" >
-                </HelpIcon>
+            <Tooltip title="Số câu hỏi"><HelpIcon className="action-table-icon" ></HelpIcon></Tooltip>
+            
             </Link>
             {questionNum}
           </div>
@@ -228,7 +228,7 @@ function DetailCampaign() {
           </div>
 
           <div className="action-table-item" >
-            <ContentPasteIcon className="action-table-icon" ></ContentPasteIcon>{registerNum}
+          <Tooltip title="Số lượt đăng ký"><ContentPasteIcon className="action-table-icon" ></ContentPasteIcon></Tooltip>{registerNum}
           </div>
 
           <div className="action-table-item"  onClick={showConfirm}   style={campStatus==="Đã xóa"?{display:"none"}:null}  >
