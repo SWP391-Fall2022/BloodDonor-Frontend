@@ -21,22 +21,26 @@
     padding: 1% 0;
 }
 
-#write-health-inf .health-group-input{
+#write-health-inf .health-group-input {
     display: grid;
     grid-template-columns: 48% 48%;
     grid-gap: 4%;
 }
-#write-health-inf .health-form-input{
+
+#write-health-inf .health-form-input {
     padding: 2% 0;
 }
-#write-health-inf .ant-form-item{
+
+#write-health-inf .ant-form-item {
     margin-bottom: 25px;
 }
-#write-health-inf .ant-modal-body{
+
+#write-health-inf .ant-modal-body {
     padding: 2% 5% 0% 5% !important;
 }
 
-#write-health-inf .donor-inf, #write-health-inf .donor-achievement{
+#write-health-inf .donor-inf,
+#write-health-inf .donor-achievement {
     padding: 9% 0;
     text-align: center;
     background-color: white;
@@ -44,20 +48,21 @@
     border: 1px solid rgb(220, 220, 220);
     margin-bottom: 5%;
 }
-#write-health-inf img{
+
+#write-health-inf img {
     width: 160px;
     height: 160px;
     border-radius: 90px;
 }
 
-#write-health-inf .donor-name{
+#write-health-inf .donor-name {
     margin-top: 5%;
     font-weight: 500;
-font-size: 20px;
-line-height: 160%;
+    font-size: 20px;
+    line-height: 160%;
 }
 
-#write-health-inf .donor-achievement-title{
+#write-health-inf .donor-achievement-title {
     font-weight: 600;
     font-size: 16px;
 }

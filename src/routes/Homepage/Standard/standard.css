@@ -22,7 +22,7 @@
     width: 97%;
     background-color: white;
     border-radius: 5px;
-    box-shadow: var(--shadow-dp-02);
+    box-shadow: var(--shadow-dp-01);
     display: block;
     position: relative;
     z-index: 0;
