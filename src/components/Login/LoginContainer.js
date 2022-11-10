@@ -62,19 +62,7 @@ export default function LoginContainer() {
                 .catch((error) => { console.log(error) })
             console.log(response)
             if (response.status === 401) {
-                if (response.body === "Username or password is incorrect") {
-                    notification.error({
-                        message: "Tài khoản hoặc mật khẩu không đúng",
-                        placement: "top"
-                    });
-                }
-                if (response.body === "The account is locked") {
-                    notification.error({
-                        message: "Tài khoản đã bị khóa",
-                        placement: "top"
-                    });
-                }
-                if (response.body === "The account is not verified or accepted by Admin") {
+                if (response.body === "Tài khoản chưa được xác nhận hay xác minh bởi quản trị viên") {
                     notification.error({
                         message: "Tài khoản chưa được xác nhận otp hoặc chưa duyệt bởi admin",
                         description: "Vui lòng đăng kí lại với chính xác tài khoản và email đã đăng kí nếu chưa xác nhận otp",
@@ -82,6 +70,12 @@ export default function LoginContainer() {
                         placement: "top"
                     });
                     navigate("/register")
+                } else {
+                    notification.error({
+                        message: response.body,
+                        duration: 0,
+                        placement: "top"
+                    });
                 }
             }
             if (response.status === 200) {

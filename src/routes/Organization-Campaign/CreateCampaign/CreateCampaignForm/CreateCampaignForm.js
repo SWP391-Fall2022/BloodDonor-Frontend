@@ -148,8 +148,7 @@ function CreateCampaignForm() {
       setMessage("Tạo chiến dịch thành công")
     }
     else {
-      if (response.body === "Campaign can not have duplicate name.")
-        setMessage("Bạn không được đặt trùng tên với chiến dịch hiện có.")
+        setMessage(response.body)
     }
     setTimeout(() => {
       setMessage('');

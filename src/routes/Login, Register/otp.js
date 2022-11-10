@@ -10,7 +10,6 @@ export default function Otp() {
     const [seconds, setSeconds] = useState(150)
     const { state } = useLocation();
     const navigate = useNavigate();
-    const [message, setMessage] = useState('')
     const handleChange = (otp) => {
         setOtp(otp)
     }
@@ -33,10 +32,14 @@ export default function Otp() {
                 navigate("/login")
                 notification.success({
                     message: 'Xác nhận otp thành công',
+                    placement: 'top'
                 });
             };
-        } else if (response.status === 400 && response.body === "Invalid code") {
-            setMessage("Mã không chính xác")
+        } else if (response.status === 400) {
+            notification.error({
+                message: response.body,
+                placement: 'top'
+            });
         }
     }
 
@@ -105,9 +108,6 @@ export default function Otp() {
                 <div style={{ textAlign: 'center' }}>
                     <Button id={`${styles.btn}`} onClick={handleSubmit}>Xác nhận</Button>
                     {button}
-                </div>
-                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', fontSize: '120%' }}>
-                    {message}
                 </div>
             </div>
         )

@@ -132,30 +132,10 @@ function RegisterDonor() {
             navigate("/otp", { state: { otpAccess: true, userId: response.body.userId } })
         } else if (response.status === 400) {
             setMessage('')
-            if (response.body === "Email not valid") {
-                notification.error({
-                    message: "Email không hợp lệ",
-                    placement: "top"
-                });
-            }
-            if (response.body === "Phone number not valid") {
-                notification.error({
-                    message: "Số điện thoại không hợp lệ",
-                    placement: "top"
-                });
-            }
-            if (response.body === "Confirm password not match") {
-                notification.error({
-                    message: "Hai mật khẩu không trùng khớp",
-                    placement: "top"
-                });
-            }
-            if (response.body === "The age must be between 18 and 60.") {
-                notification.error({
-                    message: "Độ tuổi tham gia phải từ 18 đến 60 tuổi",
-                    placement: "top"
-                });
-            }
+            notification.error({
+                message: response.body,
+                placement: "top"
+            });
 
         } else if (response.status === 500) {
             notification.error({

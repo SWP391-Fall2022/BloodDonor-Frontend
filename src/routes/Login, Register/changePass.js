@@ -1,13 +1,11 @@
 import styles from '../../components/Login/login.module.css';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import ReCAPTCHA from "react-google-recaptcha";
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 function NewPass() {
 
     const [form] = Form.useForm();
-    const [message, setMessage] = useState('')
     const { state } = useLocation();
     const navigate = useNavigate();
 
@@ -35,14 +33,17 @@ function NewPass() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         if (response.status === 200) {
-            sessionStorage.removeItem('restore')
-            setMessage('Đổi mật khẩu thành công, đang chuyển hướng về trang đăng nhập ...')
-            setTimeout(() => {
-                navigate('/login')
-            }, 2000);
+            notification.success({
+                message: response.body,
+                placement: "top"
+            });
+            navigate('/login')
         }
-        if (response.body === 'Confirm password not match') {
-            setMessage('Hai mật khẩu không trùng khớp')
+        if (response.status === 400) {
+            notification.error({
+                message: response.body,
+                placement: "top"
+            });
         }
     }
 
@@ -56,9 +57,6 @@ function NewPass() {
                         <Link to="/"><p title="Trang chủ">MEDICHOR</p></Link>
                     </div>
                     <h1 className={`${styles.title}`}>ĐỔI MẬT KHẨU</h1>
-                    <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                        {message}
-                    </div>
                     <Form form={form} layout="vertical" onFinish={onFinish}>
                         <Form.Item className={styles.formLabel} label="Nhập mật khẩu mới" name="newPassword" rules={[{ required: true, message: 'Vui lòng nhập' }]}>
                             <Input.Password placeholder="Nhập mật khẩu mới" />

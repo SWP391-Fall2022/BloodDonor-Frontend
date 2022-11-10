@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { Breadcrumb, Modal } from "antd";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import './DetailCampaign.css';
 import RegisterCampaign from '../../../Campaign/RegisterCampaign/RegisterCampaign'
 import FavoriteIcon from '@mui/icons-material/Favorite';

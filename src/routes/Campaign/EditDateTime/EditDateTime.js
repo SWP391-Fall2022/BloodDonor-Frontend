@@ -155,8 +155,7 @@ const EditDateTime = (props) => {
             updateSuccess()
         }
         else {
-            if (response.body === "The time between donations must be at least 12 weeks")
-                setMessage("Thời gian giữa những lần hiến máu của bạn phải cách nhau ít nhất 12 tuần!")
+                setMessage(response.body)
 
             console.log("ko Chỉnh sửa được")
 
