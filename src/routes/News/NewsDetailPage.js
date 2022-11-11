@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import { Navbar } from '../../components/NavBar/navbar';
-import NewsDetail from './NewsContainer/NewsDetail'
-import packageInfo from "../../shared/ListOfNews.json";
-import NewsList from './NewsContainer/NewsList'
-import './NewsDetailPageStyle.css'
-// import { PageFooter } from '../components/Footer/PageFooter';
+import NewsDetail from './NewsContainer/NewsDetail';
+import NewsList from './NewsContainer/NewsList';
+import './NewsDetailPageStyle.css';
 
 
 export default class NewsDetailPage extends Component {
     state = {
-        news: packageInfo.listOfNews,
+        news: [],
         categories: {
             campaignAct: false,
             donorStory: false,
@@ -19,6 +17,29 @@ export default class NewsDetailPage extends Component {
             typicalDonor: false,
         },
     };
+
+    componentDidMount() {
+        fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/posts`)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.setState({
+              news: result.body
+            
+            });
+           
+          },
+      
+          (error) => {
+            this.setState({
+              error: error
+            });
+            console.log(error)
+          }
+        )
+      }
+
+    
 
     render() {
         return (

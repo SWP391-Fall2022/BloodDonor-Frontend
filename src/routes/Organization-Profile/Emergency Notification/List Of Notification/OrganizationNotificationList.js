@@ -1,99 +1,56 @@
-import { Button, Menu, Table, Tooltip } from "antd"
+import { Button, Table } from "antd"
 import { Input } from 'antd';
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from '../../organization.module.css'
 import stylesNoti from './organizationNotificationList.module.css'
 import emptyListImg from '../../../../assets/empty-list.png'
 import { useEffect } from "react";
-import { QuestionCircleOutlined } from "@ant-design/icons";
 
 const { Search } = Input;
 
 export default function OrganizationNotificationList() {
-    //Show list in 3 mode: All, On Going or Done
-    const [listState, setListState] = useState('Tất cả')
     //Check empty list
     const [empty, setEmpty] = useState(true)
     //Data that will be displayed in table
     const [dataSource, setDataSource] = useState([])
     const [searchValue, setSearchValue] = useState('')
-    const navigate = useNavigate();
 
     //Second render: Show the list from databse (This won't run in first render)
-    //The list will change based on list state and search keyword
+    //The list will change based on search keyword
     useEffect(() => {
-        //TO-DO: Fetch data from database here
-        const list = [
-            {
-                key: '1',
-                STT: 1,
-                title: "Bệnh viện trung ương cần gấp nhóm máu A, B, O",
-                listState: 'Đang diễn ra',
-            },
-            {
-                key: '2',
-                STT: 2,
-                title: "Bệnh viện trung ương cần gấp nhóm máu O",
-                listState: 'Kết thúc',
-            },
-            {
-                key: '3',
-                STT: 3,
-                title: "Bệnh viện trung ương cần gấp nhóm máu AB",
-                listState: 'Kết thúc',
-            },
-            {
-                key: '4',
-                STT: 4,
-                title: "Bệnh viện trung ương cần gấp nhóm máu B",
-                listState: 'Kết thúc',
-            },
-            {
-                key: '5',
-                STT: 5,
-                title: "Bệnh viện trung ương cần gấp nhóm máu AB",
-                listState: 'Đang diễn ra',
-            },
-            {
-                key: '6',
-                STT: 6,
-                title: "Bệnh viện trung ương cần gấp nhóm máu A",
-                listState: 'Kết thúc',
-            },
-            {
-                key: '7',
-                STT: 7,
-                title: "Bệnh viện trung ương cần gấp nhóm máu AB và O",
-                listState: 'Kết thúc',
-            },
-            {
-                key: '8',
-                STT: 8,
-                title: "Bệnh viện trung ương cần gấp nhóm máu A và B",
-                listState: 'Đang diễn ra',
-            },
-        ];
+        async function fetchList() {
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`)
+                .then((res) => res.json())
+                .catch((error) => { console.log(error) })
+            // console.log(response)
+            const list = []
+            if (response.status === 200) {
+                response.body.forEach(e => {
+                    if (e.emergency) {
+                        list.push({
+                            key: e.id, title: e.name, bloodTypes: e.bloodTypes,
+                        })
+                    }
+                })
+            }
 
-        if (list.length === 0) {
-            setEmpty(true)
-        } else {
-            const filterList = list.filter(items => {
-                return listState === "Tất cả" ? items.title.toLowerCase().includes(searchValue.toLowerCase()) :
-                    items.listState === listState && items.title.toLowerCase().includes(searchValue.toLowerCase());
-            })
-            if (filterList.length === 0) {
+            if (list.length === 0) {
                 setEmpty(true)
             } else {
-                setDataSource(filterList)
-                setEmpty(false)
+                const filterList = list.filter(items => {
+                    return items.title.toLowerCase().includes(searchValue.toLowerCase())
+                })
+                if (filterList.length === 0) {
+                    setEmpty(true)
+                } else {
+                    setDataSource(filterList)
+                    setEmpty(false)
+                }
             }
         }
-    }, [listState, searchValue])
-
-    const handleMenuSelect = (value) => {
-        setListState(value.key)
-    }
+        fetchList()
+    }, [searchValue])
 
     const onSearch = (value) => {
         setSearchValue(value)
@@ -104,6 +61,9 @@ export default function OrganizationNotificationList() {
             title: 'STT',
             dataIndex: 'STT',
             key: 'STT',
+            width: '10%',
+            fixed: 'left',
+            render: (text, record, index) => index + 1,
         },
         {
             title: 'Tựa đề thông báo khẩn cấp',
@@ -112,10 +72,20 @@ export default function OrganizationNotificationList() {
             align: 'center'
         },
         {
-            title: 'Trạng thái',
-            dataIndex: 'listState',
-            key: 'listState',
-            align: 'center'
+            title: 'Nhóm máu cần',
+            dataIndex: 'bloodTypes',
+            key: 'bloodTypes',
+            align: 'center',
+            width: '20%',
+        },
+        {
+            title: '',
+            key: 'detail',
+            dataIndex: 'detail',
+            align: 'center',
+            fixed: 'right',
+            width: '10%',
+            render: (text, record, index) => <Link to="/organization/notification/view" state={{ id: record.key }} title="Chi tiết">Chi tiết</Link>
         },
     ];
     return (
@@ -124,27 +94,9 @@ export default function OrganizationNotificationList() {
                 <div className={stylesNoti.listTitleContainer}>
                     <div className={stylesNoti.listTitle}><strong>DANH SÁCH THÔNG BÁO KHẨN CẤP</strong></div>
                     <div className={stylesNoti.listContainer}>
-                        <Menu mode="horizontal" defaultSelectedKeys={['Tất cả']} onSelect={handleMenuSelect}>
-                            <Menu.Item key="Tất cả">
-                                Tất cả
-                            </Menu.Item>
-                            <Menu.Item key="Đang diễn ra">
-                                Đang diễn ra
-                            </Menu.Item>
-                            <Menu.Item key="Kết thúc">
-                                Kết thúc
-                            </Menu.Item>
-                        </Menu>
                         <div className={stylesNoti.searchCreate}>
                             <div>
                                 <Search enterButton style={{ width: '90%' }} onSearch={onSearch} />
-                                <Tooltip
-                                    title="Nhấn vào một dòng để xem thông tin chi tiết của thông báo"
-                                    arrowPointAtCenter
-                                    placement="right"
-                                >
-                                    <QuestionCircleOutlined style={{ position: 'relative', left: '20px', top: '5px' }} />
-                                </Tooltip>
                             </div>
                             <div>
                                 <Button id={styles.btn3} style={{ margin: '0 10px' }} onClick={() => setSearchValue('')}>Hiện tất cả</Button>
@@ -158,16 +110,16 @@ export default function OrganizationNotificationList() {
                                 <Table
                                     dataSource={dataSource}
                                     columns={columns}
-                                    pagination={{ total: dataSource.length, pageSize: '5' }}
+                                    pagination={{ total: dataSource.length, pageSize: '5', hideOnSinglePage: true }}
                                     className={stylesNoti.table}
-                                    onRow={() => ({
-                                        onClick: (e) => navigate("/organization/notification/view")
-                                    })}
+                                    scroll={{
+                                        x: 800,
+                                    }}
                                 />
                             </> :
                             <>
                                 <img className={styles.emptyImg} src={emptyListImg} alt="empty" />
-                                <div style={{ paddingBottom: '1rem' }}><strong>Không có thông tin của thông báo khẩn cấp {listState === "Tất cả" ? "nào" : listState.toLowerCase()} được ghi lại</strong></div>
+                                <div style={{ paddingBottom: '1rem' }}><strong>Không có thông tin của thông báo khẩn cấp nào được ghi lại</strong></div>
                                 <Link to="/organization/notification/create"><Button id={styles.btn3} style={{ marginBottom: '1rem' }}>Tạo thông báo</Button></Link>
                             </>
                         }

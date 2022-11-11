@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button, Modal } from "antd";
 
@@ -12,12 +11,10 @@ export default function AdminApproveOrganization() {
 
     //get org id
     const location = useLocation();
-    // console.log("location:", location)
 
     //nhận state từ navigation
     const orgId = location.state.id;
     const orgList = location.state.organizations.body;
-    const orgStatus = location.state.status;
 
     // tìm ra org được chọn
     const selectedOrg = orgList.find(obj => {
@@ -59,8 +56,23 @@ export default function AdminApproveOrganization() {
             className: 'refuse-org-confirm',
             onOk() {
                 refuseOrg();
-                // setOpen(false)
+            }
 
+        });
+    };
+
+    
+    // refuse confirm success
+
+    const refuseConfirmSuccess = () => {
+        Modal.success({
+            content: 'Bạn đã từ chối tài khoản của tổ chức này!',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Từ chối',
+            cancelText: 'Hủy',
+            className: 'refuse-org-confirm',
+            onOk() {
+                refuseOrg();
             }
 
         });
@@ -96,15 +108,14 @@ export default function AdminApproveOrganization() {
 
       const showApproveConfirm = () => {
         Modal.confirm({
-            title: 'Bạn có chắc duyệt tài khoản của tổ chức này không?',
+            title: 'Bạn có chắc muốn duyệt tài khoản của tổ chức này không?',
             icon: <ExclamationCircleOutlined />,
             okText: 'Duyệt',
             cancelText: 'Hủy',
             className: 'approve-org-confirm',
             onOk() {
                 approveOrg();
-                // setOpen(false)
-
+               
             }
 
         });

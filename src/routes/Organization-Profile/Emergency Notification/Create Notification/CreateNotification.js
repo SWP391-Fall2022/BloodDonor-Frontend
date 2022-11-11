@@ -108,9 +108,6 @@ export default function OrganizationCreateNotification() {
         delete formData.district
         const bloodTypeString = formData.bloodTypes.join('-')
 
-        const date = new Date(Date.now()).getDate()
-        const month = new Date(Date.now()).getMonth() + 1
-        const year = new Date(Date.now()).getFullYear()
         const requestData = {
             "name": formData.name,
             "images": image,

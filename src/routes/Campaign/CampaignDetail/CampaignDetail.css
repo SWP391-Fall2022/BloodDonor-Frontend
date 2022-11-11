@@ -28,16 +28,18 @@
 }
 
 .campaign-detail-left-img{
-    width: 60%;
+    width: 90%;
+    height: 300px;
     /* max-width: 225px; */
-    margin: 30px auto;
+    margin: 30px auto 10px auto;
+    display: inline-block;
+    /* max-height: 350px;*/
 }
 
-.campaign-detail-left-img  img{
+.campaign-detail-left-img img{
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    transform: scale(1);
+    height: 100%;
+    object-fit: contain;
 }
 
 .campaignDetail-left  .sub-title{
@@ -119,4 +121,12 @@
 
 .campaignDetail-medal-item:first-of-type{
     margin-right: 5px;
+}
+
+@media only screen and (max-width:650px) {
+    .campaign-detail-left-img{
+       
+        height: 150px;
+      
+    }
 }
