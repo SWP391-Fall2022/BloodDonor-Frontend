@@ -4,7 +4,10 @@
     padding: 2% 8%;
     text-align: center;
 }
-
+.news-list-breadcrumb {
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+}
 #admin-news-list .admin-list-title {
     font-weight: 700;
     font-size: 24px;

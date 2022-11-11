@@ -7,20 +7,23 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { AdBread } from "../../AdminBreadcrumbs";
 import { useContext } from "react";
 import { ViewNewsContext } from "./AdminViewNewsContext";
+import { Padding } from "@mui/icons-material";
 const ViewNews = () => {
+  const handleList = () => {
+    setPage(3);
+  };
   const breadName = (
     <>
-      <Link to="/admin/news_list">
+      <Link onClick={handleList}>
         <ArrowLeftOutlined style={{ marginRight: "2%", color: "black" }} />
       </Link>
       Xem tin tức
     </>
   );
-  const layer1 = <Link to="/admin/news_list">Quản lý tin tức</Link>;
-  const {setPage, setViewNews, valueViewNews}= useContext(ViewNewsContext);
+  const layer1 = <Link onClick={handleList}>Quản lý tin tức</Link>;
+  const { setPage, setViewNews, valueViewNews } = useContext(ViewNewsContext);
   const handleEdit = () => {
     setPage(1); //Go to Edit page
-    setViewNews(valueViewNews); 
   };
   return (
     <>
@@ -32,17 +35,28 @@ const ViewNews = () => {
           <div>
             <h2 className="news-title">{valueViewNews.title}</h2>
             <div>
-              Ngày đăng: {valueViewNews.postingTime} | Tác giả: {valueViewNews.author}
+              Ngày đăng:{" "}
+              {valueViewNews.postingTime
+                .substring(0, 10)
+                .split("-")
+                .reverse()
+                .join("/")}{" "}
+              | Tác giả: {valueViewNews.author}
             </div>
             <div className="news-detail-img">
               <img src={valueViewNews.image} alt={valueViewNews.title}></img>
             </div>
             <div className="news-content">
-              <div dangerouslySetInnerHTML={{ __html: valueViewNews.content }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: valueViewNews.content }}
+              />
             </div>
             <div className="view-news-buttons">
-              <Button> Ẩn </Button>
-              <Button type="primary" onClick={handleEdit}> Chỉnh sửa </Button>
+            {valueViewNews.status === true ? <Button> Ẩn </Button> : <Button> Công khai </Button>}
+              
+              <Button type="primary" onClick={handleEdit}>
+                Chỉnh sửa
+              </Button>
             </div>
           </div>
         )}

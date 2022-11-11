@@ -7,15 +7,6 @@ import { useState, useMemo } from "react";
 import { CreateNewsContext } from "./AdminCreateNewsContext";
 import PreviewNews from "../PreviewNews/PreviewNews";
 export default function AdminCreateNews() {
-  const breadName = (
-    <>
-      <Link to="/admin/news_list">
-        <ArrowLeftOutlined style={{ marginRight: "2%", color: "black" }} />
-      </Link>
-      Tạo tin tức
-    </>
-  );
-  const layer1 = <Link to="/admin/news_list">Quản lí tin tức</Link>;
   const [valueCreateNews, setCreateNews] = useState("");
   const [previewPage, setPage] = useState(0);
   const value = useMemo(
@@ -24,13 +15,6 @@ export default function AdminCreateNews() {
   );
   return (
     <>
-      <div className={styles.breadcrumb}>
-        <AdBread
-          layer1={layer1}
-          layer2="Tạo tin tức"
-          name={breadName}
-        />
-      </div>
       <div className={styles.mainContainer}>
       <CreateNewsContext.Provider value={value}>
       {/* reviewPage: Is the status preview*/}

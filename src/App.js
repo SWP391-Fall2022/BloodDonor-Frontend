@@ -71,10 +71,10 @@ import OrganizationGuide from "./routes/Organization-Profile/Organization-Guide/
 import OrganizationCampaignStatistical from "./routes/Organization-Campaign-Statistical/OrganizationCampaignStatistical";
 import AdminNewsList from "./routes/Admin-Profile/Admin-News/NewsList/AdminNewsList";
 import AdminCreateNews from "./routes/Admin-Profile/Admin-News/CreateNews/AdminCreateNews";
-import AdminViewNews from "./routes/Admin-Profile/Admin-News/ViewNews/AdminViewNews";
 import PreviewNews from "./routes/Admin-Profile/Admin-News/PreviewNews/PreviewNews";
 import EditNews from "./routes/Admin-Profile/Admin-News/EditNews/EditNews";
 import AdminCreateVoucher from './routes/Admin-Profile/Admin-Voucher/AdminCreateVoucher';
+import OverViewNews from "./routes/Admin-Profile/Admin-News/OverviewNews/OverViewNews";
 
 export default function App() {
   return (
@@ -192,11 +192,8 @@ export default function App() {
             <Route path="manage_organization" element={<AdminManageOrganization />} />
             <Route path="manage_organization/approveOrganization" element={<AdminApproveOrganization />} />
             <Route path="manage_organization/infoOrganization" element={<AdminInfoOrganization />} />
-            <Route path="news_list" element={<AdminNewsList />} />
+            <Route path="news" element={<AdminNewsList />} />
             <Route path="create_news" element={<AdminCreateNews />} />
-            <Route path="preview_news" element={<PreviewNews />} />
-            <Route path="view_news" element={<AdminViewNews />} />
-            <Route path="edit_news" element={<EditNews />} />
             <Route path="manage_vouchers" element={<AdminManageVouchers />} />
             <Route path="manage_vouchers/create" element={<AdminCreateVoucher />} />
           </Route>

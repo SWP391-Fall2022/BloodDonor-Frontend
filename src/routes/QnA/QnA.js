@@ -9,9 +9,10 @@ const QnA = () => {
     <section id="QnA">
       <Navbar />
       <section className="QnA-cover">
-        <h2>MỘT SỐ CÂU HỎI THƯỜNG GẶP</h2>
+        
       </section>
       <section className="QnA-content">
+      <h2>MỘT SỐ CÂU HỎI THƯỜNG GẶP</h2>
         <Collapse className="QnA-container">
           <Panel header="1. Ai có thể tham gia hiến máu?" className="QnA-card">
             <li>

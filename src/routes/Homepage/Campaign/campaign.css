@@ -1,11 +1,11 @@
-@import "../homepage.css";
+@import "../homepage.css"; 
 /*-----------campaign CARD------------*/
 .campaign-card {
     background-color: white;
     box-shadow: var(--shadow-dp-01);
     border-radius: 5px;
-    width: 230px;
-}
+    width: 100%;
+} 
 
 .campaign-header {
     text-align: left;
@@ -24,7 +24,6 @@
     max-width: 100%;
     object-fit: contain;
     position: absolute;
-    top: -20px;
 }
 
 .campaign-card-content {
@@ -64,6 +63,7 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 20px;
+    color: black;
 }
 
 .campaign-card-footer {
@@ -78,14 +78,14 @@
 .campaign {
     background-color: var(--blue-02);
     text-align: center;
-    padding-bottom: 5%;
+    padding-bottom: 1%;
 }
 
 .container-campaign {
     display: grid;
-    padding: 0 5% 1% 5%;
+    padding: 0 10% 1% 10%;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-gap: 1%;
+    grid-gap: 2%;
     justify-items: center;
 }
 @media only screen and (max-width: 1100px) {

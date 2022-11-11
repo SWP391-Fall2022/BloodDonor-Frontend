@@ -79,6 +79,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
+    color: black;
 }
 
 .news-card-horizontal .news-content .summary {
@@ -89,6 +90,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
+    color: black;
 }
 
 .news-card-horizontal {

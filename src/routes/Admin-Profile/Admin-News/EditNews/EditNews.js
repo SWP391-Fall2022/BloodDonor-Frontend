@@ -10,16 +10,23 @@ import { useContext } from "react";
 import { ViewNewsContext } from "../ViewNews/AdminViewNewsContext";
 import PostImage from "../PostImage/PostImage";
 export default function EditNews() {
+  const handleView = () => {
+    setPage(0);
+  }
+  const handleList = () => {
+    setPage(3);
+  }
   const breadName = (
     <>
-      <Link to="/admin/edit_news">
+      <Link onClick={handleView}>
         <ArrowLeftOutlined style={{ marginRight: "2%", color: "black" }} />
       </Link>
         Chỉnh sửa tin tức
     </>
   );
-  const layer1 = <Link to="/admin/news_list">Quản lý tin tức</Link>;
-  const layer2 = <Link to="/admin/view_News">Xem tin tức</Link>;
+  const layer1 = <Link onClick={handleList}>Quản lý tin tức</Link>;
+  const layer2 = <Link  onClick={handleView}>Xem tin tức</Link>;
+    
   const category = [
     "Chưa chọn thể loại",
     "Hoạt động sự kiện",
@@ -64,6 +71,7 @@ export default function EditNews() {
   const handleSubmit = () => {
     setFlag(0);
   };
+  
   const onFinish = (values) => {
     values.images = campaignImg ;
     values.content = valueContent;

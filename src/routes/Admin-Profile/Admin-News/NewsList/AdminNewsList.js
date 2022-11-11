@@ -1,15 +1,36 @@
-
-import styles from '../../admin.module.css'
-import { AdBread } from '../../AdminBreadcrumbs'
-import NewsList from './NewsList'
+import { useMemo } from "react";
+import { useState } from "react";
+import styles from "../../admin.module.css";
+import EditNews from "../EditNews/EditNews";
+import OverViewNews from "../OverviewNews/OverViewNews";
+import { ViewNewsContext } from "../ViewNews/AdminViewNewsContext";
+import ViewNews from "../ViewNews/ViewNews";
+import NewsList from "./NewsList";
 
 export default function AdminNewsList() {
-    return (
-        <>
-            <div className={styles.breadcrumb}><AdBread name="Quản lý tin tức" /></div>
-            <div className={styles.mainContainer}>
-                <NewsList/>
-            </div>
-        </>
-    )
+  const [valueViewNews, setViewNews] = useState("");
+  const [page, setPage] = useState(5);
+  const value = useMemo(
+    () => ({ valueViewNews, setViewNews, page, setPage }),
+    [valueViewNews, setViewNews, page, setPage]
+  );
+  return (
+    <>
+      <div className={styles.mainContainer}>
+        <ViewNewsContext.Provider value={value}>
+          {/* reviewPage: Is the status edit*/}
+          {console.log(page)}
+          {page === 0 ? (
+            <ViewNews />
+          ) : page === 1 ? (
+            <EditNews />
+          ) : page === 2 ? (
+            <OverViewNews />
+          ) : (
+            <NewsList/>
+          )}
+        </ViewNewsContext.Provider>
+      </div>
+    </>
+  );
 }
