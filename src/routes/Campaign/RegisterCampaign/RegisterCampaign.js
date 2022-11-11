@@ -16,6 +16,8 @@ export default function RegisterCampaign({ campaign, org }) {
     const [registered, setRegistered] = useState(false)
     const [medicalInfor, setMedicalInfor] = useState(false)
     const [medicalDoc, setMedicalDoc] = useState({})
+    const [donorId, setDonorId] = useState()
+
 
     //Get days for choose day ----------------------
     var getDaysArray = function (start, end) {
@@ -90,7 +92,7 @@ export default function RegisterCampaign({ campaign, org }) {
 
     // register schedule for donation
 
-    const onFinish = async (values) => {
+    const onFinish = async () => {
         if (dateValue === "" || timeValue === "")
             setMessage("Bạn phải chọn cả ngày và buổi để có thể đăng ký lịch hiến máu!")
         else {
@@ -100,7 +102,6 @@ export default function RegisterCampaign({ campaign, org }) {
                 "period": timeValue
 
             }
-            console.log("reques:", requestData)
             const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
 
@@ -115,7 +116,6 @@ export default function RegisterCampaign({ campaign, org }) {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-            console.log("response", response)
             if (response.success) {
                 registerSuccess();
                 console.log("Đăng ký thành công")
@@ -215,14 +215,16 @@ export default function RegisterCampaign({ campaign, org }) {
     //fetch api get medical document
 
     const getMedicalDoc = async (campaignId, registerDate) => {
+        getDonor();
 
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+
         const requestData = {
+            "donorId":donorId,
             "campaignId": campaignId,
             "registeredDate": registerDate,
 
         }
-        console.log("reques:", requestData)
 
         let json = {
             method: 'POST',
@@ -235,14 +237,31 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/medicalDocument/getByDonor`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log("getMedicalDoc outside response", response)
         if (response.success) {
             setMedicalDoc(response.body)
 
         }
-
-
     };
+
+    const getDonor = async () => {
+
+        const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+
+        let json = {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': "Bearer " + token,
+            })
+        }
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me`, json)
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
+        if (response.success) {
+           setDonorId(response.body.userId)
+        }
+    };
+   
 
 
     //fetch API cancel registration

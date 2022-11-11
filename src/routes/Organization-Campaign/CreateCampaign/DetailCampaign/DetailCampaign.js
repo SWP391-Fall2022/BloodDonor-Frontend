@@ -217,7 +217,7 @@ function DetailCampaign() {
           </div>
           <div className="action-table-item" >
            
-            <Link to={"/organization/manageQuestion/campaignQuestion"}  state={{ id: selectedCampaign.id }}>
+            <Link to={`/organization/manageQuestion/campaignQuestion/${selectedCampaign.id }`}  >
             <Tooltip title="Số câu hỏi"><HelpIcon className="action-table-icon" ></HelpIcon></Tooltip>
             
             </Link>

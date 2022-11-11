@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "antd/dist/antd.min.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import "./CampaignQuestion.css";
 import { Table, Tabs, Input } from 'antd';
 import { SearchOutlined } from "@ant-design/icons";
@@ -21,15 +21,12 @@ function checkQuestionStatus(answer, status) {
 }
 
 export default function ManageQuestion() {
+  const campaignId = useParams();
 
   const [tableRow, setTableRow] = useState([]);
 
   const navigate = useNavigate();
-  //get camp id
-  const location = useLocation();
 
-  //nhận state từ navigation
-  const campId = location.state.id;
 
   const [questions, setQuestions] = useState([{}])
 
@@ -45,10 +42,9 @@ export default function ManageQuestion() {
           'Authorization': "Bearer " + token,
         })
       }
-      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-campaign/${campId}`, json)
+      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-campaign/${campaignId.id}`, json)
         .then((res) => res.json())
         .catch((error) => { console.log(error) })
-
       if (response.success) {
         console.log("getQuestionsByCamp", response)
         setQuestions(response)

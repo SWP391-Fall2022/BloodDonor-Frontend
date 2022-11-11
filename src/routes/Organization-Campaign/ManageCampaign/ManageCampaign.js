@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import "./ManageCampaign.css";
 import { Input, Table, Button, Tabs } from 'antd';
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 
 
@@ -14,13 +14,13 @@ function checkCampStatus(camp) {
   const today = new Date();
   var start = new Date(camp.startDate);
   var end = new Date(camp.endDate);
-  if( camp.status === false ) return "Đã xóa"
+  if (camp.status === false) return "Đã xóa"
 
   if ((start <= today && today <= end) || start > today)
     return "Đang diễn ra"
   else // if(endDate < today)
     return "Kết thúc"
-  
+
 }
 
 
@@ -90,14 +90,22 @@ export default function ManageCampaign() {
             camName: row.name,
             camTime: row.startDate + " -> " + row.endDate,
             id: row.id,
-            donorList: 'link',
+            donorList: <Link to={`/organization-campaign-donorlist/${row.id}`}
+            onClick={(event) => {
+              event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
+            }
+          }>Xem chi tiết</Link>,
 
-            questions: 'link',
+            questions: <Link to={`/organization/manageQuestion/campaignQuestion/${row.id}`} 
+            onClick={(event) => {
+              event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
+            }}
+            >Xem chi tiết</Link>,
             status: checkCampStatus(row)
           })))
-       
+
       }
-    
+
     }
     asyncFn();
   }
@@ -161,27 +169,27 @@ export default function ManageCampaign() {
 
     <>
       <div className="manage-campaign-header">
-          <p >Quản lý chiến dịch</p>
-        </div>
+        <p >Quản lý chiến dịch</p>
+      </div>
       <div id="manage-campaign-container">
-      
+
 
         <div className="manage-campaign-container">
           <p className="manage-campaign-title"> Danh sách các chiến dịch của tổ chức hiến máu</p>
           <div className="search-buttons">
-                    <Input
-                     className="cam-search-box" 
-                     suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
-                     id="cam-search-box" 
-                     onChange={(e) => setQuery(e.target.value)}
-                     placeholder="Điền tên chiến dịch bạn muốn tìm..." 
-                     />
-                    <div className="cre-del-buttons">
-                      <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
-                        Tạo mới
-                      </Button>
-                    </div>
-                  </div>
+            <Input
+              className="cam-search-box"
+              suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+              id="cam-search-box"
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Điền tên chiến dịch bạn muốn tìm..."
+            />
+            <div className="cre-del-buttons">
+              <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
+                Tạo mới
+              </Button>
+            </div>
+          </div>
           <Tabs
             className="manage-campaign-content"
             defaultActiveKey="1"
@@ -190,13 +198,13 @@ export default function ManageCampaign() {
                 label: `Tất cả`,
                 key: '1',
                 children: <>
-                  
+
 
                   <Table columns={columns} dataSource={search(tableRow)}
                     pagination={{
                       pageSize: 5,
                     }}
-                    scroll={{x: "100wh"}}
+                    scroll={{ x: "100wh" }}
 
 
                     onRow={record => ({
@@ -215,19 +223,19 @@ export default function ManageCampaign() {
                 label: `Đang diễn ra`,
                 key: '2',
                 children: <>
-                 
+
 
                   <Table columns={columns}
-                   dataSource={filterStatus( search(tableRow), 'Đang diễn ra')}
+                    dataSource={filterStatus(search(tableRow), 'Đang diễn ra')}
                     pagination={{
                       pageSize: 5,
                     }}
-                    scroll={{x: "100wh"}}
+                    scroll={{ x: "100wh" }}
 
                     onRow={record => ({
                       onClick: (e) => {
 
-                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status  } })
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status } })
                       }
 
                     })}
@@ -239,19 +247,19 @@ export default function ManageCampaign() {
                 label: `Kết thúc`,
                 key: '3',
                 children: <>
-                 
 
-                  <Table columns={columns} dataSource={filterStatus( search(tableRow), 'Kết thúc')}
+
+                  <Table columns={columns} dataSource={filterStatus(search(tableRow), 'Kết thúc')}
                     pagination={{
                       pageSize: 5,
                     }}
-                    scroll={{x: "100wh"}}
+                    scroll={{ x: "100wh" }}
 
 
                     onRow={record => ({
                       onClick: (e) => {
 
-                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status  } })
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status } })
                       }
 
                     })}
@@ -263,18 +271,18 @@ export default function ManageCampaign() {
                 label: `Đã xóa`,
                 key: '4',
                 children: <>
-                 
 
-                  <Table columns={columns} dataSource={filterStatus( search(tableRow), 'Đã xóa')}
+
+                  <Table columns={columns} dataSource={filterStatus(search(tableRow), 'Đã xóa')}
                     pagination={{
                       pageSize: 5,
                     }}
-                    scroll={{x: "100wh"}}
+                    scroll={{ x: "100wh" }}
 
                     onRow={record => ({
                       onClick: (e) => {
 
-                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status  } })
+                        navigate(`/organization/manageCampaign/detailCampaign`, { state: { cam: campaigns, id: record.id, status: record.status } })
                       }
 
                     })}

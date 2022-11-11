@@ -30,11 +30,12 @@ const EditDateTime = (props) => {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
+                console.log("getRegistration", props.campaign.id)
             if (response.success) {
                 response.body.find((registration) => {
                     //only registration has status NOT_CHECKED_IN can be edit
-                    if (registration.status === "NOT_CHECKED_IN"){
-                        setOldDate(registration.registeredDate)
+                    if (registration.status === "NOT_CHECKED_IN" && registration.campaignId ===  props.campaign.id ){
+                        setOldDate(registration.registeredDate )
                     setOldPeriod(registration.period)
                     }
                 }
@@ -110,6 +111,8 @@ const EditDateTime = (props) => {
 
         }
         console.log("reques:", requestData)
+        console.log("campid:", props.campaign.id)
+        console.log("old date:", oldDate)
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
 
