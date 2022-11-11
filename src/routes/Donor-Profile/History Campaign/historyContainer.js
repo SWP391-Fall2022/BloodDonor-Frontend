@@ -1,13 +1,14 @@
 import styles from '../donor.module.css'
-import { Empty, Modal, Skeleton, Table, Tooltip } from 'antd';
+import { Empty, Modal, notification, Skeleton, Table, Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function HistoryContainer() {
 
     const [dataSource, setDataSource] = useState([])
     const [rendered, setRendered] = useState(false)
+    const navigate = useNavigate()
     const effectRan = useRef(false)
 
     useEffect(() => {
@@ -61,6 +62,14 @@ export default function HistoryContainer() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         // console.log(response)
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
         if (response.status === 200) {
             if (response.body.length !== 0) {
                 response.body.forEach(body => {
@@ -75,6 +84,14 @@ export default function HistoryContainer() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         // console.log(response)
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
         if (response.status === 200) {
             const info = { key: id, campaignName: response.body.name, status: body.status === "NOT_CHECKED_IN" ? "Đã đăng ký" : body.status === "CHECKED_IN" ? "Đã tham gia" : "Đã hủy" }
             setDataSource(curr => [...curr, info])
@@ -98,6 +115,14 @@ export default function HistoryContainer() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         // console.log(response)
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
         if (response.status === 200) {
             response.body.forEach(e => {
                 if (e.campaignId === record.key) {

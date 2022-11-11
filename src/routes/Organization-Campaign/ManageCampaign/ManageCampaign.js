@@ -1,7 +1,7 @@
 import React from "react";
 import "antd/dist/antd.min.css";
 import "./ManageCampaign.css";
-import { Input, Table, Button, Tabs } from 'antd';
+import { Input, Table, Button, Tabs, notification } from 'antd';
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
@@ -81,8 +81,15 @@ export default function ManageCampaign() {
       const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAllByOrganization`, json)
         .then((res) => res.json())
         .catch((error) => { console.log(error) })
-
-      if (response.success) {
+      if (response.status === 400) {
+        notification.error({
+          message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+          placement: "top"
+        });
+        sessionStorage.clear()
+        navigate("/");
+      }
+      if (response.status === 200) {
         console.log("response", response)
         setCampaigns(response)
         setTableRow(
@@ -91,15 +98,15 @@ export default function ManageCampaign() {
             camTime: row.startDate + " -> " + row.endDate,
             id: row.id,
             donorList: <Link to={`/organization-campaign-donorlist/${row.id}`}
-            onClick={(event) => {
-              event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
-            }
-          }>Xem chi tiết</Link>,
+              onClick={(event) => {
+                event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
+              }
+              }>Xem chi tiết</Link>,
 
-            questions: <Link to={`/organization/manageQuestion/campaignQuestion/${row.id}`} 
-            onClick={(event) => {
-              event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
-            }}
+            questions: <Link to={`/organization/manageQuestion/campaignQuestion/${row.id}`}
+              onClick={(event) => {
+                event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
+              }}
             >Xem chi tiết</Link>,
             status: checkCampStatus(row)
           })))

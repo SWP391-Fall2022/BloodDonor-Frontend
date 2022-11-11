@@ -1,12 +1,14 @@
 import styles from '../donor.module.css'
-import { Collapse } from 'antd';
+import { Collapse, notification } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import empty from '../../../assets/empty-list.png'
+import { useNavigate } from 'react-router-dom';
 const { Panel } = Collapse;
 
 export default function QnAContainer() {
     const [emptyList, setEmptyList] = useState(true);
     const [collapse, setCollapse] = useState(true);
+    const navigate = useNavigate()
     const effectRan = useRef(false)
 
     useEffect(() => {
@@ -22,6 +24,14 @@ export default function QnAContainer() {
                     .then((res) => res.json())
                     .catch((error) => { console.log(error) })
                 // console.log(response)
+                if (response.status === 400) {
+                    notification.error({
+                        message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                        placement: "top"
+                    });
+                    sessionStorage.clear()
+                    navigate("/");
+                }
                 if (response.status === 200) {
                     if (response.body.length === 0) {
                         setEmptyList(true)

@@ -27,23 +27,22 @@ function DonorProfile() {
                 const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me`, json)
                     .then((res) => res.json())
                     .catch((error) => { console.log(error) })
-                // console.log(response);
-                if (rolePath === null || rolePath !== "/donor") {
-                    sessionStorage.clear()
-                    notification.error({
-                        message: "Vui lòng đăng nhập người hiến máu",
-                        placement: "top"
-                    });
-                    navigate("/");
-                } else if (response.status === 400) {
+                console.log(response);
+                if (response.status === 400) {
                     notification.error({
                         message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
                         placement: "top"
                     });
                     sessionStorage.clear()
                     navigate("/");
-                }
-                if (response.success) {
+                } else if (rolePath === null || rolePath !== "/donor" || response.status === 404) {
+                    sessionStorage.clear()
+                    notification.error({
+                        message: "Vui lòng đăng nhập người hiến máu",
+                        placement: "top"
+                    });
+                    navigate("/");
+                } else if (response.status === 200) {
                     //current pathname/route
 
                     sessionStorage.setItem('avatar', JSON.stringify(response.body.avatar))

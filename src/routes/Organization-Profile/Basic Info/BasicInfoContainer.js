@@ -3,7 +3,7 @@ import styles from '../organization.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
 import { Form, Input, Select, Button, notification, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 const { Option } = Select;
 const { TextArea } = Input;
 const { confirm } = Modal;
@@ -14,6 +14,7 @@ export default function BasicInfoContainer() {
     let introduction2 = "";
     // console.log(user)
     const [form] = Form.useForm();
+    const navigate = useNavigate()
     if (user.introduction !== null) {
         const splitArr = user.introduction.split("¥£$€")
         introduction1 = splitArr[0];
@@ -93,7 +94,15 @@ export default function BasicInfoContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/organization/updateInfo`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
             notification.success({
                 message: 'Đổi thông tin thành công',
                 description: 'Đang tải lại thông tin mới',
@@ -145,10 +154,10 @@ export default function BasicInfoContainer() {
                     <TextArea rows={2} allowClear showCount maxLength={50} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Chức năng và nhiệm vụ chung" name="introduction1" initialValue={introduction1}>
-                    <TextArea rows={10} allowClear showCount maxLength={1000}/>
+                    <TextArea rows={10} allowClear showCount maxLength={1000} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Phạm vi hoạt động" name="introduction2" initialValue={introduction2}>
-                    <TextArea rows={10} allowClear showCount maxLength={1000}/>
+                    <TextArea rows={10} allowClear showCount maxLength={1000} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
                     <Button id={`${styles.btn1}`} type="primary" htmlType="submit" size="large">

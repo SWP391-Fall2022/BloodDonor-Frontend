@@ -79,7 +79,7 @@ export const SideBarforAdmin = () => {
           </Link>
           {subMenu}
 
-          <NavLink to="/admin/news_list" className="sidebar-item" title="Quản lý tin tức">
+          <NavLink to="/admin/news" className="sidebar-item" title="Quản lý tin tức">
             <HelpCenterIcon className="sidebar-icon"></HelpCenterIcon>
             <p>Quản lý tin tức</p>
           </NavLink>

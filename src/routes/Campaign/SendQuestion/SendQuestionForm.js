@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input } from 'antd';
+import { Button, Modal, Form, Input, notification } from 'antd';
 import 'antd/dist/antd.min.css';
 import './SendQuestionForm.css';
+import { useNavigate } from 'react-router-dom';
 
 const { TextArea } = Input;
 
@@ -15,7 +16,7 @@ const SendQuestion = (props) => {
   };
 
   const [form] = Form.useForm();
-
+  const navigate = useNavigate()
 
   const SendQuestionForm = ({ open, onCreate, onCancel }) => {
     return (
@@ -28,29 +29,29 @@ const SendQuestion = (props) => {
         cancelText="Hủy"
         onCancel={onCancel}
         onOk={() => {
-         sendQuestion();
+          sendQuestion();
         }}
       >
         <Form
           form={form}
           layout="vertical"
           name="send-question-form"
-  
+
         >
-         
+
           <Form.Item
             name="content"
             label="Mô tả chi tiết cho câu hỏi"
-  
+
           >
             <TextArea showCount maxLength={100} />
           </Form.Item>
-  
+
         </Form>
       </Modal>
     );
   };
-  
+
   //fetch api send question to org
 
   const sendQuestion = async () => {
@@ -58,46 +59,54 @@ const SendQuestion = (props) => {
 
     const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
     const requestData = {
-        "question": formData.content,
-    
+      "question": formData.content,
+
     }
     console.log("reques:", requestData)
 
     let json = {
-        method: 'POST',
-        body: JSON.stringify(requestData),
-        headers: new Headers({
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': "Bearer " + token,
-        })
+      method: 'POST',
+      body: JSON.stringify(requestData),
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': "Bearer " + token,
+      })
     }
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/add/${props.campaignId}`, json)
-        .then((res) => res.json())
-        .catch((error) => { console.log(error) })
+      .then((res) => res.json())
+      .catch((error) => { console.log(error) })
     console.log("response", response)
-    if (response.success) {
+    if (response.status === 400) {
+      notification.error({
+        message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+        placement: "top"
+      });
+      sessionStorage.clear()
+      navigate("/");
+    }
+    if (response.status === 200) {
 
       sendQuestionSuccess()
-        console.log("sendQuestion response".response)
+      console.log("sendQuestion response".response)
 
     }
 
 
-};
+  };
 
-//send question success
-const sendQuestionSuccess = () => {
-  // callback(!registered);
-  Modal.success({
+  //send question success
+  const sendQuestionSuccess = () => {
+    // callback(!registered);
+    Modal.success({
       content: 'Câu hỏi đã được gửi thành công.',
       okText: 'Đóng',
-     onOk(){
-      setOpen(false);
+      onOk() {
+        setOpen(false);
 
-     }
+      }
 
-  });
-};
+    });
+  };
 
 
   return (

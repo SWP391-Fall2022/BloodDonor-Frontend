@@ -2,9 +2,9 @@ import { ArrowLeftOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/ic
 import styles from '../../organization.module.css'
 import packageInfo from "../../../../shared/ProvinceDistrict.json";
 import { OrBread } from '../../organization-breadcrumb'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import stylesNoti from './createReview.module.css'
-import { Button, Checkbox, Form, Input, Select, Spin, Switch, Upload } from "antd"
+import { Button, Checkbox, Form, Input, notification, Select, Spin, Switch, Upload } from "antd"
 import { useState } from "react"
 import ImgCrop from "antd-img-crop";
 import Editor from "../Create Notification/Editor";
@@ -18,8 +18,9 @@ export default function OrganizationCreateNotification() {
 
     //Others define
     const [form] = Form.useForm();
+    const navigate = useNavigate()
 
-    //
+    //Change between 2 components
     const [review, setReview] = useState(false)
 
     //For switch, Form Items don't accept switch with text
@@ -132,6 +133,21 @@ export default function OrganizationCreateNotification() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log(response)
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
+            notification.success({
+                message: "Tạo thông báo thành công",
+                placement: "top"
+            });
+            navigate("/organization/notification");
+        }
         // sessionStorage.removeItem("notiImage")
         // sessionStorage.removeItem("notiImageID")
     }

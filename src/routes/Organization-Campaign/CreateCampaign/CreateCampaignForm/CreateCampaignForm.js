@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import "antd/dist/antd.min.css";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Input, DatePicker, Breadcrumb, Checkbox, Button, Modal, Switch, Radio, Select } from "antd";
+import { Form, Input, DatePicker, Breadcrumb, Checkbox, Button, Modal, Switch, Radio, Select, notification } from "antd";
 import moment from 'moment';
 import Editor from "../Editor/Editor";
 import './CreateCampaignForm.css';
@@ -142,12 +142,23 @@ function CreateCampaignForm() {
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
     // console.log("response", response)
-    if (response.success) {
+    if (response.status === 400) {
+      notification.error({
+        message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+        placement: "top"
+      });
+      sessionStorage.clear()
+      navigate("/");
+    }
+    if (response.status === 200) {
       navigate("/organization/manageCampaign")
       setMessage("Tạo chiến dịch thành công")
+      notification.success({
+        message: 'Tạo chiến dịch thành công'
+      })
     }
     else {
-        setMessage(response.body)
+      setMessage(response.body)
     }
     setTimeout(() => {
       setMessage('');
@@ -176,7 +187,7 @@ function CreateCampaignForm() {
     else if (e.target.value === 3 || e.target.value === 4)
       setMonthRepetition(true)
   }
-  
+
 
 
   // setup for repetition by week 
@@ -213,7 +224,7 @@ function CreateCampaignForm() {
     },
   ];
 
- 
+
   //setup onSiteDates
   const [onSiteDates, setOnSiteDates] = useState(["1970-01-01"])
 
@@ -294,14 +305,14 @@ function CreateCampaignForm() {
 
 
             <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }]}>
-              <TextArea 
-              rows={2} 
-              allowClear 
-              showCount 
-              maxLength={100}
+              <TextArea
+                rows={2}
+                allowClear
+                showCount
+                maxLength={100}
                 onChange={(e) => {
                   setAddress(e.target.value)
-                  
+
                 }} />
             </Form.Item>
 
@@ -358,7 +369,7 @@ function CreateCampaignForm() {
                 value={daysOfMonth}
                 id="daysOfMonth"
                 onChange={dateObject => {
-                 
+
                   setDaysOfMonth(dateObject)
                   dateObject.map(
                     (e) => (
@@ -367,7 +378,7 @@ function CreateCampaignForm() {
                   )
                   setDaysOfMonth(dayinmonth)
                   // setMonthRepetition(true)
-                  if (dateObject.length === 0){
+                  if (dateObject.length === 0) {
                     setMonthRepetition(false)
                   }
                 }}

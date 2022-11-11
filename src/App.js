@@ -116,7 +116,7 @@ export default function App() {
             exact strict path="/organization-homepage" element={<OrganizationHomepage />}
           />
           <Route
-            exact strict path="/organization-campaign-donorlist" element={<OrganizationCampaignDonorList />}
+            exact strict path="/organization-campaign-donorlist/0" element={<OrganizationCampaignDonorList />}
           />
           <Route
             exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf />}
@@ -171,7 +171,7 @@ export default function App() {
             {/* Manage Question */}
             <Route path="manageQuestion" element={<OrganizationQuestion />}>
               <Route index element={<OrganizationManageQuestion />} />
-              <Route path="campaignQuestion" element={<OrganizationCampaignQuestion />} />
+              <Route path="campaignQuestion/:id" element={<OrganizationCampaignQuestion />} />
               <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
               <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
             </Route>

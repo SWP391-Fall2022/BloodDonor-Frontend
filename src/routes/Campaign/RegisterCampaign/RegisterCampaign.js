@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Radio, Form, Button, Modal } from 'antd';
+import { Radio, Form, Button, Modal, notification } from 'antd';
 import { useNavigate } from "react-router-dom";
 import './RegisterCampaign.css';
 import SendQuestion from '../SendQuestion/SendQuestionForm';
@@ -116,7 +116,15 @@ export default function RegisterCampaign({ campaign, org }) {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-            if (response.success) {
+            if (response.status === 400) {
+                notification.error({
+                    message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                    placement: "top"
+                });
+                sessionStorage.clear()
+                navigate("/");
+            }
+            if (response.status == 200) {
                 registerSuccess();
                 console.log("Đăng ký thành công")
             }
@@ -166,7 +174,15 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/campaigns/${campaign.id}/status`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
             if (response.body.hasRegistered === true)
                 setRegistered(true)
         }
@@ -194,7 +210,15 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/donated`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
 
             const lastestDonated = response.body[Array(response.body).length - 1];
             if (moment().subtract(12, 'weeks') < moment(lastestDonated.registeredDate)) {
@@ -220,7 +244,7 @@ export default function RegisterCampaign({ campaign, org }) {
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
         const requestData = {
-            "donorId":donorId,
+            "donorId": donorId,
             "campaignId": campaignId,
             "registeredDate": registerDate,
 
@@ -237,7 +261,15 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/medicalDocument/getByDonor`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
             setMedicalDoc(response.body)
 
         }
@@ -257,11 +289,19 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.success) {
-           setDonorId(response.body.userId)
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
+            setDonorId(response.body.userId)
         }
     };
-   
+
 
 
     //fetch API cancel registration
@@ -300,7 +340,15 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered/${campaign.id}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
             setRegistered(false)
 
         }

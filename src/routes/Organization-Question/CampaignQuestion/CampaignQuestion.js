@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "antd/dist/antd.min.css";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import "./CampaignQuestion.css";
-import { Table, Tabs, Input } from 'antd';
+import { Table, Tabs, Input, notification } from 'antd';
 import { SearchOutlined } from "@ant-design/icons";
 
 
@@ -45,7 +45,15 @@ export default function ManageQuestion() {
       const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-campaign/${campaignId.id}`, json)
         .then((res) => res.json())
         .catch((error) => { console.log(error) })
-      if (response.success) {
+      if (response.status === 400) {
+        notification.error({
+          message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+          placement: "top"
+        });
+        sessionStorage.clear()
+        navigate("/");
+      }
+      if (response.status === 200) {
         console.log("getQuestionsByCamp", response)
         setQuestions(response)
         setTableRow(

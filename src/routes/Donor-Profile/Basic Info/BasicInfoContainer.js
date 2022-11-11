@@ -3,7 +3,7 @@ import styles from '../donor.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
 import moment from 'moment';
 import { Form, Input, Select, DatePicker, Button, notification } from 'antd';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 const { Option } = Select;
 const { TextArea } = Input;
 export default function BasicInfoContainer() {
@@ -13,6 +13,7 @@ export default function BasicInfoContainer() {
         window.location.reload(false);
     }
     const [form] = Form.useForm();
+    const navigate = useNavigate()
     let userDefaultDistrict;
     let userDefaultDistrictList;
     let userDefaultProvince;
@@ -77,7 +78,15 @@ export default function BasicInfoContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
             notification.success({
                 message: 'Đổi thông tin thành công',
                 description: 'Đang tải lại thông tin mới',

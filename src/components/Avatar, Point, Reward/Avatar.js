@@ -2,6 +2,7 @@ import { EditOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Avatar, Button, Modal, notification, Spin, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './leftside.module.css'
 
 export default function AvatarContainer() {
@@ -15,6 +16,7 @@ export default function AvatarContainer() {
     const [imageUrlPreview, setImageUrlPreview] = useState(null);
     //Cloudinary Public Img ID
     const [currPublicId, setCurrPublicId] = useState(null)
+    const navigate = useNavigate()
 
     //avatar is NULL
     var randomColor = '#';
@@ -85,6 +87,14 @@ export default function AvatarContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/user/updateAvatar`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
         if (response.status === 200) {
             notification.success({
                 message: 'Đổi ảnh đại diện thành công',

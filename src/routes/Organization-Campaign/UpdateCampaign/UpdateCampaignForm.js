@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 import "antd/dist/antd.min.css";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import { Link, useNavigate,  useParams, useLocation } from "react-router-dom";
-import { Form, Input, DatePicker, Breadcrumb, Checkbox, Button, Modal, Switch, Radio, Select } from "antd";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
+import { Form, Input, DatePicker, Breadcrumb, Checkbox, Button, Modal, Switch, Radio, Select, notification } from "antd";
 import moment from 'moment';
 import Editor from "../CreateCampaign/Editor/Editor";
 import './UpdateCampaignForm.css';
@@ -21,7 +21,7 @@ const { Option } = Select;
 
 export default function UpdateCampaignForm() {
 
-  
+
   const campaignId = useParams();
 
   const location = useLocation();
@@ -29,33 +29,33 @@ export default function UpdateCampaignForm() {
 
   //nhận state từ navigation
   const campList = location.state.campaignsList;
-  
+
 
   const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [changedCampaign, setChangedCampaign] = useState(
     {
-      
-      
-        id: 1,
-        name: "",
-        images: "",
-        description: "This is the description of the campaign 2",
-        startDate: "2022-06-20",
-        endDate: "2022-07-20",
-        emergency: false,
-        bloodTypes: "O",
-        districtId: 1,
-        addressDetails: "This is the address details",
-        organizationName: "Benh vien Ngo Viet Tien Main",
-        onSiteDates: [
-      "2022-10-30",
-      "2022-11-10"
-    ],
-  }
-    
-    )
-    
+
+
+      id: 1,
+      name: "",
+      images: "",
+      description: "This is the description of the campaign 2",
+      startDate: "2022-06-20",
+      endDate: "2022-07-20",
+      emergency: false,
+      bloodTypes: "O",
+      districtId: 1,
+      addressDetails: "This is the address details",
+      organizationName: "Benh vien Ngo Viet Tien Main",
+      onSiteDates: [
+        "2022-10-30",
+        "2022-11-10"
+      ],
+    }
+
+  )
+
 
 
   let campaignDefaultDistrict;
@@ -68,13 +68,13 @@ export default function UpdateCampaignForm() {
 
   //Find province based on user's districtID
   for (let i = 0; i < provinceList.length; i++) {
-      for (let j = 0; j < provinceList[i].district.length; j++) {
-          if (provinceList[i].district[j].id === changedCampaign.districtId) {
-            campaignDefaultDistrict = provinceList[i].district[j].name;
-            campaignDefaultDistrictList = provinceList[i].district;
-            campaignDefaultProvince = provinceList[i].name
-          }
+    for (let j = 0; j < provinceList[i].district.length; j++) {
+      if (provinceList[i].district[j].id === changedCampaign.districtId) {
+        campaignDefaultDistrict = provinceList[i].district[j].name;
+        campaignDefaultDistrictList = provinceList[i].district;
+        campaignDefaultProvince = provinceList[i].name
       }
+    }
   }
 
   const [districtList, setDistrictList] = useState(campaignDefaultDistrictList)
@@ -94,12 +94,12 @@ export default function UpdateCampaignForm() {
       const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/readOne/${campaignId.id}`, json)
         .then((res) => res.json())
         .catch((error) => { console.log("readOneFunction error", error) })
-        console.log("readOneFunction response ", response.body)
+      console.log("readOneFunction response ", response.body)
 
       if (response.success) {
         console.log("readOneFunction response succ", response.body)
         setChangedCampaign(response.body)
-       
+
 
       }
 
@@ -120,30 +120,30 @@ export default function UpdateCampaignForm() {
 
   // set up for province district register
   const [form] = Form.useForm();
-  
-//Chang initial value of form
+
+  //Chang initial value of form
   useEffect(() => {
 
     for (let i = 0; i < provinceList.length; i++) {
       for (let j = 0; j < provinceList[i].district.length; j++) {
-          if (provinceList[i].district[j].id === changedCampaign.districtId) {
-            campaignDefaultDistrict = provinceList[i].district[j].name;
-            campaignDefaultDistrictList = provinceList[i].district;
-            campaignDefaultProvince = provinceList[i].name
+        if (provinceList[i].district[j].id === changedCampaign.districtId) {
+          campaignDefaultDistrict = provinceList[i].district[j].name;
+          campaignDefaultDistrictList = provinceList[i].district;
+          campaignDefaultProvince = provinceList[i].name
 
-          }
+        }
       }
-  }
+    }
 
-  form.setFieldsValue(changedCampaign)
-  form.setFieldValue("province", campaignDefaultProvince)
-  form.setFieldValue("district", campaignDefaultDistrict)
-  form.setFieldValue("campDate", [moment(changedCampaign.startDate), moment(changedCampaign.endDate)])
-  form.setFieldValue("bloods", changedCampaign.bloodTypes)
-  setDates( [moment(changedCampaign.startDate), moment(changedCampaign.endDate)])
-  
+    form.setFieldsValue(changedCampaign)
+    form.setFieldValue("province", campaignDefaultProvince)
+    form.setFieldValue("district", campaignDefaultDistrict)
+    form.setFieldValue("campDate", [moment(changedCampaign.startDate), moment(changedCampaign.endDate)])
+    form.setFieldValue("bloods", changedCampaign.bloodTypes)
+    setDates([moment(changedCampaign.startDate), moment(changedCampaign.endDate)])
 
-   }, [form, changedCampaign])
+
+  }, [form, changedCampaign])
 
 
   const onProvinceChange = (value) => {
@@ -234,14 +234,14 @@ export default function UpdateCampaignForm() {
       "name": formData.name,
       "images": campaignImg,
       "description": formData.description,
-      "startDate": moment(formData.campDate[0]).add(1,'day'),
-      "endDate": moment(formData.campDate[1]).add(1,'day'),
+      "startDate": moment(formData.campDate[0]).add(1, 'day'),
+      "endDate": moment(formData.campDate[1]).add(1, 'day'),
       "emergency": false,
       "bloodTypes": bloodTypes.toString().replace(/,/g, '-'),
       "districtId": districtId,
       "addressDetails": formData.addressDetails,
       "sendMail": formData.sendMail,
-      "onSiteDates": onSiteDates[0] === "1970-01-01" || weekRepetition === true || monthRepetition === true  ? null : String(onSiteDates).split(","),
+      "onSiteDates": onSiteDates[0] === "1970-01-01" || weekRepetition === true || monthRepetition === true ? null : String(onSiteDates).split(","),
       // "onSiteDates": onSiteDates[0] === "1970-01-01" || formData.daysOfWeek.length !==0  || daysOfMonth.length !==0 || formData.weekNumber !==0 ? null : String(onSiteDates).split(","),
       "weekRepetition": weekRepetition,
       "monthRepetition": monthRepetition,
@@ -264,12 +264,20 @@ export default function UpdateCampaignForm() {
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
     console.log("EDIT response", response)
-    if (response.success) {
+    if (response.status === 400) {
+      notification.error({
+        message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+        placement: "top"
+      });
+      sessionStorage.clear()
+      navigate("/");
+    }
+    if (response.status === 200) {
       success();
       setMessage("Chỉnh sửa chiến dịch thành công")
     }
     else {
-        setMessage(response.body)
+      setMessage(response.body)
     }
     setTimeout(() => {
       setMessage('');
@@ -290,21 +298,21 @@ export default function UpdateCampaignForm() {
   const [isRepetition, setIsRepetition] = useState();
   function onIsRepetitionChange(e) {
     setIsRepetition(e.target.value)
-    if(e.target.value === 1){
+    if (e.target.value === 1) {
       setWeekRepetition(false)
       setMonthRepetition(false)
     }
-   else if (e.target.value === 2){
+    else if (e.target.value === 2) {
       setWeekRepetition(true)
       console.log("setWeekRepetition", weekRepetition)
       setMonthRepetition(false)
 
     }
-    else if (e.target.value === 3 || e.target.value === 4){
+    else if (e.target.value === 3 || e.target.value === 4) {
       setMonthRepetition(true)
       setWeekRepetition(false)
     }
-     
+
 
   }
 
@@ -366,7 +374,7 @@ export default function UpdateCampaignForm() {
           <Breadcrumb.Item>Thông tin chiến dịch</Breadcrumb.Item>
           <Breadcrumb.Item>Chỉnh sửa chiến dịch</Breadcrumb.Item>
         </Breadcrumb>
-        <Link to="/organization/manageCampaign/detailCampaign" state={{cam: campList, id: campaignId.id, status:null }}><ArrowLeftOutlined style={{ marginRight: "10px" }} />Chỉnh sửa chiến dịch</Link>
+        <Link to="/organization/manageCampaign/detailCampaign" state={{ cam: campList, id: campaignId.id, status: null }}><ArrowLeftOutlined style={{ marginRight: "10px" }} />Chỉnh sửa chiến dịch</Link>
       </div>
 
       <div id="create-campaign-container">
@@ -383,7 +391,7 @@ export default function UpdateCampaignForm() {
               'addressDetails': changedCampaign.addressDetails,
               'images': changedCampaign.images,
               'sendEmail': changedCampaign.sendEmail,
-              
+
             }}
 
             form={form}
@@ -394,7 +402,7 @@ export default function UpdateCampaignForm() {
           >
             <Form.Item className="create-campaign-form-item" label="Tựa đề chiến dịch" name="name" rules={[{ required: true, message: 'Vui lòng nhập Tựa đề chiến dịch' }]}>
               <Input placeholder="Nhập tựa đề chiến dịch"
-               
+
                 name="name"
                 maxLength={120}
               />
@@ -403,10 +411,10 @@ export default function UpdateCampaignForm() {
             {/* regiter province district  */}
             <Form.Item >
               <Form.Item
-               label="Tỉnh" 
-               name="province"
-                 rules={[{ required: true, message: 'Vui lòng chọn' }]} 
-                 style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                label="Tỉnh"
+                name="province"
+                rules={[{ required: true, message: 'Vui lòng chọn' }]}
+                style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                 <Select
                   showSearch placeholder="Chọn"
                   onChange={onProvinceChange}
@@ -428,20 +436,20 @@ export default function UpdateCampaignForm() {
 
 
             <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }]}>
-              <TextArea 
-              rows={2} 
-              allowClear 
-              showCount 
-              maxLength={100}
-                />
+              <TextArea
+                rows={2}
+                allowClear
+                showCount
+                maxLength={100}
+              />
             </Form.Item>
 
 
-            <Form.Item 
-            className="create-campaign-form-item"
-             label="Thời gian mở đăng ký trên Medichor"
+            <Form.Item
+              className="create-campaign-form-item"
+              label="Thời gian mở đăng ký trên Medichor"
               name="campDate"
-               rules={[{ required: true, message: 'Vui lòng nhập thời gian bạn muốn diễn ra chiến dịch' }]}>
+              rules={[{ required: true, message: 'Vui lòng nhập thời gian bạn muốn diễn ra chiến dịch' }]}>
 
               <RangePicker
                 format={'YYYY-MM-DD'}
@@ -465,7 +473,7 @@ export default function UpdateCampaignForm() {
               </Radio.Group>
             </Form.Item>
 
-            <Form.Item className="create-campaign-form-item-days" initialValue={[dates[0],dates[1]]} label="Chọn những ngày cụ thể bạn muốn mở đăng ký:" required={isRepetition === 1}>
+            <Form.Item className="create-campaign-form-item-days" initialValue={[dates[0], dates[1]]} label="Chọn những ngày cụ thể bạn muốn mở đăng ký:" required={isRepetition === 1}>
 
               <DatePickerReact
                 disabled={isRepetition !== 1}
@@ -476,7 +484,7 @@ export default function UpdateCampaignForm() {
                 multiple
                 format="YYYY-MM-DD"
                 // value={[moment(dates[0]).toDate(), moment(dates[1]).toDate()]}
-                
+
                 minDate={moment(dates[0]).toDate()}
                 maxDate={moment(dates[1]).toDate()}
                 placeholder={"Chọn những ngày mở đăng ký"}
@@ -495,7 +503,7 @@ export default function UpdateCampaignForm() {
                 value={daysOfMonth}
                 id="daysOfMonth"
                 onChange={dateObject => {
-                 
+
                   setDaysOfMonth(dateObject)
                   dateObject.map(
                     (e) => (

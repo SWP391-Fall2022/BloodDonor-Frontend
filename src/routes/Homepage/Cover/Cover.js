@@ -30,7 +30,7 @@ const Cover = () => {
         <div className="container-search">
           <h4>Bạn muốn đặt lịch vào khoảng thời gian nào?</h4>
           <div className="row-search">
-            <Space direction="horizontal" size={20} style={{ marginRight: "2%" }}>
+            {/* <Space direction="horizontal" size={20} style={{ marginRight: "2%" }}>
               <RangePicker
               placeholder={["Bắt đầu", "Kết thúc"]}
                 disabledDate={disabledDate}
@@ -44,7 +44,10 @@ const Cover = () => {
               <Link to={`/campaign`} state={{date: date}}>
                <Button type="primary">Tìm kiếm</Button>
                </Link>
-            </Space>
+            </Space> */}
+            <Link to={`/campaign`} >
+              <Button type="primary">Chọn lịch hiến máu</Button>
+            </Link>
           </div>
         </div>
       </div>
