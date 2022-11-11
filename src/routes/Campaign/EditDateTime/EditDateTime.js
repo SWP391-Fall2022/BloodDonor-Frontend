@@ -10,9 +10,6 @@ const EditDateTime = (props) => {
     const [oldPeriod, setOldPeriod] = useState("")
 
     const [message, setMessage] = useState('')
-    
-
-
     // fetch API get detail of registration
     const [form] = Form.useForm();
 
@@ -104,6 +101,9 @@ const EditDateTime = (props) => {
         console.log("formData:", formData)
 
 
+        const formData = form.getFieldsValue(true);
+        console.log(formData)
+
         const requestData = {
             "campaignId": props.campaign.id,
             "registerDate": formData.registerDate,
@@ -135,8 +135,7 @@ const EditDateTime = (props) => {
             updateSuccess()
         }
         else {
-            if (response.body === "The time between donations must be at least 12 weeks")
-                setMessage("Thời gian giữa những lần hiến máu của bạn phải cách nhau ít nhất 12 tuần!")
+                setMessage(response.body)
 
             console.log("ko Chỉnh sửa được")
 
@@ -162,9 +161,8 @@ const EditDateTime = (props) => {
         });
     };
 
-
-
     const EditDateTimeForm = ({ open, onCancel, registered }) => {
+
         return (
             <Modal
                 open={open}
@@ -194,6 +192,7 @@ const EditDateTime = (props) => {
                                 <Form.Item name="registerDate" initialValue={oldDate}>
                                     <Radio.Group name="registerDate" disabled={registered ? true : false} defaultValue={oldDate} >
 
+
                                         {
                                             daylist.map((day) =>
                                                 <div>
@@ -211,7 +210,6 @@ const EditDateTime = (props) => {
                         <div className='register-time'>
                             <Form.Item name="period" initialValue={oldPeriod}>
                                 <Radio.Group disabled={registered ? true : false} defaultValue={oldPeriod}>
-
                                     <Radio value={"MORNING"}>Buổi sáng: 8h00 đến 11h00</Radio>
                                     <Radio value={"AFTERNOON"}>Buổi chiều: 13h30 đến 17h00</Radio>
 

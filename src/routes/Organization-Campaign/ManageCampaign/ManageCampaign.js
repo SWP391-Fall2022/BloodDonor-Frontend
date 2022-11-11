@@ -1,5 +1,5 @@
 import React from "react";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "./ManageCampaign.css";
 import { Input, Table, Button, Tabs } from 'antd';
 import { useState, useEffect } from "react";

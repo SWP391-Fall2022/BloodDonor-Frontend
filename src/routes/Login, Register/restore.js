@@ -1,12 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import styles from '../../components/Login/restore.module.css';
-import { Button, Form, Input } from 'antd';
-import { useState } from "react";
+import { Button, Form, Input, notification } from 'antd';
 
 function Forget() {
 
     const [form] = Form.useForm();
-    const [message, setMessage] = useState('')
     const navigate = useNavigate();
 
     const onFinish = async () => {
@@ -18,11 +16,11 @@ function Forget() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         // console.log(response)
-        if (response.body === "This email has not been registered yet") {
-            setMessage("Email này chưa được đăng ký")
-        }
-        if (response.body === "Your account has been banned.") {
-            setMessage("Tài khoản này đã bị cấm")
+        if (response.status === 400 || response.status === 401) {
+            notification.error({
+                message: response.body,
+                placement: 'top'
+            });
         }
         if (response.status === 200) {
             navigate("/otp", { state: { otpAccess: true, userId: response.body.userId, restore: true } })
@@ -36,9 +34,6 @@ function Forget() {
                     <Link to="/"><p title="Trang chủ">MEDICHOR</p></Link>
                 </div>
                 <h1 className={`${styles.title}`}>QUÊN MẬT KHẨU</h1>
-                <div style={{ color: 'red', textAlign: 'center', fontWeight: 'bold', marginBottom: '1rem' }}>
-                    {message}
-                </div>
                 <div className={styles.info}>Nhập email để nhận mã xác nhận tài khoản</div>
                 <Form form={form} layout="vertical" onFinish={onFinish}>
                     <Form.Item className={styles.formLabel} label="Nhập email của bạn" name="email"

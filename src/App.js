@@ -64,7 +64,6 @@ import AdminManageDonor from './routes/Admin-Profile/Admin-Donor/AdminDonor';
 import AdminManageOrganization from './routes/Admin-Profile/Admin-Organization/AdminOrganization';
 import AdminApproveOrganization from './routes/Admin-Profile/Admin-Organization/Approve-Organization/ApproveOrganization';
 import AdminInfoOrganization from './routes/Admin-Profile/Admin-Organization/Info-Oranization/InfoOrganization';
-import AdminManageNews from './routes/Admin-Profile/Admin-News/AdminNews';
 import AdminManageVouchers from './routes/Admin-Profile/Admin-Voucher/AdminVoucher'
 
 import NoInternetConnection from "./others/NoInternetConnection";
@@ -130,7 +129,7 @@ export default function App() {
           {/* Pages for logged in donor */}
           <Route path="/donor" element={<DonorProfile />}>
             <Route index element={<Info />} />
-            <Route path="changePassword" element={<npm ChangePassword />} />
+            <Route path="changePassword" element={<ChangePassword />} />
             <Route path="history" element={<History />} />
             <Route path="qna" element={<QnADonor />} />
             <Route path="vouchers" element={<Vouchers />} />
