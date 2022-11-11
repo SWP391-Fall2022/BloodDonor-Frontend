@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
-import { Breadcrumb, Modal } from "antd";
+import { Breadcrumb, Modal, Tooltip } from "antd";
 import "antd/dist/antd.min.css";
 import './DetailCampaign.css';
 import RegisterCampaign from '../../../Campaign/RegisterCampaign/RegisterCampaign'
@@ -25,12 +25,10 @@ function DetailCampaign() {
   const [questionNum, setQuestionNum] = useState(0)
   // set register Num
   const [registerNum, setRegisterNum] = useState(0)
-
-
   const [message, setMessage] = useState("")
+
   //get camp id
   const location = useLocation();
-  // console.log("location:", location)
 
   //nhận state từ navigation
   const campId = location.state.id;
@@ -48,12 +46,18 @@ function DetailCampaign() {
     <li className='blood-type-item'>{bloodType}</li>
   );
 
-  // fetch api xóa campaign
+  useEffect(() => {
+    getLike();
+    getQuestion();
+    getRegister();
 
+  }, [likeNum]
+  )
+
+  // fetch api xóa campaign
   const navigate = useNavigate();
 
   // function deleteCampaign() 
-
   const deleteCampaign = async () => {
     let json = {
       method: 'DELETE',
@@ -65,11 +69,11 @@ function DetailCampaign() {
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/delete/${selectedCampaign.id}`, json)
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
-
     if (response.success) {
-      // alert("Campaign has been deleted")
       success();
-
+    }
+    else{
+      setMessage(response.body)
     }
   }
 
@@ -78,34 +82,21 @@ function DetailCampaign() {
   const getLike = async () => {
     let json = {
       method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': "Bearer " + token,
-      })
     }
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/totalLike/${selectedCampaign.id}`, json)
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
-
     if (response.success) {
       setLikeNum(response.body)
-
     }
   }
-  useEffect(() => {
-    getLike();
-  }, []
-  )
+
 
   //function fetch Num of question
 
   const getQuestion = async () => {
     let json = {
       method: 'GET',
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': "Bearer " + token,
-      })
     }
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-campaign/${selectedCampaign.id}`, json)
       .then((res) => res.json())
@@ -115,34 +106,27 @@ function DetailCampaign() {
       setQuestionNum(response.body.length)
     }
   }
-  useEffect(() => {
-    getQuestion();
-  }, []
-  )
+
 
   //function fetch Num of register
 
-  // const getRegister = async () => {
-  //   let json = {
-  //     method: 'GET',
-  //     headers: new Headers({
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //       'Authorization': "Bearer " + token,
-  //     })
-  //   }
-  //   const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getNumberOfRegistration/${selectedCampaign.id}`, json)
-  //     .then((res) => res.json())
-  //     .catch((error) => { console.log(error) })
+  const getRegister = async () => {
+    let json = {
+      method: 'GET',
+     
+    }
+    const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getNumberOfRegistration/${selectedCampaign.id}`, json)
+      .then((res) => res.json())
+      .catch((error) => { console.log(error) })
 
-  //   if (response.success) {
-  //     console.log("register response:", response)
-  //     setRegisterNum(response.body)
-  //   }
-  // }
-  // useEffect(() => {
-  //   getRegister();
-  // }, []
-  // )
+    if (response.success) {
+      console.log("register response:", response)
+      setRegisterNum(response.body)
+    }
+  }
+
+  
+  
 
 
   // confirm modal
@@ -200,7 +184,8 @@ function DetailCampaign() {
 
             <div className='org-campaign-content'>
               <p className='sub-title'>{selectedCampaign.organizationName} xin thông báo:</p>
-              <p>{selectedCampaign.description}</p>
+              {/* <p>{selectedCampaign.description}</p> */}
+              <div dangerouslySetInnerHTML={{ __html: selectedCampaign.description}} />
 
               <p className='sub-title'>Thời gian:</p>
               <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
@@ -219,7 +204,7 @@ function DetailCampaign() {
               <p className='sub-title'>Xin lưu ý</p>
               <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
               <p>Xin trân trọng thông báo!!!</p>
-              <RegisterCampaign campaign={selectedCampaign} registered={true}></RegisterCampaign>
+              <RegisterCampaign campaign={selectedCampaign} org={true}></RegisterCampaign>
             </div>
 
           </div>
@@ -227,26 +212,34 @@ function DetailCampaign() {
 
         <div id="action-table">
           <div className="action-table-item" >
-            <FavoriteIcon className="action-table-icon" ></FavoriteIcon> {likeNum}
+           <Tooltip title="Số lượt yêu Thích"> <FavoriteIcon className="action-table-icon"></FavoriteIcon></Tooltip>
+             {likeNum}
           </div>
           <div className="action-table-item" >
-            <HelpIcon className="action-table-icon" ></HelpIcon>{questionNum}
+           
+            <Link to={`/organization/manageQuestion/campaignQuestion/${selectedCampaign.id }`}  >
+            <Tooltip title="Số câu hỏi"><HelpIcon className="action-table-icon" ></HelpIcon></Tooltip>
+            
+            </Link>
+            {questionNum}
           </div>
           <div className="action-table-item" >
             <PeopleIcon className="action-table-icon" ></PeopleIcon>100
           </div>
 
           <div className="action-table-item" >
-            <ContentPasteIcon className="action-table-icon" ></ContentPasteIcon>{registerNum}
+          <Tooltip title="Số lượt đăng ký"><ContentPasteIcon className="action-table-icon" ></ContentPasteIcon></Tooltip>{registerNum}
           </div>
 
           <div className="action-table-item"  onClick={showConfirm}   style={campStatus==="Đã xóa"?{display:"none"}:null}  >
             <DeleteIcon className="action-table-icon" ></DeleteIcon>Xóa
           </div>
 
-          <div className="action-table-item"  style={campStatus==="Đã xóa"?{display:"none"}:null}  >
+<Link to={`/organization/manageCampaign/updateCampaign/${selectedCampaign.id}`} state={{campaign :{selectedCampaign}, campaignsList:location.state.cam }} style={{color:"black"}}>
+          <div className="action-table-item" style={campStatus==="Đã xóa"?{display:"none"}:null}  >
             <BorderColorIcon className="action-table-icon" ></BorderColorIcon>Sửa
           </div>
+          </Link>
         </div>
       </div>
 

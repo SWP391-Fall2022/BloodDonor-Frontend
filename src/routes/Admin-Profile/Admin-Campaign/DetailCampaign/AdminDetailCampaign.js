@@ -71,6 +71,7 @@ export default function AdminDetailCampaign() {
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/delete/${campId}`, json)
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
+      console.log("closeCampaign",response)
 
     if (response.success) {
       // alert("Campaign has been deleted")
@@ -119,7 +120,7 @@ export default function AdminDetailCampaign() {
      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/close/${campId}`, json)
        .then((res) => res.json())
        .catch((error) => { console.log(error) })
- 
+ console.log("closeCampaign",response)
      if (response.success) {
        // alert("Campaign has been deleted")
        closeSuccess();
@@ -177,7 +178,7 @@ export default function AdminDetailCampaign() {
                             <p className='sub-title'>Xin lưu ý</p>
                             <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
                             <p>Xin trân trọng thông báo!!!</p>
-                            <RegisterCampaign campaign={selectedCampaign} registered={true}></RegisterCampaign>
+                            <RegisterCampaign campaign={selectedCampaign} registered={true} org={true}></RegisterCampaign>
                         </div>
 
                     </div>
@@ -193,8 +194,8 @@ export default function AdminDetailCampaign() {
                     </div>
 
 
-                    <div className="admin-campaign-action-table-item"  onClick={showDeleteConfirm} >
-                        <HighlightOffIcon className="admin-campaign-action-table-icon" onClick={showCloseConfirm} ></HighlightOffIcon>
+                    <div className="admin-campaign-action-table-item"  onClick={closeCampaign} >
+                        <HighlightOffIcon className="admin-campaign-action-table-icon"  ></HighlightOffIcon>
                         <p>Đóng</p>
                     </div>
 

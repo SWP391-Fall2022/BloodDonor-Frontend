@@ -6,6 +6,7 @@
     margin-right: 13%;
     margin-top: 110px;
     padding-top: 30px;
+    min-height: 100vh;
 }
 
 .filter {
@@ -104,12 +105,30 @@
     background-size: cover;
 }
 
-.ant-list-pagination{
+.search-news .ant-list-pagination{
     display: flex;
 }
 
-.ant-pagination {
+.search-news .ant-pagination {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+}
+
+.search-news > span{
+    padding: 0 !important;
+}
+
+.search-news .ant-input-suffix{
+    background-color: var(--primary-500);
+    padding: 10px 14px;
+}
+
+#news-search{
+    padding: 5px 10px;
+}
+
+.newsDetail .newsDetail-breadcrumb{
+    margin-bottom: 15px;
+    line-height: 30px;
 }

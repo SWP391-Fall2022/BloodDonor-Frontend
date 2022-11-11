@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import './CampaignContainer.css';
 import { FormGroup } from "@mui/material";
 import 'antd/dist/antd.min.css';
-import { List, DatePicker, Checkbox, Avatar, Card, Tooltip } from "antd";
-import { HeartFilled, FormOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons';
+import { List, DatePicker, Checkbox, Card, Tooltip } from "antd";
+import { HeartFilled, FormOutlined, SearchOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import moment from 'moment';
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 
 const { RangePicker } = DatePicker;
@@ -20,13 +20,6 @@ const campaign = [
     { blood: "O" }
 ];
 
-const locationCampaign = [
-    { province: "TP.HCM" },
-    { province: "Quy Nhơn" },
-    { province: "Hà Nội" },
-    { province: "Đà Nẵng" },
-    { province: "Cần Thơ" }
-];
 
 //disable rangepicker
 const disabledDate = (current) => {
@@ -37,12 +30,10 @@ const disabledDate = (current) => {
 
 
 const CampaignContainer = () => {
-
+    const navigate = useNavigate();
+ 
     const [blood, setBlood] = useState([]);
     const [filteredBlood, setFilteredBlood] = useState([]);
-    // console.log("filter", filteredBlood.length===0)
-    console.log("filter::", filteredBlood)
-    // console.log("filter type", typeof(filteredBlood))
 
     const handleChange = e => {
         if (e.target.checked) {
@@ -59,7 +50,6 @@ const CampaignContainer = () => {
         } else {
             setFilteredBlood(
                 campaigns.filter(campaign =>
-                    //    console.log("split",  blood.some(category => [campaign.bloodTypes].splice("-").flat())),
                     blood.some(category => String([campaign.bloodTypes]).split("-").flat().includes(category))
                 )
             );
@@ -89,11 +79,10 @@ const CampaignContainer = () => {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-
             if (response.success) {
                 setCampaigns(response.body.filter((camp) => {
 
-                    if (camp.emergency === false && new Date(camp.endDate) > new Date()) {
+                    if (camp.emergency === false && new Date(camp.endDate) > new Date() && camp.status === true) {
                         return true
                     }
 
@@ -122,6 +111,7 @@ const CampaignContainer = () => {
     }, []
     )
 
+    // lấy date từ datePicker filter
     const dateList = date === undefined ? "" :
         (
             campaigns.filter(
@@ -165,11 +155,11 @@ const CampaignContainer = () => {
         );
         return str;
     }
-    const keys = ["camName"];
+
     const search = (data) => {
         return data.filter((item) => (
 
-            removeVietnameseTones(item.name + item.organizationName)
+            removeVietnameseTones(item.name + item.organizationName + item.addressDetails)
                 .toLowerCase()
                 .includes(removeVietnameseTones(query.toLowerCase()))
 
@@ -221,17 +211,6 @@ const CampaignContainer = () => {
                                 </div>
                             ))}
                         </div>
-
-                        <div className="filter-by-province">
-                            <p>Lọc theo vị trí</p>
-                            {locationCampaign.map(campaign => (
-                                <div className="filter-item">
-                                    <Checkbox value={campaign.province} id={campaign.id}> {campaign.province} </Checkbox>
-                                </div>
-                            ))}
-                        </div>
-
-
                     </FormGroup>
                 </div>
 
@@ -245,13 +224,15 @@ const CampaignContainer = () => {
                             }}
                             format={"DD-MM-YYYY"}
                             allowClear={false}
+                            placeholder={["Bắt đầu", "Kết thúc"]}
+
                         />
                         <Input
                             className="cam-search"
                             suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
                             id="cam-search"
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Điền tên chiến dịch hoặc tổ chức bạn muốn tìm..."
+                            placeholder="Điền tên chiến dịch, tổ chức, địa điểm bạn muốn tìm..."
                         />
                     </div>
 
@@ -260,51 +241,48 @@ const CampaignContainer = () => {
                         itemLayout="vertical"
                         size="large"
                         pagination={{
-                            onChange: (page) => {
-                                console.log(page);
-                            },
                             pageSize: 6,
                         }}
                         grid={{
                             gutter: 10,
                             column: 1,
                         }}
-                        // dataSource={dateList === "" ? search(campaigns) : search(dateList)}
-                        // dataSource={filteredBlood.length === 0 ? campaigns : filteredBlood}
                         dataSource={checkDataSrc(filteredBlood, dateList, campaigns)}
 
                         renderItem={(item) => (
-                            <Link to={`/campaign/campaign-detail/${item.id}`}>
+                            <>
                                 <List.Item
                                     key={item.id}
 
                                     extra={
-                                        <img
-                                            // width={272}
-                                            alt="logo"
-                                            src={item.images}
-                                        />
+                                        <Link to={`/campaign/campaign-detail/${item.id}`} style={{ color: "black" }}>
+                                            <img
+                                                alt="logo"
+                                                src={item.images}
+                                            />
+                                        </Link>
                                     }
                                     actions={[
-                                        <div><Tooltip title="Yêu Thích"><HeartFilled style={{ marginRight: "5px" }}></HeartFilled>100</Tooltip></div>,
-                                        <div><Tooltip title="Số lượt đăng ký"><FormOutlined style={{ marginRight: "5px" }}></FormOutlined>90</Tooltip></div>,
-                                        <div><Tooltip title="Số lượt tham gia"><EditOutlined style={{ marginRight: "5px" }}></EditOutlined>110</Tooltip></div>
+                                        <div><Tooltip title="Quan tâm"><HeartFilled style={{ marginRight: "5px" }} ></HeartFilled></Tooltip></div>,
+                                        <div><Tooltip title="Đăng ký"><FormOutlined style={{ marginRight: "5px" }}></FormOutlined></Tooltip></div>,
                                     ]}
 
                                     style={{ background: "white", padding: "20px", paddingBottom: "10px" }}
                                 >
-                                    <List.Item.Meta
-                                        // avatar={<Avatar src={item.avatar} />}
-                                        title={<div className="campaign-name" style={{ fontWeight: "600", overflow: "hidden" }} href={item.href}>{item.name}</div>}
-                                        description={item.organizationName}
-                                    />
+                                    <Link to={`/campaign/campaign-detail/${item.id}`} style={{ color: "black" }}>
+                                        <List.Item.Meta
+                                            // avatar={<Avatar src={item.avatar} />}
+                                            title={<div className="campaign-name" style={{ fontWeight: "600", overflow: "hidden" }} href={item.href}>{item.name}</div>}
+                                            description={item.organizationName}
+                                        />
 
-                                    <div style={{ marginBottom: "7px" }}><strong> Nhóm máu cần hiến: </strong>{String(item.bloodTypes).replace(/-/gi, ", ")}</div>
+                                        <div style={{ marginBottom: "7px" }}><strong> Nhóm máu cần hiến: </strong>{String(item.bloodTypes).replace(/-/gi, ", ")}</div>
 
-                                    <div className="camp-address" ><strong>Địa chỉ:</strong>{item.addressDetails}</div>
-                                    <div className="camp-time">Từ {moment(item.startDate).format("DD/MM/YYYY")} đến {moment(item.endDate).format("DD/MM/YYYY")}</div>
+                                        <div className="camp-address" ><strong>Địa chỉ:</strong>{item.addressDetails}</div>
+                                        <div className="camp-time">Từ {moment(item.startDate).format("DD/MM/YYYY")} đến {moment(item.endDate).format("DD/MM/YYYY")}</div>
+                                    </Link>
                                 </List.Item>
-                            </Link>
+                            </>
 
 
 
@@ -325,22 +303,25 @@ const CampaignContainer = () => {
 
 
                     renderItem={(item) => (
+                        <Link to={`/campaign/campaign-detail/${item.id}`}>
 
-                        <List.Item>
-                            <Card title={<p>Cần gấp nhóm máu {String(item.bloodTypes).replace(/-/gi, ",")}</p>}
-                                headStyle={{ background: "#b6292a", color: "white" }}
-                                hoverable
-                                size="small"
-                                style={{
-                                    width: 200,
-                                }}
+                            <List.Item>
+                                <Card title={<p>Cần gấp nhóm máu {String(item.bloodTypes).replace(/-/gi, ",")}</p>}
+                                    headStyle={{ background: "#b6292a", color: "white" }}
+                                    hoverable
+                                    size="small"
+                                    style={{
+                                        width: 200,
+                                    }}
 
-                            >
-                                <p className="donor-emergency-campaign-org"> {item.organizationName}</p>
-                                <p> {item.addressDetails}</p>
+                                >
+                                    <p className="donor-emergency-campaign-org"> {item.organizationName}</p>
+                                    <p> {item.addressDetails}</p>
 
-                            </Card>
-                        </List.Item>
+                                </Card>
+                            </List.Item>
+                        </Link>
+
 
                     )}
                 />
