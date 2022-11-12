@@ -96,7 +96,7 @@ export default function OrganizationNotificationList() {
                                 onChange={(e) => setSearchValue(e.target.value)}
                                 placeholder="Điền tên thông báo bạn muốn tìm..."
                                 style={{
-                                    width: 500,
+                                    width: 300,
                                 }}
                             />
                         </div>

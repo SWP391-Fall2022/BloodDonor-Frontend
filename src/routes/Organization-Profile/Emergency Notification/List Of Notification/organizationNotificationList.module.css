@@ -1,4 +1,6 @@
 .listTitleContainer {
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
 }
 
@@ -23,8 +25,7 @@
 
 @media only screen and (max-width: 1200px) {
     .listContainer {
-        width: 35rem;
-        transform: scale(0.9);
+        width: 30rem;
     }
 
     .listTitle {
