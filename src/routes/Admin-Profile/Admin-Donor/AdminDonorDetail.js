@@ -93,18 +93,10 @@ export default function AdminDonorDetail({ setDetail, user }) {
             });
         }
         if (response.status === 400) {
-            if (response.body === "User ID not found") {
-                notification.success({
-                    message: "Tài khoản không tồn tại",
-                    placement: "top"
-                });
-            }
-            if (response.body === "Cannot lock user with role ADMIN") {
-                notification.success({
-                    message: "Không được khóa tài khoản của Admin",
-                    placement: "top"
-                });
-            }
+            notification.error({
+                message: response.body,
+                placement: "top"
+            });
         }
         setOpen(false)
     }

@@ -24,8 +24,8 @@
 }
 
 .org-campaign-detail-img{
-    width: 70%;
-   
+    width: 50%;
+   max-height: 350px;
     margin: 30px auto;
 }
 

@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./CampaignContainer.css";
 import { FormGroup } from "@mui/material";
-import "antd/dist/antd.min.css";
-import { List, DatePicker, Checkbox, Avatar, Card, Tooltip } from "antd";
-import {
-  HeartFilled,
-  FormOutlined,
-  EditOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
-import { Input } from "antd";
-import moment from "moment";
-import { Link, useLocation } from "react-router-dom";
+import 'antd/dist/antd.min.css';
+import { List, DatePicker, Checkbox, Card, Tooltip } from "antd";
+import { HeartFilled, FormOutlined, SearchOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
+import moment from 'moment';
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const { RangePicker } = DatePicker;
 const campaign = [
@@ -21,86 +16,119 @@ const campaign = [
   { blood: "O" },
 ];
 
-const locationCampaign = [
-  { province: "TP.HCM" },
-  { province: "Quy Nhơn" },
-  { province: "Hà Nội" },
-  { province: "Đà Nẵng" },
-  { province: "Cần Thơ" },
-];
-
 //disable rangepicker
 const disabledDate = (current) => {
   // Can not select days before today and today
   return current && current < moment().startOf("day");
 };
 
-const CampaignContainer = (props) => {
-  const [blood, setBlood] = useState([]);
-  const [filteredBlood, setFilteredBlood] = useState([]);
-  // console.log("filter", filteredBlood.length===0)
-  console.log("filter::", filteredBlood);
-  // console.log("filter type", typeof(filteredBlood))
 
-  const handleChange = (e) => {
-    if (e.target.checked) {
-      setBlood([...blood, e.target.value]);
-    } else {
-      setBlood(blood.filter((id) => id !== e.target.value));
+
+
+const CampaignContainer = () => {
+    const navigate = useNavigate();
+ 
+    const [blood, setBlood] = useState([]);
+    const [filteredBlood, setFilteredBlood] = useState([]);
+
+    const handleChange = e => {
+        if (e.target.checked) {
+            setBlood([...blood, e.target.value]);
+
+        } else {
+            setBlood(blood.filter(id => id !== e.target.value));
+        }
+    };
+
+    useEffect(() => {
+        if (blood.length === 0) {
+            setFilteredBlood(campaigns);
+        } else {
+            setFilteredBlood(
+                campaigns.filter(campaign =>
+                    blood.some(category => String([campaign.bloodTypes]).split("-").flat().includes(category))
+                )
+            );
+        }
+
+    }, [blood]);
+
+
+    //date for range picker
+    const [date, setDate] = useState()
+
+    // fetch data function
+    const [campaigns, setCampaigns] = useState([])
+    const [emergencyCampaigns, setEmergencyCampaigns] = useState([])
+
+
+    function getCampFromAPI() {
+        const asyncFn = async () => {
+            const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+            let json = {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': "Bearer " + token,
+                })
+            }
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`, json)
+                .then((res) => res.json())
+                .catch((error) => { console.log(error) })
+            if (response.success) {
+                setCampaigns(response.body.filter((camp) => {
+
+                    if (camp.emergency === false && new Date(camp.endDate) > new Date() && camp.status === true) {
+                        return true
+                    }
+
+                }))
+                var i = 1;
+                setEmergencyCampaigns(response.body.filter((camp) => {
+
+                    if (camp.emergency === true && i <= 3) {
+                        i++
+                        return true
+                    }
+
+                })
+                )
+
+            }
+
+        }
+        asyncFn();
     }
-  };
 
-  useEffect(() => {
-    if (blood.length === 0) {
-      setFilteredBlood(campaigns);
-    } else {
-      setFilteredBlood(
-        campaigns.filter((campaign) =>
-          //    console.log("split",  blood.some(category => [campaign.bloodTypes].splice("-").flat())),
-          blood.some((category) =>
-            String([campaign.bloodTypes]).split("-").flat().includes(category)
-          )
+
+    //call etch API function
+    useEffect(() => {
+        getCampFromAPI();
+    }, []
+    )
+
+    // lấy date từ datePicker filter
+    const dateList = date === undefined ? "" :
+        (
+            campaigns.filter(
+
+                (campaign) => {
+                    if (new Date(campaign.startDate) <= date[1] && new Date(campaign.endDate) >= date[0])
+                        return true;
+                }
+            )
         )
       );
     }
-  }, [blood]);
 
-  //date for range picker
-  const [date, setDate] = useState();
+    const search = (data) => {
+        return data.filter((item) => (
 
-  // fetch data function
-  const [campaigns, setCampaigns] = useState([]);
-  const [emergencyCampaigns, setEmergencyCampaigns] = useState([]);
+            removeVietnameseTones(item.name + item.organizationName + item.addressDetails)
+                .toLowerCase()
+                .includes(removeVietnameseTones(query.toLowerCase()))
 
-  function getCampFromAPI() {
-    const asyncFn = async () => {
-      const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
-      let json = {
-        method: "GET",
-        headers: new Headers({
-          "Content-Type": "application/json; charset=UTF-8",
-          Authorization: "Bearer " + token,
-        }),
-      };
-      const response = await fetch(
-        `${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`,
-        json
-      )
-        .then((res) => res.json())
-        .catch((error) => {
-          console.log(error);
-        });
-
-      if (response.success) {
-        setCampaigns(
-          response.body.filter((camp) => {
-            if (
-              camp.emergency === false &&
-              new Date(camp.endDate) > new Date()
-            ) {
-              return true;
-            }
-          })
+        )
         );
         var i = 1;
         setEmergencyCampaigns(
@@ -186,165 +214,151 @@ const CampaignContainer = (props) => {
         }
       }
     }
-    return result;
-  }
 
-  function checkDataSrc(filter, dateList, campaigns) {
-    if (dateList === "" && filter.length === 0) return search(campaigns);
-    else if (dateList !== "" && filter.length === 0) return search(dateList);
-    else if (filter.length !== 0 && dateList === "") return search(filter);
-    else
-      return search(
-        take_duplicate_element(
-          filter.concat(dateList),
-          filter.concat(dateList).length
-        )
-      );
-  }
-  return (
-    <div className="campaign-container" id="campaign-container">
-      <div className="filter-campaign-list">
-        <div className="filter-table">
-          <FormGroup>
-            <div className="filter-by-blood">
-              <p>Lọc theo nhóm máu</p>
-              {campaign.map((campaign) => (
-                <div className="filter-item">
-                  <Checkbox
-                    onChange={handleChange}
-                    value={campaign.blood}
-                    id={campaign.id}
-                  >
-                    Nhóm máu {campaign.blood}{" "}
-                  </Checkbox>
+    function checkDataSrc(filter, dateList, campaigns) {
+        if (dateList === "" && filter.length === 0)
+            return search(campaigns)
+        else if (dateList !== "" && filter.length === 0)
+            return search(dateList)
+        else if (filter.length !== 0 && dateList === "")
+            return search(filter)
+        else
+            return search(take_duplicate_element(filter.concat(dateList), (filter.concat(dateList)).length))
+    }
+
+
+    return (
+
+        <div className="campaign-container" id="campaign-container">
+            <div className="filter-campaign-list" >
+
+                <div className="filter-table">
+                    <FormGroup>
+                        <div className="filter-by-blood">
+                            <p>Lọc theo nhóm máu</p>
+                            {campaign.map(campaign => (
+                                <div className="filter-item">
+                                    <Checkbox onChange={handleChange} value={campaign.blood} id={campaign.id}> Nhóm máu {campaign.blood} </Checkbox>
+                                </div>
+                            ))}
+                        </div>
+                    </FormGroup>
                 </div>
               ))}
             </div>
+                <div className="search-campaign" >
+                    <div className="date-seach">
+                        <RangePicker
+                            disabledDate={disabledDate}
+                            onChange={(values) => {
+                                setDate(values)
+                            }}
+                            format={"DD-MM-YYYY"}
+                            allowClear={false}
+                            placeholder={["Bắt đầu", "Kết thúc"]}
 
-            <div className="filter-by-province">
-              <p>Lọc theo vị trí</p>
-              {locationCampaign.map((campaign) => (
-                <div className="filter-item">
-                  <Checkbox value={campaign.province} id={campaign.id}>
-                    {" "}
-                    {campaign.province}{" "}
-                  </Checkbox>
+                        />
+                        <Input
+                            className="cam-search"
+                            suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+                            id="cam-search"
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="Điền tên chiến dịch, tổ chức, địa điểm bạn muốn tìm..."
+                        />
+                    </div>
+
+                    <List
+                        className="donor-campaign-list"
+                        itemLayout="vertical"
+                        size="large"
+                        pagination={{
+                            pageSize: 6,
+                        }}
+                        grid={{
+                            gutter: 10,
+                            column: 1,
+                        }}
+                        dataSource={checkDataSrc(filteredBlood, dateList, campaigns)}
+
+                        renderItem={(item) => (
+                            <>
+                                <List.Item
+                                    key={item.id}
+
+                                    extra={
+                                        <Link to={`/campaign/campaign-detail/${item.id}`} style={{ color: "black" }}>
+                                            <img
+                                                alt="logo"
+                                                src={item.images}
+                                            />
+                                        </Link>
+                                    }
+                                    actions={[
+                                        <div><Tooltip title="Quan tâm"><HeartFilled style={{ marginRight: "5px" }} ></HeartFilled></Tooltip></div>,
+                                        <div><Tooltip title="Đăng ký"><FormOutlined style={{ marginRight: "5px" }}></FormOutlined></Tooltip></div>,
+                                    ]}
+
+                                    style={{ background: "white", padding: "20px", paddingBottom: "10px" }}
+                                >
+                                    <Link to={`/campaign/campaign-detail/${item.id}`} style={{ color: "black" }}>
+                                        <List.Item.Meta
+                                            // avatar={<Avatar src={item.avatar} />}
+                                            title={<div className="campaign-name" style={{ fontWeight: "600", overflow: "hidden" }} href={item.href}>{item.name}</div>}
+                                            description={item.organizationName}
+                                        />
+
+                                        <div style={{ marginBottom: "7px" }}><strong> Nhóm máu cần hiến: </strong>{String(item.bloodTypes).replace(/-/gi, ", ")}</div>
+
+                                        <div className="camp-address" ><strong>Địa chỉ:</strong>{item.addressDetails}</div>
+                                        <div className="camp-time">Từ {moment(item.startDate).format("DD/MM/YYYY")} đến {moment(item.endDate).format("DD/MM/YYYY")}</div>
+                                    </Link>
+                                </List.Item>
+                            </>
+
+
+
+                        )}
+                    />
                 </div>
               ))}
             </div>
           </FormGroup>
         </div>
+            <div id="donor-emergency-campaign">
+                <p className="donor-emergency-campaign-title">Thông báo khẩn cấp</p>
+                <List
 
-        <div className="search-campaign">
-          <div className="date-seach">
-            <RangePicker
-              disabledDate={disabledDate}
-              onChange={(values) => {
-                setDate(values);
-              }}
-              format={"DD-MM-YYYY"}
-              allowClear={false}
-            />
-            <Input
-              className="cam-search"
-              suffix={<SearchOutlined style={{ color: "rgba(0,0,0,.45)" }} />}
-              id="cam-search"
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Điền tên chiến dịch hoặc tổ chức bạn muốn tìm..."
-            />
-          </div>
+                    itemLayout="horizontal"
 
-          <List
-            className="donor-campaign-list"
-            itemLayout="vertical"
-            size="large"
-            pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
-              pageSize: 6,
-            }}
-            grid={{
-              gutter: 10,
-              column: 1,
-            }}
-            // dataSource={dateList === "" ? search(campaigns) : search(dateList)}
-            // dataSource={filteredBlood.length === 0 ? campaigns : filteredBlood}
-            dataSource={checkDataSrc(filteredBlood, dateList, campaigns)}
-            renderItem={(item) => (
-              <Link to={`/campaign/campaign-detail/${item.id}`}>
-                <List.Item
-                  key={item.id}
-                  extra={
-                    <img
-                      // width={272}
-                      alt="logo"
-                      src={item.images}
-                    />
-                  }
-                  actions={[
-                    <div>
-                      <Tooltip title="Yêu Thích">
-                        <HeartFilled
-                          style={{ marginRight: "5px" }}
-                        ></HeartFilled>
-                        100
-                      </Tooltip>
-                    </div>,
-                    <div>
-                      <Tooltip title="Số lượt đăng ký">
-                        <FormOutlined
-                          style={{ marginRight: "5px" }}
-                        ></FormOutlined>
-                        90
-                      </Tooltip>
-                    </div>,
-                    <div>
-                      <Tooltip title="Số lượt tham gia">
-                        <EditOutlined
-                          style={{ marginRight: "5px" }}
-                        ></EditOutlined>
-                        110
-                      </Tooltip>
-                    </div>,
-                  ]}
-                  style={{
-                    background: "white",
-                    padding: "20px",
-                    paddingBottom: "10px",
-                  }}
-                >
-                  <List.Item.Meta
-                    // avatar={<Avatar src={item.avatar} />}
-                    title={
-                      <div
-                        className="campaign-name"
-                        style={{ fontWeight: "600", overflow: "hidden" }}
-                        href={item.href}
-                      >
-                        {item.name}
-                      </div>
-                    }
-                    description={item.organizationName}
-                  />
+                    dataSource={emergencyCampaigns}
+                    className="donor-emergency-campaign-list"
 
-                  <div style={{ marginBottom: "7px" }}>
-                    <strong> Nhóm máu cần hiến: </strong>
-                    {String(item.bloodTypes).replace(/-/gi, ", ")}
-                  </div>
 
-                  <div className="camp-address">
-                    <strong>Địa chỉ:</strong>
-                    {item.addressDetails}
-                  </div>
-                  <div className="camp-time">
-                    Từ {moment(item.startDate).format("DD/MM/YYYY")} đến{" "}
-                    {moment(item.endDate).format("DD/MM/YYYY")}
-                  </div>
-                </List.Item>
-              </Link>
-            )}
-          />
+                    renderItem={(item) => (
+                        <Link to={`/campaign/campaign-detail/${item.id}`}>
+
+                            <List.Item>
+                                <Card title={<p>Cần gấp nhóm máu {String(item.bloodTypes).replace(/-/gi, ",")}</p>}
+                                    headStyle={{ background: "#b6292a", color: "white" }}
+                                    hoverable
+                                    size="small"
+                                    style={{
+                                        width: 200,
+                                    }}
+
+                                >
+                                    <p className="donor-emergency-campaign-org"> {item.organizationName}</p>
+                                    <p> {item.addressDetails}</p>
+
+                                </Card>
+                            </List.Item>
+                        </Link>
+
+
+                    )}
+                />
+
+            </div>
         </div>
       </div>
 

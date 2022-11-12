@@ -110,7 +110,7 @@ code {
   
   .ant-btn:hover, .ant-btn:focus{
     border-color: var(--primary-1000);
-    color: var(--primary-300);
+    color: white;
   }
 
   .ant-btn:active {

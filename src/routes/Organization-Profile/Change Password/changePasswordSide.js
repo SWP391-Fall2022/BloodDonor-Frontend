@@ -36,16 +36,10 @@ export default function ChangePasswordSide() {
             }, 2000);
         }
         else if (response.status === 400) {
-            if (response.body === "Old password is incorrect.")
-                notification.error({
-                    message: 'Mật khẩu cũ không chính xác',
-                    placement: "top"
-                });
-            if (response.body === "Confirm password not match")
-                notification.error({
-                    message: 'Hai mật khẩu mới không trùng khớp',
-                    placement: "top"
-                });
+            notification.error({
+                message: response.body,
+                placement: "top"
+            });
         };
     }
 

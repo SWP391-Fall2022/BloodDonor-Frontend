@@ -52,7 +52,7 @@ export default function OrganizationReviewNotification({ setReview, notification
                         <div>Ngày đăng: {date < 10 ? "0" + date : date}/{month < 10 ? "0" + month : month}/{year} | {JSON.parse(sessionStorage.getItem("name"))}  </div>
                     </div>
 
-                    <div className='campaign-detail-left-img'>
+                    <div className='campaign-detail-left-img' style={{ width: '40%' }}>
                         <img src={notificationInfo.images} alt="" />
                     </div>
 
