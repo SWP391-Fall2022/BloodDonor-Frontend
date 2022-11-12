@@ -75,6 +75,15 @@ export default function RegisterCampaign({ campaign, org }) {
         });
     };
 
+    const notDonorError = (string) => {
+        Modal.error({
+            className: 'errorRegister',
+            title: string,
+            content: "Chỉ có người tham gia hiến máu mới được phép đăng kí tham gia chiến dịch",
+            okText: 'Đóng'
+        });
+    };
+
     const registerSuccess = () => {
         // callback(!registered);
         Modal.success({
@@ -116,6 +125,7 @@ export default function RegisterCampaign({ campaign, org }) {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
+            console.log(response)
             if (response.status == 200) {
                 registerSuccess();
                 console.log("Đăng ký thành công")
@@ -123,6 +133,9 @@ export default function RegisterCampaign({ campaign, org }) {
             else {
                 if (response.message === "Missing request attribute 'user' of type User") {
                     nonLogin();
+                }
+                else if (response.status === 403) {
+                    notDonorError(response.message);
                 }
                 else {
                     setMessage(response.message)
