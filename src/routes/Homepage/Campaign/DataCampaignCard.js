@@ -2,6 +2,7 @@ import { Card } from "antd";
 import { Link } from "react-router-dom";
 
 const DataCampaignCard = ({ data }) => {
+  console.log("njefffffffffffffffffffffffffffffffffffffffffffffffff", data)
   return (
     <>
       <div className="campaign-card">
@@ -24,19 +25,18 @@ const DataCampaignCard = ({ data }) => {
             </div>
             <div className="campaign-time">
               Từ{" "}
-              {data.onSiteDates[0]
-                // .substring(0, 10)
-                // .split("-")
-                // .reverse()
-                // .join("/")
+              {data.startDate
+                .split("-")
+                .reverse()
+                .join("-")
               }
               {" "}
               đến
-              {data.onSiteDates[1]
-                // .substring(0, 10)
-                // .split("-")
-                // .reverse()
-                // .join("/")
+              {" "}
+              {data.endDate
+                .split("-")
+                .reverse()
+                .join("-")
               }
             </div>
           </div>

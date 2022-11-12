@@ -25,7 +25,11 @@ const NoInternetConnection = (props) => {
             props.children
         )
     } else {
-        return (<div className={`${styles.mainBackground} ${styles.mainBackgroundInternet}`}></div>)
+        return (
+            <>
+                <div className={`${styles.mainBackground} ${styles.mainBackgroundInternet}`} />
+            </>
+        )
     }
 }
 
