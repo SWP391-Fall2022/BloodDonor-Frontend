@@ -116,14 +116,6 @@ export default function RegisterCampaign({ campaign, org }) {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-            if (response.status === 400) {
-                notification.error({
-                    message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                    placement: "top"
-                });
-                sessionStorage.clear()
-                navigate("/");
-            }
             if (response.status == 200) {
                 registerSuccess();
                 console.log("Đăng ký thành công")
@@ -174,14 +166,6 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/campaigns/${campaign.id}/status`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.status === 400) {
-            notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                placement: "top"
-            });
-            sessionStorage.clear()
-            navigate("/");
-        }
         if (response.status === 200) {
             if (response.body.hasRegistered === true)
                 setRegistered(true)
@@ -210,14 +194,6 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/donated`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.status === 400) {
-            notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                placement: "top"
-            });
-            sessionStorage.clear()
-            navigate("/");
-        }
         if (response.status === 200) {
 
             const lastestDonated = response.body[Array(response.body).length - 1];
@@ -261,14 +237,6 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/medicalDocument/getByDonor`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.status === 400) {
-            notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                placement: "top"
-            });
-            sessionStorage.clear()
-            navigate("/");
-        }
         if (response.status === 200) {
             setMedicalDoc(response.body)
 
@@ -289,14 +257,6 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.status === 400) {
-            notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                placement: "top"
-            });
-            sessionStorage.clear()
-            navigate("/");
-        }
         if (response.status === 200) {
             setDonorId(response.body.userId)
         }
@@ -340,14 +300,6 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered/${campaign.id}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.status === 400) {
-            notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                placement: "top"
-            });
-            sessionStorage.clear()
-            navigate("/");
-        }
         if (response.status === 200) {
             setRegistered(false)
 

@@ -70,25 +70,9 @@ export default function ManageCampaign() {
   // fetch data function
   function getCampFromAPI() {
     const asyncFn = async () => {
-      const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
-      let json = {
-        method: 'GET',
-        headers: new Headers({
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': "Bearer " + token,
-        })
-      }
-      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAllByOrganization`, json)
+      const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAllByOrganization`)
         .then((res) => res.json())
         .catch((error) => { console.log(error) })
-      if (response.status === 400) {
-        notification.error({
-          message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-          placement: "top"
-        });
-        sessionStorage.clear()
-        navigate("/");
-      }
       if (response.status === 200) {
         console.log("response", response)
         setCampaigns(response)

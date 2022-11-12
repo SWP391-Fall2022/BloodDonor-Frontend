@@ -32,14 +32,6 @@ const EditDateTime = (props) => {
                 .catch((error) => { console.log(error) })
             console.log("fetchResponse", response)
             console.log("getRegistration", props.campaign.id)
-            if (response.status === 400) {
-                notification.error({
-                    message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                    placement: "top"
-                });
-                sessionStorage.clear()
-                navigate("/");
-            }
             if (response.status === 200) {
                 response.body.find((registration) => {
                     //only registration has status NOT_CHECKED_IN can be edit
@@ -137,14 +129,6 @@ const EditDateTime = (props) => {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log("response", response)
-        if (response.status === 400) {
-            notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                placement: "top"
-            });
-            sessionStorage.clear()
-            navigate("/");
-        }
         if (response.status === 200) {
             console.log("Chỉnh sửa thành công:", response)
             updateSuccess()
