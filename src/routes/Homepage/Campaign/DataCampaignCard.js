@@ -2,7 +2,6 @@ import { Card } from "antd";
 import { Link } from "react-router-dom";
 
 const DataCampaignCard = ({ data }) => {
-  console.log("njefffffffffffffffffffffffffffffffffffffffffffffffff", data)
   return (
     <>
       <div className="campaign-card">
@@ -38,6 +37,7 @@ const DataCampaignCard = ({ data }) => {
                 .reverse()
                 .join("-")
               }
+
             </div>
           </div>
         </Link>
