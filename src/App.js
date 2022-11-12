@@ -108,9 +108,9 @@ export default function App() {
           <Route
             exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />}
           />
-          <Route
+          {/* <Route
             exact strict path="/organization/:id" element={<OrganizationInformation />}
-          />
+          /> */}
 
           <Route
             exact strict path="/organization-homepage" element={<OrganizationHomepage />}

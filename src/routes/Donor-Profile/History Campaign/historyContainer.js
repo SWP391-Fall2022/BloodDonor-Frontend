@@ -34,7 +34,7 @@ export default function HistoryContainer() {
             dataIndex: 'campaignName',
             key: 'campaignName',
             align: 'center',
-            render: (text, record) => <Link to={'/organization/' + record.key} title="Chi tiết chiến dịch">{text}</Link>
+            render: (text, record) => <Link to={'/campaign/campaign-detail/' + record.key} title="Chi tiết chiến dịch">{text}</Link>
         },
         {
             title: 'Thông tin sức khỏe',
