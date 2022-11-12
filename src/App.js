@@ -186,6 +186,7 @@ export default function App() {
 
           {/* Pages for admin */}
           <Route path="/admin" element={<AdminProfile />}>
+            <Route index element={<AdminManageCampaign />} />
             <Route path="manage_campaign" element={<AdminManageCampaign />} />
             <Route path="manage_campaign/detail_campaign" element={<AdminDetailCampaign />} />
             <Route path="manage_donor" element={<AdminManageDonor />} />

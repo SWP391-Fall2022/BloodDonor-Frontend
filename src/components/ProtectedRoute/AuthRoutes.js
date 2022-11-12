@@ -8,10 +8,9 @@ export default function AuthGoogleRoutes() {
     const [authorized, setAuthorized] = useState(false);
     const navigate = useNavigate();
     const [rendered, setRendered] = useState(false)
+    const [userRole, setUserRole] = useState(JSON.parse(sessionStorage.getItem('userRole')))
 
     useEffect(() => {
-        // Send JWT to backend to get user
-        const userRole = JSON.parse(sessionStorage.getItem('userRole'))
         // Login Donor
         if (userRole === "DONOR") {
             setAuthorized(true)
@@ -33,7 +32,13 @@ export default function AuthGoogleRoutes() {
     }, [navigate]);
 
     if (authorized) {
-        return <Navigate to={`/`} />
+        if (userRole === "DONOR") {
+            return <Navigate to={`/`} />
+        } else if (userRole === "ORGANIZATION") {
+            return <Navigate to={`/organization`} />
+        } else if (userRole === "ADMIN") {
+            return <Navigate to={`/admin`} />
+        }
     } else {
         if (rendered) {
             return <Navigate to={`/register`} />
