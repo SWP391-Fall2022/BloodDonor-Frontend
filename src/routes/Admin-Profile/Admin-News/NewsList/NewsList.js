@@ -109,7 +109,7 @@ const NewsList = () => {
         <AdBread name="Quản lý tin tức" />
       </div>
       <section id="admin-news-list">
-        <div className="admin-list-title">Danh sách quản lý tin tức</div>
+        <div className="admin-list-title"><strong>DANH SÁCH QUẢN LÝ TIN TỨC</strong></div>
         <div className="admin-list-tools">
           <Input.Group className="admin-list-search" compact>
             <Input

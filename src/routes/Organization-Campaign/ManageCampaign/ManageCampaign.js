@@ -192,7 +192,7 @@ export default function ManageCampaign() {
               placeholder="Điền tên chiến dịch bạn muốn tìm..."
             />
             <div className="cre-del-buttons">
-              <Button type="primary" danger className="cre-button" href="/organization/manageCampaign/createCampaign">
+              <Button type="primary" className="cre-button" href="/organization/manageCampaign/createCampaign">
                 Tạo mới
               </Button>
             </div>

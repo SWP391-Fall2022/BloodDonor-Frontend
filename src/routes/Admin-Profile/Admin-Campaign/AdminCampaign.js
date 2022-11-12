@@ -149,7 +149,7 @@ export default function AdminManageCampaign() {
         <>
             <div className={styles.breadcrumb}><AdBread name="Quản lý chiến dịch" /></div>
             <div className='ad-manage-campaign-container'>
-                <h2 className="admin-manage-campaign-title">DANH SÁCH TỔNG HỢP CÁC CHIẾN DỊCH</h2>
+                <h2 className="admin-manage-campaign-title"><strong>DANH SÁCH TỔNG HỢP CÁC CHIẾN DỊCH</strong></h2>
                 <div className="admin-cam-search-box">
                     <Input
                         className="admin-cam-search-box"
