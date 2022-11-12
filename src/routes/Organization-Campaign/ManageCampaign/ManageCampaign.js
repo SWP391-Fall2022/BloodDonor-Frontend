@@ -72,6 +72,7 @@ export default function ManageCampaign() {
   function getCampFromAPI() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+      {console.log("Token",token)}
       let json = {
         method: 'GET',
         headers: new Headers({

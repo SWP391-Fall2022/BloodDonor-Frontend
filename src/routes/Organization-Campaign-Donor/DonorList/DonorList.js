@@ -1,6 +1,6 @@
 import { Button, Divider, Input, Radio, Table, Tabs } from "antd";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import "./donorlist.css";
 const columns = [
   {
@@ -9,146 +9,79 @@ const columns = [
   },
   {
     title: "Họ và Tên",
-    dataIndex: "fullName",
+    dataIndex: "name",
     render: (text) => <a>{text}</a>,
-    
   },
   {
     title: "CMND",
-    dataIndex: "cmnd",
+    dataIndex: "identityNum",
   },
   {
     title: "Mã xác nhận",
-    dataIndex: "code",
+    dataIndex: ["donateRegistrationResponse","code"],
   },
   {
     title: "Thông tin sức khỏe",
-    dataIndex: "inf",
-    render: (_, user) => (
-      <Link to={`/organization-campaign-health-inf`}>
-        <a >Bấm để xem </a>
+    render: (_, record) => {
+      if (record.donateRegistrationResponse.status === "CHECKED_IN"){
+      return <Link to={`/organization-campaign-health-inf/${record.donateRegistrationResponse.donorId}`}>
+        <a>Bấm để xem </a>
       </Link>
-    ),
+      }
+      else{
+        return <Link to={`/organization-campaign-health-inf/${record.donateRegistrationResponse.donorId}`}>
+        <a>Bấm để ghi </a>
+      </Link>
+      }
+  }
   },
   {
     title: "Trạng thái",
-    dataIndex: "state",
-  },
-];
-const data = [
-  {
-    stt: "1",
-    key: "1",
-    fullName: "Nguyễn Văn A",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "2",
-    key: "2",
-    fullName: "Phạm Minh Tiến",
-    cmnd: "567",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Tham gia",
-  },
-  {
-    stt: "3",
-    key: "3",
-    fullName: "Đào Duy Thanh",
-    cmnd: "789",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Hủy",
-  },
-  {
-    stt: "4",
-    key: "4",
-    fullName: "Lê Ngọc Bảo",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "5",
-    key: "5",
-    fullName: "Từ Minh Ngọc",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "6",
-    key: "6",
-    fullName: "Hải Văn Phong",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Tham gia",
-  },
-  {
-    stt: "7",
-    key: "7",
-    fullName: "Nguyễn Văn Huy",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Hủy",
-  },
-  {
-    stt: "8",
-    key: "8",
-    fullName: "Huỳnh Minh Đăng",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "9",
-    key: "9",
-    fullName: "Trần Đức Tài",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
-  },
-  {
-    stt: "10",
-    key: "10",
-    fullName: "Đoàn Nguyễn Đức Minh",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Tham gia",
-  },
-  {
-    stt: "11",
-    key: "11",
-    fullName: "Phạm Long",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Hủy",
-  },
-  {
-    stt: "12",
-    key: "12",
-    fullName: "John Brown",
-    cmnd: "12412341234",
-    code: "2345235",
-    inf: "Phiếu sức khỏe",
-    state: "Đăng ký",
+    dataIndex: "status",
+    render: (_, record) => {
+        if (record.donateRegistrationResponse.status === "CHECKED_IN")
+          return "Tham gia"
+        return "Đăng ký"
+    }
   },
 ];
 
-// rowSelection object indicates the need for row selection
+const DonorList = ({campaignID}) => {
+  console.log(typeof(campaignID))
+  const [data, setData] = useState([]);
+  // fetch data function
+  function getDonorListFromAPI() {
+    const asyncFn = async () => {
+      const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
+      console.log("Token: ", token);
 
-const DonorList = () => {
+      let json = {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+          Authorization: "Bearer " + token,
+        }),
+      };
+
+      const response = await fetch(
+        `${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getParticipatedDonor/${Number(campaignID)}`,
+        json
+      )
+        .then((res) => res.json())
+        .catch((error) => {
+          console.log(error);
+        });
+
+      if (response.success) {
+        console.log("TEST NEK: ",response.body)
+        setData(response.body);
+       }
+    };
+    asyncFn();
+  }
+  useEffect(() => {
+    getDonorListFromAPI();
+     }, []);
   function removeVietnameseTones(str) {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
@@ -180,65 +113,72 @@ const DonorList = () => {
     );
     return str;
   }
-  const keys = ["fullName", "cmnd", "code"];
+  const keys = ["name", "identityNum"];
+  console.log("keys: ", keys);
   const search = (data) => {
-    return data.filter((item) =>
-      keys.some((key) =>
-        removeVietnameseTones(item[key])
-          .toLowerCase()
-          .includes(removeVietnameseTones(query.toLowerCase()))
-      )
-    );
+    const searchTxt = removeVietnameseTones(query.toLowerCase());
+    return data.filter((item) => {
+      if(removeVietnameseTones(item.name.toLowerCase()).includes(searchTxt) ) return true;
+      if(removeVietnameseTones(item.identityNum.toLowerCase()).includes(searchTxt) ) return true;
+      if(removeVietnameseTones(item.donateRegistrationResponse.code.toLowerCase()).includes(searchTxt) ) return true;
+      // keys.some((key) =>
+      //   removeVietnameseTones(item[key])
+      //     .toLowerCase()
+      //     .includes(removeVietnameseTones(query.toLowerCase()))
+      // )
+    });
   };
+  const filterStatus = (data, key) => {
+    return data.filter((item) => item.donateRegistrationResponse.status === key);
+  }
   const [query, setQuery] = useState("");
-  const filterState = (data, keys) => {
-    return data.filter((item) => item.state.includes(keys));
-  };
   return (
     <section id="organization-donor-list">
-      <div className="donor-list-title">
-        Danh sách TÌNH NGUYỆN viên HIẾN MÁU
-      </div>
-      <div className="donor-list-search">
-        <Input.Group compact>
-          <Input
-            placeholder="Hãy điền thông tin mà bạn muốn tìm kiếm"
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </Input.Group>
-      </div>
-      <div className="donor-list-table">
-        <Tabs defaultActiveKey="1">
-          <Tabs.TabPane tab="Tất cả" key="1">
-            <Table columns={columns} dataSource={search(data)} size="middle" scroll={{ x: "100wh" }}/>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="Đăng ký" key="2">
-            <Table
-              columns={columns}
-              dataSource={filterState(search(data), "Đăng ký")}
-              size="middle"
-              scroll={{ x: "100wh" }}
-            />
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="Tham gia" key="3">
-            <Table
-              columns={columns}
-              dataSource={filterState(search(data), "Tham gia")}
-              size="middle"
-              scroll={{ x: "100wh" }}
-            />
-          </Tabs.TabPane>
-          <Tabs.TabPane tab="Hủy" key="4">
-            <Table
-              columns={columns}
-              dataSource={filterState(search(data), "Hủy")}
-              size="middle"
-              scroll={{ x: "100wh" }}
-            />
-          </Tabs.TabPane>
-          <Tabs></Tabs>
-        </Tabs>
-      </div>
+      {data.length !== 0 && (
+        <>
+          <div className="donor-list-title">
+            Danh sách TÌNH NGUYỆN viên HIẾN MÁU
+          </div>
+          <div className="donor-list-search">
+            <Input.Group compact>
+              <Input
+                placeholder="Hãy điền thông tin mà bạn muốn tìm kiếm"
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </Input.Group>
+          </div>
+          <div className="donor-list-table">
+            <Tabs defaultActiveKey="1">
+              <Tabs.TabPane tab="Tất cả" key="1">
+                <Table
+                  columns={columns}
+                  dataSource={search(data)}
+                  size="middle"
+                  scroll={{ x: "100wh" }}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Đăng ký" key="2">
+                <Table
+                  columns={columns}
+                  dataSource={filterStatus(search(data), "NOT_CHECKED_IN")}
+                  size="middle"
+                  scroll={{ x: "100wh" }}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Tham gia" key="3">
+                <Table
+                  columns={columns}
+                  dataSource={filterStatus(search(data), "CHECKED_IN")}
+                  size="middle"
+                  scroll={{ x: "100wh" }}
+                />
+              </Tabs.TabPane>
+             
+              <Tabs></Tabs>
+            </Tabs>
+          </div>
+        </>
+      )}
     </section>
   );
 };

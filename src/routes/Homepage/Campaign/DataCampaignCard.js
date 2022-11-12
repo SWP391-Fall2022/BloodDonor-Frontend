@@ -23,12 +23,12 @@ const DataCampaignCard = ({ data }) => {
             {data.addressDetails}
           </div>
           <div className="campaign-time">
-            Từ{" "}
+            Từ
             {data.onSiteDates[0]
               .substring(0, 10)
               .split("-")
               .reverse()
-              .join("/")}{" "}
+              .join("/")}
             đến
             {data.onSiteDates[1]
               .substring(0, 10)

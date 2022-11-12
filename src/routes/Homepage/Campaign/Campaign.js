@@ -24,16 +24,16 @@ const Campaign = () => {
     fetch("http://localhost:8080/v1/campaign/getAllActive", { method: "GET" })
       .then((response) => response.json())
       .then((dataApi) => {
-        setHoChiMinh(dataApi.body.reverse(). filter(
+        setHoChiMinh(dataApi.body.reverse().filter(
           (item) => item.districtId >= 1 && item.districtId <= 23
         ))
-        setHaNoi(dataApi.body.reverse(). filter(
+        setHaNoi(dataApi.body.reverse().filter(
           (item) => item.districtId >= 25 && item.districtId <= 54
         ))
-        setDaNang(dataApi.body.reverse(). filter(
+        setDaNang(dataApi.body.reverse().filter(
           (item) => item.districtId >= 55 && item.districtId <= 62
         ))
-        setBinhThuan(dataApi.body.reverse(). filter(
+        setBinhThuan(dataApi.body.reverse().filter(
           (item) => item.districtId >= 171 && item.districtId <= 180
         ))
         setCanTho(dataApi.body.reverse(). filter(

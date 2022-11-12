@@ -114,10 +114,10 @@ export default function App() {
             exact strict path="/organization-homepage" element={<OrganizationHomepage />}
           />
           <Route
-            exact strict path="/organization-campaign-donorlist" element={<OrganizationCampaignDonorList />}
+            exact strict path="/organization-campaign-donorlist/0" element={<OrganizationCampaignDonorList />}
           />
           <Route
-            exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf />}
+            exact strict path="/organization-campaign-health-inf/:id" element={<OrganizationCampaignHealthInf />}
           />
           <Route
             exact strict path="/statistical" element={<OrganizationCampaignStatistical />}

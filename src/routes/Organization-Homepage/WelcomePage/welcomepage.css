@@ -1,6 +1,63 @@
-
 @import url(../Homepage/homepagedetail.css);
 
+#welcomePageWithCampaign {
+    max-width: 100%;
+    margin: 2% 10% 1% 10%;
+    padding: 3% 5%;
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    text-align: center;
+}
+
+#welcomePageWithCampaign .welcome-box-container {
+    display: grid;
+    grid-template-columns: 28% 28% 46%;
+    margin-top: 2%;
+    padding: 0 15%;
+}
+
+#welcomePageWithCampaign .amount {
+    background-color: var(--primary-900);
+    padding: 10px 0;
+    width: 80%;
+    margin: 0 10%;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 36px;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-01);
+    color: white;
+}
+
+@media only screen and (max-width: 1200px) {
+    #welcomePageWithCampaign .welcome-box-container {
+
+        padding: 0 10%;
+    }
+    #welcomePageWithCampaign .amount {
+        font-size: 26px;
+        line-height: 32px;}
+}
+
+@media only screen and (max-width: 900px) {
+    #welcomePageWithCampaign {
+        padding: 7% 2%;
+    }
+    #welcomePageWithCampaign .welcome-box-container {
+        padding: 0 5%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    #welcomePageWithCampaign .welcome-box-container {
+        display: block;
+        padding: 0 30%;
+    }
+    #welcomePageWithCampaign .amount {
+        font-size: 22px;
+        line-height: 28px;}
+}
 #welcomePageWithNoCampaign {
     max-width: 100%;
     margin: 2% 10% 1% 10%;

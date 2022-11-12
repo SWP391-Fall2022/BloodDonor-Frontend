@@ -7,6 +7,8 @@ import WriteHealthInf from "./WriteHealthInf";
 import { useState } from "react";
 import { useMemo } from "react";
 import EditHealthInf from "./EditHealthInf";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 const routes = [
   {
     path: "index",
@@ -22,49 +24,41 @@ const routes = [
   },
 ];
 const OrganizationCampaignHealthInf = () => {
-  const user = [
-    {
-      stt: "1",
-      fullName: "Nguyễn Văn A",
-      phone: "0982123456",
-      email: "nguyenvana@gmail.com",
-      cmnd: "12412341234",
-      code: "2345235",
-      place: "123 đường 494 quận Thủ Đức, TP Hồ Chí Minh",
-      weight: "70",
-      bloodType: "O",
-      amount: "250",
-      details: "Tốt",
-      status: "true",
-    },
-    {
-      stt: "2",
-      fullName: "Phạm Minh Tiến",
-      phone: "0982123456",
-      email: "phamminhtien@gmail.com",
-      cmnd: "12412341234",
-      place: "123 đường Võ Thị Sáu quận 2, TP Hồ Chí Minh",
-      weight: "67",
-      bloodType: "AB",
-      amount: "300",
-      details: "Tình nguyện viên có sức khỏe ổn định, không có bệnh nền. Không nhiễm viêm gan B.",
-      status: "true",
-    },
-    {
-      stt: "3",
-      fullName: "Đào Duy Thanh",
-      cmnd: "12412341234",
-      email: "phamminhtien@gmail.com",
-      place: "123 đường Võ Thị Sáu quận 2, TP Hồ Chí Minh",
-      inf: "Phiếu sức khỏe",
-      state: "Hủy",
-      weight: "",
-      bloodType: "",
-      amount: "", 
-      details: "",
-      status: "false",
-    },
-  ];
+  const donorID = useParams();
+  const [user, setUser] = useState([]);
+  // fetch data function
+  function getDonorHealthInfFromAPI() {
+    const asyncFn = async () => {
+      const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
+      console.log("Token: ", token);
+
+      let json = {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+          Authorization: "Bearer " + token,
+        }),
+      };
+
+      const response = await fetch(
+        `${process.env.REACT_APP_BACK_END_HOST}/v1/donors/${Number(donorID)}/donated/latest`,
+        json
+      )
+        .then((res) => res.json())
+        .catch((error) => {
+          console.log(error);
+        });
+
+      if (response.success) {
+        console.log("TEST NEK: ",response.body)
+        setUser(response.body);
+       }
+    };
+    asyncFn();
+  }
+  useEffect(() => {
+    getDonorHealthInfFromAPI();
+     }, []);
   const [valueForm, setForm] = useState(user[0]);
   const [valueState, setState] = useState("false");
   const value = useMemo(
