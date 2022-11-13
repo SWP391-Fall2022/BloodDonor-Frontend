@@ -8,11 +8,11 @@
     margin-right: 20px;
     padding: 25px 35px;
     box-shadow: var(--shadow-dp-02);
-    width: 65%;
+    width: 70%;
 }
 
 .organization-right{
-    width: 35%;
+    width: 30%;
 }
 
 .organization-left-title{

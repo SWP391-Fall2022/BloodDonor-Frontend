@@ -3,11 +3,12 @@
 
 #manage-campaign-container{
     text-align: center;
-    width: 100%;
+    /* width: 100%; */
+    
 }
 
 .manage-campaign-container{
-    padding: 0 15%;
+    padding: 0 10%;
 }
 
 .manage-campaign-header{
@@ -40,6 +41,8 @@
     padding: 10px 30px;
     box-shadow: var(--shadow-dp-02);
     margin-bottom: 30px;
+border-radius: 5px;
+
 
  }
 

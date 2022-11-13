@@ -128,7 +128,6 @@ export default function RegisterCampaign({ campaign, org }) {
             console.log(response)
             if (response.status == 200) {
                 registerSuccess();
-                console.log("Đăng ký thành công")
             }
             else {
                 if (response.message === "Missing request attribute 'user' of type User") {
@@ -141,8 +140,7 @@ export default function RegisterCampaign({ campaign, org }) {
                     setMessage(response.message)
                     registerError(response.message);
                 }
-                console.log("ko đăng ký được")
-
+             
             }
 
         }
