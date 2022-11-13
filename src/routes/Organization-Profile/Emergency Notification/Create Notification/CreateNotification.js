@@ -70,7 +70,7 @@ export default function OrganizationCreateNotification() {
             method: 'POST',
             body: formData
         }).then(r => r.json());
-        console.log(data)
+        // console.log(data)
         setImage(data.url)
         sessionStorage.setItem("notiImage", JSON.stringify(data.url))
         setImagePublicId(data.public_id)

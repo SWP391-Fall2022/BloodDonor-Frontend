@@ -64,7 +64,7 @@ export default function NewsDetail() {
       case "5":
         return "Giải trí cùng ABO"
       default:
-         return "Gương hiến máu tiêu biểu"
+        return "Gương hiến máu tiêu biểu"
 
     }
   }
@@ -89,7 +89,9 @@ export default function NewsDetail() {
           </div>
 
           <div className='content'>
-            <p>{news.content}</p>
+            <div
+              dangerouslySetInnerHTML={{ __html: news.content }}
+            />
           </div>
 
         </div>
