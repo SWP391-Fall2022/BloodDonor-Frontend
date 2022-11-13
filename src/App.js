@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import "antd/dist/antd.min.css";
 import "./index.css";
 
@@ -76,134 +76,138 @@ import EditNews from "./routes/Admin-Profile/Admin-News/EditNews/EditNews";
 import AdminCreateVoucher from './routes/Admin-Profile/Admin-Voucher/AdminCreateVoucher';
 import OverViewNews from "./routes/Admin-Profile/Admin-News/OverviewNews/OverViewNews";
 
+import { UserProvider } from './others/UserRoleContext';
+
 export default function App() {
   return (
     <NoInternetConnection>
-      <BrowserRouter>
-        <Routes>
-          {/* Home page */}
-          <Route exact strict path="/" element={<Homepage />} />
-          <Route exact strict path="/news" element={<ListNewsPage />} />
-          <Route
-            exact
-            strict
-            path="/news/news-detail/:id"
-            element={<NewsDetailPage />}
-          />
-          <Route exact strict path="/qna" element={<QnA />} />
-          <Route exact strict path="/achievement" element={<Achievement />} />
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Home page */}
+            <Route exact strict path="/" element={<Homepage />} />
+            <Route exact strict path="/news" element={<ListNewsPage />} />
+            <Route
+              exact
+              strict
+              path="/news/news-detail/:id"
+              element={<NewsDetailPage />}
+            />
+            <Route exact strict path="/qna" element={<QnA />} />
+            <Route exact strict path="/achievement" element={<Achievement />} />
 
-          {/* Basic system */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/register/donor" element={<RegisterDonor />} />
-          <Route path="/register/place" element={<RegisterPlace />} />
+            {/* Basic system */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/register/donor" element={<RegisterDonor />} />
+            <Route path="/register/place" element={<RegisterPlace />} />
 
-          <Route path="/auth" element={<AuthRoutes />} />
-          <Route path="/new-password" element={<NewPass />} />
-          <Route path="/restore" element={<Forget />} />
-          <Route path="/otp" element={<Otp />} />
+            <Route path="/auth" element={<AuthRoutes />} />
+            <Route path="/new-password" element={<NewPass />} />
+            <Route path="/restore" element={<Forget />} />
+            <Route path="/otp" element={<Otp />} />
 
-          <Route exact strict path="/campaign" element={<Campaign />} />
-          <Route
-            exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />}
-          />
-          {/* <Route
+            <Route exact strict path="/campaign" element={<Campaign />} />
+            <Route
+              exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />}
+            />
+            {/* <Route
             exact strict path="/organization/:id" element={<OrganizationInformation />}
           /> */}
 
-          <Route
-            exact strict path="/organization-homepage" element={<OrganizationHomepage />}
-          />
-          <Route
-            exact strict path="/organization-campaign-donorlist/0" element={<OrganizationCampaignDonorList />}
-          />
-          <Route
-            exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf />}
-          />
-          <Route
-            exact strict path="/statistical" element={<OrganizationCampaignStatistical />}
-          />
-          <Route exact strict path="/test" element={<AdminNewsList />} />
-
-          {/* Pages for logged in donor */}
-          <Route path="/donor" element={<DonorProfile />}>
-            <Route index element={<Info />} />
-            <Route path="changePassword" element={<ChangePassword />} />
-            <Route path="history" element={<History />} />
-            <Route path="qna" element={<QnADonor />} />
-            <Route path="vouchers" element={<Vouchers />} />
-          </Route>
-
-          {/* Pages for logged in organization */}
-          <Route path="/organization" element={<OrganizationProfile />}>
-            {/* Home Page */}
-            <Route index element={<OrganizationHomepage />} />
-            {/* Notification Emergency Management */}
             <Route
-              path="notification"
-              element={<OrganizationNotificationContainer />}
-            >
+              exact strict path="/organization-homepage" element={<OrganizationHomepage />}
+            />
+            <Route
+              exact strict path="/organization-campaign-donorlist/0" element={<OrganizationCampaignDonorList />}
+            />
+            <Route
+              exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf />}
+            />
+            <Route
+              exact strict path="/statistical" element={<OrganizationCampaignStatistical />}
+            />
+            <Route exact strict path="/test" element={<AdminNewsList />} />
+
+            {/* Pages for logged in donor */}
+            <Route path="/donor" element={<DonorProfile />}>
+              <Route index element={<Info />} />
+              <Route path="changePassword" element={<ChangePassword />} />
+              <Route path="history" element={<History />} />
+              <Route path="qna" element={<QnADonor />} />
+              <Route path="vouchers" element={<Vouchers />} />
+            </Route>
+
+            {/* Pages for logged in organization */}
+            <Route path="/organization" element={<OrganizationProfile />}>
+              {/* Home Page */}
+              <Route index element={<OrganizationHomepage />} />
+              {/* Notification Emergency Management */}
               <Route
-                index
-                element={<OrganizationNotificationListContainer />}
-              />
+                path="notification"
+                element={<OrganizationNotificationContainer />}
+              >
+                <Route
+                  index
+                  element={<OrganizationNotificationListContainer />}
+                />
+                <Route
+                  path="create"
+                  element={<OrganizationCreateNotification />}
+                />
+                <Route
+                  path="create/preview"
+                  element={<OrganizationReviewNotification />}
+                />
+                <Route path="view" element={<OrganizationViewNotification />} />
+                <Route path="*" element={<NoPageOrganization />} />
+              </Route>
+              {/* Manage Campaign */}
+              <Route path="manageCampaign" element={<OrganizationCampign />}>
+                <Route index element={<OrganizationManageCampaign />} />
+                <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
+                <Route path="updateCampaign/:id" element={<OrganizationUpdateCampaign />} />
+                <Route path="detailCampaign" element={<OrganizationDetailCampaign />} />
+                <Route path="preview" element={<OrganizationPreviewCampaign />} />
+              </Route>
+
+              {/* Manage Question */}
+              <Route path="manageQuestion" element={<OrganizationQuestion />}>
+                <Route index element={<OrganizationManageQuestion />} />
+                <Route path="campaignQuestion/:id" element={<OrganizationCampaignQuestion />} />
+                <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
+                <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
+              </Route>
+              <Route path="manageGuide" element={<OrganizationGuide />} />
               <Route
-                path="create"
-                element={<OrganizationCreateNotification />}
+                path="changePassword"
+                element={<OrganizationChangePassword />}
               />
-              <Route
-                path="create/preview"
-                element={<OrganizationReviewNotification />}
-              />
-              <Route path="view" element={<OrganizationViewNotification />} />
+              <Route path="profile" element={<OrganizationInfo />} />
               <Route path="*" element={<NoPageOrganization />} />
             </Route>
-            {/* Manage Campaign */}
-            <Route path="manageCampaign" element={<OrganizationCampign />}>
-              <Route index element={<OrganizationManageCampaign />} />
-              <Route path="createCampaign" element={<OrganizationCreateCampaign />} />
-              <Route path="updateCampaign/:id" element={<OrganizationUpdateCampaign />} />
-              <Route path="detailCampaign" element={<OrganizationDetailCampaign />} />
-              <Route path="preview" element={<OrganizationPreviewCampaign />} />
+
+            {/* Pages for admin */}
+            <Route path="/admin" element={<AdminProfile />}>
+              <Route index element={<AdminManageCampaign />} />
+              <Route path="manage_campaign" element={<AdminManageCampaign />} />
+              <Route path="manage_campaign/detail_campaign" element={<AdminDetailCampaign />} />
+              <Route path="manage_donor" element={<AdminManageDonor />} />
+              <Route path="manage_organization" element={<AdminManageOrganization />} />
+              <Route path="manage_organization/approveOrganization" element={<AdminApproveOrganization />} />
+              <Route path="manage_organization/infoOrganization" element={<AdminInfoOrganization />} />
+              <Route path="news" element={<AdminNewsList />} />
+              <Route path="create_news" element={<AdminCreateNews />} />
+              <Route path="manage_vouchers" element={<AdminManageVouchers />} />
+              <Route path="manage_vouchers/create" element={<AdminCreateVoucher />} />
             </Route>
 
-            {/* Manage Question */}
-            <Route path="manageQuestion" element={<OrganizationQuestion />}>
-              <Route index element={<OrganizationManageQuestion />} />
-              <Route path="campaignQuestion/:id" element={<OrganizationCampaignQuestion />} />
-              <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
-              <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
-            </Route>
-            <Route path="manageGuide" element={<OrganizationGuide />} />
-            <Route
-              path="changePassword"
-              element={<OrganizationChangePassword />}
-            />
-            <Route path="profile" element={<OrganizationInfo />} />
-            <Route path="*" element={<NoPageOrganization />} />
-          </Route>
-
-          {/* Pages for admin */}
-          <Route path="/admin" element={<AdminProfile />}>
-            <Route index element={<AdminManageCampaign />} />
-            <Route path="manage_campaign" element={<AdminManageCampaign />} />
-            <Route path="manage_campaign/detail_campaign" element={<AdminDetailCampaign />} />
-            <Route path="manage_donor" element={<AdminManageDonor />} />
-            <Route path="manage_organization" element={<AdminManageOrganization />} />
-            <Route path="manage_organization/approveOrganization" element={<AdminApproveOrganization />} />
-            <Route path="manage_organization/infoOrganization" element={<AdminInfoOrganization />} />
-            <Route path="news" element={<AdminNewsList />} />
-            <Route path="create_news" element={<AdminCreateNews />} />
-            <Route path="manage_vouchers" element={<AdminManageVouchers />} />
-            <Route path="manage_vouchers/create" element={<AdminCreateVoucher />} />
-          </Route>
-
-          {/* 404 error page */}
-          <Route path="/404" element={<NoPage />} />
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-      </BrowserRouter>
+            {/* 404 error page */}
+            <Route path="/404" element={<NoPage />} />
+            <Route path="*" element={<NoPage />} />
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </NoInternetConnection>
   );
 }
