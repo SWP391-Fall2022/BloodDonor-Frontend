@@ -12,7 +12,11 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 ChartJS.defaults.font.size = 10;
-const DoughnutChart = () => {
+const filterParticipatedStatus = (data, key) => {
+  return data.filter((item) => item.donateRegistrationResponse.status === "CHECKED_IN")
+    .length;
+};
+const DoughnutChart = (participated) => {
   var data = {
     labels: ["Nhóm máu O", "Nhóm máu A", "Nhóm máu B", "Nhóm máu AB"],
     datasets: [

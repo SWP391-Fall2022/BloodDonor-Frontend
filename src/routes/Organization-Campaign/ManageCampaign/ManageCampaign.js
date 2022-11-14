@@ -91,7 +91,7 @@ export default function ManageCampaign() {
             camName: row.name,
             camTime: row.startDate + " -> " + row.endDate,
             id: row.id,
-            donorList: <Link to={`/organization-campaign-donorlist/${row.id}`}
+            donorList: <Link to={`/organization/manageCampaign/campaign-donorlist/${row.id}`}
             onClick={(event) => {
               event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
             }

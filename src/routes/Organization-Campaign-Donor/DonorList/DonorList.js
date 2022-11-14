@@ -24,12 +24,12 @@ const columns = [
     title: "Thông tin sức khỏe",
     render: (_, record) => {
       if (record.donateRegistrationResponse.status === "CHECKED_IN"){
-      return <Link to={`/organization-campaign-health-inf/${record.donateRegistrationResponse.donorId}`}>
+      return <Link to={`/organization/manageCampaign/campaign-health-inf/${record.donateRegistrationResponse.campaignId}/${record.donateRegistrationResponse.donorId}/${record.donateRegistrationResponse.registeredDate}`}>
         <a>Bấm để xem </a>
       </Link>
       }
       else{
-        return <Link to={`/organization-campaign-health-inf/${record.donateRegistrationResponse.donorId}`}>
+        return <Link to={`/organization/manageCampaign/campaign-health-inf/${record.donateRegistrationResponse.campaignId}/${record.donateRegistrationResponse.donorId}/${record.donateRegistrationResponse.registeredDate}`}>
         <a>Bấm để ghi </a>
       </Link>
       }
@@ -46,8 +46,7 @@ const columns = [
   },
 ];
 
-const DonorList = ({campaignID}) => {
-  console.log(typeof(campaignID))
+const DonorList = (campaignID) => {
   const [data, setData] = useState([]);
   // fetch data function
   function getDonorListFromAPI() {
@@ -64,7 +63,7 @@ const DonorList = ({campaignID}) => {
       };
 
       const response = await fetch(
-        `${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getParticipatedDonor/${Number(campaignID)}`,
+        `${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getParticipatedDonor/${campaignID.campaignID}`,
         json
       )
         .then((res) => res.json())
@@ -135,6 +134,51 @@ const DonorList = ({campaignID}) => {
   return (
     <section id="organization-donor-list">
       {data.length !== 0 && (
+        <>
+          <div className="donor-list-title">
+            Danh sách TÌNH NGUYỆN viên HIẾN MÁU
+          </div>
+          <div className="donor-list-search">
+            <Input.Group compact>
+              <Input
+                placeholder="Hãy điền thông tin mà bạn muốn tìm kiếm"
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </Input.Group>
+          </div>
+          <div className="donor-list-table">
+            <Tabs defaultActiveKey="1">
+              <Tabs.TabPane tab="Tất cả" key="1">
+                <Table
+                  columns={columns}
+                  dataSource={search(data)}
+                  size="middle"
+                  scroll={{ x: "100wh" }}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Đăng ký" key="2">
+                <Table
+                  columns={columns}
+                  dataSource={filterStatus(search(data), "NOT_CHECKED_IN")}
+                  size="middle"
+                  scroll={{ x: "100wh" }}
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Tham gia" key="3">
+                <Table
+                  columns={columns}
+                  dataSource={filterStatus(search(data), "CHECKED_IN")}
+                  size="middle"
+                  scroll={{ x: "100wh" }}
+                />
+              </Tabs.TabPane>
+             
+              <Tabs></Tabs>
+            </Tabs>
+          </div>
+        </>
+      )}
+      {data.length === 0 && (
         <>
           <div className="donor-list-title">
             Danh sách TÌNH NGUYỆN viên HIẾN MÁU

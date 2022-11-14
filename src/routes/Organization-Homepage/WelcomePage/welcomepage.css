@@ -87,10 +87,8 @@
     width: 100%;
 }
 #welcomePageWithNoCampaign .welcome-box-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 3%;
-    padding: 0 10%;
+    
+    padding: 0 30%;
 }
 
 #welcomePageWithNoCampaign .amount {

@@ -1,15 +1,14 @@
 import { PageHeader } from "antd";
 import { Link, useParams } from "react-router-dom";
-import { SideBarforOrganization } from "../../components/SideBar/SideBarforOrganization";
-import DonorList from "./DonorList/DonorList";
 import "./organizationcampaigndonorlist.css";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { AdBread } from "../Admin-Profile/AdminBreadcrumbs";
-import { OrgBread } from "./OrganizationHealthBreadcrumb";
+import { SideBarforOrganization } from "../../../components/SideBar/SideBarforOrganization";
+import { OrgBread } from "../OrganizationBreadcrumb";
+import DonorList from "./DonorList";
 const OrganizationCampaignDonorList = () => {
   const breadName = (
     <>
-      <Link to="`/homepage`">
+      <Link to="/organization/manageCampaign">
         <ArrowLeftOutlined style={{ marginRight: "2%", color: "black" }} />
       </Link>
       Danh sách tình nguyện viên
@@ -38,7 +37,7 @@ const OrganizationCampaignDonorList = () => {
             name={breadName}
           />
         </div>
-        <DonorList campaignID={Number(campaignID.id)} />
+        <DonorList campaignID={campaignID.id} />
       </div>
     </div>
   );

@@ -29,7 +29,7 @@
 
 #campaign-statistical .statistical-list {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 21% 21% 30% 21%;
     grid-gap: 2%;
 }
 
@@ -37,7 +37,7 @@
     background-color: var(--blue-02);
     border-bottom: 10px solid var(--blue-01);
     border-radius: 5px;
-    padding: 8% 10% 5% 10%;
+    padding: 12px;
     margin-bottom: 2%;
 }
 
@@ -50,16 +50,18 @@
 
 #campaign-statistical .card-number {
     font-weight: 600;
-    font-size: 27px;
+    font-size: 25px;
     line-height: 30px;
     display: flex;
     flex-direction: center;
     align-items: center;
+    height: 35px;
+    text-align: center;
 }
 
 #campaign-statistical .MuiSvgIcon-root {
     color: var(--blue-01);
-    margin-right: 10%;
+    margin-right: 10px;
     background-color: white;
     padding: 8%;
     font-size: 30px;
@@ -92,7 +94,7 @@
     margin-bottom: 5px;
 }
 
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1200px) {
     #campaign-statistical .statistical-list {
         grid-template-columns: 1fr 1fr;
     }
@@ -116,3 +118,7 @@
         padding: 8% 5%;
     }
 }
+@media only screen and (max-width: 600px) {
+    #campaign-statistical .statistical-list {
+        grid-template-columns: 1fr;
+    }}

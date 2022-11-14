@@ -1,6 +1,6 @@
 import { PageHeader } from "antd";
 import { SideBarforOrganization } from "../../../components/SideBar/SideBarforOrganization";
-import { FormContext } from "./OrganizationCampaignHealthInfContext";
+import { HealthContext } from "./OrganizationCampaignHealthInfContext";
 import "./organizationcampaignhealthinf.css";
 import RecheckHealthInf from "./RecheckHealthInf";
 import WriteHealthInf from "./WriteHealthInf";
@@ -9,25 +9,77 @@ import { useMemo } from "react";
 import EditHealthInf from "./EditHealthInf";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-const routes = [
-  {
-    path: "index",
-    breadcrumbName: "Danh sách chiến dịch",
-  },
-  {
-    path: "/organization-campaign-donorlist",
-    breadcrumbName: "Danh sách quản lý tình nguyện viên",
-  },
-  {
-    path: "/organization-campaign-health-inf",
-    breadcrumbName: "Thông tin sức khỏe",
-  },
-];
 const OrganizationCampaignHealthInf = () => {
-  const donorID = useParams();
-  const [user, setUser] = useState([]);
+  const [valueState, setState] = useState("false");
+
+  const userInfor = useParams();
+  console.log("DONOR ID: ", userInfor.idD);
+  console.log("ORG ID: ", userInfor.idC);
+  console.log("DATE: ", userInfor.date);
+  const [valueStatus, setStatus] = useState();
+  const [valueDonorInfor, setDonorInfor] = useState();
+  const [valueHealthInfor, setHealthInfor] = useState();
+  const [valueTempHealth, setTempInfor] = useState();
+  const [data, setData] = useState();
+  const value = useMemo(
+    () => ({
+      valueStatus,
+      setStatus,
+      valueDonorInfor,
+      setDonorInfor,
+      valueHealthInfor,
+      setHealthInfor,
+      valueTempHealth,
+      setTempInfor,
+      valueState,
+      setState,
+      userInfor,
+    }),
+    [
+      valueStatus,
+      setStatus,
+      valueDonorInfor,
+      setDonorInfor,
+      valueHealthInfor,
+      setHealthInfor,
+      valueTempHealth,
+      setTempInfor,
+      valueState,
+      setState,
+      userInfor,
+    ]
+  );
+
   // fetch data function
-  function getDonorHealthInfFromAPI() {
+  function getDonorInforAPI() {
+    const asyncFn = async () => {
+      const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
+      console.log("Token: ", token);
+
+      let json = {
+        method: "GET",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+          Authorization: "Bearer " + token,
+        }),
+      };
+      const response = await fetch(
+        `${process.env.REACT_APP_BACK_END_HOST}/v1/donors/${userInfor.idD}`,
+        json
+      )
+        .then((res) => res.json())
+        .catch((error) => {
+          console.log(error);
+        });
+
+      if (response.success) {
+        console.log("DATE DONOR INFOR: ", response.body);
+        setDonorInfor(response.body);
+      }
+    };
+    asyncFn();
+  }
+  function getDonorStatusAPI() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
       console.log("Token: ", token);
@@ -39,9 +91,8 @@ const OrganizationCampaignHealthInf = () => {
           Authorization: "Bearer " + token,
         }),
       };
-
       const response = await fetch(
-        `${process.env.REACT_APP_BACK_END_HOST}/v1/donors/${Number(donorID)}/donated/latest`,
+        `${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getParticipatedDonor/${userInfor.idC}`,
         json
       )
         .then((res) => res.json())
@@ -50,21 +101,25 @@ const OrganizationCampaignHealthInf = () => {
         });
 
       if (response.success) {
-        console.log("TEST NEK: ",response.body)
-        setUser(response.body);
-       }
+        console.log("DATA DONOR STATUS: ", response.body.reverse());
+        setStatus(
+          response.body.reverse().find(function (item) {
+            console.log("ITEM: ", item);
+            return (
+              item.donateRegistrationResponse.donorId == userInfor.idD &&
+              item.donateRegistrationResponse.campaignId == userInfor.idC &&
+              item.donateRegistrationResponse.registeredDate == userInfor.date
+            );
+          })
+        );
+      }
     };
     asyncFn();
   }
   useEffect(() => {
-    getDonorHealthInfFromAPI();
-     }, []);
-  const [valueForm, setForm] = useState(user[0]);
-  const [valueState, setState] = useState("false");
-  const value = useMemo(
-    () => ({ valueForm, setForm, valueState, setState }),
-    [valueForm, setForm, valueState, setState]
-  );
+    getDonorStatusAPI();
+    getDonorInforAPI();
+  }, []);
   // const user = JSON.parse(sessionStorage.getItem('user'))
   // const rolePath = JSON.parse(sessionStorage.getItem('userRole'))
   // if (user === null) {
@@ -78,36 +133,21 @@ const OrganizationCampaignHealthInf = () => {
         <SideBarforOrganization />
       </div>
       <div>
-        <PageHeader
-          breadcrumb={{ routes }}
-          className="site-page-header"
-          title="Thông tin sức khỏe"
-        />
-        <div className="content-col">
-          <div>
-            <FormContext.Provider value={value}>
-            {/*status: Already filled out a health form(true) or not(false) */}
-            {/*valueState: need to edit(true) or watch(false); */}
-              {valueForm.status === "false" ? (
-                <WriteHealthInf />
-    
-              ) : valueState === "false" ? (
-                <RecheckHealthInf />
-              ) : (
-                <EditHealthInf />
-              )}
-            </FormContext.Provider>
-          </div>
-          <div>
-            <div className="donor-inf">
-              <img src="https://i.cbc.ca/1.5359228.1577206958!/fileImage/httpImage/smudge-the-viral-cat.jpg" />
-              <div className="donor-name">Nguyễn Văn A</div>
+        {valueStatus && valueDonorInfor && (
+            <div>
+              <HealthContext.Provider value={value}>
+              {console.log(valueStatus)}
+                {valueStatus.donateRegistrationResponse.status ===
+                "NOT_CHECKED_IN" ? (
+                  <WriteHealthInf />
+                ) : valueState === "false" ? (
+                  <RecheckHealthInf />
+                ) : (
+                  <EditHealthInf />
+                )}
+              </HealthContext.Provider>
             </div>
-            <div className="donor-achievement">
-              <div className="donor-achievement-title">Thành tích</div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

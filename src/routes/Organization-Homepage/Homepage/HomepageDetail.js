@@ -150,6 +150,7 @@ const HomepageDetail = () => {
         campaigns={campaigns}
         participated={participated}
         bloodAmount={bloodAmount}
+        question={question}
       />
       {/* <WelcomePageWithNoCampaign /> */}
       <div className="homepage-col-2">

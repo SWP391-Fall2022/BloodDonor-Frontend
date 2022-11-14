@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form, Radio, message } from 'antd';
+import { Button, Modal, Form, Radio, message, notification } from 'antd';
 import 'antd/dist/antd.min.css';
 import './EditDateTime.css';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 const EditDateTime = (props) => {
-    const [oldDate, setOldDate] = useState("")
+    const [oldDate, setOldDate] = useState()
 
-    const [oldPeriod, setOldPeriod] = useState("")
+    const [oldPeriod, setOldPeriod] = useState()
 
     const [message, setMessage] = useState('')
+
+    const navigate = useNavigate()
     // fetch API get detail of registration
     const [form] = Form.useForm();
 
@@ -27,19 +30,21 @@ const EditDateTime = (props) => {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-                console.log("getRegistration", props.campaign.id)
-            if (response.success) {
+            console.log("fetchResponse", response)
+            console.log("getRegistration", props.campaign.id)
+            if (response.status === 200) {
                 response.body.find((registration) => {
                     //only registration has status NOT_CHECKED_IN can be edit
-                    if (registration.status === "NOT_CHECKED_IN" && registration.campaignId ===  props.campaign.id ){
-                        setOldDate(registration.registeredDate )
-                    setOldPeriod(registration.period)
+                    if (registration.status == "NOT_CHECKED_IN" && registration.campaignId === props.campaign.id) {
+                        setOldDate(registration.registeredDate)
+                        setOldPeriod(registration.period)
+                        console.log(registration)
                     }
                 }
 
                 )
             }
-            else{
+            else {
                 setMessage(response.message)
             }
 
@@ -51,8 +56,7 @@ const EditDateTime = (props) => {
     //call etch API function
     useEffect(() => {
         getRegistration();
-    }, []
-    )
+    })
 
     //Get days for choose day ----------------------
     var getDaysArray = function (start, end) {
@@ -61,7 +65,7 @@ const EditDateTime = (props) => {
         }
         return arr;
     };
-    var daylist = props.campaign.onSiteDates !== undefined ?  props.campaign.onSiteDates : getDaysArray(new Date(props.campaign.startDate), new Date(props.campaign.endDate));
+    var daylist = props.campaign.onSiteDates !== undefined ? props.campaign.onSiteDates : getDaysArray(new Date(props.campaign.startDate), new Date(props.campaign.endDate));
 
     const getDayOfWeek = (day) => {
         var useday = new Date(day);
@@ -101,9 +105,6 @@ const EditDateTime = (props) => {
         console.log("formData:", formData)
 
 
-        const formData = form.getFieldsValue(true);
-        console.log(formData)
-
         const requestData = {
             "campaignId": props.campaign.id,
             "registerDate": formData.registerDate,
@@ -128,14 +129,13 @@ const EditDateTime = (props) => {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log("response", response)
-        if (response.success) {
-            
-      
+        if (response.status === 200) {
             console.log("Chỉnh sửa thành công:", response)
             updateSuccess()
         }
         else {
-                setMessage(response.body)
+            if (response.body === "The time between donations must be at least 12 weeks")
+                setMessage("Thời gian giữa những lần hiến máu của bạn phải cách nhau ít nhất 12 tuần!")
 
             console.log("ko Chỉnh sửa được")
 
@@ -152,7 +152,7 @@ const EditDateTime = (props) => {
             content: 'Lịch tham gia đã được chỉnh sửa thành công',
             okText: 'Đóng',
             onOk() {
-        window.location.reload(false);
+                window.location.reload(false);
 
                 setOpen(false);
 
@@ -161,8 +161,9 @@ const EditDateTime = (props) => {
         });
     };
 
-    const EditDateTimeForm = ({ open, onCancel, registered }) => {
 
+
+    const EditDateTimeForm = ({ open, onCancel, registered }) => {
         return (
             <Modal
                 open={open}
@@ -180,7 +181,7 @@ const EditDateTime = (props) => {
                     form={form}
                     layout="vertical"
                     name="edit-date-time-form"
-               
+
 
                 >
                     <Form.Item>
@@ -191,7 +192,6 @@ const EditDateTime = (props) => {
                             <div className='register-date'>
                                 <Form.Item name="registerDate" initialValue={oldDate}>
                                     <Radio.Group name="registerDate" disabled={registered ? true : false} defaultValue={oldDate} >
-
 
                                         {
                                             daylist.map((day) =>
@@ -210,13 +210,14 @@ const EditDateTime = (props) => {
                         <div className='register-time'>
                             <Form.Item name="period" initialValue={oldPeriod}>
                                 <Radio.Group disabled={registered ? true : false} defaultValue={oldPeriod}>
+
                                     <Radio value={"MORNING"}>Buổi sáng: 8h00 đến 11h00</Radio>
                                     <Radio value={"AFTERNOON"}>Buổi chiều: 13h30 đến 17h00</Radio>
 
                                 </Radio.Group>
                             </Form.Item>
                         </div>
-                        <div style={{color:"red"}}>{message}</div>
+                        <div style={{ color: "red" }}>{message}</div>
                     </Form.Item>
 
                 </Form>

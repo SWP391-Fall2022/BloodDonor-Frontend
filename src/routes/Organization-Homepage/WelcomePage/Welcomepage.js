@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./welcomepage.css";
 import img_1 from "../../../../src/assets/homepage-organization-blood-bag-wink-1-eye.png";
-const WelcomePage = ({ campaigns, participated, bloodAmount }) => {
+const WelcomePage = ({ campaigns, participated, bloodAmount, question}) => {
     const [now, setNow] = useState()
     const getRealTime = () => {
         setNow(new Date().getTime());
@@ -43,18 +43,18 @@ const WelcomePage = ({ campaigns, participated, bloodAmount }) => {
               <div className="welcome-box">
                 <h4>Đăng ký</h4>
                 <div className="amount">
-                  {filterStatus(participated, "CHECKED_IN")}
+                  {filterStatus(participated, "NOT_CHECKED_IN")}
                 </div>
               </div>
               <div className="welcome-box">
                 <h4>Tham gia</h4>
                 <div className="amount">
-                  {filterStatus(participated, "NOT_CHECKED_IN")}
+                  {filterStatus(participated, "CHECKED_IN")}
                 </div>
               </div>
               <div className="welcome-box">
                 <h4>Lượng máu</h4>
-                <div className="amount">{bloodAmount * 0.001}l</div>
+                <div className="amount">{(bloodAmount * 0.001).toFixed(2)}l</div>
               </div>
             </div>
           </div>
@@ -69,12 +69,8 @@ const WelcomePage = ({ campaigns, participated, bloodAmount }) => {
             </h5>
             <div className="welcome-box-container">
               <div className="welcome-box">
-                <h4>Hỏi đáp</h4>
-                <div className="amount">102</div>
-              </div>
-              <div className="welcome-box">
-                <h4>Tin nhắn</h4>
-                <div className="amount">102</div>
+                <h4>Câu hỏi</h4>
+                {question ? (<div className="amount">{question.length}</div>) : (<div className="amount">0</div>)}
               </div>
             </div>
           </div>
