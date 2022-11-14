@@ -90,6 +90,10 @@ padding: 5% 7%;
     opacity: 0.7;
 }
 
+#daysOfMonth[disabled]{
+    opacity: 0.7;
+}
+
 #onSiteDates, #daysOfMonth{
     height: 32px;
     padding: 4px 11px;

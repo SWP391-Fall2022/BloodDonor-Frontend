@@ -62,13 +62,11 @@ export default function HistoryContainer() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         // console.log(response)
-        if (response.status === 400) {
+        if (response.status === 400 || response.status === 403) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
             if (response.body.length !== 0) {
@@ -86,11 +84,9 @@ export default function HistoryContainer() {
         // console.log(response)
         if (response.status === 400) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
             const info = { key: id, campaignName: response.body.name, status: body.status === "NOT_CHECKED_IN" ? "Đã đăng ký" : body.status === "CHECKED_IN" ? "Đã tham gia" : "Đã hủy" }
@@ -122,6 +118,12 @@ export default function HistoryContainer() {
             });
             sessionStorage.clear()
             navigate("/");
+        }
+        if (response.status === 403) {
+            notification.error({
+                message: response.body,
+                placement: "top"
+            });
         }
         if (response.status === 200) {
             response.body.forEach(e => {

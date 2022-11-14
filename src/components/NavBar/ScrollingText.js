@@ -5,12 +5,10 @@ export default class ScrollingText extends Component {
   render() {
     return (
       <div id="mainmodal">
-        <div class="modalconent">
-          <marquee class="marquee" behavior="scroll" direction="left">
+        <div className="modalconent">
+          <marquee className="marquee" behavior="scroll" direction="left" pauseOnHover="true">
             <div>
-              ......"Đổi mới phong cách, thái độ phục vụ của cán bộ y tế hướng
-              tới sự hài lòng của người bệnh" ....... ___ ...... "An toàn thực
-              phầm - Hạnh phúc của mọi người" ......
+              ......"Hiến máu hôm nay - Sức khỏe ngày mai" ...... ___ ...... "Hiến giọt máu đào - Trao đời sự sống"...... ___ ......"Mỗi giọt máu cho đi, một cuộc đời ở lại"......
             </div>
           </marquee>
         </div>

@@ -27,14 +27,6 @@ export default function ChangePasswordSide() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/user/updatePassword`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.status === 400) {
-            notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                placement: "top"
-            });
-            sessionStorage.clear()
-            navigate("/");
-        }
         if (response.status === 200) {
             notification.success({
                 message: 'Đổi mật khẩu thành công',

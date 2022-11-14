@@ -1,10 +1,10 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "antd/dist/antd.min.css";
 import "./UnReplied.css";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { Form, Input, Button, Modal, notification } from "antd";
 
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { OrBread } from "../../Organization-Profile/organization-breadcrumb";
 
 const { TextArea } = Input;
@@ -13,26 +13,32 @@ const { TextArea } = Input;
 
 export default function DetailQuestion() {
     const [form] = Form.useForm();
-    const navigate = useNavigate();
+    const question1 = useParams();
     const [answer, setAnswer] = useState("");
+    const [question, setQuestion] = useState({});
 
+    const navigate = useNavigate();
 
     const location = useLocation();
-    //   console.log("location answer:", location)
-
-    //nhận state từ navigation
-    const question = location.state.question;
-    const id = location.state.id;
-
+    // //nhận state từ navigation
+    const previous = location.state?.previous;
+    const campaignId = location.state?.campaignId;
 
     const onFinish = async () => {
 
         const formData = form.getFieldsValue(true);
 
         const requestData = {
-            "answer": formData.answer
+            "answer": formData.answer.replace(/\s+/g,' ').trim()
         }
-        console.log("requestData", requestData)
+
+        if( requestData.answer.length === 0){
+            notification.error({
+              message: "Câu trả lời không được để trống!",
+              placement: "top"
+            });
+            return;
+          }
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
 
@@ -44,27 +50,27 @@ export default function DetailQuestion() {
                 'Authorization': "Bearer " + token,
             })
         }
-        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/answer/${id}`, json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/answer/${question1.id}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log("response", response)
         if (response.status === 400) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
-            console.log("Bạn đã trả lời câu hỏi thành công")
+            notification.success({
+                message: "Bạn đã trả lời câu hỏi thành công",
+                placement: "top"
+            });
             navigate("/organization/manageQuestion")
         }
 
 
     };
     // modal
-    const [open, setOpen] = useState(false);
+
 
     const showConfirm = () => {
         Modal.confirm({
@@ -74,11 +80,24 @@ export default function DetailQuestion() {
             cancelText: 'Xem Lại',
             onOk() {
                 onFinish();
-                setOpen(false)
             }
 
         });
     };
+
+    const showRefuseConfirm = () => {
+        Modal.confirm({
+            title: 'Bạn có chắc muốn từ chối trả lời câu hỏi này? Hành động này sẽ không thể thay đổi!',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Từ chối',
+            cancelText: 'Hủy',
+            onOk() {
+                refuseQuestion();
+            }
+
+        });
+    };
+
 
     //   fetch API refuse answer question
     const refuseQuestion = async () => {
@@ -92,20 +111,20 @@ export default function DetailQuestion() {
                 'Authorization': "Bearer " + token,
             })
         }
-        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/refuse/${id}`, json)
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/refuse/${question1.id}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        console.log("response", response)
         if (response.status === 400) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
-            console.log("Bạn đã từ chối trả lời câu hỏi!")
+            notification.info({
+                message: "Bạn đã từ chối trả lời câu hỏi!",
+                placement: "top"
+            });
             navigate("/organization/manageQuestion")
         }
 
@@ -113,8 +132,52 @@ export default function DetailQuestion() {
     };
 
 
+    // fetch data function
+    function getQuestionsFromAPI() {
+        const asyncFn = async () => {
+            const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+            let json = {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': "Bearer " + token,
+                })
+            }
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-organization`, json)
+                .then((res) => res.json())
+                .catch((error) => { console.log(error) })
+            if (response.status === 400) {
+                notification.error({
+                    message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                    placement: "top"
+                });
+                sessionStorage.clear()
+                navigate("/");
+            }
+            if (response.status === 200) {
+
+
+                setQuestion(response.body.find(obj => {
+
+                    return obj.questionId == question1.id;
+                }
+                ))
+            }
+        }
+        asyncFn();
+
+    }
+
+
+    //call etch API function
+    useEffect(() => {
+        getQuestionsFromAPI();
+    }, []
+    )
+
+
     const breadName = <>
-        <Link to="/organization/manageQuestion">
+        <Link to={previous !== undefined ? `/organization/manageQuestion/campaignQuestion/${campaignId}` : '/organization/manageQuestion'}>
             <ArrowLeftOutlined style={{ marginRight: '2%', color: 'black' }} />
         </Link>Chi tiết câu hỏi
     </>
@@ -130,18 +193,16 @@ export default function DetailQuestion() {
 
                 <div className="detail-question-body">
                     <h2>Trả lời câu hỏi</h2>
-                    {/* <p className="detail-question-title">Người bị cao huyết áp có hiến máu được không?</p> */}
-                    <p className="detail-question-content">{question}</p>
+                    <p className="detail-question-content">{question.question}</p>
 
                     <Form
                         id="answer-question-form"
                         form={form}
-                    // onFinish={onFinish}
                     >
                         <Form.Item
                             label="Trả lời"
                             name="answer"
-                            rules={[{ required: true, message: 'Vui lòng nhập câu trả lời cho câu hỏi' }]}>
+                            rules={[{ required: true, message: 'Vui lòng nhập câu trả lời cho câu hỏi' }, { whitespace: true, message:'Câu trả lời không thể chỉ chứa khoảng trắng'}]}>
                             <TextArea showCount maxLength={100} onChange={(e) => (setAnswer(e.target.value))}></TextArea>
                         </Form.Item>
 
@@ -154,7 +215,7 @@ export default function DetailQuestion() {
                                 id="refuseButton"
                                 type="primary"
                                 htmlType="button"
-                                onClick={refuseQuestion}
+                                onClick={showRefuseConfirm}
                             >
                                 Từ chối trả lời
                             </Button>
@@ -174,7 +235,8 @@ export default function DetailQuestion() {
                                 htmlType="button"
 
                                 onClick={() => {
-                                    form.resetFields();
+                                    form.resetFields("");
+                                    setAnswer("")
                                 }}>
                                 Hủy
                             </Button>

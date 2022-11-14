@@ -1,120 +1,65 @@
 import React from 'react';
-import { Collapse } from 'antd';
+import { Collapse, List } from 'antd';
 import './QaA.css';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
-export default function CampaignDetail() {
+export default function CampaignDetail(campaignId) {
 
+    console.log(campaignId.campaignId)
     //panel for q&a
     const { Panel } = Collapse;
+
+    const [questions, setQuestions] = useState();
+
+    // fetch data function
+    function getQuestion() {
+        const asyncFn = async () => {
+
+            let json = {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                })
+            }
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-campaign/${parseInt(campaignId.campaignId)}`, json)
+                .then((res) => res.json())
+                .catch((error) => { console.log("readOneFunction error", error) })
+            console.log(response)
+            if (response.success) {
+                setQuestions(response.body.filter((obj)=> obj.status === true && obj.answer !== 'REFUSED' && obj.answer !== ''))
+            }
+
+        }
+        asyncFn();
+    }
+
+
+    //call etch API function
+    useEffect(() => {
+        getQuestion();
+    }, [campaignId.campaignId]
+    )
 
 
     return (
         <>
+
             <section className="campaignDetail-q-and-a">
                 <h3>Q&A</h3>
+                <List
+                    itemLayout="horizontal"
+                    dataSource={questions !== undefined ? questions.filter((_, index) => index < 8) : questions}
+                    renderItem= {item => (
 
-                <Collapse className="campaignDetail-q-and-a-container">
-                    <Panel header="Ai có thể tham gia hiến máu?" className="campaignDetail-q-and-a-card">
-                        <li>
-                            Tất cả mọi người từ 18 - 60 tuổi, thực sự tình nguyện hiến máu của
-                            mình để cứu chữa người bệnh.
-                        </li>
-                        <li>
-                            Cân nặng ít nhất là 45kg đối với phụ nữ, nam giới. Lượng máu hiến
-                            mỗi lần không quá 9ml/kg cân nặng và không quá 500ml mỗi lần.
-                        </li>
-                        <li>
-                            Không bị nhiễm hoặc không có các hành vi lây nhiễm HIV và các bệnh
-                            lây nhiễm qua đường truyền máu khác.
-                        </li>
-                        <li>
-                            Thời gian giữa 2 lần hiến máu là 12 tuần đối với cả Nam và Nữ.
-                        </li>
-                        <li>Có giấy tờ tùy thân.</li>
-                    </Panel>
-                </Collapse>
-                <Collapse className="campaignDetail-q-and-a-container">
-                    <Panel
-                        header="Ai là người không nên hiến máu?"
-                        className="campaignDetail-q-and-a-card"
-                    >
-                        <li>
-                            Người đã nhiễm hoặc đã thực hiện hành vi có nguy cơ nhiễm HIV,
-                            viêm gan B, viêm gan C, và các vius lây qua đường truyền máu.
-                        </li>
-                        <li>
-                            Người có các bệnh mãn tính: tim mạch, huyết áp, hô hấp, dạ dày…
-                        </li>
-                    </Panel>
-                </Collapse>
-                <Collapse className="campaignDetail-q-and-a-container">
-                    <Panel
-                        header="Máu của tôi sẽ được làm những xét nghiệm gì?"
-                        className="campaignDetail-q-and-a-card"
-                    >
-                        <li>
-                            Tất cả những đơn vị máu thu được sẽ được kiểm tra nhóm máu (hệ
-                            ABO, hệ Rh), HIV, virus viêm gan B, virus viêm gan C, giang mai,
-                            sốt rét.
-                        </li>
-                        <li>
-                            Bạn sẽ được thông báo kết quả, được giữ kín và được tư vấn (miễn
-                            phí) khi phát hiện ra các bệnh nhiễm trùng nói trên.
-                        </li>
-                    </Panel>
-                </Collapse>
+                        <Collapse className="campaignDetail-q-and-a-container">
+                            <Panel header={item.question} className="campaignDetail-q-and-a-card">
+                                {item.answer}
+                            </Panel>
+                        </Collapse>
 
-                <Collapse className="campaignDetail-q-and-a-container">
-                    <Panel header="Ai có thể tham gia hiến máu?" className="campaignDetail-q-and-a-card">
-                        <li>
-                            Tất cả mọi người từ 18 - 60 tuổi, thực sự tình nguyện hiến máu của
-                            mình để cứu chữa người bệnh.
-                        </li>
-                        <li>
-                            Cân nặng ít nhất là 45kg đối với phụ nữ, nam giới. Lượng máu hiến
-                            mỗi lần không quá 9ml/kg cân nặng và không quá 500ml mỗi lần.
-                        </li>
-                        <li>
-                            Không bị nhiễm hoặc không có các hành vi lây nhiễm HIV và các bệnh
-                            lây nhiễm qua đường truyền máu khác.
-                        </li>
-                        <li>
-                            Thời gian giữa 2 lần hiến máu là 12 tuần đối với cả Nam và Nữ.
-                        </li>
-                        <li>Có giấy tờ tùy thân.</li>
-                    </Panel>
-                </Collapse>
-                <Collapse className="campaignDetail-q-and-a-container">
-                    <Panel
-                        header="Ai là người không nên hiến máu?"
-                        className="campaignDetail-q-and-a-card"
-                    >
-                        <li>
-                            Người đã nhiễm hoặc đã thực hiện hành vi có nguy cơ nhiễm HIV,
-                            viêm gan B, viêm gan C, và các vius lây qua đường truyền máu.
-                        </li>
-                        <li>
-                            Người có các bệnh mãn tính: tim mạch, huyết áp, hô hấp, dạ dày…
-                        </li>
-                    </Panel>
-                </Collapse>
-                <Collapse className="campaignDetail-q-and-a-container">
-                    <Panel
-                        header="Máu của tôi sẽ được làm những xét nghiệm gì?"
-                        className="campaignDetail-q-and-a-card"
-                    >
-                        <li>
-                            Tất cả những đơn vị máu thu được sẽ được kiểm tra nhóm máu (hệ
-                            ABO, hệ Rh), HIV, virus viêm gan B, virus viêm gan C, giang mai,
-                            sốt rét.
-                        </li>
-                        <li>
-                            Bạn sẽ được thông báo kết quả, được giữ kín và được tư vấn (miễn
-                            phí) khi phát hiện ra các bệnh nhiễm trùng nói trên.
-                        </li>
-                    </Panel>
-                </Collapse>
-
+                    )}
+                />
             </section>
         </>
     )

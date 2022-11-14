@@ -119,6 +119,7 @@ export default function App() {
           <Route
             exact strict path="/organization-homepage" element={<OrganizationHomepage />}
           />
+
            {/*ĐOAN KHÁNH: GIỮ NGUYÊN*/}
            <Route exact strict path="/organization/manageCampaign/campaign-donorlist/:id" element={<OrganizationCampaignDonorList />}/>
           <Route exact strict path="/organization/manageCampaign/campaign-health-inf/:idC/:idD/:date" element={<OrganizationCampaignHealthInf />}/>
@@ -155,21 +156,21 @@ export default function App() {
                 <Route path="preview" element={<OrganizationPreviewCampaign />} />
               </Route>
 
-              {/* Manage Question */}
-              <Route path="manageQuestion" element={<OrganizationQuestion />}>
-                <Route index element={<OrganizationManageQuestion />} />
-                <Route path="campaignQuestion/:id" element={<OrganizationCampaignQuestion />} />
-                <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
-                <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
-              </Route>
-              <Route path="manageGuide" element={<OrganizationGuide />} />
-              <Route
-                path="changePassword"
-                element={<OrganizationChangePassword />}
-              />
-              <Route path="profile" element={<OrganizationInfo />} />
-              <Route path="*" element={<NoPageOrganization />} />
+            {/* Manage Question */}
+            <Route path="manageQuestion" element={<OrganizationQuestion />}>
+              <Route index element={<OrganizationManageQuestion />} />
+              <Route path="campaignQuestion/:id" element={<OrganizationCampaignQuestion />} />
+              <Route path="unReplyQuestion/:id" element={<OrganizationUnRepliedQuestion />} />
+              <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
             </Route>
+            <Route path="manageGuide" element={<OrganizationGuide />} />
+            <Route
+              path="changePassword"
+              element={<OrganizationChangePassword />}
+            />
+            <Route path="profile" element={<OrganizationInfo />} />
+            <Route path="*" element={<NoPageOrganization />} />
+          </Route>
 
             {/* Pages for admin */}
             <Route path="/admin" element={<AdminProfile />}>

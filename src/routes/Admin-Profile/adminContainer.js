@@ -12,12 +12,12 @@ export default function AdminProfile() {
     const [render, setRender] = useState(false)
     const [access, setAccess] = useState(false)
     const navigate = useNavigate()
-    const { role } = useContext(UserContext)
+    const role = JSON.parse(sessionStorage.getItem("userRole"))
     const effectRan = useRef(false)
 
     useEffect(() => {
         if (effectRan.current === true) {
-            if (role !== "ADMIN") {
+            if (role !== "/admin" || role === null) {
                 notification.error({
                     message: 'Chỉ admin mới được phép truy cập',
                     placement: 'top'

@@ -22,9 +22,9 @@ function checkOrgStatus(org) {
 const columns = [
     {
         title: 'STT',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text) => <a>{text}</a>,
+        dataIndex: 'STT',
+        key: 'STT',
+        render: (text, record, index) => index + 1,
     },
 
     {
@@ -82,8 +82,6 @@ export default function AdminManageOrganization() {
                         phone: row.phone,
                         status: checkOrgStatus(row)
                     })))
-                console.log("camps", tableRow)
-                // navigate("/organization/manageCampaign")
 
             }
 

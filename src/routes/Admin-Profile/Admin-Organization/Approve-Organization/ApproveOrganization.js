@@ -39,13 +39,15 @@ export default function AdminApproveOrganization() {
         console.log("response", response)
         if (response.status === 400) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
+            notification.success({
+                message: response.body,
+                placement: "top"
+            });
             console.log("Bạn đã từ chối tài khoản của tổ chức này!")
             navigate("/admin/manage_organization")
         }
@@ -104,13 +106,15 @@ export default function AdminApproveOrganization() {
         console.log("response", response)
         if (response.status === 400) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
+            notification.success({
+                message: response.body,
+                placement: "top"
+            });
             console.log("Bạn đã duyệt thành công tài khoản của tổ chức này!")
             navigate("/admin/manage_organization")
         }

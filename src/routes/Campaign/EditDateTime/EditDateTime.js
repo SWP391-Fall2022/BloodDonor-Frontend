@@ -30,8 +30,7 @@ const EditDateTime = (props) => {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me/registered`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-            console.log("fetchResponse", response)
-            console.log("getRegistration", props.campaign.id)
+           
             if (response.status === 200) {
                 response.body.find((registration) => {
                     //only registration has status NOT_CHECKED_IN can be edit

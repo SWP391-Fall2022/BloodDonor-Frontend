@@ -27,8 +27,6 @@ export default class NewsList extends Component {
           return 5
         if (category[0] === "typicalDonor")
           return 6
-
-
       }
 
       );
@@ -85,10 +83,7 @@ export default class NewsList extends Component {
 
       );
     };
-    // const [query, setQuery] = useState("");
-
-
-
+   
     return (
       // dùng list vs pagination component
       <>
@@ -118,7 +113,7 @@ export default class NewsList extends Component {
               <div className="news-item-content">
                 <p className="title">{item.title}</p>
                 <p>{item.date}</p>
-                <div
+                <div className="new-content"
                   dangerouslySetInnerHTML={{ __html: item.content }}
                 />
               </div>

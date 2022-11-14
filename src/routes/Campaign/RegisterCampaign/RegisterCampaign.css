@@ -113,6 +113,11 @@
     color: black;
 }
 
+.registered-buttons  .cancel-camp:hover{
+    color: black;
+
+}
+
 /* customize button of antd modal */
 .cancel-confirm .ant-btn-primary{
     border-color: var(--primary-600) !important;

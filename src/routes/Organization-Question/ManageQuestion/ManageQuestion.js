@@ -10,8 +10,6 @@ function checkQuestionStatus(answer, status) {
 
   if (answer === "REFUSED" && status === false)
     return "Từ chối"
-  else if (status === false)
-    return "Đã xóa"
   else if (answer === "" || answer === null)
     return "Chưa trả lời"
   else
@@ -42,18 +40,8 @@ export default function ManageQuestion() {
       const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-organization`, json)
         .then((res) => res.json())
         .catch((error) => { console.log(error) })
-      if (response.status === 400) {
-        notification.error({
-          message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-          placement: "top"
-        });
-        sessionStorage.clear()
-        navigate("/");
-      }
       if (response.status === 200) {
-        console.log("response", response)
         setQuestions(response)
-        console.log("question after set", questions)
         setTableRow(
           response.body.map(row => ({
             donorName: row.donorName,
@@ -81,9 +69,11 @@ export default function ManageQuestion() {
   const columns = [
     {
       title: 'STT',
-      dataIndex: 'id',
-      key: 'id',
-      render: (text) => <a>{text}</a>,
+      dataIndex: 'STT',
+      key: 'STT',
+      width: '10%',
+      fixed: 'left',
+      render: (text, record, index) => index + 1,
     },
     {
       title: 'Tên người hỏi',
@@ -196,11 +186,12 @@ export default function ManageQuestion() {
 
                       pageSize: 5,
                     }}
+                    scroll={{ x: "100wh" }}
 
                     onRow={record => ({
                       onClick: (e) => {
                         if (record.status == `Chưa trả lời`) {
-                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+                          navigate(`/organization/manageQuestion/unReplyQuestion/${record.id}`, { state: { question: record.question, id: record.id } })
                         } else {
                           navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
                         }
@@ -228,7 +219,7 @@ export default function ManageQuestion() {
 
                     onRow={record => ({
                       onClick: (e) => {
-                        navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+                        navigate(`/organization/manageQuestion/unReplyQuestion/${record.id}`, { state: { question: record.question, id: record.id } })
 
                       }
 

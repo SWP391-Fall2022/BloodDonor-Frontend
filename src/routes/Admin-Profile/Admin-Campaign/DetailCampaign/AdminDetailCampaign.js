@@ -21,7 +21,6 @@ export default function AdminDetailCampaign() {
 
   //get camp id
   const location = useLocation();
-  // console.log("location:", location)
 
   //nhận state từ navigation
   const campId = location.state.id;
@@ -71,14 +70,11 @@ export default function AdminDetailCampaign() {
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/delete/${campId}`, json)
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
-    console.log("closeCampaign", response)
-    if (response.status === 400) {
+    if (response.status === 400 || response.status === 403) {
       notification.error({
-        message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+        message: response.body,
         placement: "top"
       });
-      sessionStorage.clear()
-      navigate("/");
     }
     if (response.status === 200) {
       // alert("Campaign has been deleted")
@@ -90,54 +86,6 @@ export default function AdminDetailCampaign() {
   const deleteSuccess = () => {
     Modal.success({
       content: 'Chiến dịch đã được xóa thành công.',
-      onOk() {
-        navigate("/admin/manage_campaign")
-
-      }
-
-    });
-  };
-
-  // close confirm modal
-  const showCloseConfirm = () => {
-    Modal.confirm({
-      title: 'Bạn có chắc muốn đóng chiến dịch này không? Chiến dịch sẽ không thể được mở lại!',
-      icon: <ExclamationCircleOutlined />,
-      okText: 'Đóng',
-      cancelText: 'Hủy',
-      className: 'close-campaign-confirm',
-
-      onOk() {
-        deleteCampaign();
-        setOpen(false)
-      }
-    });
-  };
-
-  // function deleteCampaign() 
-
-  const closeCampaign = async () => {
-    let json = {
-      method: 'PUT',
-      headers: new Headers({
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': "Bearer " + token,
-      })
-    }
-    const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/close/${campId}`, json)
-      .then((res) => res.json())
-      .catch((error) => { console.log(error) })
-    console.log("closeCampaign", response)
-    if (response.success) {
-      // alert("Campaign has been deleted")
-      closeSuccess();
-
-    }
-  }
-
-  const closeSuccess = () => {
-    Modal.success({
-      content: 'Chiến dịch đã được đóng thành công.',
       onOk() {
         navigate("/admin/manage_campaign")
 
@@ -166,7 +114,8 @@ export default function AdminDetailCampaign() {
 
             <div className='admin-campaign-content'>
               <p className='sub-title' style={{ textTransform: "uppercase" }}>{selectedCampaign.organizationName} xin thông báo:</p>
-              <p>{selectedCampaign.description}</p>
+              <div dangerouslySetInnerHTML={{ __html: selectedCampaign.description }} />
+
 
               <p className='sub-title'>Thời gian:</p>
               <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
@@ -199,13 +148,6 @@ export default function AdminDetailCampaign() {
             <DeleteIcon className="admin-campaign-action-table-icon" ></DeleteIcon>
             <p>Xóa</p>
           </div>
-
-
-          <div className="admin-campaign-action-table-item" onClick={closeCampaign} >
-            <HighlightOffIcon className="admin-campaign-action-table-icon"  ></HighlightOffIcon>
-            <p>Đóng</p>
-          </div>
-
 
         </div>
       </div>

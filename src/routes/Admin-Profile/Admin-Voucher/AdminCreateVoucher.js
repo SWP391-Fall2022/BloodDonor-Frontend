@@ -35,17 +35,19 @@ export default function AdminCreateVoucher() {
             "amount": formData.amount
         }
         // console.log(requestData)
+        const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
         let json = {
             method: 'POST',
-            body: JSON.stringify(requestData),
             headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8'
-            })
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': "Bearer " + token,
+            }),
+            body: JSON.stringify(requestData),
         }
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/rewards`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        // console.log(response)
+        console.log(response)
         if (response.status === 200) {
             notification.success({
                 message: 'Tạo voucher thành công',

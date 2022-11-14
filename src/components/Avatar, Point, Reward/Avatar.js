@@ -87,13 +87,11 @@ export default function AvatarContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/user/updateAvatar`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.status === 400) {
+        if (response.status === 400 || response.status === 403) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
             notification.success({

@@ -128,7 +128,6 @@ export default function RegisterCampaign({ campaign, org }) {
             console.log(response)
             if (response.status == 200) {
                 registerSuccess();
-                console.log("Đăng ký thành công")
             }
             else {
                 if (response.message === "Missing request attribute 'user' of type User") {
@@ -141,8 +140,7 @@ export default function RegisterCampaign({ campaign, org }) {
                     setMessage(response.message)
                     registerError(response.message);
                 }
-                console.log("ko đăng ký được")
-
+             
             }
 
         }
@@ -220,16 +218,16 @@ export default function RegisterCampaign({ campaign, org }) {
 
     };
     useEffect(() => {
+        getDonor();
+
         getDonated();
 
-    }, []
+    },[donorId]
     )
 
     //fetch api get medical document
 
     const getMedicalDoc = async (campaignId, registerDate) => {
-        getDonor();
-
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
         const requestData = {
@@ -250,6 +248,8 @@ export default function RegisterCampaign({ campaign, org }) {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/medicalDocument/getByDonor`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
+        console.log(response) 
+
         if (response.status === 200) {
             setMedicalDoc(response.body)
 
@@ -387,14 +387,17 @@ export default function RegisterCampaign({ campaign, org }) {
 
 
                 <div className='participated-buttons' style={{ display: medicalInfor === true && org === false ? "block" : "none" }}>
+                    <p>* Vì lần cuối cùng tham gia hiến máu của bạn cách hiện tại chưa đủ 12 tuần. Bạn chưa thể đăng ký tham gia hiến máu nữa. Vui lòng quay lại sau khi đủ thời gian.</p>
                     <Button type="primary" id='medical-infor' onClick={showModal}>
                         Thông tin sức khỏe
                     </Button>
                     <Modal title="THÔNG TIN SỨC KHỎE" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} className='health-info-modal'>
+                        <p style={{textAlign: "center"}}><strong>Lần hiến máu gần nhất </strong> </p>
                         <p><strong>Cân nặng: </strong> {medicalDoc.weight}</p>
                         <p><strong>Nhóm máu: </strong> {medicalDoc.bloodType}</p>
                         <p><strong>Lượng máu: </strong>{medicalDoc.amount}</p>
                         <p><strong>Chi tiết sức khỏe: </strong>{medicalDoc.details}</p>
+                        <p><strong>Ngày hiến máu: </strong>{moment(medicalDoc.registeredDate).format("DD/MM/YYYY")}</p>
 
                     </Modal>
                 </div>
