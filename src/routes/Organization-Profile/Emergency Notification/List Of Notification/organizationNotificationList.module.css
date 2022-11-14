@@ -23,6 +23,16 @@
     justify-content: space-between;
 }
 
+.viewContainer {
+    text-align: center;
+    width: 45rem;
+    background-color: white;
+    padding: 1% 5%;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    margin: 0 1rem 1rem 0;
+}
+
 @media only screen and (max-width: 1200px) {
     .listContainer {
         width: 30rem;
@@ -32,7 +42,14 @@
         font-size: 1.5em;
     }
 
-    .formContainer {
-        transform: scale(0.9);
+    .viewContainer {
+        width: 30rem;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .viewContainer {
+        width: 25rem;
     }
 }

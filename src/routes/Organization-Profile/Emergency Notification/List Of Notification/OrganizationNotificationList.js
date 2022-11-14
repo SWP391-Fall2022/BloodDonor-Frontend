@@ -19,7 +19,15 @@ export default function OrganizationNotificationList() {
     //The list will change based on search keyword
     useEffect(() => {
         async function fetchList() {
-            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`)
+            const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+            let json = {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': "Bearer " + token,
+                })
+            }
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAllByOrganization`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             // console.log(response)
@@ -100,7 +108,7 @@ export default function OrganizationNotificationList() {
                                 }}
                             />
                         </div>
-                        <div>                            
+                        <div>
                             <Link to="/organization/notification/create">
                                 <Button id={styles.btn3}>Tạo mới</Button>
                             </Link>

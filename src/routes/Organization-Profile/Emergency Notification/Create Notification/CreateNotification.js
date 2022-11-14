@@ -133,17 +133,15 @@ export default function OrganizationCreateNotification() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log(response)
-        if (response.status === 400) {
+        if (response.status === 400 || response.status === 403) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
             notification.success({
-                message: "Tạo thông báo thành công",
+                message: "Chỉnh sửa thành công",
                 placement: "top"
             });
             navigate("/organization/notification");
@@ -182,7 +180,7 @@ export default function OrganizationCreateNotification() {
                     <div className={stylesNoti.formContainer}>
                         <h1 style={{ padding: '1rem 0' }}><strong>TẠO THÔNG BÁO KHẨN CẤP</strong></h1>
                         <Form form={form} layout="vertical" onFinish={onFinish}>
-                            <Form.Item className={styles.formLabel} label="Tựa đề thông báo" name="name" rules={[{ required: true }]}>
+                            <Form.Item className={styles.formLabel} label="Tựa đề thông báo" name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
                                 <Input />
                             </Form.Item>
                             <Form.Item className={styles.formLabel}>
@@ -205,10 +203,10 @@ export default function OrganizationCreateNotification() {
                                     </Select>
                                 </Form.Item>
                             </Form.Item>
-                            <Form.Item className={styles.formLabel} label="Địa điểm" name="addressDetails" rules={[{ required: true }]}>
+                            <Form.Item className={styles.formLabel} label="Địa điểm" name="addressDetails" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item className={styles.formLabel} label="Yêu cầu về nhóm máu" name="bloodTypes" rules={[{ required: true }]}>
+                            <Form.Item className={styles.formLabel} label="Yêu cầu về nhóm máu" name="bloodTypes" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
                                 <Checkbox.Group options={["A", "B", "AB", "O"]} />
                             </Form.Item>
                             <Form.Item className={styles.formLabel} label="Nội dung thông báo">

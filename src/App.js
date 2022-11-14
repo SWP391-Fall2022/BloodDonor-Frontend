@@ -32,6 +32,7 @@ import OrganizationInfo from "./routes/Organization-Profile/Basic Info/Info";
 import OrganizationNotificationContainer from "./routes/Organization-Profile/Emergency Notification/OrganizationNotificationContainer";
 import OrganizationNotificationListContainer from "./routes/Organization-Profile/Emergency Notification/List Of Notification/OrganizationNotificationListContainer";
 import OrganizationCreateNotification from "./routes/Organization-Profile/Emergency Notification/Create Notification/CreateNotification";
+import OrganizationEditNotification from "./routes/Organization-Profile/Emergency Notification/List Of Notification/EditNotification";
 import OrganizationViewNotification from "./routes/Organization-Profile/Emergency Notification/List Of Notification/OrganizationViewNotification";
 import OrganizationReviewNotification from "./routes/Organization-Profile/Emergency Notification/Create Notification/ReviewNotification";
 import OrganizationProfile from "./routes/Organization-Profile/organization-profile";
@@ -143,22 +144,10 @@ export default function App() {
               {/* Home Page */}
               <Route index element={<OrganizationHomepage />} />
               {/* Notification Emergency Management */}
-              <Route
-                path="notification"
-                element={<OrganizationNotificationContainer />}
-              >
-                <Route
-                  index
-                  element={<OrganizationNotificationListContainer />}
-                />
-                <Route
-                  path="create"
-                  element={<OrganizationCreateNotification />}
-                />
-                <Route
-                  path="create/preview"
-                  element={<OrganizationReviewNotification />}
-                />
+              <Route path="notification" element={<OrganizationNotificationContainer />}>
+                <Route index element={<OrganizationNotificationListContainer />} />
+                <Route path="create" element={<OrganizationCreateNotification />} />
+                <Route path="edit" element={<OrganizationEditNotification />} />
                 <Route path="view" element={<OrganizationViewNotification />} />
                 <Route path="*" element={<NoPageOrganization />} />
               </Route>
