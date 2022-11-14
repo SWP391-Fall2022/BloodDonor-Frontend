@@ -28,9 +28,9 @@ export default function CampaignDetail() {
       const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/readOne/${campaignTitle.id}`, json)
         .then((res) => res.json())
         .catch((error) => { console.log("readOneFunction error", error) })
-       
+
       if (response.success) {
-        
+
         setSelectedCampaign(response.body)
 
       }
@@ -113,11 +113,14 @@ export default function CampaignDetail() {
               </Link>
 
             </div >
+            <Link to={`/organization/${selectedCampaign.organization !== undefined ? selectedCampaign.organization.id : ""}`}>
 
-            <p className='organization-name'>{selectedCampaign.organization !== undefined ? selectedCampaign.organization.name : ""}</p>
+              <p className='organization-name' style={{color: "black"}}>{selectedCampaign.organization !== undefined ? selectedCampaign.organization.name : ""}</p>
+            </Link>
+
           </div >
 
-          <QaA className='list-qaa'></QaA>
+          <QaA className='list-qaa' campaignId={selectedCampaign.id}></QaA>
 
 
         </div >

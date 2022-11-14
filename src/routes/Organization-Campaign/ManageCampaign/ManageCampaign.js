@@ -111,12 +111,13 @@ export default function ManageCampaign() {
       if (response.status === 200) {
         setCampaigns(response)
         setTableRow(
-          response.body.map(row => ({
+          response.body.filter((obj) => obj.emergency === false)
+          .map(row => ({
             camName: row.name,
             startDate: moment(row.startDate).format("DD/MM/YYYY"),
             endDate: moment(row.endDate).format("DD/MM/YYYY"),
             id: row.id,
-            donorList: <Link to={`/organization-campaign-donorlist/${row.id}`}
+            donorList: <Link to={`/organization/manageCampaign/campaign-donorlist/${row.id}`}
               onClick={(event) => {
                 event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
               }

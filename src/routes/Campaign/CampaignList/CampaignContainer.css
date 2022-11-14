@@ -57,7 +57,8 @@
 .date-seach .ant-picker-range {
     height: 35px;
     width: 40%;
-    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 
@@ -72,7 +73,8 @@
 
 #campaign-container span.ant-input-affix-wrapper.cam-search {
     width: 57%;
-    border-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 /*-----------campaign CARD------------*/
@@ -159,6 +161,10 @@
 
 .search-campaign .ant-list-item-main {
     width: 60%;
+}
+
+.search-campaign .ant-list-vertical .ant-list-item-main{
+    line-height: 30px;
 }
 
 .search-campaign .ant-list-vertical .ant-list-item-meta {

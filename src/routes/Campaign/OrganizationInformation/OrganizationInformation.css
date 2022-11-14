@@ -1,19 +1,16 @@
 .organization-container{
-    margin: 140px 12% 30px 12%;
+    padding: 140px 20% 30px 20%;
     display: flex;
 }
 
 .organization-left{
     background-color: white;
-    margin-right: 20px;
     padding: 25px 35px;
     box-shadow: var(--shadow-dp-02);
-    width: 70%;
+    width: 100%;
+    border-radius: 5px;
 }
 
-.organization-right{
-    width: 30%;
-}
 
 .organization-left-title{
     text-align: center;
@@ -26,11 +23,6 @@
     margin-top: 20px;
 }
 
-.organization-achievement-title{
-    text-align: center;
-    font-weight: 600;
-    font-size: 18px;
-}
 
 .organization-name{
     font-weight: 600;
@@ -52,74 +44,6 @@ transform: scale(1);
 }
 
 
-/* right side style */
-.organization-name{
-    max-width: 65%;
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: 600;
-    font-size: 15px;
-}
-
-.organization-achievement{
-    text-align: center;
-    background-color: white;
-    padding: 20px 10px;
-    box-shadow: var(--shadow-dp-02);
-    margin-bottom: 20px;
-}
-
-.medals{
-    display: flex;
-    margin-top: 20px;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.organization-medal-item p{
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.organization-medal-item img{
-    width: 45%;
-}
-
-.organization-medal-item:first-of-type{
-    margin-right: 5px;
-}
-
-.ongoing-campaign{
-    background-color: white;
-    box-shadow: var(--shadow-dp-02);
-}
-
-.ongoing-campaign .ant-list-item {
-    border: none;
-}
-.ongoing-campaign .campaign-card{
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-}
-
-.ongoing-campaign .campaign-item{
-    text-align: center;
-}
-
-.ongoing-campaign .campaign-name{
-    font-size: 18px;
-    font-weight: 600;
-    margin: 10px 0;
-}
-
-.ongoing-campaign .campaign-header{
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.196);
-}
-
-.ongoing-campaign .campaign-img-container img{
-    height: 100%;
-}
 
 .informations{
     margin: 20px 0;
