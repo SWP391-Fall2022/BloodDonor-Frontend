@@ -110,7 +110,7 @@ export default function App() {
           {/*ĐOAN KHÁNH: GIỮ NGUYÊN*/}
           <Route exact strict path="/organization/manageCampaign/campaign-donorlist/:id" element={<OrganizationCampaignDonorList />}/>
           <Route exact strict path="/organization/manageCampaign/campaign-health-inf/:idC/:idD/:date" element={<OrganizationCampaignHealthInf />}/>
-          <Route exact strict path="/organization/manageCampaign/campaign-detail/statistical/:id" element={<OrganizationCampaignStatistical />} />
+          <Route exact strict path="/organization/manageCampaign/detailCampaign/statistical/:id" element={<OrganizationCampaignStatistical />} />
           {/*ĐOAN KHÁNH: TỚI ĐÂY */}
 
           {/* Pages for logged in donor */}
