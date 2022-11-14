@@ -50,11 +50,9 @@ export default function DetailQuestion() {
         console.log("response", response)
         if (response.status === 400) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
             console.log("Bạn đã trả lời câu hỏi thành công")
@@ -98,11 +96,9 @@ export default function DetailQuestion() {
         console.log("response", response)
         if (response.status === 400) {
             notification.error({
-                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                message: response.body,
                 placement: "top"
             });
-            sessionStorage.clear()
-            navigate("/");
         }
         if (response.status === 200) {
             console.log("Bạn đã từ chối trả lời câu hỏi!")

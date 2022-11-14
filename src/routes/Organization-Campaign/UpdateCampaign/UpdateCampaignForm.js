@@ -266,11 +266,9 @@ export default function UpdateCampaignForm() {
     console.log("EDIT response", response)
     if (response.status === 400) {
       notification.error({
-        message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+        message: response.body,
         placement: "top"
       });
-      sessionStorage.clear()
-      navigate("/");
     }
     if (response.status === 200) {
       success();

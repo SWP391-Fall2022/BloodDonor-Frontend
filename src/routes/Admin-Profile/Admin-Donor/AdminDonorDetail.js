@@ -82,7 +82,14 @@ export default function AdminDonorDetail({ setDetail, user }) {
     ];
 
     const lockAccount = async () => {
-        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/admin/lock/${user.userId}`, { method: "PUT" })
+        const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+        let json = {
+            method: 'PUT',
+            headers: new Headers({
+                'Authorization': "Bearer " + token,
+            }),
+        }
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/admin/lock/${user.userId}`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         // console.log(response)
@@ -122,7 +129,11 @@ export default function AdminDonorDetail({ setDetail, user }) {
                                     dataSource={dataSource}
                                 />
                                 <div style={{ textAlign: 'center' }}>
-                                    <Button id={styles.btn3} style={{ margin: '1rem 0' }} onClick={() => setOpen(true)}>Cấm tài khoản</Button>
+                                    {user.listState === "Cấm" ?
+                                        <Button id={styles.btnDisable} style={{ margin: '1rem 0' }} disabled>Cấm tài khoản</Button>
+                                        :
+                                        <Button id={styles.btn3} style={{ margin: '1rem 0' }} onClick={() => setOpen(true)}>Cấm tài khoản</Button>
+                                    }
                                     <Modal
                                         closable={false}
                                         open={open}

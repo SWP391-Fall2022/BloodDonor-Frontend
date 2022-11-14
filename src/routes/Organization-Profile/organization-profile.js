@@ -43,6 +43,11 @@ function OrganizationProfile() {
                         placement: "top"
                     });
                     navigate("/");
+                } else if (response.status === 403) {
+                    notification.error({
+                        message: response.body,
+                        placement: "top"
+                    });
                 } else if (response.status === 200) {
                     sessionStorage.setItem('avatar', JSON.stringify(response.body.avatar))
                     sessionStorage.setItem('name', JSON.stringify(response.body.name))

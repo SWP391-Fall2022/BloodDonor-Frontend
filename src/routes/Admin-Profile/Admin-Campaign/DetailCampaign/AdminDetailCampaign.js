@@ -72,13 +72,11 @@ export default function AdminDetailCampaign() {
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
     console.log("closeCampaign", response)
-    if (response.status === 400) {
+    if (response.status === 400 || response.status === 403) {
       notification.error({
-        message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+        message: response.body,
         placement: "top"
       });
-      sessionStorage.clear()
-      navigate("/");
     }
     if (response.status === 200) {
       // alert("Campaign has been deleted")

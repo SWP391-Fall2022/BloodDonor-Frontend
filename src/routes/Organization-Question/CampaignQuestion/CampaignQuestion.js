@@ -47,11 +47,9 @@ export default function ManageQuestion() {
         .catch((error) => { console.log(error) })
       if (response.status === 400) {
         notification.error({
-          message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+          message: response.body,
           placement: "top"
         });
-        sessionStorage.clear()
-        navigate("/");
       }
       if (response.status === 200) {
         console.log("getQuestionsByCamp", response)

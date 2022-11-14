@@ -19,14 +19,6 @@ export default function Points() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             // console.log(response);
-            if (response.status === 400) {
-                notification.error({
-                    message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
-                    placement: "top"
-                });
-                sessionStorage.clear()
-                navigate("/");
-            }
             if (response.status === 200) {
                 setpoints(response.body)
             }
