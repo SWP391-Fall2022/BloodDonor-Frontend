@@ -19,7 +19,7 @@ const { Option } = Select;
 function CreateCampaignForm() {
   const navigate = useNavigate();
   const [message, setMessage] = useState('')
-
+  const [sendMail, setSendMail] = useState(false)
 
   const [campaigName, setCampaigName] = useState("");
   const [dates, setDates] = useState([])
@@ -103,7 +103,7 @@ function CreateCampaignForm() {
     const formData = form.getFieldsValue(true);
 
     const requestData = {
-      "name": formData.name.replace(/\s+/g,' ').trim(),
+      "name": formData.name.replace(/\s+/g, ' ').trim(),
       "images": campaignImg,
       "description": formData.description,
       "startDate": formData.campDate[0],
@@ -111,8 +111,8 @@ function CreateCampaignForm() {
       "emergency": false,
       "bloodTypes": bloodTypes.toString().replace(/,/g, '-'),
       "districtId": districtId,
-      "addressDetails": formData.addressDetails.replace(/\s+/g,' ').trim(),
-      "sendMail": formData.sendMail,
+      "addressDetails": formData.addressDetails.replace(/\s+/g, ' ').trim(),
+      "sendMail": sendMail,
       "onSiteDates": onSiteDates[0] === "1970-01-01" || weekRepetition === true || monthRepetition === true ? null : String(onSiteDates).split(","),
       "weekRepetition": weekRepetition,
       "monthRepetition": monthRepetition,
@@ -122,37 +122,36 @@ function CreateCampaignForm() {
 
     }
     console.log("reques:", requestData)
-    if( requestData.name.length === 0){
+    if (requestData.name.length === 0) {
       notification.error({
         message: "Tên chiến dịch không được để trống!",
         placement: "top"
       });
       return;
     }
-    if(isRepetition === 1 && onSiteDates[0] === "1970-01-01" )
-    {
+    if (isRepetition === 1 && onSiteDates[0] === "1970-01-01") {
       notification.error({
         message: "Bạn phải chọn những ngày cụ thể bạn muốn mở đăng ký!",
         placement: "top"
       });
       return;
     }
-    else if(isRepetition === 2 && requestData.daysOfWeek.length === 0){
+    else if (isRepetition === 2 && requestData.daysOfWeek.length === 0) {
       notification.error({
         message: "Bạn phải chọn thứ trong tuần bạn muốn mở đăng ký!",
         placement: "top"
       });
       return;
     }
-    else if(isRepetition === 4 && (requestData.daysOfWeek.length === 0 || requestData.weekNumber === 0 )){
+    else if (isRepetition === 4 && (requestData.daysOfWeek.length === 0 || requestData.weekNumber === 0)) {
       notification.error({
         message: "Bạn phải chọn thứ trong tuần và tuần thứ mấy trong tháng bạn muốn mở đăng ký!",
         placement: "top"
       });
       return;
     }
-    
-    if(requestData.addressDetails.length === 0 ){
+
+    if (requestData.addressDetails.length === 0) {
       notification.error({
         message: "Địa chỉ chi tiết của chiến dịch không được để trống!",
         placement: "top"
@@ -202,11 +201,6 @@ function CreateCampaignForm() {
     setCampaignImg(campaignImg);
   }
 
-
-  // setup for send email
-  const sendEmail = (checked) => {
-    console.log(`switch to ${checked}`);
-  };
 
   // setup for repetition by  
   const [isRepetition, setIsRepetition] = useState();
@@ -308,7 +302,7 @@ function CreateCampaignForm() {
             name="basic"
             scrollToFirstError
           >
-            <Form.Item className="create-campaign-form-item" label="Tựa đề chiến dịch" name="name" rules={[{ required: true, message: 'Vui lòng nhập Tựa đề chiến dịch' }, { whitespace: true, message:'Tên chiến dịch không thể chỉ chứa khoảng trắng'}]}>
+            <Form.Item className="create-campaign-form-item" label="Tựa đề chiến dịch" name="name" rules={[{ required: true, message: 'Vui lòng nhập Tựa đề chiến dịch' }, { whitespace: true, message: 'Tên chiến dịch không thể chỉ chứa khoảng trắng' }]}>
               <Input placeholder="Nhập tựa đề chiến dịch"
                 onChange={(e) => {
                   setCampaigName(e.target.value)
@@ -342,7 +336,7 @@ function CreateCampaignForm() {
             </Form.Item>
 
 
-            <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }, { whitespace: true, message:'Chi tiết địa điểm diễn ra chiến dịch không thể chỉ chứa khoảng trắng'}]}>
+            <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }, { whitespace: true, message: 'Chi tiết địa điểm diễn ra chiến dịch không thể chỉ chứa khoảng trắng' }]}>
               <TextArea
                 rows={2}
                 allowClear
@@ -448,7 +442,9 @@ function CreateCampaignForm() {
             <PostImage campaignImg={campaignImg} callback={callbackImageFunction}></PostImage>
 
             <Form.Item label="Tính năng nâng cao - Mặc định thông báo chiến dịch sẽ không gửi cho mọi người:" name="sendMail" initialValue={false}>
-              <Switch onChange={sendEmail} style={{ marginRight: "10px" }} /> Gửi mail cho tình nguyện hiến máu có địa chỉ thường trú trong khu vực.
+              <Switch onChange={(value) => {
+                setSendMail(value)
+              }} style={{ marginRight: "10px" }} /> Gửi mail cho tình nguyện hiến máu có địa chỉ thường trú trong khu vực.
             </Form.Item>
 
             <div className="Mess" style={{ textAlign: "center", color: "red", marginBottom: "20px" }}>{message}</div>
@@ -457,7 +453,7 @@ function CreateCampaignForm() {
 
               <Button
                 disabled={
-                  (campaigName === "" || dates.length !== 2 || address === ""  ) ? true : false
+                  (campaigName === "" || dates.length !== 2 || address === "") ? true : false
                 }
                 id="finishButton" type="primary" htmlType="submit" size="large"
                 onClick={showConfirm}

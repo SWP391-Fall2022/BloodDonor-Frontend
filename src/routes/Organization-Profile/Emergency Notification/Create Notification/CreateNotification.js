@@ -141,7 +141,7 @@ export default function OrganizationCreateNotification() {
         }
         if (response.status === 200) {
             notification.success({
-                message: "Chỉnh sửa thành công",
+                message: "Tạo thông báo thành công",
                 placement: "top"
             });
             navigate("/organization/notification");

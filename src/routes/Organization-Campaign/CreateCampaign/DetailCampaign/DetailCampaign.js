@@ -355,7 +355,7 @@ function DetailCampaign() {
             Đóng
           </div>
 
-          <Link to={`/organization/statistical/${selectedCampaign.id}`} style={{ color: "black" }}>
+          <Link to={`/organization/manageCampaign/detailCampaign/statistical/${selectedCampaign.id}`} style={{ color: "black" }}>
             <div className="action-table-item"  >
               <Tooltip title="Thống kê"> <BarChartIcon className="action-table-icon" ></BarChartIcon></Tooltip>
               Thống kê

@@ -236,7 +236,7 @@ export default function UpdateCampaignForm() {
       "bloodTypes": bloodTypes.toString().replace(/,/g, '-'),
       "districtId": districtId,
       "addressDetails": formData.addressDetails.replace(/\s+/g,' ').trim(),
-      "sendMail": formData.sendMail,
+      "sendMail": false,
       "onSiteDates": onSiteDates[0] === "1970-01-01" || weekRepetition === true || monthRepetition === true ? null : String(onSiteDates).split(","),
       "weekRepetition": weekRepetition,
       "monthRepetition": monthRepetition,
@@ -551,9 +551,9 @@ export default function UpdateCampaignForm() {
 
             <PostImage campaignImg={campaignImg} callback={callbackImageFunction}></PostImage>
 
-            <Form.Item label="Tính năng nâng cao - Mặc định thông báo chiến dịch sẽ không gửi cho mọi người:" name="sendMail" initialValue={false}>
+            {/* <Form.Item label="Tính năng nâng cao - Mặc định thông báo chiến dịch sẽ không gửi cho mọi người:" name="sendMail" initialValue={false}>
               <Switch style={{ marginRight: "10px" }} /> Gửi mail cho tình nguyện hiến máu có địa chỉ thường trú trong khu vực.
-            </Form.Item>
+            </Form.Item> */}
 
             <div className="Mess" style={{ textAlign: "center", color: "red", marginBottom: "20px" }}>{message}</div>
 

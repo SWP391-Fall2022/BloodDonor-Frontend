@@ -79,7 +79,7 @@ export default function AdminManageCampaign() {
                 .catch((error) => { console.log(error) })
 
             if (response.success) {
-                // console.log("response", response)
+                console.log("response", response)
                 setCampaigns(response)
                 setTableRow(
                     response.body.map(row => ({
@@ -87,7 +87,7 @@ export default function AdminManageCampaign() {
                         startDate: moment(row.startDate).format("DD/MM/YYYY") ,
                         endDate: moment(row.endDate).format("DD/MM/YYYY") ,
                         id: row.id,
-                        orgName: row.organizationName,
+                        orgName: row.organization.name,
                         status: checkCampStatus(row)
                     })))
              

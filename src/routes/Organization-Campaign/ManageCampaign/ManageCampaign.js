@@ -19,7 +19,7 @@ function checkCampStatus(camp) {
 
   if ((start <= today && today <= end) || start > today)
     return "Đang diễn ra"
-  else // if(endDate < today)
+  if (end < today || end < start)// if(endDate < today)
     return "Kết thúc"
 
 }
@@ -73,7 +73,7 @@ const columns = [
     title: 'Trạng thái',
     dataIndex: 'status',
     key: 'status',
-    width:'10%'
+    width: '10%'
 
   },
 ];
@@ -89,7 +89,7 @@ export default function ManageCampaign() {
   function getCampFromAPI() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
-      {console.log("Token",token)}
+      // { console.log("Token", token) }
       let json = {
         method: 'GET',
         headers: new Headers({
@@ -100,7 +100,7 @@ export default function ManageCampaign() {
       const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAllByOrganization`, json)
         .then((res) => res.json())
         .catch((error) => { console.log(error) })
-        console.log(response)
+      console.log(response)
       if (response.status === 400) {
         notification.error({
           message: response.body,
@@ -111,25 +111,25 @@ export default function ManageCampaign() {
         setCampaigns(response)
         setTableRow(
           response.body.filter((obj) => obj.emergency === false)
-          .map(row => ({
-            camName: row.name,
-            startDate: moment(row.startDate).format("DD/MM/YYYY"),
-            endDate: moment(row.endDate).format("DD/MM/YYYY"),
-            id: row.id,
+            .map(row => ({
+              camName: row.name,
+              startDate: moment(row.startDate).format("DD/MM/YYYY"),
+              endDate: moment(row.endDate).format("DD/MM/YYYY"),
+              id: row.id,
 
-            donorList: <Link style={{padding:"30px 0"}} to={`/organization/manageCampaign/campaign-donorlist/${row.id}`}
-              onClick={(event) => {
-                event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
-              }
-              }>Chi tiết</Link>,
+              donorList: <Link style={{ padding: "30px 0" }} to={`/organization/manageCampaign/campaign-donorlist/${row.id}`}
+                onClick={(event) => {
+                  event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
+                }
+                }>Chi tiết</Link>,
 
-            questions: <Link style={{padding:"30px 0"}} to={`/organization/manageQuestion/campaignQuestion/${row.id}`}
-              onClick={(event) => {
-                event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
-              }}
-            >Chi tiết</Link>,
-            status: checkCampStatus(row)
-          })))
+              questions: <Link style={{ padding: "30px 0" }} to={`/organization/manageQuestion/campaignQuestion/${row.id}`}
+                onClick={(event) => {
+                  event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
+                }}
+              >Chi tiết</Link>,
+              status: checkCampStatus(row)
+            })))
 
       }
 
@@ -212,7 +212,7 @@ export default function ManageCampaign() {
               placeholder="Điền tên chiến dịch bạn muốn tìm..."
             />
             <div className="cre-del-buttons">
-              <Button type="primary"  className="cre-button" href="/organization/manageCampaign/createCampaign">
+              <Button type="primary" className="cre-button" href="/organization/manageCampaign/createCampaign">
                 Tạo mới
               </Button>
             </div>
@@ -227,14 +227,14 @@ export default function ManageCampaign() {
                 children: <>
 
 
-                  <Table 
-                  columns={columns} 
-                  dataSource={search( [...tableRow].reverse())}
+                  <Table
+                    columns={columns}
+                    dataSource={search([...tableRow].reverse())}
                     pagination={{
                       pageSize: 5,
                     }}
                     scroll={{ x: "100wh" }}
-                  // size="middle"
+                    // size="middle"
                     className={"org-campaign-table"}
                     onRow={record => ({
                       onClick: (e) => {
@@ -255,7 +255,7 @@ export default function ManageCampaign() {
 
 
                   <Table columns={columns}
-                    dataSource={filterStatus(search( [...tableRow].reverse()), 'Đang diễn ra')}
+                    dataSource={filterStatus(search([...tableRow].reverse()), 'Đang diễn ra')}
                     pagination={{
                       pageSize: 5,
                     }}
@@ -279,7 +279,7 @@ export default function ManageCampaign() {
                 children: <>
 
 
-                  <Table columns={columns} dataSource={filterStatus(search( [...tableRow].reverse()), 'Kết thúc')}
+                  <Table columns={columns} dataSource={filterStatus(search([...tableRow].reverse()), 'Kết thúc')}
                     pagination={{
                       pageSize: 5,
                     }}
@@ -303,7 +303,7 @@ export default function ManageCampaign() {
                 children: <>
 
 
-                  <Table columns={columns} dataSource={filterStatus(search( [...tableRow].reverse()), 'Đã xóa')}
+                  <Table columns={columns} dataSource={filterStatus(search([...tableRow].reverse()), 'Đã xóa')}
                     pagination={{
                       pageSize: 5,
                     }}
