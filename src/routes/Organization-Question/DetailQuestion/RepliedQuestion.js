@@ -16,11 +16,11 @@ export default function DetailQuestion() {
   //nhận state từ navigation
   const question = location.state.question;
   const answer = location.state.answer;
-
-
+  const previous = location.state?.previous;
+  const campaignId = location.state?.campaignId;
 
     const breadName = <>
-        <Link to="/organization/manageQuestion">
+        <Link to={previous !== undefined ? `/organization/manageQuestion/campaignQuestion/${campaignId}` : '/organization/manageQuestion'}>
             <ArrowLeftOutlined style={{ marginRight: '2%', color: 'black' }} />
         </Link>Chi tiết câu hỏi
     </>

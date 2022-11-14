@@ -27,10 +27,6 @@ export default function ManageQuestion() {
 
   const navigate = useNavigate();
 
-
-  const [questions, setQuestions] = useState([{}])
-
-
   // fetch data function
   function getQuestionsByCamp() {
     const asyncFn = async () => {
@@ -52,8 +48,7 @@ export default function ManageQuestion() {
         });
       }
       if (response.status === 200) {
-        console.log("getQuestionsByCamp", response)
-        setQuestions(response)
+       
         setTableRow(
           response.body.map(row => ({
             donorName: row.donorName,
@@ -81,9 +76,11 @@ export default function ManageQuestion() {
   const columns = [
     {
       title: 'STT',
-      dataIndex: 'id',
-      key: 'id',
-      render: (text) => <a>{text}</a>,
+      dataIndex: 'STT',
+      key: 'STT',
+      width: '10%',
+      fixed: 'left',
+      render: (text, record, index) => index + 1,
     },
     {
       title: 'Tên người hỏi',
@@ -200,9 +197,9 @@ export default function ManageQuestion() {
                     onRow={record => ({
                       onClick: (e) => {
                         if (record.status == `Chưa trả lời`) {
-                          navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+                          navigate(`/organization/manageQuestion/unReplyQuestion/${record.id}`, { state: { question: record.question, id: record.id, previous: true, campaignId: campaignId.id } })
                         } else {
-                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+                          navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id,  previous: true,  campaignId: campaignId.id  } })
                         }
                       }
 
@@ -228,7 +225,7 @@ export default function ManageQuestion() {
 
                     onRow={record => ({
                       onClick: (e) => {
-                        navigate("/organization/manageQuestion/unReplyQuestion", { state: { question: record.question, id: record.id } })
+                        navigate(`/organization/manageQuestion/unReplyQuestion/${record.id}`, { state: { question: record.question, id: record.id, previous: true, campaignId: campaignId.id } })
 
                       }
 
@@ -254,7 +251,7 @@ export default function ManageQuestion() {
 
                     onRow={record => ({
                       onClick: (e) => {
-                        navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+                        navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id,  previous: true,  campaignId: campaignId.id  } })
 
                       }
 
@@ -279,7 +276,7 @@ export default function ManageQuestion() {
 
                     onRow={record => ({
                       onClick: (e) => {
-                        navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id } })
+                        navigate("/organization/manageQuestion/repliedQuestion", { state: { question: record.question, answer: record.answer, id: record.id,  previous: true ,  campaignId: campaignId.id } })
 
                       }
 

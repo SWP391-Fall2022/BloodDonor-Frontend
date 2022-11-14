@@ -108,27 +108,27 @@ export default function App() {
             <Route path="/restore" element={<Forget />} />
             <Route path="/otp" element={<Otp />} />
 
-            <Route exact strict path="/campaign" element={<Campaign />} />
-            <Route
-              exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />}
-            />
-            {/* <Route
+          <Route exact strict path="/campaign" element={<Campaign />} />
+          <Route
+            exact strict path="/campaign/campaign-detail/:id" element={<CampaignDetailPage />}
+          />
+          <Route
             exact strict path="/organization/:id" element={<OrganizationInformation />}
-          /> */}
+          /> 
 
-            <Route
-              exact strict path="/organization-homepage" element={<OrganizationHomepage />}
-            />
-            <Route
-              exact strict path="/organization-campaign-donorlist/0" element={<OrganizationCampaignDonorList />}
-            />
-            <Route
-              exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf />}
-            />
-            <Route
-              exact strict path="/statistical" element={<OrganizationCampaignStatistical />}
-            />
-            <Route exact strict path="/test" element={<AdminNewsList />} />
+          <Route
+            exact strict path="/organization-homepage" element={<OrganizationHomepage />}
+          />
+          <Route
+            exact strict path="/organization-campaign-donorlist/0" element={<OrganizationCampaignDonorList />}
+          />
+          <Route
+            exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf />}
+          />
+          <Route
+            exact strict path="/statistical" element={<OrganizationCampaignStatistical />}
+          />
+          <Route exact strict path="/test" element={<AdminNewsList />} />
 
             {/* Pages for logged in donor */}
             <Route path="/donor" element={<DonorProfile />}>
@@ -160,21 +160,21 @@ export default function App() {
                 <Route path="preview" element={<OrganizationPreviewCampaign />} />
               </Route>
 
-              {/* Manage Question */}
-              <Route path="manageQuestion" element={<OrganizationQuestion />}>
-                <Route index element={<OrganizationManageQuestion />} />
-                <Route path="campaignQuestion/:id" element={<OrganizationCampaignQuestion />} />
-                <Route path="unReplyQuestion" element={<OrganizationUnRepliedQuestion />} />
-                <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
-              </Route>
-              <Route path="manageGuide" element={<OrganizationGuide />} />
-              <Route
-                path="changePassword"
-                element={<OrganizationChangePassword />}
-              />
-              <Route path="profile" element={<OrganizationInfo />} />
-              <Route path="*" element={<NoPageOrganization />} />
+            {/* Manage Question */}
+            <Route path="manageQuestion" element={<OrganizationQuestion />}>
+              <Route index element={<OrganizationManageQuestion />} />
+              <Route path="campaignQuestion/:id" element={<OrganizationCampaignQuestion />} />
+              <Route path="unReplyQuestion/:id" element={<OrganizationUnRepliedQuestion />} />
+              <Route path="repliedQuestion" element={<OrganizationRepliedQuestion />} />
             </Route>
+            <Route path="manageGuide" element={<OrganizationGuide />} />
+            <Route
+              path="changePassword"
+              element={<OrganizationChangePassword />}
+            />
+            <Route path="profile" element={<OrganizationInfo />} />
+            <Route path="*" element={<NoPageOrganization />} />
+          </Route>
 
             {/* Pages for admin */}
             <Route path="/admin" element={<AdminProfile />}>

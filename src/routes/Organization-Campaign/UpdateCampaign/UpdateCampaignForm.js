@@ -94,13 +94,9 @@ export default function UpdateCampaignForm() {
       const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/readOne/${campaignId.id}`, json)
         .then((res) => res.json())
         .catch((error) => { console.log("readOneFunction error", error) })
-      console.log("readOneFunction response ", response.body)
 
       if (response.success) {
-        console.log("readOneFunction response succ", response.body)
         setChangedCampaign(response.body)
-
-
       }
 
     }
@@ -231,7 +227,7 @@ export default function UpdateCampaignForm() {
     console.log("formData dayofweek:", formData.daysOfWeek)
 
     const requestData = {
-      "name": formData.name,
+      "name": formData.name.replace(/\s+/g,' ').trim(),
       "images": campaignImg,
       "description": formData.description,
       "startDate": moment(formData.campDate[0]).add(1, 'day'),
@@ -239,18 +235,34 @@ export default function UpdateCampaignForm() {
       "emergency": false,
       "bloodTypes": bloodTypes.toString().replace(/,/g, '-'),
       "districtId": districtId,
-      "addressDetails": formData.addressDetails,
+      "addressDetails": formData.addressDetails.replace(/\s+/g,' ').trim(),
       "sendMail": formData.sendMail,
       "onSiteDates": onSiteDates[0] === "1970-01-01" || weekRepetition === true || monthRepetition === true ? null : String(onSiteDates).split(","),
-      // "onSiteDates": onSiteDates[0] === "1970-01-01" || formData.daysOfWeek.length !==0  || daysOfMonth.length !==0 || formData.weekNumber !==0 ? null : String(onSiteDates).split(","),
       "weekRepetition": weekRepetition,
       "monthRepetition": monthRepetition,
       "daysOfWeek": formData.daysOfWeek,
       "daysOfMonth": daysOfMonth,
       "weekNumber": formData.weekNumber
-      // formData.weekNumber !==0 || daysOfMonth!==[] || || formData.daysOfWeek !==[]
+  
     }
     console.log("EDIT request:", requestData)
+
+    if( requestData.name.length === 0){
+      notification.error({
+        message: "Tên chiến dịch không được để trống!",
+        placement: "top"
+      });
+      return;
+    }
+
+    if(requestData.addressDetails.length === 0 ){
+      notification.error({
+        message: "Địa chỉ chi tiết của chiến dịch không được để trống!",
+        placement: "top"
+      });
+      return;
+    }
+
     const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
     let json = {
       method: 'PUT',
@@ -317,8 +329,6 @@ export default function UpdateCampaignForm() {
 
   // setup for repetition by week 
   const [weekRepetition, setWeekRepetition] = useState(false);
-  console.log("setWeekRepetition afterset", weekRepetition)
-
 
   const weeksData = [
     {
@@ -372,7 +382,7 @@ export default function UpdateCampaignForm() {
           <Breadcrumb.Item>Thông tin chiến dịch</Breadcrumb.Item>
           <Breadcrumb.Item>Chỉnh sửa chiến dịch</Breadcrumb.Item>
         </Breadcrumb>
-        <Link to="/organization/manageCampaign/detailCampaign" state={{ cam: campList, id: campaignId.id, status: null }}><ArrowLeftOutlined style={{ marginRight: "10px" }} />Chỉnh sửa chiến dịch</Link>
+        <Link to="/organization/manageCampaign/detailCampaign" state={{ cam: campList, id: campaignId.id, status: null }}>Chỉnh sửa chiến dịch</Link>
       </div>
 
       <div id="create-campaign-container">
@@ -398,7 +408,7 @@ export default function UpdateCampaignForm() {
             name="basic"
             scrollToFirstError
           >
-            <Form.Item className="create-campaign-form-item" label="Tựa đề chiến dịch" name="name" rules={[{ required: true, message: 'Vui lòng nhập Tựa đề chiến dịch' }]}>
+            <Form.Item className="create-campaign-form-item" label="Tựa đề chiến dịch" name="name" rules={[{ required: true, message: 'Vui lòng nhập Tựa đề chiến dịch' },  { whitespace: true, message:'Tên chiến dịch không được chỉ chứa khoảng trắng'}]}>
               <Input placeholder="Nhập tựa đề chiến dịch"
 
                 name="name"
@@ -406,7 +416,6 @@ export default function UpdateCampaignForm() {
               />
             </Form.Item>
 
-            {/* regiter province district  */}
             <Form.Item >
               <Form.Item
                 label="Tỉnh"
@@ -433,7 +442,7 @@ export default function UpdateCampaignForm() {
             </Form.Item>
 
 
-            <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }]}>
+            <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' },  { whitespace: true, message:'Chi tiết địa điểm diễn ra chiến dịch không được chỉ chứa khoảng trắng'}]}>
               <TextArea
                 rows={2}
                 allowClear
@@ -457,6 +466,7 @@ export default function UpdateCampaignForm() {
                 }}
                 placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
                 defaultValue={[moment(changedCampaign.startDate), moment(changedCampaign.endDate)]}
+                allowClear={false}
               >
               </RangePicker>
             </Form.Item>

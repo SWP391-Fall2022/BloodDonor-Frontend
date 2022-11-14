@@ -29,7 +29,7 @@ export default class Editor extends Component {
         <Form.Item getValueFromEvent={normFile} className="create-campaign-form-item" name="description" >
           <ReactQuill
             onChange={this.handleChange}
-            placeholder="Nhập chi tiết của chiến dịch"
+            placeholder="Nhập thông tin chi tiết của chiến dịch"
             modules={Editor.modules}
             formats={Editor.formats}
             theme={"snow"}

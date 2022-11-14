@@ -26,10 +26,8 @@ export default function NewsDetail() {
       const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/posts`, json)
         .then((res) => res.json())
         .catch((error) => { console.log(error) })
-      console.log("news response", response)
 
       if (response.success) {
-        console.log("news response succ", response)
         setNews(response.body.find(obj => {
 
           return obj.id == newsTitle.id;

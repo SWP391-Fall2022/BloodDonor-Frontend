@@ -14,12 +14,13 @@ export default function InfoOrganization() {
     //nhận state từ navigation
     const orgId = location.state.id;
     const orgList = location.state.organizations.body;
-    const orgStatus = location.state.status;
 
     // tìm ra org được chọn
     const selectedOrg = orgList.find(obj => {
         return obj.id === orgId;
     });
+
+    const information = selectedOrg.introduction.split('¥£$€')
 
     return (
         <>
@@ -48,10 +49,11 @@ export default function InfoOrganization() {
 
 
                         <div className="organization-intro">
-                            <p style={{ fontSize: "17px", fontWeight: "700" }}>Thông tin chi tiết</p>
-                            {selectedOrg.introduction}
-
-
+                        <p style={{ fontSize: "17px", fontWeight: "700" }}>Thông tin chi tiết</p>
+                            <p ><strong>Chức năng và nhiệm vụ</strong></p>
+                            <p style={{wordWrap: "break-word"}}>{information[0]}</p>
+                            <p ><strong>Phạm vi phục vụ</strong></p>
+                           <p style={{wordWrap: "break-word"}}>{information[1]}</p>
                         </div>
 
 
