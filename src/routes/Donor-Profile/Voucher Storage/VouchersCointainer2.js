@@ -1,8 +1,8 @@
 import styles from '../donor.module.css'
 import empty from '../../../assets/empty-list.png'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Card, List, Modal } from 'antd'
-import { Link } from 'react-router-dom';
+import { Card, List, Modal, notification } from 'antd'
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 const { confirm } = Modal;
@@ -10,6 +10,7 @@ const { confirm } = Modal;
 export default function VouchersContainer2() {
     const [emptyList, setEmptyList] = useState(false);
     const [dataSource, setDataSource] = useState([])
+    const navigate = useNavigate()
 
     //Load vouchers
     useEffect(() => {
@@ -25,6 +26,14 @@ export default function VouchersContainer2() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             // console.log(response);
+            if (response.status === 400) {
+                notification.error({
+                    message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                    placement: "top"
+                });
+                sessionStorage.clear()
+                navigate("/");
+            }
             if (response.status === 200) {
                 response.body.forEach(e => data.push({
                     id: e.id, sponsor: e.sponsor, point: e.level, details: e.details, expiredDate: e.expiredDate
@@ -67,6 +76,20 @@ export default function VouchersContainer2() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         // console.log(response)
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
+            notification.success({
+                message: "Đổi voucher thành công",
+                placement: "top"
+            });
+        }
         setTimeout(() => {
             window.location.reload(false);
         }, 1000);

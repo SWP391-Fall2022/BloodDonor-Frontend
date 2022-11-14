@@ -3,11 +3,13 @@ import styles from '../donor.module.css'
 import empty from '../../../assets/empty-list.png'
 import { useEffect } from 'react';
 // import { Link } from 'react-router-dom';
-import { Card, List } from 'antd';
+import { Card, List, notification } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 export default function VouchersContainer() {
     const [emptyList, setEmptyList] = useState(false);
     const [dataSource, setDataSource] = useState([])
+    const navigate = useNavigate()
     useEffect(() => {
         async function fetchAPI() {
             const data = [];
@@ -21,6 +23,14 @@ export default function VouchersContainer() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             // console.log(response);
+            if (response.status === 400) {
+                notification.error({
+                    message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                    placement: "top"
+                });
+                sessionStorage.clear()
+                navigate("/");
+            }
             if (response.status === 200) {
                 response.body.forEach(e => data.push({
                     id: e.reward.id, sponsor: e.reward.sponsor, code: e.reward.code, details: e.reward.details, expiredDate: e.reward.expiredDate

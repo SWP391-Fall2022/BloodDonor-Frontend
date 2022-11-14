@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
-import { Breadcrumb, Modal, Tooltip } from "antd";
+import { Breadcrumb, Modal, notification, Tooltip } from "antd";
 import "antd/dist/antd.min.css";
 import './DetailCampaign.css';
 import RegisterCampaign from '../../../Campaign/RegisterCampaign/RegisterCampaign'
@@ -69,10 +69,16 @@ function DetailCampaign() {
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/delete/${selectedCampaign.id}`, json)
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
-    if (response.success) {
+    if (response.status === 400) {
+      notification.error({
+        message: response.body,
+        placement: "top"
+      });
+    }
+    if (response.status === 200) {
       success();
     }
-    else{
+    else {
       setMessage(response.body)
     }
   }
@@ -113,7 +119,7 @@ function DetailCampaign() {
   const getRegister = async () => {
     let json = {
       method: 'GET',
-     
+
     }
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getNumberOfRegistration/${selectedCampaign.id}`, json)
       .then((res) => res.json())
@@ -125,8 +131,8 @@ function DetailCampaign() {
     }
   }
 
-  
-  
+
+
 
 
   // confirm modal
@@ -185,7 +191,7 @@ function DetailCampaign() {
             <div className='org-campaign-content'>
               <p className='sub-title'>{selectedCampaign.organizationName} xin thông báo:</p>
               {/* <p>{selectedCampaign.description}</p> */}
-              <div dangerouslySetInnerHTML={{ __html: selectedCampaign.description}} />
+              <div dangerouslySetInnerHTML={{ __html: selectedCampaign.description }} />
 
               <p className='sub-title'>Thời gian:</p>
               <p>Buổi sáng bắt đầu lúc 08h00 đến 11h00 <br></br>
@@ -212,14 +218,14 @@ function DetailCampaign() {
 
         <div id="action-table">
           <div className="action-table-item" >
-           <Tooltip title="Số lượt yêu Thích"> <FavoriteIcon className="action-table-icon"></FavoriteIcon></Tooltip>
-             {likeNum}
+            <Tooltip title="Số lượt yêu Thích"> <FavoriteIcon className="action-table-icon"></FavoriteIcon></Tooltip>
+            {likeNum}
           </div>
           <div className="action-table-item" >
-           
-            <Link to={`/organization/manageQuestion/campaignQuestion/${selectedCampaign.id }`}  >
-            <Tooltip title="Số câu hỏi"><HelpIcon className="action-table-icon" ></HelpIcon></Tooltip>
-            
+
+            <Link to={`/organization/manageQuestion/campaignQuestion/${selectedCampaign.id}`}  >
+              <Tooltip title="Số câu hỏi"><HelpIcon className="action-table-icon" ></HelpIcon></Tooltip>
+
             </Link>
             {questionNum}
           </div>
@@ -228,17 +234,17 @@ function DetailCampaign() {
           </div>
 
           <div className="action-table-item" >
-          <Tooltip title="Số lượt đăng ký"><ContentPasteIcon className="action-table-icon" ></ContentPasteIcon></Tooltip>{registerNum}
+            <Tooltip title="Số lượt đăng ký"><ContentPasteIcon className="action-table-icon" ></ContentPasteIcon></Tooltip>{registerNum}
           </div>
 
-          <div className="action-table-item"  onClick={showConfirm}   style={campStatus==="Đã xóa"?{display:"none"}:null}  >
+          <div className="action-table-item" onClick={showConfirm} style={campStatus === "Đã xóa" ? { display: "none" } : null}  >
             <DeleteIcon className="action-table-icon" ></DeleteIcon>Xóa
           </div>
 
-<Link to={`/organization/manageCampaign/updateCampaign/${selectedCampaign.id}`} state={{campaign :{selectedCampaign}, campaignsList:location.state.cam }} style={{color:"black"}}>
-          <div className="action-table-item" style={campStatus==="Đã xóa"?{display:"none"}:null}  >
-            <BorderColorIcon className="action-table-icon" ></BorderColorIcon>Sửa
-          </div>
+          <Link to={`/organization/manageCampaign/updateCampaign/${selectedCampaign.id}`} state={{ campaign: { selectedCampaign }, campaignsList: location.state.cam }} style={{ color: "black" }}>
+            <div className="action-table-item" style={campStatus === "Đã xóa" ? { display: "none" } : null}  >
+              <BorderColorIcon className="action-table-icon" ></BorderColorIcon>Sửa
+            </div>
           </Link>
         </div>
       </div>

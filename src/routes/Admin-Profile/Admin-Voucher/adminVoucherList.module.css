@@ -1,5 +1,8 @@
 .listTitleContainer {
+    width: 56rem;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .listTitle {
@@ -64,7 +67,7 @@
 
 @media only screen and (max-width: 1200px) {
 
-    .listContainer {
+    .listContainer, .listTitleContainer {
         width: 40rem;
     }
 
@@ -78,11 +81,9 @@
 }
 
 .searchBar {
-    margin-top: 2%;
-    margin-left: 1%;
     display: flex;
     justify-content: space-between;
-    padding: 0 2%;
+    margin-bottom: 2rem;
 }
 
 @media only screen and (max-width: 1400px) {
@@ -102,7 +103,7 @@
 
 @media only screen and (max-width: 1000px) {
 
-    .listContainer {
+    .listContainer, .listTitleContainer {
         width: 33rem;
     }
 

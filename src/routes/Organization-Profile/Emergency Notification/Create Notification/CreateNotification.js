@@ -2,9 +2,9 @@ import { ArrowLeftOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/ic
 import styles from '../../organization.module.css'
 import packageInfo from "../../../../shared/ProvinceDistrict.json";
 import { OrBread } from '../../organization-breadcrumb'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import stylesNoti from './createReview.module.css'
-import { Button, Checkbox, Form, Input, Select, Spin, Switch, Upload } from "antd"
+import { Button, Checkbox, Form, Input, notification, Select, Spin, Switch, Upload } from "antd"
 import { useState } from "react"
 import ImgCrop from "antd-img-crop";
 import Editor from "../Create Notification/Editor";
@@ -18,8 +18,9 @@ export default function OrganizationCreateNotification() {
 
     //Others define
     const [form] = Form.useForm();
+    const navigate = useNavigate()
 
-    //
+    //Change between 2 components
     const [review, setReview] = useState(false)
 
     //For switch, Form Items don't accept switch with text
@@ -69,7 +70,7 @@ export default function OrganizationCreateNotification() {
             method: 'POST',
             body: formData
         }).then(r => r.json());
-        console.log(data)
+        // console.log(data)
         setImage(data.url)
         sessionStorage.setItem("notiImage", JSON.stringify(data.url))
         setImagePublicId(data.public_id)
@@ -132,6 +133,19 @@ export default function OrganizationCreateNotification() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log(response)
+        if (response.status === 400 || response.status === 403) {
+            notification.error({
+                message: response.body,
+                placement: "top"
+            });
+        }
+        if (response.status === 200) {
+            notification.success({
+                message: "Chỉnh sửa thành công",
+                placement: "top"
+            });
+            navigate("/organization/notification");
+        }
         // sessionStorage.removeItem("notiImage")
         // sessionStorage.removeItem("notiImageID")
     }
@@ -166,7 +180,16 @@ export default function OrganizationCreateNotification() {
                     <div className={stylesNoti.formContainer}>
                         <h1 style={{ padding: '1rem 0' }}><strong>TẠO THÔNG BÁO KHẨN CẤP</strong></h1>
                         <Form form={form} layout="vertical" onFinish={onFinish}>
-                            <Form.Item className={styles.formLabel} label="Tựa đề thông báo" name="name" rules={[{ required: true }]}>
+                            <Form.Item className={styles.formLabel} label="Tựa đề thông báo" name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                            {
+                                validator: (rule, value, callback) => {
+                                    if (value.trim().length === 0) {
+                                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                    } else {
+                                        callback()
+                                    }
+                                }
+                            }]}>
                                 <Input />
                             </Form.Item>
                             <Form.Item className={styles.formLabel}>
@@ -189,10 +212,19 @@ export default function OrganizationCreateNotification() {
                                     </Select>
                                 </Form.Item>
                             </Form.Item>
-                            <Form.Item className={styles.formLabel} label="Địa điểm" name="addressDetails" rules={[{ required: true }]}>
+                            <Form.Item className={styles.formLabel} label="Địa điểm" name="addressDetails" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                            {
+                                validator: (rule, value, callback) => {
+                                    if (value.trim().length === 0) {
+                                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                    } else {
+                                        callback()
+                                    }
+                                }
+                            }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item className={styles.formLabel} label="Yêu cầu về nhóm máu" name="bloodTypes" rules={[{ required: true }]}>
+                            <Form.Item className={styles.formLabel} label="Yêu cầu về nhóm máu" name="bloodTypes" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
                                 <Checkbox.Group options={["A", "B", "AB", "O"]} />
                             </Form.Item>
                             <Form.Item className={styles.formLabel} label="Nội dung thông báo">

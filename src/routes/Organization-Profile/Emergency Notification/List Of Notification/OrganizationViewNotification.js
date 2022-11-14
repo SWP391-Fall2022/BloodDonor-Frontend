@@ -1,12 +1,14 @@
-import { ArrowLeftOutlined } from "@ant-design/icons"
+import { ArrowLeftOutlined, ExclamationCircleOutlined } from "@ant-design/icons"
 import styles from '../../organization.module.css'
-import stylesNoti from '../Create Notification/createReview.module.css'
+import stylesNoti from './organizationNotificationList.module.css'
 import { OrBread } from '../../organization-breadcrumb'
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { useState } from "react"
-import { notification } from "antd"
+import { Modal, notification } from "antd"
 import { useRef } from "react"
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import DeleteIcon from '@mui/icons-material/Delete';
 import packageInfo from "../../../../shared/ProvinceDistrict.json";
 
 export default function OrganizationViewNotification() {
@@ -18,6 +20,7 @@ export default function OrganizationViewNotification() {
     const [data, setData] = useState()
     const [fail, setFail] = useState(true)
     const effectRan = useRef(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (effectRan.current === true) {
@@ -51,6 +54,8 @@ export default function OrganizationViewNotification() {
                     );
                     //Make datas before set
                     const generateData = {
+                        id: response.body.id,
+                        status: response.body.status,
                         name: response.body.name,
                         date: `${date < 10 ? "0" + date : date}/${month < 10 ? "0" + month : month}/${year}`,
                         images: response.body.images,
@@ -59,7 +64,6 @@ export default function OrganizationViewNotification() {
                         districtName: districtName,
                         provinceName: provinceName,
                         bloodTypeList: bloodTypeList,
-
                     }
                     setData(generateData)
                     setFail(false)
@@ -80,6 +84,47 @@ export default function OrganizationViewNotification() {
         }
     }, [])
 
+    const deleteCampaign = async () => {
+        const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+        let json = {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': "Bearer " + token,
+            })
+        }
+        const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/delete/${data.id}`, json)
+            .then((res) => res.json())
+            .catch((error) => { console.log(error) })
+        if (response.status === 400 || response.status === 403) {
+            notification.error({
+                message: response.body,
+                placement: "top"
+            });
+        }
+        if (response.status === 200) {
+            notification.success({
+                message: "Xóa thông báo thành công",
+                placement: "top"
+            });
+            navigate("/organization/notification");
+        }
+    }
+
+    const showConfirm = () => {
+        Modal.confirm({
+            title: 'Bạn có chắc muốn xóa thông báo khẩn này không? Thông báo này sẽ không thể được khôi phục lại!',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Xóa',
+            cancelText: 'Hủy',
+            className: 'create-campaign-confirm',
+
+            onOk() {
+                deleteCampaign()
+            }
+        });
+    };
+
     return (
         <>
             <div className={styles.breadcrumb}><OrBread layer1={layer1} layer2="Xem thông báo khẩn cấp" name={breadName} /></div>
@@ -88,13 +133,13 @@ export default function OrganizationViewNotification() {
                     <></>
                     :
                     <>
-                        <div className={stylesNoti.formContainer}>
+                        <div className={stylesNoti.viewContainer}>
                             <div className='campaignDetail-left-title'>
                                 <h1><strong>{data.name}</strong></h1>
                                 <div>Ngày đăng: {data.date} | {JSON.parse(sessionStorage.getItem("name"))} </div>
                             </div>
 
-                            <div className='campaign-detail-left-img' style={{ width: '40%' }}>
+                            <div className='campaign-detail-left-img' style={{ width: '40%', height: 'auto' }}>
                                 <img src={data.images} alt="" />
                             </div>
 
@@ -114,6 +159,17 @@ export default function OrganizationViewNotification() {
                                 <p>Khi đi hiến máu nhớ mang theo CMND hoặc CCCD (hoặc có hình ảnh kèm theo).</p>
                                 <p>Xin trân trọng thông báo!!!</p>
                             </div>
+                        </div>
+                        <div id="action-table" style={!data.status ? { display: "none" } : null}>
+                            <div className="action-table-item" onClick={showConfirm} >
+                                <DeleteIcon className="action-table-icon" ></DeleteIcon>Xóa
+                            </div>
+
+                            <Link to={`/organization/notification/edit`} state={{ campaignId: data.id }} style={{ color: "black" }}>
+                                <div className="action-table-item" >
+                                    <BorderColorIcon className="action-table-icon" ></BorderColorIcon>Sửa
+                                </div>
+                            </Link>
                         </div>
                     </>
                 }

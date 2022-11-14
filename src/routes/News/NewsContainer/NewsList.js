@@ -37,7 +37,7 @@ export default class NewsList extends Component {
     const filteredNews = this.props.news.filter(({ category }) =>
       checkedNews.includes(category)
     );
-  
+
     const data =
       filteredNews.length === 0 ? this.props.news : filteredNews;
 
@@ -94,12 +94,12 @@ export default class NewsList extends Component {
       <>
         <Input
           className="news-search"
-          suffix={<SearchOutlined style={{ color:"white"}} />}
+          suffix={<SearchOutlined style={{ color: "white" }} />}
           id="news-search"
           onChange={(e) => this.setState({
             query: e.target.value
           })}
-          style={{marginBottom:"30px"}}
+          style={{ marginBottom: "30px" }}
 
           placeholder="Điền tiêu đề tin tức bạn muốn tìm..."
         />
@@ -117,9 +117,10 @@ export default class NewsList extends Component {
 
               <div className="news-item-content">
                 <p className="title">{item.title}</p>
-                <p>{item.content}</p>
-                <p>{item.category}</p>
                 <p>{item.date}</p>
+                <div
+                  dangerouslySetInnerHTML={{ __html: item.content }}
+                />
               </div>
 
               <div className="news-item-img">

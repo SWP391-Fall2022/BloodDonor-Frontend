@@ -13,9 +13,12 @@ import FolderIcon from '@mui/icons-material/Folder';
 import InfoIcon from '@mui/icons-material/Info';
 import SupportIcon from '@mui/icons-material/Support';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { UserContext } from '../../others/UserRoleContext'
+import { useContext } from "react";
 export const SideBarforAdmin = () => {
   const [click, setClick] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState(false);
+  const { removeRole } = useContext(UserContext)
   function handleClick() {
     setClick(!click);
     // console.log(click);
@@ -23,6 +26,7 @@ export const SideBarforAdmin = () => {
 
   function handleLogout() {
     sessionStorage.clear()
+    removeRole()
   }
 
   function handleSubMenu() {
@@ -79,7 +83,7 @@ export const SideBarforAdmin = () => {
           </Link>
           {subMenu}
 
-          <NavLink to="/admin/news_list" className="sidebar-item" title="Quản lý tin tức">
+          <NavLink to="/admin/news" className="sidebar-item" title="Quản lý tin tức">
             <HelpCenterIcon className="sidebar-icon"></HelpCenterIcon>
             <p>Quản lý tin tức</p>
           </NavLink>

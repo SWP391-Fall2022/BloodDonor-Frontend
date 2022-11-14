@@ -13,30 +13,33 @@ const DataCampaignCard = ({ data }) => {
         <div className="campaign-img-container">
           <img src={data.images} alt="logo_1"></img>
         </div>
-        
+
         <Link to={`campaign/campaign-detail/${data.id}`}>
-        <div className="campaign-card-content">
-          <div href="#name" className="campaign-name">
-            {data.name}
+          <div className="campaign-card-content">
+            <div href="#name" className="campaign-name">
+              {data.name}
+            </div>
+            <div href="#address" className="campaign-address">
+              {data.addressDetails}
+            </div>
+            <div className="campaign-time">
+              Từ{" "}
+              {data.startDate
+                .split("-")
+                .reverse()
+                .join("-")
+              }
+              {" "}
+              đến
+              {" "}
+              {data.endDate
+                .split("-")
+                .reverse()
+                .join("-")
+              }
+
+            </div>
           </div>
-          <div href="#address" className="campaign-address">
-            {data.addressDetails}
-          </div>
-          <div className="campaign-time">
-            Từ
-            {data.onSiteDates[0]
-              .substring(0, 10)
-              .split("-")
-              .reverse()
-              .join("/")}
-            đến
-            {data.onSiteDates[1]
-              .substring(0, 10)
-              .split("-")
-              .reverse()
-              .join("/")}
-          </div>
-        </div>
         </Link>
       </div>
     </>

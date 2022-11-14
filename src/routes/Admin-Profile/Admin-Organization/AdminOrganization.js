@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input, Table, Tabs } from 'antd';
+import { Input, notification, Table, Tabs } from 'antd';
 import { SearchOutlined } from "@ant-design/icons";
 import { AdBread } from '../AdminBreadcrumbs'
 import styles from '../admin.module.css';
@@ -9,9 +9,9 @@ import './AdminOrganization.css'
 
 // check status of org to render on table
 function checkOrgStatus(org) {
-  if(org.approve === "APPROVED")
-    return "Đã duyệt"
-    else if(org.approve === "PENDING"){
+    if (org.approve === "APPROVED")
+        return "Đã duyệt"
+    else if (org.approve === "PENDING") {
         return "Chờ duyệt"
     }
     else
@@ -67,19 +67,10 @@ export default function AdminManageOrganization() {
     // fetch data function
     function getOrgFromAPI() {
         const asyncFn = async () => {
-            const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
-            let json = {
-                method: 'GET',
-                  headers: new Headers({
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Authorization': "Bearer " + token,
-                  })
-            }
-            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/organization`, json)
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/organization`)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
-
-            if (response.success) {
+            if (response.status === 200) {
                 console.log("response", response)
                 setOrganizations(response)
                 setTableRow(
@@ -186,21 +177,21 @@ export default function AdminManageOrganization() {
                                 <Table columns={columns} dataSource={search(tableRow)}
                                     pagination={{
                                         pageSize: 5,
-                                          position: ["bottomCenter"]
-                                        
+                                        position: ["bottomCenter"]
+
                                     }}
                                     scroll={{ x: "100wh" }}
 
                                     onRow={record => ({
                                         onClick: (e) => {
-                                          if (record.status === `Chờ duyệt`) {
-                                            navigate("/admin/manage_organization/approveOrganization", {  state: { organizations: organizations, id: record.id, status: record.status } })
-                                          } else {
-                                            navigate("/admin/manage_organization/InfoOrganization", {  state: { organizations: organizations, id: record.id, status: record.status }})
-                                          }
+                                            if (record.status === `Chờ duyệt`) {
+                                                navigate("/admin/manage_organization/approveOrganization", { state: { organizations: organizations, id: record.id, status: record.status } })
+                                            } else {
+                                                navigate("/admin/manage_organization/InfoOrganization", { state: { organizations: organizations, id: record.id, status: record.status } })
+                                            }
                                         }
-                  
-                                      })}
+
+                                    })}
                                 />
 
                             </>,
@@ -216,14 +207,14 @@ export default function AdminManageOrganization() {
                                     dataSource={filterStatus(search(tableRow), 'Đã duyệt')}
                                     pagination={{
                                         pageSize: 5,
-                                          position: ["bottomCenter"]
+                                        position: ["bottomCenter"]
                                     }}
                                     scroll={{ x: "100wh" }}
 
                                     onRow={record => ({
                                         onClick: (e) => {
 
-                                            navigate("/admin/manage_organization/InfoOrganization", {  state: { organizations: organizations, id: record.id, status: record.status }})
+                                            navigate("/admin/manage_organization/InfoOrganization", { state: { organizations: organizations, id: record.id, status: record.status } })
 
                                         }
 
@@ -241,7 +232,7 @@ export default function AdminManageOrganization() {
                                 <Table columns={columns} dataSource={filterStatus(search(tableRow), 'Chờ duyệt')}
                                     pagination={{
                                         pageSize: 5,
-                                          position: ["bottomCenter"]
+                                        position: ["bottomCenter"]
                                     }}
                                     scroll={{ x: "100wh" }}
 
@@ -249,7 +240,7 @@ export default function AdminManageOrganization() {
                                     onRow={record => ({
                                         onClick: (e) => {
 
-                                            navigate("/admin/manage_organization/approveOrganization", {  state: { organizations: organizations, id: record.id, status: record.status } })
+                                            navigate("/admin/manage_organization/approveOrganization", { state: { organizations: organizations, id: record.id, status: record.status } })
 
                                         }
 
@@ -268,7 +259,7 @@ export default function AdminManageOrganization() {
                                 <Table columns={columns} dataSource={filterStatus(search(tableRow), 'Đã từ chối')}
                                     pagination={{
                                         pageSize: 5,
-                                          position: ["bottomCenter"]
+                                        position: ["bottomCenter"]
                                     }}
                                     scroll={{ x: "100wh" }}
 
@@ -276,7 +267,7 @@ export default function AdminManageOrganization() {
                                     onRow={record => ({
                                         onClick: (e) => {
 
-                                            navigate("/admin/manage_organization/InfoOrganization", {  state: { organizations: organizations, id: record.id, status: record.status }})
+                                            navigate("/admin/manage_organization/InfoOrganization", { state: { organizations: organizations, id: record.id, status: record.status } })
 
                                         }
 

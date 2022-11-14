@@ -3,7 +3,7 @@ import styles from '../donor.module.css'
 import packageInfo from "../../../shared/ProvinceDistrict.json";
 import moment from 'moment';
 import { Form, Input, Select, DatePicker, Button, notification } from 'antd';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 const { Option } = Select;
 const { TextArea } = Input;
 export default function BasicInfoContainer() {
@@ -13,6 +13,7 @@ export default function BasicInfoContainer() {
         window.location.reload(false);
     }
     const [form] = Form.useForm();
+    const navigate = useNavigate()
     let userDefaultDistrict;
     let userDefaultDistrictList;
     let userDefaultProvince;
@@ -77,7 +78,15 @@ export default function BasicInfoContainer() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/donors/me`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
             notification.success({
                 message: 'Đổi thông tin thành công',
                 description: 'Đang tải lại thông tin mới',
@@ -99,10 +108,28 @@ export default function BasicInfoContainer() {
             <div className={styles.title}>THÔNG TIN CƠ BẢN</div>
             <Form layout="vertical" form={form} onFinish={onFinish}>
                 <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="Họ và Tên" name="name" initialValue={user.name} rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                    <Form.Item className={styles.subFormLabel} label="Họ và Tên" name="name" initialValue={user.name} rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value.trim().length === 0) {
+                                callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                            } else {
+                                callback()
+                            }
+                        }
+                    }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                         <Input placeholder="Nhập họ và tên" />
                     </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value.trim().length === 0) {
+                                callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                            } else {
+                                callback()
+                            }
+                        }
+                    }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
                         <Input placeholder="Nhập số điện thoại" />
                     </Form.Item>
                 </Form.Item>
@@ -118,7 +145,16 @@ export default function BasicInfoContainer() {
                     </Form.Item>
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="CMND" name="identityNum" initialValue={user.identityNum} rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                    <Form.Item className={styles.subFormLabel} label="CMND" name="identityNum" initialValue={user.identityNum} rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value.trim().length === 0) {
+                                callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                            } else {
+                                callback()
+                            }
+                        }
+                    }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                         <Input placeholder="Nhập số CMND" />
                     </Form.Item>
                     <Form.Item className={styles.subFormLabel} label="Nhóm máu" name="bloodType" initialValue={user.bloodType} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>

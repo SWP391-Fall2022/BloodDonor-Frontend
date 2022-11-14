@@ -30,7 +30,7 @@ const Cover = () => {
         {/* <div className="container-search"> */}
           {/* <h4>Bạn muốn đặt lịch vào khoảng thời gian nào?</h4>
           <div className="row-search">
-            <Space direction="horizontal" size={20} style={{ marginRight: "2%" }}>
+            {/* <Space direction="horizontal" size={20} style={{ marginRight: "2%" }}>
               <RangePicker
               placeholder={["Bắt đầu", "Kết thúc"]}
                 disabledDate={disabledDate}

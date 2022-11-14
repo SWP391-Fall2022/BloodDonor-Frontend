@@ -1,5 +1,5 @@
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { Button, Modal } from "antd";
+import { Button, Modal, notification } from "antd";
 
 import { ArrowLeftOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { AdBread } from '../../AdminBreadcrumbs'
@@ -7,7 +7,7 @@ import styles from '../../admin.module.css';
 import './ApproveOrganization.css';
 
 export default function AdminApproveOrganization() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
     //get org id
     const location = useLocation();
@@ -37,7 +37,15 @@ export default function AdminApproveOrganization() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log("response", response)
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
             console.log("Bạn đã từ chối tài khoản của tổ chức này!")
             navigate("/admin/manage_organization")
         }
@@ -61,7 +69,7 @@ export default function AdminApproveOrganization() {
         });
     };
 
-    
+
     // refuse confirm success
 
     const refuseConfirmSuccess = () => {
@@ -78,8 +86,8 @@ export default function AdminApproveOrganization() {
         });
     };
 
-     // fetch API refuse org
-     const approveOrg = async () => {
+    // fetch API refuse org
+    const approveOrg = async () => {
 
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
@@ -94,7 +102,15 @@ export default function AdminApproveOrganization() {
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
         console.log("response", response)
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
             console.log("Bạn đã duyệt thành công tài khoản của tổ chức này!")
             navigate("/admin/manage_organization")
         }
@@ -103,10 +119,10 @@ export default function AdminApproveOrganization() {
     };
 
 
-      // approve confirm
-      
+    // approve confirm
 
-      const showApproveConfirm = () => {
+
+    const showApproveConfirm = () => {
         Modal.confirm({
             title: 'Bạn có chắc muốn duyệt tài khoản của tổ chức này không?',
             icon: <ExclamationCircleOutlined />,
@@ -115,14 +131,14 @@ export default function AdminApproveOrganization() {
             className: 'approve-org-confirm',
             onOk() {
                 approveOrg();
-               
+
             }
 
         });
     };
     return (
         <>
-            <div className={styles.breadcrumb}><AdBread name={<Link style={{color:"black"}} to="/admin/manage_organization"><ArrowLeftOutlined style={{ marginRight: "10px" }} />Duyệt tài khoản của tổ chức hiến máu</Link>}  layer1="Quản lý tổ chức hiến máu" layer2="Duyệt tài khoản tổ chức hiến máu" /></div>
+            <div className={styles.breadcrumb}><AdBread name={<Link style={{ color: "black" }} to="/admin/manage_organization"><ArrowLeftOutlined style={{ marginRight: "10px" }} />Duyệt tài khoản của tổ chức hiến máu</Link>} layer1="Quản lý tổ chức hiến máu" layer2="Duyệt tài khoản tổ chức hiến máu" /></div>
 
             <div className="mainContainer">
                 <div className="approve-org-container">
@@ -153,7 +169,7 @@ export default function AdminApproveOrganization() {
                                 id="approveButton" type="primary" size="middle "
                                 onClick={showApproveConfirm}
                             >
-                               Duyệt
+                                Duyệt
                             </Button>
 
                         </div>

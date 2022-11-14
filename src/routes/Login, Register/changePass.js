@@ -58,10 +58,28 @@ function NewPass() {
                     </div>
                     <h1 className={`${styles.title}`}>ĐỔI MẬT KHẨU</h1>
                     <Form form={form} layout="vertical" onFinish={onFinish}>
-                        <Form.Item className={styles.formLabel} label="Nhập mật khẩu mới" name="newPassword" rules={[{ required: true, message: 'Vui lòng nhập' }]}>
+                        <Form.Item className={styles.formLabel} label="Nhập mật khẩu mới" name="newPassword" rules={[{ required: true, message: 'Vui lòng nhập' },
+                        {
+                            validator: (rule, value, callback) => {
+                                if (value.trim().length === 0) {
+                                    callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                } else {
+                                    callback()
+                                }
+                            }
+                        }]}>
                             <Input.Password placeholder="Nhập mật khẩu mới" />
                         </Form.Item>
-                        <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu mới" name="confirmNewPassword" rules={[{ required: true, message: 'Vui lòng nhập' }]}>
+                        <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu mới" name="confirmNewPassword" rules={[{ required: true, message: 'Vui lòng nhập' },
+                        {
+                            validator: (rule, value, callback) => {
+                                if (value.trim().length === 0) {
+                                    callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                } else {
+                                    callback()
+                                }
+                            }
+                        }]}>
                             <Input.Password placeholder="Nhập lại mật khẩu mới" />
                         </Form.Item>
                         <Form.Item className={`${styles.formLabel} ${styles.recapcha}`}>

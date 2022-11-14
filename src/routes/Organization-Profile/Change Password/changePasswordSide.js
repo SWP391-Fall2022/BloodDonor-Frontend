@@ -1,10 +1,12 @@
 import styles from '../organization.module.css'
 import { Form, Input, Button, notification, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 const { confirm } = Modal;
 export default function ChangePasswordSide() {
 
     const [form] = Form.useForm();
+    const navigate = useNavigate()
 
     //Cancel Button
     const onReset = () => {
@@ -25,7 +27,15 @@ export default function ChangePasswordSide() {
         const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/user/updatePassword`, json)
             .then((res) => res.json())
             .catch((error) => { console.log(error) })
-        if (response.success) {
+        if (response.status === 400) {
+            notification.error({
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
+                placement: "top"
+            });
+            sessionStorage.clear()
+            navigate("/");
+        }
+        if (response.status === 200) {
             notification.success({
                 message: 'Đổi mật khẩu thành công',
                 placement: "top"
@@ -66,13 +76,40 @@ export default function ChangePasswordSide() {
         <div className={styles.infoContainer}>
             <div className={styles.title}>ĐỔI MẬT KHẨU</div>
             <Form layout="vertical" form={form} onFinish={onFinish}>
-                <Form.Item className={styles.formLabel} label="Nhập mật khẩu cũ" name="oldPassword" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
+                <Form.Item className={styles.formLabel} label="Nhập mật khẩu cũ" name="oldPassword" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.trim().length === 0) {
+                            callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                        } else {
+                            callback()
+                        }
+                    }
+                }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Nhập mật khẩu mới" name="newPassword" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
+                <Form.Item className={styles.formLabel} label="Nhập mật khẩu mới" name="newPassword" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.trim().length === 0) {
+                            callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                        } else {
+                            callback()
+                        }
+                    }
+                }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu mới" name="confirmNewPassword" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
+                <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu mới" name="confirmNewPassword" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.trim().length === 0) {
+                            callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                        } else {
+                            callback()
+                        }
+                    }
+                }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
                 <Form.Item>

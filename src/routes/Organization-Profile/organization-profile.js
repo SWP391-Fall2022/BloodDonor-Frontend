@@ -27,23 +27,23 @@ function OrganizationProfile() {
                 const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/organization/getInfo`, json)
                     .then((res) => res.json())
                     .catch((error) => { console.log(error) })
-                // console.log(response);
-                if (rolePath === null || rolePath !== "/organization") {
-                    sessionStorage.clear()
-                    notification.error({
-                        message: "Vui lòng đăng nhập nơi hiến máu",
-                        placement: "top"
-                    });
-                    navigate("/");
-                } else if (response.status === 400) {
+                console.log(response);
+
+                if (response.status === 400) {
                     sessionStorage.clear()
                     notification.error({
                         message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
                         placement: "top"
                     });
                     navigate("/");
-                }
-                if (response.success) {
+                } else if (rolePath === null || rolePath !== "/organization" || response.status === 500) {
+                    sessionStorage.clear()
+                    notification.error({
+                        message: "Vui lòng đăng nhập nơi hiến máu",
+                        placement: "top"
+                    });
+                    navigate("/");
+                } else if (response.status === 200) {
                     sessionStorage.setItem('avatar', JSON.stringify(response.body.avatar))
                     sessionStorage.setItem('name', JSON.stringify(response.body.name))
                     setUser({

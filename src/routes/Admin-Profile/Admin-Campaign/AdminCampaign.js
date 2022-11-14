@@ -65,15 +65,7 @@ export default function AdminManageCampaign() {
     // fetch data function
     function getCampFromAPI() {
         const asyncFn = async () => {
-            // const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
-            let json = {
-                method: 'GET',
-                //   headers: new Headers({
-                //     'Content-Type': 'application/json; charset=UTF-8',
-                //     'Authorization': "Bearer " + token,
-                //   })
-            }
-            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`, json)
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
 
@@ -157,7 +149,7 @@ export default function AdminManageCampaign() {
         <>
             <div className={styles.breadcrumb}><AdBread name="Quản lý chiến dịch" /></div>
             <div className='ad-manage-campaign-container'>
-                <h2 className="admin-manage-campaign-title">DANH SÁCH TỔNG HỢP CÁC CHIẾN DỊCH</h2>
+                <h2 className="admin-manage-campaign-title"><strong>DANH SÁCH TỔNG HỢP CÁC CHIẾN DỊCH</strong></h2>
                 <div className="admin-cam-search-box">
                     <Input
                         className="admin-cam-search-box"
