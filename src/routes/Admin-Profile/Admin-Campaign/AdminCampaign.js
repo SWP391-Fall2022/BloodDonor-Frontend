@@ -25,28 +25,37 @@ function checkCampStatus(camp) {
 
 //Set columns for table
 const columns = [
-    {
+    { 
         title: 'STT',
-        dataIndex: 'id',
-        key: 'id',
-        render: (text) => <a>{text}</a>,
+        dataIndex: 'STT',
+        key: 'STT',
+        render: (text, record, index) => index + 1,
     },
     {
         title: 'Tên chiến dịch',
         dataIndex: 'camName',
         key: 'camName',
+        width: '40%'
 
     },
     {
         title: 'Tên tổ chức hiến máu',
         dataIndex: 'orgName',
         key: 'orgName',
-
+        width: '20%'
     },
     {
-        title: 'Thời gian diễn ra',
-        dataIndex: 'camTime',
-        key: 'camTime',
+        title: 'Ngày bắt đầu',
+        dataIndex: 'startDate',
+        key: 'startDate',
+        width: '15%',
+    },
+    {
+        title: 'Ngày kết thúc',
+        dataIndex: 'endDate',
+        key: 'endDate',
+        width: '15%',
+
     },
     {
         title: 'Trạng thái',
@@ -75,14 +84,13 @@ export default function AdminManageCampaign() {
                 setTableRow(
                     response.body.map(row => ({
                         camName: row.name,
-                        camTime: moment(row.startDate).format("DD/MM/YYYY") + " -> " + moment(row.endDate).format("DD/MM/YYYY"),
+                        startDate: moment(row.startDate).format("DD/MM/YYYY") ,
+                        endDate: moment(row.endDate).format("DD/MM/YYYY") ,
                         id: row.id,
                         orgName: row.organizationName,
                         status: checkCampStatus(row)
                     })))
-                // console.log("camps", tableRow)
-                // navigate("/organization/manageCampaign")
-
+             
             }
 
         }
@@ -131,13 +139,13 @@ export default function AdminManageCampaign() {
     const keys = ["camName", "orgName"];
     const search = (data) => {
         return data.filter((item) =>
-          keys.some((key) =>
-            removeVietnameseTones(item[key])
-              .toLowerCase()
-              .includes(removeVietnameseTones(query.toLowerCase()))
-          )
+            keys.some((key) =>
+                removeVietnameseTones(item[key])
+                    .toLowerCase()
+                    .includes(removeVietnameseTones(query.toLowerCase()))
+            )
         );
-      };
+    };
     const [query, setQuery] = useState("");
 
     const filterStatus = (data, keys) => {
@@ -148,14 +156,14 @@ export default function AdminManageCampaign() {
     return (
         <>
             <div className={styles.breadcrumb}><AdBread name="Quản lý chiến dịch" /></div>
-            <div className='ad-manage-campaign-container'>
+            <div className='ad-manage-campaign-container mainContainer'>
                 <h2 className="admin-manage-campaign-title">DANH SÁCH TỔNG HỢP CÁC CHIẾN DỊCH</h2>
                 <div className="admin-cam-search-box">
                     <Input
                         className="admin-cam-search-box"
                         suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
                         id="admin-cam-search-box"
-                       onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e) => setQuery(e.target.value)}
                         placeholder="Điền tên chiến dịch hoặc tổ chức bạn muốn tìm..."
                     />
 
@@ -169,12 +177,10 @@ export default function AdminManageCampaign() {
                             label: `Tất cả`,
                             key: '1',
                             children: <>
-
-
-                                <Table columns={columns} dataSource={search(tableRow)}
+                                <Table columns={columns} dataSource={search([...tableRow].reverse())}
                                     pagination={{
                                         pageSize: 5,
-                                        position:["bottomCenter"]
+                                        position: ["bottomCenter"]
                                     }}
                                     scroll={{ x: "100wh" }}
 
@@ -198,7 +204,7 @@ export default function AdminManageCampaign() {
 
 
                                 <Table columns={columns}
-                                    dataSource={filterStatus(search(tableRow), 'Đang diễn ra')}
+                                    dataSource={filterStatus(search([...tableRow].reverse()), 'Đang diễn ra')}
                                     pagination={{
                                         pageSize: 5,
                                     }}
@@ -207,7 +213,7 @@ export default function AdminManageCampaign() {
                                     onRow={record => ({
                                         onClick: (e) => {
 
-                                            navigate(`/admin/manage_campaign/detail_campaign`, { state: { cam: campaigns, id: record.id } })
+                                            navigate(`/admin/manage_campaign/detail_campaign`, { state: { cam: campaigns, id: record.id , status: record.status }  })
                                         }
 
                                     })}
@@ -221,7 +227,7 @@ export default function AdminManageCampaign() {
                             children: <>
 
 
-                                <Table columns={columns} dataSource={filterStatus(search(tableRow), 'Kết thúc')}
+                                <Table columns={columns} dataSource={filterStatus(search([...tableRow].reverse()), 'Kết thúc')}
                                     pagination={{
                                         pageSize: 5,
                                     }}
@@ -231,7 +237,7 @@ export default function AdminManageCampaign() {
                                     onRow={record => ({
                                         onClick: (e) => {
 
-                                            navigate(`/admin/manage_campaign/detail_campaign`, { state: { cam: campaigns, id: record.id } })
+                                            navigate(`/admin/manage_campaign/detail_campaign`, { state: { cam: campaigns, id: record.id , status: record.status }  })
                                         }
 
                                     })}
@@ -245,7 +251,7 @@ export default function AdminManageCampaign() {
                             children: <>
 
 
-                                <Table columns={columns} dataSource={filterStatus(search(tableRow), 'Đã xóa')}
+                                <Table columns={columns} dataSource={filterStatus(search([...tableRow].reverse()), 'Đã xóa')}
                                     pagination={{
                                         pageSize: 5,
                                     }}
@@ -254,7 +260,7 @@ export default function AdminManageCampaign() {
                                     onRow={record => ({
                                         onClick: (e) => {
 
-                                            navigate(`/admin/manage_campaign/detail_campaign`, { state: { cam: campaigns, id: record.id } })
+                                            navigate(`/admin/manage_campaign/detail_campaign`, { state: { cam: campaigns, id: record.id , status: record.status }  })
                                         }
 
                                     })}
