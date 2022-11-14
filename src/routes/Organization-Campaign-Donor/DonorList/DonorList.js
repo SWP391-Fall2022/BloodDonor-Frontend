@@ -145,6 +145,7 @@ const DonorList = (campaignID) => {
                 onChange={(e) => setQuery(e.target.value)}
               />
             </Input.Group>
+            <Button>Chuyển trạng thái</Button>
           </div>
           <div className="donor-list-table">
             <Tabs defaultActiveKey="1">
