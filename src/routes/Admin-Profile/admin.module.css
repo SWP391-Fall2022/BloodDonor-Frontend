@@ -23,8 +23,20 @@
     font-size: 14px;
 }
 
-#btn3:hover, .btn3:focus {
+#btn3:hover, #btn3:focus {
     background-color: var(--primary-800);
+    color: white;
+}
+
+#btnDisable {
+    background-color: var(--secondary-500);
+    color: white;
+    border: 0px;
+    font-size: 14px;
+}
+
+#btnDisable:hover, #btnDisable:focus {
+    background-color: var(--secondary-600);
     color: white;
 }
 
