@@ -16,12 +16,12 @@ const filterParticipatedStatus = (data, key) => {
   return data.filter((item) => item.donateRegistrationResponse.status === "CHECKED_IN")
     .length;
 };
-const DoughnutChart = (participated) => {
+const DoughnutChartGender = (dataS) => {
   var data = {
-    labels: ["Nhóm máu O", "Nhóm máu A", "Nhóm máu B", "Nhóm máu AB"],
+    labels: ["Nữ", "Nam"],
     datasets: [
       {
-        data: [60, 10, 25, 5],
+        data: [dataS.dataS.Female, dataS.dataS.Male],
         backgroundColor: [
           "rgb(255, 99, 132)",
           "rgb(54, 162, 235)",
@@ -55,4 +55,4 @@ const DoughnutChart = (participated) => {
   );
 };
 
-export default DoughnutChart;
+export default DoughnutChartGender;

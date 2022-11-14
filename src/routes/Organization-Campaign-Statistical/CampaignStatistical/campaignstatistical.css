@@ -23,7 +23,7 @@
 
 #campaign-statistical .statistical-right {
     display: grid;
-    grid-template-columns: 57% 41%;
+    grid-template-columns: 32% 32% 32%;
     grid-gap: 2%;
 }
 

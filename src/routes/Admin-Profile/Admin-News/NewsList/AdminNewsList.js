@@ -10,6 +10,7 @@ import NewsList from "./NewsList";
 export default function AdminNewsList() {
   const [valueViewNews, setViewNews] = useState("");
   const [page, setPage] = useState(5);
+  const [newsID, setNewsID] = useState();
   const value = useMemo(
     () => ({ valueViewNews, setViewNews, page, setPage }),
     [valueViewNews, setViewNews, page, setPage]

@@ -1,6 +1,4 @@
 import "./campaignstatistical.css";
-import LineChart from "./Chart/LineChart";
-import DoughnutChart from "./Chart/DoughnutChart";
 import Diversity2Icon from "@mui/icons-material/Diversity2";
 import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import HelpCenterIcon from "@mui/icons-material/HelpCenter";
@@ -10,6 +8,9 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import { useState } from "react";
 import { OrgBread } from "../../Organization-Campaign-Donor/OrganizationBreadcrumb";
+import DoughnutChartBloodType from "./Chart/DoughnutChartBloodtype";
+import DoughnutChartGender from "./Chart/DoughnutChartGender";
+import DoughnutChartAge from "./Chart/DoughnutChartAge";
 const CampaignStatistical = () => {
   const campaign = useParams();
   const breadName = (
@@ -103,6 +104,36 @@ const CampaignStatistical = () => {
 
       if (response.success) {
         setQuestion(response.body);
+        console.log(response.success)
+      }
+    };
+    asyncFn();
+  }
+  const [statistical, setStatistical] = useState();
+  function getStatisticalAPI() {
+    const asyncFn = async () => {
+      const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
+      console.log("Token: ", token);
+
+      let json = {
+        method: "GET",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+          Authorization: "Bearer " + token,
+        }),
+      };
+      const response = await fetch(
+        `${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/statistic/${campaign.id}`,
+        json
+      )
+        .then((res) => res.json())
+        .catch((error) => {
+          console.log(error);
+        });
+
+      if (response.success) {
+        console.log("DATE DONOR INFOR: ", response.body);
+        setStatistical(response.body);
       }
     };
     asyncFn();
@@ -112,14 +143,14 @@ const CampaignStatistical = () => {
     getBloodAmountFromAPI();
     getParticipatedDonorAPI();
     getQuestionAPI();
+    getStatisticalAPI();
   }, []);
   const filterParticipatedStatus = (data, key) => {
     return data.filter((item) => item.donateRegistrationResponse.status === key)
       .length;
   };
   const filterQuestionStatus = (data, key) => {
-    return data.filter((item) => item.status === key)
-      .length;
+    return data.filter((item) => item.status === key).length;
   };
   return (
     <section id="campaign-statistical">
@@ -136,7 +167,7 @@ const CampaignStatistical = () => {
           <div className="statistical-title">Thống kê chiến dịch</div>
           {bloodAmount && participated && question && (
             <div className="statistical-list">
-            <div className="statistical-card">
+              <div className="statistical-card">
                 <div className="card-col">
                   <div className="card-number">
                     <FavoriteIcon />
@@ -153,9 +184,7 @@ const CampaignStatistical = () => {
                   </div>
                 </div>
 
-                <div className="card-content">
-                  Lượt tham gia
-                </div>
+                <div className="card-content">Lượt tham gia</div>
               </div>
               <div className="statistical-card">
                 <div className="card-col">
@@ -173,29 +202,44 @@ const CampaignStatistical = () => {
                     {filterQuestionStatus(question, true)}
                   </div>
                 </div>
-                <div className="card-content">
-                  Câu hỏi được giải đáp
-                </div>
+                <div className="card-content">Câu hỏi được giải đáp</div>
               </div>
             </div>
           )}
         </div>
         <div className="statistical-right">
-          <div className="chart-card">
-            <div className="chart-title">Thống kê số tình nguyện viên</div>
-            <div style={{ width: "100%", padding: "1% 5%" }}>
-              <LineChart />
-            </div>
-          </div>
-          <div className="chart-card">
-            <div className="chart-title">Thống kê lượng máu từng loại</div>
-            <div
-              style={{ width: "85%", marginLeft: "7.5%", paddingTop: "3% " }}
-            >
-              <DoughnutChart participated={participated}/>
-              {console.log("Participated: ",participated)}
-            </div>
-          </div>
+          {statistical && (
+            <>
+              <div className="chart-card">
+                <div className="chart-title">Thống kê lượng máu từng loại</div>
+                <div
+                  style={{
+                    width: "85%",
+                    marginLeft: "7.5%",
+                    paddingTop: "3% ",
+                  }}
+                >
+                  <DoughnutChartBloodType dataS={statistical} />
+                </div>
+              </div>
+              <div className="chart-card">
+                <div className="chart-title">
+                  Thống kê độ tuổi tham gia hiến máu
+                </div>
+                <div style={{ width: "100%", padding: "1% 5%" }}>
+                  <DoughnutChartGender dataS={statistical} />
+                </div>
+              </div>
+              <div className="chart-card">
+                <div className="chart-title">
+                  Thống kê giới tính tham gia hiến máu
+                </div>
+                <div style={{ width: "100%", padding: "1% 5%" }}>
+                  <DoughnutChartAge dataS={statistical} />
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>

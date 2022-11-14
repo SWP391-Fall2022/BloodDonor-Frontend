@@ -7,7 +7,7 @@ import { ViewNewsContext } from "../ViewNews/AdminViewNewsContext";
 import "./newslist.css";
 
 const NewsList = () => {
-  const { valueViewNews, setViewNews, setPage } = useContext(ViewNewsContext);
+  const { valueViewNews, setViewNews, setPage, setNewsID } = useContext(ViewNewsContext);
   const [pageNumber, setPageNumber] = React.useState(1);
   const columns = [
     {
@@ -57,6 +57,7 @@ const NewsList = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
+      
   }, []);
 
   function removeVietnameseTones(str) {
@@ -131,7 +132,8 @@ const NewsList = () => {
                   size="middle"
                   scroll={{ x: "100wh" }}
                   onRow={(record) => ({
-                    onClick: () => onChoose(record),
+                    onClick: () => {
+                      onChoose(record)},
                   })}
                   pagination={{
                     onChange(current) {
