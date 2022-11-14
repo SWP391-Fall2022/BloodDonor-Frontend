@@ -16,7 +16,6 @@ const OrganizationCampaignDonorList = () => {
   );
   const layer1 = <Link to="/organization/manageCampaign" >Danh sách chiến dịch</Link>;
   const campaignID = useParams();
-  console.log(campaignID);
   // const user = JSON.parse(sessionStorage.getItem('user'))
   // const rolePath = JSON.parse(sessionStorage.getItem('userRole'))
   // if (user === null) {

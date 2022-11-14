@@ -71,7 +71,7 @@ export default function AdminManageOrganization() {
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             if (response.status === 200) {
-                console.log("response", response)
+                
                 setOrganizations(response)
                 setTableRow(
                     response.body.map(row => ({

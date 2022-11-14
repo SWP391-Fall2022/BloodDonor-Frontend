@@ -41,7 +41,6 @@ export default function PreviewNews() {
 
       <div className="news-content">
       {/* {valueCreateNews.context} */}
-      {console.log(valueCreateNews.content)}
       <div dangerouslySetInnerHTML={{ __html: valueCreateNews.content}} />
       </div>
       <Button onClick={handleReturn}> Quay lại</Button>

@@ -8,7 +8,7 @@ import "./overviewnews.css";
 export default function OverViewNews() {
   const { valueViewNews, setPage } = useContext(ViewNewsContext);
   const handleReturn = () => {
-    console.log("Test return edit page");
+    
     setPage(1);
   };
   const handleView = () => {
@@ -52,7 +52,7 @@ export default function OverViewNews() {
 
         <div className="news-content">
           {/* {valueViewNews.context} */}
-          {console.log(valueViewNews.content)}
+          
           <div dangerouslySetInnerHTML={{ __html: valueViewNews.content }} />
         </div>
         <Button onClick={handleReturn}> Quay lại</Button>

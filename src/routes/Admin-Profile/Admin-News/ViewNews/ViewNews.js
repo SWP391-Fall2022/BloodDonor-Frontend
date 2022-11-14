@@ -46,7 +46,7 @@ const ViewNews = () => {
       .catch((error) => {
         console.log(error);
       });
-    console.log("response", response);
+      
   };
 
   const unhideNews = async () => {
@@ -68,7 +68,7 @@ const ViewNews = () => {
       .catch((error) => {
         console.log(error);
       });
-    console.log("response", response);
+      
   };
   
   return (

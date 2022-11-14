@@ -2,10 +2,14 @@ import { Button, Divider, Input, Radio, Table, Tabs } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./donorlist.css";
+
+const DonorList = (campaignID) => {
+  const [pageNumber, setPageNumber] = React.useState(1);
 const columns = [
   {
     title: "STT",
-    dataIndex: "stt",
+     render: (text, record, index) =>  (pageNumber - 1) * 10 + index + 1, 
+
   },
   {
     title: "Họ và Tên",
@@ -18,41 +22,75 @@ const columns = [
   },
   {
     title: "Mã xác nhận",
-    dataIndex: ["donateRegistrationResponse","code"],
+    dataIndex: ["donateRegistrationResponse", "code"],
   },
   {
     title: "Thông tin sức khỏe",
     render: (_, record) => {
-      if (record.donateRegistrationResponse.status === "CHECKED_IN"){
-      return <Link to={`/organization/manageCampaign/campaign-health-inf/${record.donateRegistrationResponse.campaignId}/${record.donateRegistrationResponse.donorId}/${record.donateRegistrationResponse.registeredDate}`}>
-        <a>Bấm để xem </a>
-      </Link>
+      if (record.donateRegistrationResponse.status === "CHECKED_IN") {
+        return (
+          <Link
+            to={`/organization/manageCampaign/campaign-health-inf/${record.donateRegistrationResponse.campaignId}/${record.donateRegistrationResponse.donorId}/${record.donateRegistrationResponse.registeredDate}`}
+          >
+            <a>Bấm để xem </a>
+          </Link>
+        );
+      } else {
+        return (
+          <Link
+            to={`/organization/manageCampaign/campaign-health-inf/${record.donateRegistrationResponse.campaignId}/${record.donateRegistrationResponse.donorId}/${record.donateRegistrationResponse.registeredDate}`}
+          >
+            <a>Bấm để ghi </a>
+          </Link>
+        );
       }
-      else{
-        return <Link to={`/organization/manageCampaign/campaign-health-inf/${record.donateRegistrationResponse.campaignId}/${record.donateRegistrationResponse.donorId}/${record.donateRegistrationResponse.registeredDate}`}>
-        <a>Bấm để ghi </a>
-      </Link>
-      }
-  }
+    },
   },
   {
     title: "Trạng thái",
     dataIndex: "status",
     render: (_, record) => {
-        if (record.donateRegistrationResponse.status === "CHECKED_IN")
-          return "Tham gia"
-        return "Đăng ký"
-    }
+      if (record.donateRegistrationResponse.status === "CHECKED_IN")
+        return "Tham gia";
+      return "Đăng ký";
+    },
   },
 ];
-
-const DonorList = (campaignID) => {
   const [data, setData] = useState([]);
   // fetch data function
+  const outDateFromAPI = () => {
+    const asyncFn = async () => {
+      const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
+      
+
+      let json = {
+        method: "PUT",
+        headers: new Headers({
+          "Content-Type": "application/json; charset=UTF-8",
+          Authorization: "Bearer " + token,
+        }),
+      };
+
+      const response = await fetch(
+        `${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/cancel-outdated-registration/${campaignID.campaignID}`,
+        json
+      )
+        .then((res) => res.json())
+        .catch((error) => {
+          console.log(error);
+        });
+
+      if (response.success) {
+        window.location.reload();
+       
+      }
+    };
+    asyncFn();
+  }
   function getDonorListFromAPI() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
-      console.log("Token: ", token);
+      
 
       let json = {
         method: "POST",
@@ -72,15 +110,15 @@ const DonorList = (campaignID) => {
         });
 
       if (response.success) {
-        console.log("TEST NEK: ",response.body)
+        console.log("TEST NEK: ", response.body);
         setData(response.body);
-       }
+      }
     };
     asyncFn();
   }
   useEffect(() => {
     getDonorListFromAPI();
-     }, []);
+  }, []);
   function removeVietnameseTones(str) {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
@@ -115,36 +153,47 @@ const DonorList = (campaignID) => {
   const keys = ["name", "identityNum"];
   console.log("keys: ", keys);
   const search = (data) => {
+    if(data){
+      console.log(data);
     const searchTxt = removeVietnameseTones(query.toLowerCase());
     return data.filter((item) => {
-      if(removeVietnameseTones(item.name.toLowerCase()).includes(searchTxt) ) return true;
-      if(removeVietnameseTones(item.identityNum.toLowerCase()).includes(searchTxt) ) return true;
-      if(removeVietnameseTones(item.donateRegistrationResponse.code.toLowerCase()).includes(searchTxt) ) return true;
-      // keys.some((key) =>
-      //   removeVietnameseTones(item[key])
-      //     .toLowerCase()
-      //     .includes(removeVietnameseTones(query.toLowerCase()))
-      // )
-    });
+      if (removeVietnameseTones(item.name.toLowerCase()).includes(searchTxt))
+        return true;
+      if (removeVietnameseTones(item.identityNum.toLowerCase()).includes(searchTxt))
+        return true;
+      if (removeVietnameseTones(item.donateRegistrationResponse.code.toLowerCase()).includes(searchTxt))
+        return true;
+      });
+    }
+      return [];
   };
   const filterStatus = (data, key) => {
-    return data.filter((item) => item.donateRegistrationResponse.status === key);
-  }
+    if(data){
+    return data.filter(
+      (item) => item.donateRegistrationResponse.status === key
+    );}
+    else return [];
+  };
   const [query, setQuery] = useState("");
   return (
     <section id="organization-donor-list">
-      {data.length !== 0 && (
+      {data && (
         <>
           <div className="donor-list-title">
             Danh sách TÌNH NGUYỆN viên HIẾN MÁU
           </div>
-          <div className="donor-list-search">
-            <Input.Group compact>
-              <Input
-                placeholder="Hãy điền thông tin mà bạn muốn tìm kiếm"
-                onChange={(e) => setQuery(e.target.value)}
-              />
-            </Input.Group>
+          <div className="donor-list-tool">
+            <div className="donor-list-search">
+              <Input.Group compact>
+                <Input
+                  placeholder="Hãy điền thông tin mà bạn muốn tìm kiếm"
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+              </Input.Group>
+            </div>
+            <Link to={`/organization/manageCampaign/campaign-donorlist/${campaignID.campaignID}`}>
+            <Button type="primary" onClick={outDateFromAPI}>Xử lý đăng ký quá hạn</Button>
+            </Link>
           </div>
           <div className="donor-list-table">
             <Tabs defaultActiveKey="1">
@@ -172,52 +221,7 @@ const DonorList = (campaignID) => {
                   scroll={{ x: "100wh" }}
                 />
               </Tabs.TabPane>
-             
-              <Tabs></Tabs>
-            </Tabs>
-          </div>
-        </>
-      )}
-      {data.length === 0 && (
-        <>
-          <div className="donor-list-title">
-            Danh sách TÌNH NGUYỆN viên HIẾN MÁU
-          </div>
-          <div className="donor-list-search">
-            <Input.Group compact>
-              <Input
-                placeholder="Hãy điền thông tin mà bạn muốn tìm kiếm"
-                onChange={(e) => setQuery(e.target.value)}
-              />
-            </Input.Group>
-          </div>
-          <div className="donor-list-table">
-            <Tabs defaultActiveKey="1">
-              <Tabs.TabPane tab="Tất cả" key="1">
-                <Table
-                  columns={columns}
-                  dataSource={search(data)}
-                  size="middle"
-                  scroll={{ x: "100wh" }}
-                />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Đăng ký" key="2">
-                <Table
-                  columns={columns}
-                  dataSource={filterStatus(search(data), "NOT_CHECKED_IN")}
-                  size="middle"
-                  scroll={{ x: "100wh" }}
-                />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Tham gia" key="3">
-                <Table
-                  columns={columns}
-                  dataSource={filterStatus(search(data), "CHECKED_IN")}
-                  size="middle"
-                  scroll={{ x: "100wh" }}
-                />
-              </Tabs.TabPane>
-             
+
               <Tabs></Tabs>
             </Tabs>
           </div>

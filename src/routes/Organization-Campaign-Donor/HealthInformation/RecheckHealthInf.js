@@ -30,7 +30,6 @@ const RecheckHealthInf = () => {
   function getHealthInforAPI() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
-      console.log("Token: ", token);
 
       let json = {
         method: "GET",
@@ -49,10 +48,9 @@ const RecheckHealthInf = () => {
         });
 
       if (response.success) {
-        console.log("DATA DONOR STATUS: ", response.body.reverse());
+        
         setHealthInfor(
           response.body.reverse().find(function (item) {
-            console.log("ITEM: ", item);
             return (
               item.donorId == userInfor.idD &&
               item.campaignId == userInfor.idC &&

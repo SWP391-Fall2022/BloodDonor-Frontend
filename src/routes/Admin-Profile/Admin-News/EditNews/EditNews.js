@@ -146,7 +146,7 @@ export default function EditNews() {
             </Form.Item>
 
             <PostImage campaignImg={campaignImg} callback={callbackImageFunction}></PostImage>
-            {console.log(valueViewNews.category)}
+          
             <Form.Item
               name="category"
               label="Thể loại tin tức"
@@ -157,7 +157,7 @@ export default function EditNews() {
                 },
               ]}
             >
-             {console.log(typeof( valueViewNews.category))}
+            
               <Select defaultValue={category[valueViewNews.category]}
               placeholder="Bạn hãy chọn thể loại tin tức" allowClear>
                 <Option value="1">{category[1]}</Option>

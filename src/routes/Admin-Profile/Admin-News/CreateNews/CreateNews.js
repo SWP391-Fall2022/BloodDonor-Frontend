@@ -68,7 +68,6 @@ const CreateNews = () => {
       ...valueCreateNews,
       ...values,
     });
-    console.log(values);
     if (flag == 1) {
       setPage(1);
     } else {

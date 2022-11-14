@@ -13,9 +13,7 @@ const OrganizationCampaignHealthInf = () => {
   const [valueState, setState] = useState("false");
 
   const userInfor = useParams();
-  console.log("DONOR ID: ", userInfor.idD);
-  console.log("ORG ID: ", userInfor.idC);
-  console.log("DATE: ", userInfor.date);
+  
   const [valueStatus, setStatus] = useState();
   const [valueDonorInfor, setDonorInfor] = useState();
   const [valueHealthInfor, setHealthInfor] = useState();
@@ -54,8 +52,6 @@ const OrganizationCampaignHealthInf = () => {
   function getDonorInforAPI() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
-      console.log("Token: ", token);
-
       let json = {
         method: "GET",
         headers: new Headers({
@@ -73,7 +69,6 @@ const OrganizationCampaignHealthInf = () => {
         });
 
       if (response.success) {
-        console.log("DATE DONOR INFOR: ", response.body);
         setDonorInfor(response.body);
       }
     };
@@ -82,7 +77,6 @@ const OrganizationCampaignHealthInf = () => {
   function getDonorStatusAPI() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
-      console.log("Token: ", token);
 
       let json = {
         method: "POST",
@@ -101,10 +95,8 @@ const OrganizationCampaignHealthInf = () => {
         });
 
       if (response.success) {
-        console.log("DATA DONOR STATUS: ", response.body.reverse());
         setStatus(
           response.body.reverse().find(function (item) {
-            console.log("ITEM: ", item);
             return (
               item.donateRegistrationResponse.donorId == userInfor.idD &&
               item.donateRegistrationResponse.campaignId == userInfor.idC &&
@@ -136,7 +128,6 @@ const OrganizationCampaignHealthInf = () => {
         {valueStatus && valueDonorInfor && (
             <div>
               <HealthContext.Provider value={value}>
-              {console.log(valueStatus)}
                 {valueStatus.donateRegistrationResponse.status ===
                 "NOT_CHECKED_IN" ? (
                   <WriteHealthInf />

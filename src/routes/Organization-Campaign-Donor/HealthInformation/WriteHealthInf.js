@@ -78,7 +78,7 @@ const WriteHealthInf = () => {
       amount: formData.amount,
       weight: formData.weight,
     };
-    console.log("reques:", requestData);
+    
     const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
 
     let json = {
@@ -97,7 +97,7 @@ const WriteHealthInf = () => {
       .catch((error) => {
         console.log(error);
       });
-    // console.log("response", response)
+      
     if (response.success) {
       navigate(
         `/organization/manageCampaign/campaign-health-inf/${userInfor.idC}/${userInfor.idD}/${userInfor.date}`
@@ -247,7 +247,7 @@ const WriteHealthInf = () => {
               />
             </Form.Item>
             <Form.Item>
-              <Link to={`/organization/campaign-donorlist/${userInfor.idC}`}>
+              <Link to={`/organization/manageCampaign/campaign-donorlist/${userInfor.idC}`} style={{marginRight: "10px"}}>
                 <Button htmlType="button">Hủy chỉnh sửa</Button>
               </Link>
               <Button type="primary" htmlType="submit">
@@ -255,6 +255,7 @@ const WriteHealthInf = () => {
               </Button>
               <Modal
                 open={isModalOpen}
+                onCancel={handleCancel}
                 footer={[
                   <Button key="back" onClick={handleCancel}>
                     Xem lại

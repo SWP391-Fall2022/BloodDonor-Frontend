@@ -17,7 +17,7 @@ const filterParticipatedStatus = (data, key) => {
     .length;
 };
 const DoughnutChartAge = (dataS) => {
-    {console.log("TEST:", dataS.dataS.BloodA)}
+  
   var data = {
     labels: ["18-30", "31-40", "41-50", "51-60"],
     datasets: [

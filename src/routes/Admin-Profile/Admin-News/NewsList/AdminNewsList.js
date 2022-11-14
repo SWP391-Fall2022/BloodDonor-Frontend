@@ -20,7 +20,6 @@ export default function AdminNewsList() {
       <div className={styles.mainContainer}>
         <ViewNewsContext.Provider value={value}>
           {/* reviewPage: Is the status edit*/}
-          {console.log(page)}
           {page === 0 ? (
             <ViewNews />
           ) : page === 1 ? (

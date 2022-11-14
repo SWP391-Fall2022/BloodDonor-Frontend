@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 export default function CampaignDetail(campaignId) {
 
-    console.log(campaignId.campaignId)
+    
     //panel for q&a
     const { Panel } = Collapse;
 
@@ -25,7 +25,7 @@ export default function CampaignDetail(campaignId) {
             const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/question/get-by-campaign/${parseInt(campaignId.campaignId)}`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log("readOneFunction error", error) })
-            console.log(response)
+            
             if (response.success) {
                 setQuestions(response.body.filter((obj)=> obj.status === true && obj.answer !== 'REFUSED' && obj.answer !== ''))
             }

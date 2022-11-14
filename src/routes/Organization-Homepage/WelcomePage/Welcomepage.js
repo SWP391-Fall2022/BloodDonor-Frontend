@@ -17,8 +17,7 @@ const WelcomePage = ({ campaigns, participated, bloodAmount, question}) => {
   const countDown = () => {
     // Get today's date and time
     const endDate = new Date(campaigns[0].endDate).getTime() - now;
-    // console.log("TEST: ", endDate)
-    // console.log("Now: ", now)
+    
 
     // Time calculations for days, hours, minutes and seconds
     // const weeks = Math.floor(endDate / (1000 * 60 * 60 * 24 * 7));

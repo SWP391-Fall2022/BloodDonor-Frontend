@@ -12,7 +12,7 @@ const NewsList = () => {
   const columns = [
     {
       title: "STT",
-      render: (text, record, index) =>  (pageNumber - 1) * 10 + index + 1,
+      render: (text, record, index) =>  (pageNumber - 1) * 10 + index + 1, 
     },
     {
       title: "Tên bài viết",
@@ -43,7 +43,6 @@ const NewsList = () => {
     },
   ];
   const onChoose = (values) => {
-    console.log(values);
     setViewNews(values);
     setPage(0);
   };

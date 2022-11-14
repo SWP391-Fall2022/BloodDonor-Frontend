@@ -18,7 +18,7 @@ export default function AdminCreateNews() {
       <div className={styles.mainContainer}>
       <CreateNewsContext.Provider value={value}>
       {/* reviewPage: Is the status preview*/}
-      {console.log(previewPage)}
+      
       {previewPage === 0 ? (
                 <CreateNews />
               ) : (

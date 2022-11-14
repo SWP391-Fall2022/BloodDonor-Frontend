@@ -57,7 +57,7 @@ const EditHealthInf = () => {
       ...values,
     });
     showModal();
-    console.log(values)
+    
   };
   const validateMessages = {
     required: "Bạn đang để trống ${label}",
@@ -86,7 +86,7 @@ const EditHealthInf = () => {
       amount: formData.amount,
       weight: formData.weight,
     };
-    console.log("reques:", requestData);
+    
     const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
 
     let json = {
@@ -105,7 +105,7 @@ const EditHealthInf = () => {
       .catch((error) => {
         console.log(error);
       });
-    // console.log("response", response)
+      
     if (response.success) {
       navigate(`/organization/manageCampaign/campaign-health-inf/${userInfor.idC}/${userInfor.idD}/${userInfor.date}`);
       setMessage("Chỉnh sửa phiếu sức khỏe thành công");
@@ -246,7 +246,7 @@ const EditHealthInf = () => {
             </Form.Item>
 
             <Form.Item>
-              <Button htmlType="button" onClick={cancel}>
+              <Button htmlType="button" onClick={cancel}  style={{marginRight: "10px"}}>
                 Hủy chỉnh sửa
               </Button>
               <Button type="primary" htmlType="submit">
@@ -254,6 +254,7 @@ const EditHealthInf = () => {
               </Button>
               <Modal
                 open={isModalOpen}
+                onCancel={handleCancel}
                 footer={[
                   <Button key="back" onClick={handleCancel}>
                     Xem lại

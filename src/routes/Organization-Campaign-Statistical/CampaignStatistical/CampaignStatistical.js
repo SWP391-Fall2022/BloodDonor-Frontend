@@ -99,7 +99,7 @@ const CampaignStatistical = () => {
 
       if (response.success) {
         setQuestion(response.body);
-        console.log(response.success)
+        
       }
     };
     asyncFn();
@@ -108,7 +108,6 @@ const CampaignStatistical = () => {
   function getStatisticalAPI() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem("JWT_Key"));
-      console.log("Token: ", token);
 
       let json = {
         method: "GET",
@@ -127,7 +126,7 @@ const CampaignStatistical = () => {
         });
 
       if (response.success) {
-        console.log("DATE DONOR INFOR: ", response.body);
+        
         setStatistical(response.body);
       }
     };
