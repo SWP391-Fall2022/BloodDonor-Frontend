@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, Form, Input, Modal, notification, Select } from "antd";
 import "./createnews.css";
 import { Option } from "antd/lib/mentions";
 import { useContext, useState } from "react";
@@ -6,7 +6,7 @@ import React from "react";
 import Editor from "../Editor/Editor";
 import { CreateNewsContext } from "./AdminCreateNewsContext";
 import PostImage from "../PostImage/PostImage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { AdBread } from "../../AdminBreadcrumbs";
 
@@ -26,19 +26,27 @@ const CreateNews = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [valueContent, setValueContent] = useState(valueCreateNews.content);
+  const navigate = useNavigate()
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {
+  const handleOk = async () => {
     setIsModalOpen(false);
-    fetch("http://localhost:8080/v1/posts", {
+    const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+    const response = await fetch("http://localhost:8080/v1/posts", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", 'Authorization': "Bearer " + token, },
       body: JSON.stringify(valueCreateNews),
     })
-      .then((response) => response.json())
-      .then((msg) => {})
-      .catch((error) => {});
+      .then((res) => res.json())
+      .catch((error) => { console.log(error) })
+    if (response.status === 200) {
+      notification.success({
+        message: 'Tạo tin tức thành công',
+        placement: 'top'
+      })
+      navigate("/admin/news")
+    }
   };
   const normFile = (e) => {
     setValueContent(e);
@@ -75,21 +83,21 @@ const CreateNews = () => {
   }
   const breadName = (
     <>
-      <Link to="/admin/news_list">
+      <Link to="/admin/news">
         <ArrowLeftOutlined style={{ marginRight: "2%", color: "black" }} />
       </Link>
       Tạo tin tức
     </>
   );
-  const layer1 = <Link to="/admin/news">Quản lí tin tức</Link>;
+  const layer1 = <Link to="/admin/news">Quản lý tin tức</Link>;
   return (<>
-  <div className="create-news-breadcrumb">
-        <AdBread
-          layer1={layer1}
-          layer2="Tạo tin tức"
-          name={breadName}
-        />
-      </div>
+    <div className="create-news-breadcrumb">
+      <AdBread
+        layer1={layer1}
+        layer2="Tạo tin tức"
+        name={breadName}
+      />
+    </div>
     <section id="create-news">
       <div className="news-form">
         <div className="news-form-title">TẠO TIN TỨC</div>
@@ -130,9 +138,9 @@ const CreateNews = () => {
             <Form.Item value={valueContent} name="content">
               <Editor updateContent={normFile} content={valueContent}></Editor>
             </Form.Item>
-            <PostImage 
-            campaignImg={campaignImg} 
-            callback={callbackImageFunction}>
+            <PostImage
+              campaignImg={campaignImg}
+              callback={callbackImageFunction}>
             </PostImage>
 
             <Form.Item
@@ -158,8 +166,8 @@ const CreateNews = () => {
                 <Option value="6">{category[6]}</Option>
               </Select>
             </Form.Item>
-            <Form.Item> 
-              <Button htmlType="submit" onClick={handlePreview}>
+            <Form.Item>
+              <Button htmlType="submit" onClick={handlePreview} style={{ marginRight: '5px' }}>
                 Xem trước
               </Button>
               <Button type="primary" htmlType="submit" onClick={handleSubmit}>

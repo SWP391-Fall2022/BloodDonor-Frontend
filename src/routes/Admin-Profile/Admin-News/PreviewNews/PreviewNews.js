@@ -18,7 +18,7 @@ export default function PreviewNews() {
       Xem trước tin tức
     </>
   );
-  const layer1 = <Link to="/admin/news">Quản lí tin tức</Link>;
+  const layer1 = <Link to="/admin/news">Quản lý tin tức</Link>;
   const layer2 = <Link onClick={handleReturn} >Tạo tin tức</Link>;
   
   return (

@@ -1,6 +1,6 @@
 .ad-manage-campaign-container{
     margin-left: 270px;
-    padding: 5% 9%;
+    padding: 2% 9%;
 }
 
 .admin-manage-campaign-content{
@@ -17,8 +17,7 @@
 
 .admin-manage-campaign-title{
     text-align: center;
-    font-weight: 700;
-    font-size: 26px;
+    font-size: 1.5rem;
 }
 
 .admin-cam-search-box{

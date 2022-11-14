@@ -123,10 +123,28 @@ export default function BasicInfoContainer() {
         <div className={styles.infoContainer}>
             <div className={styles.title}>THAY ĐỔI THÔNG TIN</div>
             <Form layout="vertical" form={form} onFinish={onFinish}>
-                <Form.Item className={styles.FormLabel} label="Tên tổ chức" initialValue={user.name} name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} >
+                <Form.Item className={styles.FormLabel} label="Tên tổ chức" initialValue={user.name} name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.trim().length === 0) {
+                            callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                        } else {
+                            callback()
+                        }
+                    }
+                }]} >
                     <Input placeholder="Nhập tên tổ chức" />
                 </Form.Item>
-                <Form.Item className={styles.FormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} >
+                <Form.Item className={styles.FormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.trim().length === 0) {
+                            callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                        } else {
+                            callback()
+                        }
+                    }
+                }]} >
                     <Input placeholder="Nhập số điện thoại" />
                 </Form.Item>
                 <div className={styles.textLabel}><strong>Email: </strong>{user.email}</div>

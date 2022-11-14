@@ -14,17 +14,16 @@ const PostImage = ({ campaignImg, callback }) => {
     const { onSuccess, onError, file, onProgress } = options;
     const fmData = new FormData();
     fmData.append("file", file);
-    fmData.append("upload_preset", "news-img");
-    fmData.append("cloud_name", "blooddonor");
+    fmData.append("upload_preset", `${process.env.REACT_APP_UPLOAD_PRESET}`);
     try {
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/blooddonor/image/upload",
-        fmData
-      );
+      const data = await fetch(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, {
+        method: 'POST',
+        body: fmData
+      }).then(r => r.json());
 
       onSuccess("Ok");
-      setLinkList(linkList + res.data.url);
-      callback(res.data.url);
+      setLinkList(linkList + data.url);
+      callback(data.url);
     } catch (err) {
       const error = new Error("Some error");
       onError({ err });
@@ -38,7 +37,7 @@ const PostImage = ({ campaignImg, callback }) => {
   };
   const [fileList, setFileList] = useState([
     {
-      url: campaignImg ,
+      url: campaignImg,
     },
   ]);
   const onChange = ({ fileList: newFileList }) => {
@@ -46,14 +45,14 @@ const PostImage = ({ campaignImg, callback }) => {
   };
   return (
     <Form.Item
-      label="Hình ảnh cho chiến dịch"
+      label="Hình ảnh cho bài báo"
       name="images"
       getValueFromEvent={normFile}
     >
       <ImgCrop rotate>
         <Upload
-        accept="image/*"
-        customRequest={uploadImage}
+          accept="image/*"
+          customRequest={uploadImage}
           listType="picture-card"
           fileList={fileList}
           onChange={onChange}

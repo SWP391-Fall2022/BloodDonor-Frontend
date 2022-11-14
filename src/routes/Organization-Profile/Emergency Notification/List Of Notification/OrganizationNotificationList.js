@@ -6,8 +6,7 @@ import styles from '../../organization.module.css'
 import stylesNoti from './organizationNotificationList.module.css'
 import emptyListImg from '../../../../assets/empty-list.png'
 import { useEffect } from "react";
-
-const { Search } = Input;
+import { SearchOutlined } from "@ant-design/icons";
 
 export default function OrganizationNotificationList() {
     //Check empty list
@@ -20,7 +19,15 @@ export default function OrganizationNotificationList() {
     //The list will change based on search keyword
     useEffect(() => {
         async function fetchList() {
-            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAll`)
+            const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+            let json = {
+                method: 'GET',
+                headers: new Headers({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Authorization': "Bearer " + token,
+                })
+            }
+            const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/getAllByOrganization`, json)
                 .then((res) => res.json())
                 .catch((error) => { console.log(error) })
             // console.log(response)
@@ -51,10 +58,6 @@ export default function OrganizationNotificationList() {
         }
         fetchList()
     }, [searchValue])
-
-    const onSearch = (value) => {
-        setSearchValue(value)
-    }
 
     const columns = [
         {
@@ -93,18 +96,25 @@ export default function OrganizationNotificationList() {
             <div>
                 <div className={stylesNoti.listTitleContainer}>
                     <div className={stylesNoti.listTitle}><strong>DANH SÁCH THÔNG BÁO KHẨN CẤP</strong></div>
-                    <div className={stylesNoti.listContainer}>
-                        <div className={stylesNoti.searchCreate}>
-                            <div>
-                                <Search enterButton style={{ width: '90%' }} onSearch={onSearch} />
-                            </div>
-                            <div>
-                                <Button id={styles.btn3} style={{ margin: '0 10px' }} onClick={() => setSearchValue('')}>Hiện tất cả</Button>
-                                <Link to="/organization/notification/create">
-                                    <Button id={styles.btn3}>Tạo mới</Button>
-                                </Link>
-                            </div>
+                    <div className={stylesNoti.searchCreate}>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <Input
+                                className="cam-search-box"
+                                suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+                                onChange={(e) => setSearchValue(e.target.value)}
+                                placeholder="Điền tên thông báo bạn muốn tìm..."
+                                style={{
+                                    width: 300,
+                                }}
+                            />
                         </div>
+                        <div>
+                            <Link to="/organization/notification/create">
+                                <Button id={styles.btn3}>Tạo mới</Button>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className={stylesNoti.listContainer}>
                         {!empty ?
                             <>
                                 <Table

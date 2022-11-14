@@ -7,8 +7,7 @@ import stylesVoucher from './adminVoucherList.module.css'
 import emptyListImg from '../../../assets/empty-list.png'
 import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-
-const { Search } = Input;
+import { SearchOutlined } from '@ant-design/icons';
 
 export default function AdminManageVouchers() {
     //Check empty list
@@ -55,10 +54,6 @@ export default function AdminManageVouchers() {
         setRendered(true)
     }, [searchValue])
 
-    const onSearch = (value) => {
-        setSearchValue(value)
-    }
-
     const columns = [
         {
             title: 'STT',
@@ -97,18 +92,25 @@ export default function AdminManageVouchers() {
             <div className={styles.mainContainer}>
                 <div className={stylesVoucher.listTitleContainer}>
                     <div className={stylesVoucher.listTitle}><strong>DANH SÁCH QUẢN LÝ VOUCHERS</strong></div>
+                    <div className={stylesVoucher.searchBar}>
+                        <div>
+                            <Input
+                                className="cam-search-box"
+                                suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+                                onChange={(e) => setSearchValue(e.target.value)}
+                                placeholder="Điền tên voucher bạn muốn tìm..."
+                                style={{
+                                    width: 400,
+                                }}
+                            />
+                        </div>
+                        <div>
+                            <Button id={styles.btn3} style={{ marginLeft: '1rem' }} onClick={() => { navigate("/admin/manage_vouchers/create") }}>Tạo mới</Button>
+                        </div>
+                    </div>
                     <div className={stylesVoucher.listContainer}>
                         {rendered ?
                             <>
-                                <div className={stylesVoucher.searchBar}>
-                                    <div>
-                                        <Search enterButton style={{ width: '90%' }} onSearch={onSearch} />
-                                    </div>
-                                    <div>
-                                        <Button id={styles.btn3} onClick={() => setSearchValue('')}>Hiện tất cả</Button>
-                                        <Button id={styles.btn3} style={{ marginLeft: '1rem' }} onClick={() => { navigate("/admin/manage_vouchers/create") }}>Tạo mới</Button>
-                                    </div>
-                                </div>
                                 {!empty ?
                                     <>
                                         <Table

@@ -1,15 +1,13 @@
 import { AdBread } from '../AdminBreadcrumbs'
-import { Button, Menu, Skeleton, Table, Tooltip } from "antd"
+import { Menu, Skeleton, Table, Tooltip } from "antd"
 import { Input } from 'antd';
 import { useState } from "react"
 import styles from '../admin.module.css'
 import stylesDonor from './adminDonorList.module.css'
 import emptyListImg from '../../../assets/empty-list.png'
 import { useEffect } from "react";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import AdminDonorDetail from './AdminDonorDetail';
-
-const { Search } = Input;
 
 export default function AdminManageDonor() {
     //Show list in 3 mode: All, Active, Ban
@@ -71,10 +69,6 @@ export default function AdminManageDonor() {
         setListState(value.key)
     }
 
-    const onSearch = (value) => {
-        setSearchValue(value)
-    }
-
     const columns = [
         {
             title: 'Họ và tên',
@@ -132,23 +126,30 @@ export default function AdminManageDonor() {
                     <div className={styles.mainContainer}>
                         <div className={stylesDonor.listTitleContainer}>
                             <div className={stylesDonor.listTitle}><strong>DANH SÁCH TÌNH NGUYỆN VIÊN</strong></div>
+                            <div className={stylesDonor.searchBar}>
+                                <div>
+                                    <Input
+                                        className="cam-search-box"
+                                        suffix={<SearchOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+                                        onChange={(e) => setSearchValue(e.target.value)}
+                                        placeholder="Điền tên tình nguyện viên bạn muốn tìm..."
+                                        style={{
+                                            width: 400,
+                                        }}
+                                    />
+                                    <Tooltip
+                                        title="Nhấn vào một hàng để xem thông tin chi tiết của tình nguyện viên"
+                                        arrowPointAtCenter
+                                        placement="right"
+                                    >
+                                        <QuestionCircleOutlined style={{ position: 'relative', left: '20px', top: '1px' }} />
+                                    </Tooltip>
+                                </div>
+                            </div>
                             <div className={stylesDonor.listContainer}>
                                 {rendered ?
                                     <>
                                         <Menu mode="horizontal" items={menuItems} defaultSelectedKeys={['Tất cả']} onSelect={handleMenuSelect} />
-                                        <div className={stylesDonor.searchBar}>
-                                            <div>
-                                                <Search enterButton style={{ width: '90%' }} onSearch={onSearch} />
-                                                <Tooltip
-                                                    title="Nhấn vào một hàng để xem thông tin chi tiết của tình nguyện viên"
-                                                    arrowPointAtCenter
-                                                    placement="right"
-                                                >
-                                                    <QuestionCircleOutlined style={{ position: 'relative', left: '20px', top: '5px' }} />
-                                                </Tooltip>
-                                            </div>
-                                            <Button id={styles.btn3} onClick={() => setSearchValue('')}>Hiện tất cả</Button>
-                                        </div>
                                         {!empty ?
                                             <>
                                                 <Table

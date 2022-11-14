@@ -69,14 +69,41 @@ export default function AdminCreateVoucher() {
                             <DatePicker style={{ width: '100%' }} placeholder="Chọn ngày" />
                         </Form.Item>
                         <Form.Item className={stylesVoucher.formLabel}>
-                            <Form.Item label="Công ty tài trợ" name="sponsor" rules={[{ required: true, message: 'Vui lòng nhập công ty' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                            <Form.Item label="Công ty tài trợ" name="sponsor" rules={[{ required: true, message: 'Vui lòng nhập công ty' },
+                            {
+                                validator: (rule, value, callback) => {
+                                    if (value.trim().length === 0) {
+                                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                    } else {
+                                        callback()
+                                    }
+                                }
+                            }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                                 <Input placeholder="Nhập công ty" />
                             </Form.Item>
-                            <Form.Item label="Số điểm quy đổi" name="level" rules={[{ required: true, message: 'Vui lòng nhập số điểm' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                            <Form.Item label="Số điểm quy đổi" name="level" rules={[{ required: true, message: 'Vui lòng nhập số điểm' },
+                            {
+                                validator: (rule, value, callback) => {
+                                    if (value.trim().length === 0) {
+                                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                    } else {
+                                        callback()
+                                    }
+                                }
+                            }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
                                 <Input placeholder="Nhập số điểm" />
                             </Form.Item>
                         </Form.Item>
-                        <Form.Item className={stylesVoucher.formLabel} label="Số lượng voucher" name="amount" rules={[{ required: true, message: 'Vui lòng nhập số lượng' }]}>
+                        <Form.Item className={stylesVoucher.formLabel} label="Số lượng voucher" name="amount" rules={[{ required: true, message: 'Vui lòng nhập số lượng' },
+                        {
+                            validator: (rule, value, callback) => {
+                                if (value.trim().length === 0) {
+                                    callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                } else {
+                                    callback()
+                                }
+                            }
+                        }]}>
                             <Input placeholder="Nhập số lượng" />
                         </Form.Item>
                         <Form.Item className={stylesVoucher.buttonLabel}>

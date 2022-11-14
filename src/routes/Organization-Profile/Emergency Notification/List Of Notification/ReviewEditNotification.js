@@ -1,6 +1,6 @@
 import { ArrowLeftOutlined } from "@ant-design/icons"
 import styles from '../../organization.module.css'
-import stylesNoti from './createReview.module.css'
+import stylesNoti from './editReview.module.css'
 import { OrBread } from '../../organization-breadcrumb'
 import { Link } from "react-router-dom"
 import { Button } from "antd"
@@ -10,7 +10,7 @@ export default function OrganizationReviewNotification({ setReview, notification
     //Breadcrumb props
     const breadName = <><Link onClick={() => setReview(false)}><ArrowLeftOutlined style={{ marginRight: '2%', color: 'black' }} /></Link>Xem trước</>
     const layer1 = <Link to="/organization/notification">Quản lí thông báo khẩn cấp</Link>
-    const layer2 = <Link onClick={() => setReview(false)}>Tạo thông báo khẩn cấp</Link>
+    const layer2 = <Link onClick={() => setReview(false)}>Chỉnh sửa thông báo khẩn cấp</Link>
 
     //Get now date
     const date = new Date(Date.now()).getDate()
