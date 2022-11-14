@@ -108,10 +108,28 @@ export default function BasicInfoContainer() {
             <div className={styles.title}>THÔNG TIN CƠ BẢN</div>
             <Form layout="vertical" form={form} onFinish={onFinish}>
                 <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="Họ và Tên" name="name" initialValue={user.name} rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                    <Form.Item className={styles.subFormLabel} label="Họ và Tên" name="name" initialValue={user.name} rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value.trim().length === 0) {
+                                callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                            } else {
+                                callback()
+                            }
+                        }
+                    }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                         <Input placeholder="Nhập họ và tên" />
                     </Form.Item>
-                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                    <Form.Item className={styles.subFormLabel} label="Số điện thoại" name="phone" initialValue={user.phone} rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value.trim().length === 0) {
+                                callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                            } else {
+                                callback()
+                            }
+                        }
+                    }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
                         <Input placeholder="Nhập số điện thoại" />
                     </Form.Item>
                 </Form.Item>
@@ -127,7 +145,16 @@ export default function BasicInfoContainer() {
                     </Form.Item>
                 </Form.Item>
                 <Form.Item className={styles.formLabel}>
-                    <Form.Item className={styles.subFormLabel} label="CMND" name="identityNum" initialValue={user.identityNum} rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
+                    <Form.Item className={styles.subFormLabel} label="CMND" name="identityNum" initialValue={user.identityNum} rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                    {
+                        validator: (rule, value, callback) => {
+                            if (value.trim().length === 0) {
+                                callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                            } else {
+                                callback()
+                            }
+                        }
+                    }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', }}>
                         <Input placeholder="Nhập số CMND" />
                     </Form.Item>
                     <Form.Item className={styles.subFormLabel} label="Nhóm máu" name="bloodType" initialValue={user.bloodType} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>

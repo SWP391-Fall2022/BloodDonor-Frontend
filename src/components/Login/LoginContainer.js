@@ -141,10 +141,28 @@ export default function LoginContainer() {
                 </div>
                 <h1 className={`${styles.title}`}>ĐĂNG NHẬP</h1>
                 <Form layout="vertical">
-                    <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
+                    <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.trim().length === 0) {
+                            callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                        } else {
+                            callback()
+                        }
+                    }
+                }]}>
                         <Input placeholder="Nhập tên đăng nhập" value={username} onChange={handleOnChangeUsername} />
                     </Form.Item>
-                    <Form.Item className={styles.formLabel} label="Mật khẩu" name="Password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                    <Form.Item className={styles.formLabel} label="Mật khẩu" name="Password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.trim().length === 0) {
+                            callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                        } else {
+                            callback()
+                        }
+                    }
+                }]}>
                         <Input.Password placeholder="Nhập mật khẩu" value={password} onChange={handleOnChangePassword} />
                     </Form.Item>
                     <Form.Item className={styles.formLabel}>

@@ -40,14 +40,41 @@ function RegisterDonor() {
     const STEP_1_FORM = () => {
         return (
             <>
-                <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
+                <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value.trim().length === 0) {
+                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                    } else {
+                        callback()
+                    }
+                }
+            }]}>
                     <Input placeholder="Nhập tên đăng nhập" />
                 </Form.Item>
                 {emailInput}
-                <Form.Item className={styles.formLabel} label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                <Form.Item className={styles.formLabel} label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value.trim().length === 0) {
+                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                    } else {
+                        callback()
+                    }
+                }
+            }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu" name="confirmPassword" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu" name="confirmPassword" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value.trim().length === 0) {
+                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                    } else {
+                        callback()
+                    }
+                }
+            }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
             </>
@@ -56,7 +83,16 @@ function RegisterDonor() {
     const STEP_2_FORM = () => {
         return (
             <>
-                <Form.Item className={styles.formLabel} label="Họ và Tên" name="name" rules={[{ required: true, message: 'Vui lòng nhập Họ và Tên' }]}>
+                <Form.Item className={styles.formLabel} label="Họ và Tên" name="name" rules={[{ required: true, message: 'Vui lòng nhập Họ và Tên' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value.trim().length === 0) {
+                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                    } else {
+                        callback()
+                    }
+                }
+            }]}>
                     <Input placeholder="Nhập Họ và Tên" />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
@@ -72,7 +108,16 @@ function RegisterDonor() {
                             <Option value="FEMALE">Nữ</Option>
                         </Select>
                     </Form.Item>
-                    <Form.Item className={styles.formLabel} label="Số CMND" name="identityNum" rules={[{ required: true, message: 'Vui lòng nhập số CMND' }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
+                    <Form.Item className={styles.formLabel} label="Số CMND" name="identityNum" rules={[{ required: true, message: 'Vui lòng nhập số CMND' },
+                {
+                    validator: (rule, value, callback) => {
+                        if (value.trim().length === 0) {
+                            callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                        } else {
+                            callback()
+                        }
+                    }
+                }]} style={{ display: 'inline-block', width: 'calc(50% - 10px)', marginLeft: '20px', }}>
                         <Input placeholder="Nhập số CMND" />
                     </Form.Item>
                 </Form.Item>

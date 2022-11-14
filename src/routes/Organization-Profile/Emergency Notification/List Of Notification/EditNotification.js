@@ -53,7 +53,7 @@ export default function OrganizationEditNotification() {
                 const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/readOne/${location.state.campaignId}`)
                     .then((res) => res.json())
                     .catch((error) => { console.log(error) })
-                console.log(response)
+                // console.log(response)
                 if (response.status === 200) {
                     //Province, District
                     const provinceList = packageInfo.provinces
@@ -243,15 +243,24 @@ export default function OrganizationEditNotification() {
                             <div className={stylesNoti.formContainer}>
                                 <h1 style={{ padding: '1rem 0' }}><strong>CHỈNH SỬA THÔNG BÁO KHẨN CẤP</strong></h1>
                                 <Form form={form} layout="vertical" onFinish={onFinish}
-                                initialValues={{
-                                    'description': data.description,
-                                    'name': data.name,
-                                    'province': data.provinceName,
-                                    'district': data.districtName,
-                                    'addressDetails': data.addressDetails,
-                                    'bloodTypes': data.bloodTypes,
-                                  }}>
-                                    <Form.Item className={styles.formLabel} label="Tựa đề thông báo" name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
+                                    initialValues={{
+                                        'description': data.description,
+                                        'name': data.name,
+                                        'province': data.provinceName,
+                                        'district': data.districtName,
+                                        'addressDetails': data.addressDetails,
+                                        'bloodTypes': data.bloodTypes,
+                                    }}>
+                                    <Form.Item className={styles.formLabel} label="Tựa đề thông báo" name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                                    {
+                                        validator: (rule, value, callback) => {
+                                            if (value.trim().length === 0) {
+                                                callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                            } else {
+                                                callback()
+                                            }
+                                        }
+                                    }]}>
                                         <Input />
                                     </Form.Item>
                                     <Form.Item className={styles.formLabel}>
@@ -274,7 +283,16 @@ export default function OrganizationEditNotification() {
                                             </Select>
                                         </Form.Item>
                                     </Form.Item>
-                                    <Form.Item className={styles.formLabel} label="Địa điểm" name="addressDetails" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
+                                    <Form.Item className={styles.formLabel} label="Địa điểm" name="addressDetails" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                                    {
+                                        validator: (rule, value, callback) => {
+                                            if (value.trim().length === 0) {
+                                                callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                            } else {
+                                                callback()
+                                            }
+                                        }
+                                    }]}>
                                         <Input />
                                     </Form.Item>
                                     <Form.Item className={styles.formLabel} label="Yêu cầu về nhóm máu" name="bloodTypes" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>

@@ -39,14 +39,41 @@ function RegisterPlace() {
     const STEP_1_FORM = () => {
         return (
             <>
-                <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' }]}>
+                <Form.Item className={styles.formLabel} label="Tên đăng nhập" name="username" rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value.trim().length === 0) {
+                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                    } else {
+                        callback()
+                    }
+                }
+            }]}>
                     <Input placeholder="Nhập tên đăng nhập" />
                 </Form.Item>
                 {emailInput}
-                <Form.Item className={styles.formLabel} label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                <Form.Item className={styles.formLabel} label="Mật khẩu" name="password" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value.trim().length === 0) {
+                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                    } else {
+                        callback()
+                    }
+                }
+            }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu" name="confirmPassword" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}>
+                <Form.Item className={styles.formLabel} label="Nhập lại mật khẩu" name="confirmPassword" rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value.trim().length === 0) {
+                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                    } else {
+                        callback()
+                    }
+                }
+            }]}>
                     <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
             </>
@@ -55,13 +82,31 @@ function RegisterPlace() {
     const STEP_2_FORM = () => {
         return (
             <>
-                <Form.Item className={styles.formLabel} label="Tên bệnh viện/ trạm y tế/ nơi tiếp nhận hiến máu" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên' }]}>
+                <Form.Item className={styles.formLabel} label="Tên bệnh viện/ trạm y tế/ nơi tiếp nhận hiến máu" name="name" rules={[{ required: true, message: 'Vui lòng nhập tên' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value.trim().length === 0) {
+                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                    } else {
+                        callback()
+                    }
+                }
+            }]}>
                     <TextArea rows={2} allowClear showCount maxLength={100} />
                 </Form.Item>
                 <Form.Item className={styles.formLabel} label="Nhập số điện thoại" name="phone" rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}>
                     <Input style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
                 </Form.Item>
-                <Form.Item className={styles.formLabel} label="Mã số thuế" name="taxcode" rules={[{ required: true, message: 'Vui lòng nhập mã số' }]}>
+                <Form.Item className={styles.formLabel} label="Mã số thuế" name="taxcode" rules={[{ required: true, message: 'Vui lòng nhập mã số' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value.trim().length === 0) {
+                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                    } else {
+                        callback()
+                    }
+                }
+            }]}>
                     <Input placeholder="Nhập mã số thuế" />
                 </Form.Item>
             </>

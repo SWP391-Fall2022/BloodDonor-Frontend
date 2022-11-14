@@ -180,7 +180,16 @@ export default function OrganizationCreateNotification() {
                     <div className={stylesNoti.formContainer}>
                         <h1 style={{ padding: '1rem 0' }}><strong>TẠO THÔNG BÁO KHẨN CẤP</strong></h1>
                         <Form form={form} layout="vertical" onFinish={onFinish}>
-                            <Form.Item className={styles.formLabel} label="Tựa đề thông báo" name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
+                            <Form.Item className={styles.formLabel} label="Tựa đề thông báo" name="name" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                            {
+                                validator: (rule, value, callback) => {
+                                    if (value.trim().length === 0) {
+                                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                    } else {
+                                        callback()
+                                    }
+                                }
+                            }]}>
                                 <Input />
                             </Form.Item>
                             <Form.Item className={styles.formLabel}>
@@ -203,7 +212,16 @@ export default function OrganizationCreateNotification() {
                                     </Select>
                                 </Form.Item>
                             </Form.Item>
-                            <Form.Item className={styles.formLabel} label="Địa điểm" name="addressDetails" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
+                            <Form.Item className={styles.formLabel} label="Địa điểm" name="addressDetails" rules={[{ required: true, message: 'Vui lòng không bỏ trống' },
+                            {
+                                validator: (rule, value, callback) => {
+                                    if (value.trim().length === 0) {
+                                        callback('Không được phép nhập dữ liệu chỉ có dấu cách')
+                                    } else {
+                                        callback()
+                                    }
+                                }
+                            }]}>
                                 <Input />
                             </Form.Item>
                             <Form.Item className={styles.formLabel} label="Yêu cầu về nhóm máu" name="bloodTypes" rules={[{ required: true, message: 'Vui lòng không bỏ trống' }]}>
