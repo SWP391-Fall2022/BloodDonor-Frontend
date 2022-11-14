@@ -166,7 +166,7 @@ const CreateNews = () => {
               </Select>
             </Form.Item>
             <Form.Item>
-              <Button htmlType="submit" onClick={handlePreview} style={{ marginRight: '5px' }}>
+              <Button htmlType="submit" onClick={handlePreview} style={{ marginRight: '10px' }}>
                 Xem trước
               </Button>
               <Button type="primary" htmlType="submit" onClick={handleSubmit}>
@@ -174,6 +174,7 @@ const CreateNews = () => {
               </Button>
               <Modal
                 open={isModalOpen}
+                onCancel={handleCancel}
                 footer={[
                   <Button key="back" onClick={handleCancel}>
                     Xem lại

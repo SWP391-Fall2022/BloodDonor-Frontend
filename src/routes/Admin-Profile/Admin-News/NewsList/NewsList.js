@@ -147,6 +147,15 @@ const NewsList = () => {
                   dataSource={filterStatus(search(data), true)}
                   size="middle"
                   scroll={{ x: "100wh" }}
+                  onRow={(record) => ({
+                    onClick: () => {
+                      onChoose(record)},
+                  })}
+                  pagination={{
+                    onChange(current) {
+                      setPageNumber(current);
+                    },
+                  }}
                 />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Ẩn" key="3">
@@ -155,6 +164,15 @@ const NewsList = () => {
                   dataSource={filterStatus(search(data), false)}
                   size="middle"
                   scroll={{ x: "100wh" }}
+                  onRow={(record) => ({
+                    onClick: () => {
+                      onChoose(record)},
+                  })}
+                  pagination={{
+                    onChange(current) {
+                      setPageNumber(current);
+                    },
+                  }}
                 />
               </Tabs.TabPane>
             </Tabs>

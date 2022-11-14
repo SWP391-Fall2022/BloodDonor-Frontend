@@ -90,7 +90,7 @@ const ViewNews = () => {
               | Tác giả: {valueViewNews.author}
             </div>
             <div className="news-detail-img">
-              <img src={valueViewNews.image} alt={valueViewNews.title}></img>
+              <img src={valueViewNews.images} alt={valueViewNews.title}></img>
             </div>
             <div className="news-content">
               <div
