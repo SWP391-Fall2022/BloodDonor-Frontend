@@ -105,7 +105,7 @@ export default class NewsList extends Component {
           pagination={{
             pageSize: 5,
           }}
-          dataSource={search(data).reverse()}
+          dataSource={search(data.filter(obj => obj.status === true)).reverse()}
 
           renderItem={(item) => (
             <Link to={`/news/news-detail/${item.id}`} className="news-item">
