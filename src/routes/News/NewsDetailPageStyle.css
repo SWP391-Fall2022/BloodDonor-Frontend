@@ -45,6 +45,10 @@
         margin-bottom: 30px;
 }
 
+.other-news .new-content{
+    display: none;
+}
+
 .other-news-title {
     margin: 0 auto;
     font-style: normal;
