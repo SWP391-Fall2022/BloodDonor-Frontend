@@ -117,13 +117,13 @@ export default function ManageCampaign() {
             startDate: moment(row.startDate).format("DD/MM/YYYY"),
             endDate: moment(row.endDate).format("DD/MM/YYYY"),
             id: row.id,
-            donorList: <Link to={`/organization/manageCampaign/campaign-donorlist/${row.id}`}
+            donorList: <Link style={{padding:"30px 0"}} to={`/organization/manageCampaign/campaign-donorlist/${row.id}`}
               onClick={(event) => {
                 event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
               }
               }>Chi tiết</Link>,
 
-            questions: <Link to={`/organization/manageQuestion/campaignQuestion/${row.id}`}
+            questions: <Link style={{padding:"30px 0"}} to={`/organization/manageQuestion/campaignQuestion/${row.id}`}
               onClick={(event) => {
                 event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
               }}
@@ -235,7 +235,7 @@ export default function ManageCampaign() {
                     }}
                     scroll={{ x: "100wh" }}
                   // size="middle"
-                    
+                    className={"org-campaign-table"}
                     onRow={record => ({
                       onClick: (e) => {
 
@@ -260,6 +260,7 @@ export default function ManageCampaign() {
                       pageSize: 5,
                     }}
                     scroll={{ x: "100wh" }}
+                    className={"org-campaign-table"}
 
                     onRow={record => ({
                       onClick: (e) => {
@@ -283,7 +284,7 @@ export default function ManageCampaign() {
                       pageSize: 5,
                     }}
                     scroll={{ x: "100wh" }}
-
+                    className={"org-campaign-table"}
 
                     onRow={record => ({
                       onClick: (e) => {
@@ -307,6 +308,7 @@ export default function ManageCampaign() {
                       pageSize: 5,
                     }}
                     scroll={{ x: "100wh" }}
+                    className={"org-campaign-table"}
 
                     onRow={record => ({
                       onClick: (e) => {

@@ -49,7 +49,7 @@ export default function CampaignDetail(campaignId) {
                 <h3>Q&A</h3>
                 <List
                     itemLayout="horizontal"
-                    dataSource={questions}
+                    dataSource={questions.filter((_, index) => index < 8)}
                     renderItem= {item => (
 
                         <Collapse className="campaignDetail-q-and-a-container">

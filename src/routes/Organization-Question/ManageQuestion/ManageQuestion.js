@@ -10,8 +10,6 @@ function checkQuestionStatus(answer, status) {
 
   if (answer === "REFUSED" && status === false)
     return "Từ chối"
-  else if (status === false)
-    return "Đã xóa"
   else if (answer === "" || answer === null)
     return "Chưa trả lời"
   else
