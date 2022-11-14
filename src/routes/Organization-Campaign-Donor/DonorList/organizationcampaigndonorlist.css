@@ -2,7 +2,10 @@
     display: grid;
     grid-template-columns: 270px auto;
 }
-
+.donor-health-breadcrumb{
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+}
 @media only screen and (max-width: 800px) {
     .organization-donorlist-col {
         display: grid;

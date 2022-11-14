@@ -38,7 +38,6 @@ import OrganizationReviewNotification from "./routes/Organization-Profile/Emerge
 import OrganizationProfile from "./routes/Organization-Profile/organization-profile";
 import OrganizationChangePassword from "./routes/Organization-Profile/Change Password/changePassword";
 import OrganizationHomepage from "./routes/Organization-Homepage/OrganizationHomepage";
-import OrganizationCampaignDonorList from "./routes/Organization-Campaign-Donor/OrganizationCampaignDonorList";
 import OrganizationCampaignHealthInf from "./routes/Organization-Campaign-Donor/HealthInformation/OrganizationCampaignHealthInf";
 
 
@@ -76,6 +75,7 @@ import PreviewNews from "./routes/Admin-Profile/Admin-News/PreviewNews/PreviewNe
 import EditNews from "./routes/Admin-Profile/Admin-News/EditNews/EditNews";
 import AdminCreateVoucher from './routes/Admin-Profile/Admin-Voucher/AdminCreateVoucher';
 import OverViewNews from "./routes/Admin-Profile/Admin-News/OverviewNews/OverViewNews";
+import OrganizationCampaignDonorList from "./routes/Organization-Campaign-Donor/DonorList/OrganizationCampaignDonorList";
 
 import { UserProvider } from './others/UserRoleContext';
 
@@ -114,21 +114,17 @@ export default function App() {
           />
           <Route
             exact strict path="/organization/:id" element={<OrganizationInformation />}
-          /> 
+          />
 
           <Route
             exact strict path="/organization-homepage" element={<OrganizationHomepage />}
           />
-          <Route
-            exact strict path="/organization-campaign-donorlist/0" element={<OrganizationCampaignDonorList />}
-          />
-          <Route
-            exact strict path="/organization-campaign-health-inf" element={<OrganizationCampaignHealthInf />}
-          />
-          <Route
-            exact strict path="/statistical" element={<OrganizationCampaignStatistical />}
-          />
-          <Route exact strict path="/test" element={<AdminNewsList />} />
+
+           {/*ĐOAN KHÁNH: GIỮ NGUYÊN*/}
+           <Route exact strict path="/organization/manageCampaign/campaign-donorlist/:id" element={<OrganizationCampaignDonorList />}/>
+          <Route exact strict path="/organization/manageCampaign/campaign-health-inf/:idC/:idD/:date" element={<OrganizationCampaignHealthInf />}/>
+          <Route exact strict path="/organization/manageCampaign/detailCampaign/statistical/:id" element={<OrganizationCampaignStatistical />} />
+          {/*ĐOAN KHÁNH: TỚI ĐÂY */}
 
             {/* Pages for logged in donor */}
             <Route path="/donor" element={<DonorProfile />}>

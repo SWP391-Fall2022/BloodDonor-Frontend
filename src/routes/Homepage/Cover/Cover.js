@@ -27,8 +27,8 @@ const Cover = () => {
           <br />
           Hãy cứu lấy mạng người bằng máu của mình!
         </h3>
-        <div className="container-search">
-          <h4>Bạn muốn đặt lịch vào khoảng thời gian nào?</h4>
+        {/* <div className="container-search"> */}
+          {/* <h4>Bạn muốn đặt lịch vào khoảng thời gian nào?</h4>
           <div className="row-search">
             {/* <Space direction="horizontal" size={20} style={{ marginRight: "2%" }}>
               <RangePicker
@@ -40,16 +40,13 @@ const Cover = () => {
                 format={"DD-MM-YYYY"}
                 allowClear={false}
               />
-              {console.log(date)}
-              <Link to={`/campaign`} state={{date: date}}>
-               <Button type="primary">Tìm kiếm</Button>
+              {console.log("date:", date)} */}
+              <Link to={`/campaign`} >
+               <Button type="primary">Chọn lịch hiến máu</Button>
                </Link>
-            </Space> */}
-            <Link to={`/campaign`} >
-              <Button type="primary">Chọn lịch hiến máu</Button>
-            </Link>
-          </div>
-        </div>
+            {/* </Space> */}
+          {/* </div> */}
+        {/* </div> */}
       </div>
     </section>
   );

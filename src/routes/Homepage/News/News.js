@@ -47,9 +47,7 @@ const News = () => {
 
             <div className="news-list">
               {data.map(
-                (post, index) =>
-                  index > 0 &&
-                  index < 4 && (
+                (post, index) => index > 0 && index < 4 && (
                     <Link to={`news/news-detail/${post.id}`}>
                       <div className="news-card-horizontal">
                         <div className="news-content">

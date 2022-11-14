@@ -89,6 +89,7 @@ export default function ManageCampaign() {
   function getCampFromAPI() {
     const asyncFn = async () => {
       const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
+      {console.log("Token",token)}
       let json = {
         method: 'GET',
         headers: new Headers({
@@ -115,6 +116,7 @@ export default function ManageCampaign() {
             startDate: moment(row.startDate).format("DD/MM/YYYY"),
             endDate: moment(row.endDate).format("DD/MM/YYYY"),
             id: row.id,
+
             donorList: <Link style={{padding:"30px 0"}} to={`/organization/manageCampaign/campaign-donorlist/${row.id}`}
               onClick={(event) => {
                 event.stopPropagation(); // prevent event to propogate to parent to have row click which is default functionality
