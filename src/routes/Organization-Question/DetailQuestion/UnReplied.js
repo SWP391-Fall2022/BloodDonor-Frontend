@@ -29,8 +29,16 @@ export default function DetailQuestion() {
         const formData = form.getFieldsValue(true);
 
         const requestData = {
-            "answer": formData.answer
+            "answer": formData.answer.replace(/\s+/g,' ').trim()
         }
+
+        if( requestData.answer.length === 0){
+            notification.error({
+              message: "Câu trả lời không được để trống!",
+              placement: "top"
+            });
+            return;
+          }
         const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
 
@@ -198,7 +206,7 @@ export default function DetailQuestion() {
                         <Form.Item
                             label="Trả lời"
                             name="answer"
-                            rules={[{ required: true, message: 'Vui lòng nhập câu trả lời cho câu hỏi' }]}>
+                            rules={[{ required: true, message: 'Vui lòng nhập câu trả lời cho câu hỏi' }, { whitespace: true, message:'Câu trả lời không thể chỉ chứa khoảng trắng'}]}>
                             <TextArea showCount maxLength={100} onChange={(e) => (setAnswer(e.target.value))}></TextArea>
                         </Form.Item>
 

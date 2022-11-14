@@ -1,0 +1,5 @@
+@import '../../../index.css';
+
+.create-campaign-header{
+    box-shadow: var(--shadow-dp-02) !important;
+}

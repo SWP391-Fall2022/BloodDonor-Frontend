@@ -78,15 +78,11 @@ function CreateCampaignForm() {
     checkedValues.map((value) => {
       return checked.push(value);
     },
-
       setBloodTypes(checked)
-
     )
-
   };
 
   // confirm modal
-  const [open, setOpen] = useState(false);
 
   const showConfirm = () => {
     Modal.confirm({
@@ -97,7 +93,6 @@ function CreateCampaignForm() {
       className: 'create-campaign-confirm',
       onOk() {
         onFinish();
-        setOpen(false)
       }
 
     });
@@ -108,7 +103,7 @@ function CreateCampaignForm() {
     const formData = form.getFieldsValue(true);
 
     const requestData = {
-      "name": formData.name,
+      "name": formData.name.replace(/\s+/g,' ').trim(),
       "images": campaignImg,
       "description": formData.description,
       "startDate": formData.campDate[0],
@@ -116,9 +111,9 @@ function CreateCampaignForm() {
       "emergency": false,
       "bloodTypes": bloodTypes.toString().replace(/,/g, '-'),
       "districtId": districtId,
-      "addressDetails": formData.addressDetails,
+      "addressDetails": formData.addressDetails.replace(/\s+/g,' ').trim(),
       "sendMail": formData.sendMail,
-      "onSiteDates": onSiteDates[0] === "1970-01-01" ? null : String(onSiteDates).split(","),
+      "onSiteDates": onSiteDates[0] === "1970-01-01" || weekRepetition === true || monthRepetition === true ? null : String(onSiteDates).split(","),
       "weekRepetition": weekRepetition,
       "monthRepetition": monthRepetition,
       "daysOfWeek": formData.daysOfWeek,
@@ -127,6 +122,43 @@ function CreateCampaignForm() {
 
     }
     console.log("reques:", requestData)
+    if( requestData.name.length === 0){
+      notification.error({
+        message: "Tên chiến dịch không được để trống!",
+        placement: "top"
+      });
+      return;
+    }
+    if(isRepetition === 1 && onSiteDates[0] === "1970-01-01" )
+    {
+      notification.error({
+        message: "Bạn phải chọn những ngày cụ thể bạn muốn mở đăng ký!",
+        placement: "top"
+      });
+      return;
+    }
+    else if(isRepetition === 2 && requestData.daysOfWeek.length === 0){
+      notification.error({
+        message: "Bạn phải chọn thứ trong tuần bạn muốn mở đăng ký!",
+        placement: "top"
+      });
+      return;
+    }
+    else if(isRepetition === 4 && (requestData.daysOfWeek.length === 0 || requestData.weekNumber === 0 )){
+      notification.error({
+        message: "Bạn phải chọn thứ trong tuần và tuần thứ mấy trong tháng bạn muốn mở đăng ký!",
+        placement: "top"
+      });
+      return;
+    }
+    
+    if(requestData.addressDetails.length === 0 ){
+      notification.error({
+        message: "Địa chỉ chi tiết của chiến dịch không được để trống!",
+        placement: "top"
+      });
+      return;
+    }
     const token = JSON.parse(sessionStorage.getItem('JWT_Key'))
 
 
@@ -141,14 +173,14 @@ function CreateCampaignForm() {
     const response = await fetch(`${process.env.REACT_APP_BACK_END_HOST}/v1/campaign/create`, json)
       .then((res) => res.json())
       .catch((error) => { console.log(error) })
-    // console.log("response", response)
+    console.log("response", response)
     if (response.status === 400) {
       notification.error({
         message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại",
         placement: "top"
       });
-      sessionStorage.clear()
-      navigate("/");
+      // sessionStorage.clear()
+      // navigate("/");
     }
     if (response.status === 200) {
       navigate("/organization/manageCampaign")
@@ -182,13 +214,20 @@ function CreateCampaignForm() {
   const [isRepetition, setIsRepetition] = useState();
   function onIsRepetitionChange(e) {
     setIsRepetition(e.target.value)
-    if (e.target.value === 2)
+    if (e.target.value === 1) {
+      setWeekRepetition(false)
+      setMonthRepetition(false)
+    }
+    else if (e.target.value === 2) {
       setWeekRepetition(true)
-    else if (e.target.value === 3 || e.target.value === 4)
+      setMonthRepetition(false)
+
+    }
+    else if (e.target.value === 3 || e.target.value === 4) {
       setMonthRepetition(true)
+      setWeekRepetition(false)
+    }
   }
-
-
 
   // setup for repetition by week 
   const [weekRepetition, setWeekRepetition] = useState(false);
@@ -271,13 +310,14 @@ function CreateCampaignForm() {
             name="basic"
             scrollToFirstError
           >
-            <Form.Item className="create-campaign-form-item" label="Tựa đề chiến dịch" name="name" rules={[{ required: true, message: 'Vui lòng nhập Tựa đề chiến dịch' }]}>
+            <Form.Item className="create-campaign-form-item" label="Tựa đề chiến dịch" name="name" rules={[{ required: true, message: 'Vui lòng nhập Tựa đề chiến dịch' }, { whitespace: true, message:'Tên chiến dịch không thể chỉ chứa khoảng trắng'}]}>
               <Input placeholder="Nhập tựa đề chiến dịch"
                 onChange={(e) => {
                   setCampaigName(e.target.value)
                 }}
                 name="name"
                 maxLength={120}
+                autoComplete="false"
               />
             </Form.Item>
 
@@ -304,7 +344,7 @@ function CreateCampaignForm() {
             </Form.Item>
 
 
-            <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }]}>
+            <Form.Item className="create-campaign-form-item" label="Địa chỉ chi tiết" name="addressDetails" rules={[{ required: true, message: 'Vui lòng nhập chi tiết địa điểm diễn ra chiến dịch' }, { whitespace: true, message:'Chi tiết địa điểm diễn ra chiến dịch không thể chỉ chứa khoảng trắng'}]}>
               <TextArea
                 rows={2}
                 allowClear
@@ -330,7 +370,7 @@ function CreateCampaignForm() {
               </RangePicker>
             </Form.Item>
 
-            <Form.Item label="Tính năng nâng cao: bạn muốn lặp lại chiến dịch theo" name="isRepetition">
+            <Form.Item label="Tính năng nâng cao - bạn muốn lặp lại chiến dịch theo:" name="isRepetition">
               <Radio.Group onChange={(e) => onIsRepetitionChange(e)} >
                 <Radio value={1}>Ngày cụ thể</Radio>
                 <Radio value={2}>Tuần</Radio>
@@ -340,7 +380,7 @@ function CreateCampaignForm() {
               </Radio.Group>
             </Form.Item>
 
-            <Form.Item className="create-campaign-form-item-days" initialValue={" "} label="Chọn những ngày cụ thể bạn muốn mở đăng ký:" required={isRepetition === 1}>
+            <Form.Item className="create-campaign-form-item-days" initialValue={""} label="Chọn những ngày cụ thể bạn muốn mở đăng ký:" required={isRepetition === 1}>
 
               <DatePickerReact
                 disabled={isRepetition !== 1}
@@ -357,7 +397,7 @@ function CreateCampaignForm() {
               />
             </Form.Item>
 
-            <Form.Item className="create-campaign-form-item" initialValue={[]} label="Cài đặt nâng cao, chọn thứ trong tuần để lặp:" name="daysOfWeek" required={isRepetition === 4 || isRepetition === 2}>
+            <Form.Item className="create-campaign-form-item" initialValue={[]} label="Chọn thứ trong tuần bạn muốn mở đăng ký:" name="daysOfWeek" required={isRepetition === 4 || isRepetition === 2}>
               <Checkbox.Group options={weeksData} disabled={isRepetition !== 2 && isRepetition !== 4} />
 
             </Form.Item>
@@ -385,12 +425,11 @@ function CreateCampaignForm() {
                 multiple
                 format={"DD"}
                 buttons={false}
-                placeholder={"Chọn những ngày mở đăng ký"}
                 disabled={isRepetition !== 3}
               />
             </Form.Item>
 
-            <Form.Item initialValue={0} label="Chọn tuần thứ mấy trong tháng bạn muốn lặp lại:" name="weekNumber" required={isRepetition === 4}>
+            <Form.Item initialValue={0} label="Chọn tuần thứ mấy trong tháng bạn muốn mở đăng ký:" name="weekNumber" required={isRepetition === 4}>
               <Radio.Group disabled={isRepetition !== 4}>
                 <Radio value={1}>Tuần 1</Radio>
                 <Radio value={2}>Tuần 2</Radio>
@@ -419,7 +458,9 @@ function CreateCampaignForm() {
             <Form.Item className="create-campaign-form-buttons">
 
               <Button
-                disabled={(campaigName === "" || dates.length !== 2 || address === "") ? true : false}
+                disabled={
+                  (campaigName === "" || dates.length !== 2 || address === ""  ) ? true : false
+                }
                 id="finishButton" type="primary" htmlType="submit" size="large"
                 onClick={showConfirm}
               >
