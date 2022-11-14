@@ -30,6 +30,7 @@ const News = () => {
                   </div>
                   <div className="news-content">
                     <div className="time">
+                      Ngày đăng:{" "}
                       {data[0].postingTime
                         .substring(0, 10)
                         .split("-")
@@ -39,7 +40,7 @@ const News = () => {
                     <a className="title" href="#.">
                       {data[0].title}
                     </a>
-                    <div className="summary">{data[0].content}</div>
+                    <div className="summary" dangerouslySetInnerHTML={{ __html: data[0].content }} />
                   </div>
                 </div>
               </Link>
@@ -48,27 +49,28 @@ const News = () => {
             <div className="news-list">
               {data.map(
                 (post, index) => index > 0 && index < 4 && (
-                    <Link to={`news/news-detail/${post.id}`}>
-                      <div className="news-card-horizontal">
-                        <div className="news-content">
-                          <div className="time">
-                            {post.postingTime
-                              .substring(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("/")}
-                          </div>
-                          <a className="title" href="#.">
-                            {post.title}
-                          </a>
-                          <div className="summary">{post.content}</div>
+                  <Link to={`news/news-detail/${post.id}`}>
+                    <div className="news-card-horizontal">
+                      <div className="news-content">
+                        <div className="time">
+                          Ngày đăng:{" "}
+                          {post.postingTime
+                            .substring(0, 10)
+                            .split("-")
+                            .reverse()
+                            .join("/")}
                         </div>
-                        <div className="news-img-container">
-                          <img src={post.images} alt="news"></img>
-                        </div>
+                        <a className="title" href="#.">
+                          {post.title}
+                        </a>
+                        <div className="summary" dangerouslySetInnerHTML={{ __html: post.content }} />
                       </div>
-                    </Link>
-                  )
+                      <div className="news-img-container">
+                        <img src={post.images} alt="news"></img>
+                      </div>
+                    </div>
+                  </Link>
+                )
               )}
             </div>
           </div>
