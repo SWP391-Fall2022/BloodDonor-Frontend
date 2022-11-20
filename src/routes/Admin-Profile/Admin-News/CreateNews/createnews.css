@@ -1,0 +1,73 @@
+@import "../../../../index";
+#create-news{
+    padding: 3% 15%;
+}
+#create-news .news-form {
+    padding: 4% 8%;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(220, 220, 220);
+}
+.create-news-breadcrumb{
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+}
+#create-news .news-form-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+}
+
+#create-news .news-form-text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 1% 0;
+}
+
+#create-news .news-group-input {
+    display: grid;
+    grid-template-columns: 48% 48%;
+    grid-gap: 4%;
+}
+
+#create-news .news-form-input {
+    padding: 2% 0;
+}
+
+#create-news .ant-form-item {
+    margin-bottom: 25px;
+}
+
+#create-news .ant-modal-body {
+    padding: 2% 5% 0% 5% !important;
+}
+
+#create-news .donor-inf,
+#create-news .donor-achievement {
+    padding: 9% 0;
+    text-align: center;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgb(220, 220, 220);
+    margin-bottom: 5%;
+}
+
+#create-news img {
+    width: 160px;
+    height: 160px;
+    border-radius: 90px;
+}
+
+#create-news .donor-name {
+    margin-top: 5%;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 160%;
+}
+
+#create-news .donor-achievement-title {
+    font-weight: 600;
+    font-size: 16px;
+}

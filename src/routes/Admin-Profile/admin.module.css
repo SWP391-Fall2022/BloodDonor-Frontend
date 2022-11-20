@@ -1,0 +1,55 @@
+.mainContainer {
+    margin-left: 270px;
+}
+
+.adminSideBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    z-index: 2;
+}
+
+.breadcrumb {
+    margin-left: 270px;
+    background-color: white;
+    box-shadow: var(--shadow-dp-02);
+}
+
+#btn3 {
+    background-color: var(--primary-600);
+    color: white;
+    border: 0px;
+    font-size: 14px;
+}
+
+#btn3:hover, #btn3:focus {
+    background-color: var(--primary-800);
+    color: white;
+}
+
+#btnDisable {
+    background-color: var(--secondary-500);
+    color: white;
+    border: 0px;
+    font-size: 14px;
+}
+
+#btnDisable:hover, #btnDisable:focus {
+    background-color: var(--secondary-600);
+    color: white;
+}
+
+.emptyImg {
+    width: 30%;
+}
+
+@media only screen and (max-width: 800px) {
+    .mainContainer {
+        margin-left: 60px;
+    }
+
+    .breadcrumb {
+        margin-left: 60px;
+    }
+}

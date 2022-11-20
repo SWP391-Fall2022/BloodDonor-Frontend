@@ -1,0 +1,43 @@
+@import "../homepage.css";
+/*---------------COVER------------*/
+.cover {
+    background-image: url("../../../../src/assets/homepage-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 85px;
+    height: 100vh;
+    position: relative;
+}
+.cover-img{
+    position: absolute;
+    object-fit: center;
+    padding-top: 85px;
+    top: 0;
+}
+.container-content {
+    display: inline-block;
+    text-align: left;
+}
+
+.container-search {
+    display: inline-block;
+    background-color: white;
+    padding: 2% 3%;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-01);
+    margin-top: 0.5%;
+}
+
+.row-search {
+    display: flex;
+    justify-content: space-between
+}
+
+
+
+

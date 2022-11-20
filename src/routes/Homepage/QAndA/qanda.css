@@ -1,0 +1,33 @@
+@import "../homepage.css";
+/*-----------THẮC MẮC THƯỜNG GẶP--------*/
+.q-and-a {
+    text-align: center;
+    padding: 5% 22% 5% 22%;
+    background-image: url(../../../assets/homepage-qanda-background.png);
+    background-repeat: no-repeat;
+    background-size: 15%;
+    background-position: 97% 50%;
+}
+
+.q-and-a-container {
+    text-align: left;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 5px;
+    margin-bottom: 2%;
+    border: 1px solid rgb(220, 220, 220);
+    background-color: white;
+    margin-bottom: 1% !important;
+}
+
+.q-and-a-card {
+    border-radius: 5px;
+    background-color: var(--blue-02);
+    margin-bottom: 0.5%;
+}
+
+.q-and-a-card li {
+    font-size: 17px !important;
+    padding: 0.8% 2%;
+    list-style-type: disc;
+}

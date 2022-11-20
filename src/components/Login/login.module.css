@@ -1,0 +1,105 @@
+.mainBackground {
+    background-image: url('../../assets/login-background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.container {
+    position: absolute;
+    left: 55%;
+    top: 5%;
+    background-color: white;
+    width: 400px;
+    height: auto;
+    padding: 25px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    transform: scale(0.9);
+}
+
+.title, .formLabel, .underInfo {
+    font-weight: 700;
+    text-align: center;
+}
+
+.title {
+    color: var(--secondary-900);
+    font-size: 33px;
+}
+
+.underInfo {
+    font-family: 'Inter';
+    font-weight: 400;
+}
+
+#btn {
+    width: 100%;
+    background-color: var(--blue-01);
+    color: white;
+    box-shadow: var(--shadow-dp-02);
+    border: 0px;
+    border-radius: 5px;
+    margin: 2% 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#btn:hover, #btn:focus {
+    background-color: black;
+    color: white;
+}
+
+#buttonDiv {
+    position: relative;
+    left: 30%
+}
+
+.link {
+    color: black;
+    font-weight: 700;
+}
+
+.recaptcha {
+    margin: 0 25px;
+}
+
+
+@media only screen and (max-width: 1200px) {
+    .mainBackground {
+        height: 1000px;
+    }
+
+    .container {
+        width: 400px;
+        left: 50%;
+        top: 35%;
+        transform: translateX(-50%);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .mainBackground {
+        height: 1000px;
+    }
+
+    .container {
+        left: 50%;
+        top: 30%;
+        transform: translateX(-50%);
+        margin-bottom: 100px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .recaptcha {
+        margin: 0;
+        padding: 0;
+    }
+}

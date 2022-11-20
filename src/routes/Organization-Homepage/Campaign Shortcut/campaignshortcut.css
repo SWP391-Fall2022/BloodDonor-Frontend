@@ -1,0 +1,42 @@
+@import url("../../../index.css");
+@import url("../Homepage/homepagedetail.css");
+
+#create-shortcut {
+    padding: 7% 10%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: var(--shadow-dp-02);
+    text-align: center;
+}
+
+#create-shortcut img {
+    width: 50%;
+    margin: 0 25%;
+}
+
+#create-shortcut .button-shortcut {
+    display: flex;
+    justify-content: space-between;
+}
+
+.participated-buttons .ant-btn-primary {
+    border-color: var(--primary-600) !important;
+    background: var(--primary-600) !important;
+}
+
+.participated-buttons .ant-btn-primary:active {
+    border-color: var(--primary-600);
+    background: var(--primary-600);
+}
+
+@media only screen and (max-width: 1200px) {
+    #create-shortcut .button-shortcut {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+    #create-shortcut .button-shortcut button{
+        margin-bottom: 3%;
+    }
+}

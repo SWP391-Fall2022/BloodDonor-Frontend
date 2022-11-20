@@ -1,0 +1,43 @@
+.mainContainer{
+    margin-left: 270px;
+}
+
+.approve-org{
+    background-color: white;
+    padding: 5%;
+    box-shadow: var(--shadow-dp-02);
+}
+
+.approve-org-container{
+    padding: 10% 20%;
+}
+
+.approve-org-title, .approve-org-name{
+    text-align: center;
+    font-weight: 700;
+}
+
+.approve-org-buttons{
+    display: flex;
+   justify-content: center;
+}
+
+#approveButton{
+    background-color: var(--primary-500);
+    border: none;
+}
+
+#refuseOrgButton{
+    background-color: white;
+    border: 1px solid var(--primary-500);
+    color: var(--primary-500);
+    margin-right: 20px;
+
+}
+
+@media screen and (max-width:800px){
+    .mainContainer{
+        margin-left: 60px;
+    }
+}
+

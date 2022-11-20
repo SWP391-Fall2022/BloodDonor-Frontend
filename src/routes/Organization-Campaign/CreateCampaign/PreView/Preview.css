@@ -1,0 +1,67 @@
+/* modal style-------------------------------------- */
+.edit-date-time .ant-btn-primary{
+    border-color: var(--primary-600) !important;
+    background:  var(--primary-600) !important;
+}
+
+.edit-date-time .ant-btn-primary:active{
+    border-color: var(--primary-600);
+    background:  var(--primary-600);
+}
+
+/* -----------------------Left side---------- */
+.preview-campaignDetail-left {
+    background-color: white;
+    margin-right: 20px;
+    padding: 25px 35px;
+    text-align: center;
+    box-shadow: var(--shadow-dp-02);
+}
+
+.preview-campaignDetail-left-title {
+    text-align: left;
+}
+
+.preview-campaign-title{
+    font-weight: 700;
+    margin-top: 15px;
+}
+
+.preview-campaign-detail-left-img{
+    width: 40%;
+    max-width: 225px;
+    height: 220px;
+    margin: 30px auto;
+}
+
+.preview-campaign-detail-left-img  img{
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transform: scale(1);
+}
+
+.preview-campaignDetail-left  .sub-title{
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+/* Blood type */
+
+.blood-type ul{
+    list-style: none;
+    display: flex;
+    padding: 0;
+    width: 60%;
+    margin: 10px auto 0 auto;
+    justify-content: center
+}
+
+.blood-type-item{
+    background-color: var(--primary-500);
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    margin: 5px 20px;
+}
+

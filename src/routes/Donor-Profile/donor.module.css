@@ -1,0 +1,170 @@
+/* Overall */
+.mainContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 110px;
+    padding-bottom: 100px;
+    margin-left: 270px;
+}
+
+.donorSideBar {
+    margin-top: 90px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    z-index: 2;
+}
+
+.donorFooterSmall {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 270px;
+}
+
+.breadcrumb {
+    margin-top: 90px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    z-index: 2;
+}
+
+.infoContainer, .leftContainer, .infoContainerHistory, .voucherContainer {
+    margin: 0 20px;
+    background-color: white;
+    height: auto;
+    padding: 20px 20px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+}
+
+.infoContainer {
+    width: 510px;
+    margin-bottom: 2rem;
+    height: fit-content;
+}
+
+.infoContainerHistory {
+    width: 700px;
+    height: fit-content;
+}
+
+.voucherContainer {
+    width: 780px;
+    height: fit-content;
+}
+
+.leftContainerMain {
+    width: 270px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 1300px) {
+    .leftContainerMain, .infoContainer, .infoContainerHistory, .voucherContainer {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .mainContainer, .donorFooterSmall {
+        margin-left: 60px;
+    }
+
+    .donorFooterSmall {
+        left: 0;
+    }
+    .leftContainerMain, .infoContainer, .infoContainerHistory, .voucherContainer {
+        width: 90%;
+    }
+}
+
+/* Buttons */
+
+#btn1 {
+    background-color: var(--primary-600);
+    color: white;
+    box-shadow: var(--shadow-dp-01);
+    border: 0px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#btn1:hover, #btn1:focus {
+    background-color: var(--primary-800);
+    color: white;
+}
+
+#btn2 {
+    color: black;
+    box-shadow: var(--shadow-dp-01);
+    border: 0px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#btn2:hover, #btn2:focus {
+    background-color: var(--secondary-200);
+    color: black;
+}
+
+/* Basic Info, Change Password Page */
+
+.title, .buttonLabel {
+    font-weight: 600;
+    text-align: center;
+}
+
+.title {
+    color: var(--secondary-900);
+    margin: 0%;
+    font-size: 18px;
+    padding: 15px 0;
+}
+
+.formLabel {
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.subFormLabel {
+    margin-bottom: 0px;
+}
+
+/* QnA page */
+.questionPanel {
+    border: 0px;
+    border-radius: 2px;
+    color: black;
+    box-shadow: var(--shadow-dp-01);
+    font-weight: 600;
+}
+
+.questionPanel li {
+    padding: 0.8% 5%;
+    list-style-type: disc;
+}
+
+/* Voucher Page */
+.innerTitle {
+    color: var(--secondary-900);
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.uploader {
+    width: 470px;
+    height: 470px;
+}
+
+.img {
+    width: 50%;
+}

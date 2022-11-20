@@ -1,0 +1,40 @@
+@import "../../../index.css";
+
+#organization-donor-list {
+    padding: 2% 8%;
+    text-align: center;
+}
+
+#organization-donor-list .donor-list-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    text-transform: uppercase;
+    padding: 3% 0 2% 0;
+}
+
+#organization-donor-list table {
+    border-radius: 5px;
+}
+
+#organization-donor-list .donor-list-table {
+    background-color: white;
+    padding: 1.5% 4%;
+    border-radius: 5px;
+    border: 1px solid rgb(220, 220, 220);
+}
+
+#organization-donor-list .donor-list-search {
+    padding: 1.5% 0 1% 0;
+    border-radius: 5px;
+    margin-bottom: 1%;
+    text-align: left;
+    width: 50%;
+    display: inline-block;
+}
+
+#organization-donor-list .donor-list-tool {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,0 +1,130 @@
+/* Date style */
+.register-date{
+    max-width: 443px;
+    height: 165px;
+    overflow: auto;
+    margin: 0 auto;
+    line-height: 25px;
+    background-color: var(--primary-050);
+    border-radius: 5px;
+    padding: 0 20px;
+
+}
+
+.register-date-cover{
+    background-color: var(--primary-050);
+    box-shadow: var(--shadow-dp-02);
+    height: 197px;
+    padding: 20px 0;
+    width: 79%;
+    margin: 0 auto;
+}
+
+.campaignDetail-left .ant-radio-group {
+    line-height: 40px;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: start;
+}
+
+.register-time{
+    width: 49%;
+    max-width: 281px;
+    text-align: initial;
+    margin: 20px auto;
+    background-color: var(--primary-050);
+    padding: 15px 17px 10px 19px;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+
+}
+
+.register-time .ant-form-item{
+    margin-bottom: 0;
+}
+
+.register-time .ant-radio-group{
+    display: block;
+}
+
+#medical-infor{
+    background-color: var(--primary-500);
+    border: none;
+}
+
+/* unreistered buttons style */
+#join{
+    background-color: var(--primary-500);
+    color: white;
+    margin-right: 20px;
+    margin-top: 20px;
+    border: none;
+}
+
+/* paticipated buttons style=============================================== */
+.health-info-modal .ant-modal-title{
+    font-weight: 700;
+    font-size: 24px ;
+    text-align: center ;
+    line-height: 35px ;
+    text-transform: uppercase;
+    padding: 20px 85px 0 85px;
+}
+
+.health-info-modal .ant-modal-header{
+    border: none;
+}
+
+.health-info-modal .ant-modal-body{
+    padding: 0 40px 24px 40px;
+}
+
+.health-info-modal .ant-modal-footer{
+    display: none;
+
+
+}
+
+.participated-buttons .num-of-registered{
+   display: none ;
+}
+
+/* customize button of antd modal */
+.participated-buttons .ant-btn-primary{
+    border-color: var(--primary-600) !important;
+    background:  var(--primary-600) !important;
+}
+
+.participated-buttons .ant-btn-primary:active{
+    border-color: var(--primary-600);
+    background:  var(--primary-600);
+}
+
+/* registered buttons style===============================================  */
+/* edit buttons position */
+.registered-buttons .edit-date-time{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.registered-buttons  .cancel-camp{
+    margin-right: 20px;
+    border-color: var(--primary-600) !important;
+    color: black;
+}
+
+.registered-buttons  .cancel-camp:hover{
+    color: black;
+
+}
+
+/* customize button of antd modal */
+.cancel-confirm .ant-btn-primary{
+    border-color: var(--primary-600) !important;
+    background:  var(--primary-600) !important;
+}
+
+.cancel-confirm .ant-btn-primary:active{
+    border-color: var(--primary-600);
+    background:  var(--primary-600);
+}

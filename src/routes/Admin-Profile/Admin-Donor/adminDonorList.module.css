@@ -1,0 +1,99 @@
+.listTitleContainer {
+    text-align: center;
+    width: 56rem;   
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.listTitle {
+    font-size: 2em;
+    padding: 2%;
+}
+
+.listContainer {
+    width: 56rem;
+    background-color: white;
+    padding: 1% 2%;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+}
+
+
+.donorDetailContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.donorInfoContainer {
+    width: 45rem;
+    background-color: white;
+    padding: 1% 2%;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    margin-bottom: 2rem;
+}
+
+.avaContainer {
+    width: 18rem;
+    height: fit-content;
+    background-color: white;
+    padding: 1% 2%;
+    box-shadow: var(--shadow-dp-02);
+    border-radius: 5px;
+    margin-left: 2rem;
+    font-size: 130%;
+    font-weight: 700;
+    text-align: center;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .listContainer, .listTitleContainer {
+        width: 40rem;
+    }
+
+    .listTitle {
+        font-size: 1.5em;
+    }
+
+    .table {
+        transform: scale(0.9);
+    }
+}
+
+.searchBar {
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+@media only screen and (max-width: 1400px) {
+
+    .donorInfoContainer {
+        order: 2;
+        width: 90%;
+    }
+
+    .avaContainer {
+        order: 1;
+        width: 90%;
+        margin: 0 0 2rem 0;
+    }
+
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .listContainer, .listTitleContainer {
+        width: 33rem;
+    }
+
+    .table {
+        transform: scale(0.8);
+    }
+
+}

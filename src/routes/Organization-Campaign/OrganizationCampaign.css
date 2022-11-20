@@ -1,0 +1,15 @@
+.manage-campaign{
+    display: grid;
+    grid-template-columns: 270px auto;
+}
+
+
+ @media (max-width:800px){  
+    .manage-campaign{
+        display: grid;
+        grid-template-columns: 60px auto; 
+    }
+
+    
+    
+} 
